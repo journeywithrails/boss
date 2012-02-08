@@ -1,0 +1,34 @@
+<table border="0" width="580" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" style="font-family: Arial; font-size: 12pt; color: #493F0B;">
+
+	<tr>
+
+		<td>&nbsp;</td>
+		<td style="padding-bottom: 20px"><img border="0" src="<%= ::AppConfig.host %>/images/email/email_logo.gif" width="175" height="90"></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td style="padding-bottom: 20px">
+
+<%= _("<b>Dear %{name},") % {:name => @user_name} %> <br/><br/>
+
+<%= _("Thank you for your feedback on Billing Boss. Here is the reviewer's response:") %>
+<br/><br/>
+<%= @response_text %>
+<br/><br/>
+<b><%= _("We hope the response was helpful") %>. <br/><br/>
+
+<%= _("Below is the original feedback text you sent us:") %></b><br/><br/>
+
+<%= @text_to_send %>
+
+				</td>
+
+				<td style="border-left-width: 1px; border-right: 1px solid #A7C520; border-top-width: 1px; border-bottom-width: 1px">&nbsp;</td>
+			</tr>
+
+
+			
+		</table>
+<br/>
+<p><%= _("You are receiving this e-mail because we received a feedback with this reply-to address. If you didn't send the feedback, please disregard the e-mail.") %></p>

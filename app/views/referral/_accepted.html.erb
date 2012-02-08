@@ -1,0 +1,15 @@
+          <span style="text-align: center"><%= _('Thank you for helping to spread the word about Billing Boss. Your invitations have been sent.') %></span>  
+		  <% if ::AppConfig.contest.rac && logged_in? %>
+		  <span style="text-align: center"><%= _('For each referral you send, you will get an extra entry in the contest, up to a maximum of 25 entries.') %></span><br/>
+		  <% end %>
+		  <br/>
+<span style="text-align: center">
+<%= _('Learn how to make invoicing easy.') %> <a href="/<%= @tour_target %>/tour"><%= _("Take a Tour")%></a>.</span>
+
+<% if !logged_in? %>
+<% login_link_text = s_("login_link|Log in") %>
+<% signup_link_text = s_("signup_link|sign up") %>
+ <span style="text-align: center"><%= _("%{login_link} or %{signup_link} to Billing Boss now.") % {
+	:login_link => "<a href='/login'>#{login_link_text}</a>", 
+	:signup_link => "<a href='/signup'>#{signup_link_text}</a>"} %></span>
+ <% end %>                

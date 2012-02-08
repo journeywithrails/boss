@@ -1,0 +1,55 @@
+<%@skip_footer= true%>
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+<% @content_for_main_top = capture do %>
+<% end %>
+
+	<% form_for(:invoice, :url => invoice_path(@invoice)) do |f| %>
+		<% @content_for_lnav = capture do %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+      <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+			<% if @invoice.status != "superceded" %>
+			      <br />
+						<div id="preview_container">
+					   		<%= render :partial => "/invoices/simply/preview", :locals => {:f => f, :profile => @profile, :invoice => @invoice } %>		
+						</div>
+				  <p>
+				  	
+			  <br/><hr><br/>
+			  <%= _('This invoice was created in Simply Accounting.') %>
+			  <br/><br/>
+			  <%= _('You cannot edit this invoice in Billing Boss, and it can only be paid in full on the Billing Boss site. If you wish to record a partial payment, please record it in Simply Accounting, and re-send the invoice to Billing Boss from Simply Accounting.') %>
+			  <br/><br/>
+			  <%= _('Any actions on this invoice in Billing Boss (such as deleting, marking it as paid, or collecting an automated payment through your selected payment method), will <b>not</b> automatically update the invoice in Simply Accounting!') %>
+			  <br/><br/>
+			  <% @link = "#{::AppConfig.mail.host}/access/#{@invoice.get_or_create_access_key}" %>
+			  <%= _('The invoice link received by your customer is:') %> <%= link_to(@link, @link, {:id => "invoice_link", :name => @invoice.get_or_create_access_key, :target => "_blank"}) %>
+				<br/><br/>
+				  </p>
+			<% else %>
+				<% id = @invoice.superceded_by_id %>
+				<span id="superceded" name="<%= id %>"><%= _("This invoice is out of date and has been replaced by a new one. Click  #{link_to('here', "#{::AppConfig.secure_host}/invoices/#{id}")} to view the new invoice.") %></span>
+			<% end %>
+		<% end %>		
+		<%= render_inner_layout('norounded') %>
+	<% end %>
+  

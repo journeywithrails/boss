@@ -1,0 +1,31 @@
+Index: actionpack/lib/action_view/helpers/prototype_helper.rb
+===================================================================
+--- actionpack/lib/action_view/helpers/prototype_helper.rb	(revision 1312)
++++ actionpack/lib/action_view/helpers/prototype_helper.rb	(working copy)
+@@ -1017,15 +1017,23 @@
+           js_options['parameters'] = "Form.serialize('#{options[:submit]}')"
+         elsif options[:with]
+           js_options['parameters'] = options[:with]
++        elsif options[:with_hash]
++          js_options['parameters'] = options[:with_hash]
+         end
+         
+-        if protect_against_forgery? && !options[:form]
++        if protect_against_forgery?
+           if js_options['parameters']
+-            js_options['parameters'] << " + '&"
++            if options[:with_hash]
++              js_options['parameters'] << ".merge({#{request_forgery_protection_token}: '#{escape_javascript form_authenticity_token}'})"
++            else
++              js_options['parameters'] << " + '&"
++            end
+           else
+             js_options['parameters'] = "'"
+           end
+-          js_options['parameters'] << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
++          unless options[:with_hash]
++            js_options['parameters'] << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
++          end
+         end
+       
+         options_for_javascript(js_options)

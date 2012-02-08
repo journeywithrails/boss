@@ -1,0 +1,46 @@
+<% content_for "stylesheets" do%>
+
+<% end%>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		
+		<h1><%= _("Settings") %></h1>
+		<%= link_to _("Menu"), "/", :id => "backButton" %>
+		<%= link_to_function _("Save"), "$('profile_form').submit()", :id => "register_button", :class => "nav Action" %>
+
+
+	</div>
+<% end %>
+
+<% @content_for_main_top = capture do %>
+
+<% end %>
+
+<% form_for(:profile, @profile, :url => { :action => "update" }, :html => { :id => "profile_form", :method => :put, :multipart => true }) do |f| %>
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+  
+	<% @content_for_infobox = capture do %>
+	<%#fixme: braindead way of finding whether flash has errors or just empty placeholder %>
+	<% unless (formatted_flash.size < 10) || formatted_flash.include?("empty") || !(error_messages_for :profile).blank? %>
+    <ul><li><%= formatted_flash %></li></ul>
+	<% end %>
+	<% unless (error_messages_for :profile).blank? %>
+		<ul><li><%= error_messages_for :profile %></li></ul>
+	<% end %>
+
+ 	<% end %>  
+
+	<% @content_for_main = capture do %>
+
+	  <%= render :partial => "/profiles/mobile/form", :locals => {:f => f} %>
+
+	<% end %>
+  
+	<%= render_inner_mobile_layout('nomenu') %>  
+
+	<%= link_to_function _("Save"), "$('profile_form').submit()", :id => "save_profile_button", :class => "button white margined" %>
+
+<% end %>
+

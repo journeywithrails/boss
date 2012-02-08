@@ -1,0 +1,119 @@
+<% content_for "stylesheets" do %>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  <%= stylesheet_link_tag "/ext/resources/plugins/grid_summary/Ext.ux.grid.GridSummary.css" %>
+	<%= xpath_theme %>
+	<%= stylesheet_theme_controller_printable(print?) %>
+<% end %>
+
+<% content_for "javascripts" do %>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>  
+  <%= javascript_include_tag "/ext/resources/plugins/grid_summary/Ext.ux.grid.GridSummary.js" %>
+ 	<%= javascript_include_tag "/ext/source/locale/ext-lang-#{locale.language}.js" %>
+<% end %>
+
+
+	<% form_for( :filters, :url => { :action => "show" }, :html => { :method => :get} ) do |f| %>
+		<% @content_for_lnav = capture do %>
+		<% end %>
+	
+		<% @content_for_sidebar = capture do %>
+      <% if @nested %>
+        <%= hidden_field_tag "filters[search_key]", "client_#{@client.id}_invoice_report", :id => 'filters_search_key' %>  
+      <% else %>
+        <%= hidden_field_tag "filters[search_key]", "invoice_report", :id => 'filters_search_key' %>        
+      <% end %>
+			<div  id="filter" >
+				<br/>
+			  <div>
+			    <%= _("Customer") %>: 
+			    <%= render :partial => "shared/select_multiple", :locals => { 
+		                :collection => @parent.customers,
+		                :selected_value => @filters.customers,
+		                :name => "filters[customers]",	                                                                
+		                :options => {:option_id => 'customers', :prefix => "customers", :blank_option => s_('dropdown|– All Customers –')}
+		         } %>
+			  </div>
+			  <br /><br />
+				<% if @currencies.size > 1 %>
+				<div>
+					<%= _("Currency") %>:
+						<%= f.select :currency, @currencies, :selected => @filters.currency %>
+				</div>
+				<br /><br />
+				<% end %>
+				<div>	
+					<%= _("Status") %>:
+			   		<%= f.select :meta_status, @statuses, :selected => @filters.meta_status.to_s %>
+				</div>
+				<br /><br />
+		 	  <div>
+			    <%= _('Date From') %>: 
+	 				<br />
+					<%= f.calendar_date_select :fromdate, :size=>0, :class=>"date_select" %>		
+			  </div>		
+		 	  <div>
+			    <%= _('Date To') %>:
+					<br />
+					<%= f.calendar_date_select :todate, :size=>0, :class=>"date_select" %>		
+			  </div>		
+			  <br />
+			  <div>
+			    <%= submit_tag _("Filter") %>
+			    <%= submit_tag _("Clear"), :name => "filters[clear]" %>
+			  </div>
+			</div>
+      
+    <br/>
+	<div id="csv">
+		<ul class="lnav_ul">
+			<li>
+        <% if @nested %>
+  				<%= link_to _('Printable version'), print_bookkeeping_client_report_path(:bookkeeping_client_id => params[:bookkeeping_client_id], :id => 'invoice'), {:target => '_blank'}  %>
+        <% else %>
+				<%= link_to _('Printable version'), print_report_path(:id => 'invoice'), {:target => '_blank'}  %>
+        <% end %>
+			</li>
+			<li>
+        <% if @nested %>
+  				<%= link_to _('Save as CSV file'), bookkeeping_client_report_path(params[:bookkeeping_client_id], 'invoice', :format => 'csv')  %>
+        <% else %>
+	  			<%= link_to _('Save as CSV file'), report_path('invoice', :format => 'csv')  %>
+        <% end %>
+			</li>
+      <% unless params[:bookkeeping_client_id].nil? # only for bookkeeping clients report -%>
+        <li>
+          <%= link_to _('Back to Clients'), bookkeeping_clients_path %> 
+        </li>
+      <% end -%>
+		</ul>
+	</div>
+		<% end %>
+    
+	  <% @content_for_infobox = capture do %>
+		  <%= formatted_flash %>
+ 	  <% end %>    
+	
+		<% @content_for_main = capture do %>
+			<br style="clear:both;"/>			
+      <% if (@client.nil?)
+				  	@url = report_path(:id => 'invoice')
+						@title = _('Invoice Report for ') + (@parent.profile.company_name.blank? ? @parent.email : @parent.profile.company_name)
+					else 
+						@url = bookkeeping_client_report_path(:bookkeeping_client_id => @client.id, :id => 'invoice') 
+						@title = _('Invoice Report for client ') + (@parent.profile.company_name.blank? ? @parent.email : @parent.profile.company_name)
+					end
+			%>
+			<%= render :partial => "invoice_grid", :locals => {
+			  :url => @url,
+			  :elm => 'invoice_report_grid',
+			  :title => @title,
+			  :label => 'invoices',
+			  :page_size => 10,
+			} %>
+			<div id="invoice_report_grid"></div>
+			
+		<% end %>
+		<%= render_inner_layout %>
+	<% end %>

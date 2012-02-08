@@ -1,0 +1,42 @@
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			
+<% end %>
+
+<% content_for :header do %>	    	
+	<%= render :partial => "home/header" %>
+<% end %>
+
+<% content_for("main")  do %>
+<div class="yui-b">
+  <div class="yui-gc"> 
+      <div class="yui-u first">
+        <div class="corner_large_tr">
+          <div class="corner_large_tl">
+          <%= formatted_flash_always %>     
+          </div>
+        </div>
+        
+        <div class="content">
+        	<br/>
+          
+        <div>
+          <p><%= _("You have been invited by %{invitor} to join Billing Boss.") % {:invitor => "<span id='invitor_name'>#{h invitor_name }</span>"} %></p>
+					<p><%= _("Once you have created an account, you will be able to see the invoice data of %{invitor}. To accept this invitation, you must %{signup_link}.") % {:invitor => "<span id='invitor_name'>#{h invitor_name}</span>", :signup_link => link_to(_("create a new account."), signup_url(:service_url => current_action_service_url, :email => @invitation.recipient), :id => 'inline-signup-link')} %></p>
+          <br/>
+          <div id="invitation-button-container">
+            <form>
+            <%= submit_tag _("register"), :class => "go_button", :onclick => "document.location.href='#{signup_url_with_sagespark_intercept(:service_url => current_action_service_url, :email => @invitation.recipient)}';return false;", :id => 'large-register-button' %> 
+            </form>
+          </div>
+        </div>
+        <%= _('Already an existing user?') %> <%= link_to_login_by_email _("Login..."), @invitation.recipient %>
+        </div>      
+        <%= bottom_corners() %>
+      </div>
+      <div class="yui-u" >&nbsp;</div>
+  </div>
+</div>
+<div class="yui-b"></div>
+  
+<% end %>

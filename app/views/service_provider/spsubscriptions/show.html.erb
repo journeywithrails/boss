@@ -1,0 +1,32 @@
+<h1>
+  <b>Account:</b>
+  <%= @spaccount.spaccount_name %>
+</h1>
+
+<p>
+  <b>Product Code:</b>
+  <%=h @spsubscription.service_code %>
+</p>
+
+<p>
+  <b>Qty:</b>
+  <%=h @spsubscription.qty %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @spsubscription.status %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @spsubscription.comment %>
+</p>
+
+<%= link_to 'Edit', edit_service_provider_spaccount_spsubscription_path(@spaccount, @spsubscription) %> 
+|
+<%= link_to 'Back', service_provider_spaccount_spsubscriptions_path(@spaccount) %>
+
+
+
+

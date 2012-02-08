@@ -1,0 +1,165 @@
+.profile_banner_1{
+	background-color:#A7C520;
+	background-image:url(/themes/default/images/settings_banner_l.gif);
+	background-repeat:no-repeat;
+	float:left;
+	height:78px;
+	width: 100%;
+
+}
+
+input, select{
+	margin-top: 3px !important;
+}
+
+.has_checkbox input, input.checkbox{
+	margin-top: -2px !important;
+}
+
+.profile_banner_2{
+	float: right; 
+	height: 78px; 
+	background-image: url(/themes/default/images/settings_banner_r.gif);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+.tax_label{
+	color: #046380;
+	font-size: 120%;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+#user_gateways label span {
+  font-style: italic;
+}
+
+.profile_line
+{ 
+    border: 0;
+    color: #79973f;
+    background-color: #79973f;
+    height: 1px;
+    width: 100%;
+    text-align: left;
+    margin-top:15px;
+    margin-bottom:15px;
+    width:100%;
+}
+
+.profile_title
+{
+  color: #046380;
+  font-size:160%;
+  margin-bottom:5px;
+  font-weight: bold;
+}
+
+.profile_description
+{
+	font-size: 105%;
+}
+
+.profile_subtitle
+{
+  color: #046380;
+  font-size:105%;
+  margin-bottom:5px;
+  margin-top:5px;
+
+}
+
+.profile_subnav
+{
+	width: 100%;
+	font-size: 110%;
+	font-weight: bold;
+}
+
+.profile_subnav td
+{
+	padding-left: 31px;
+	padding-right: 31px;
+	border-left: solid;
+	border-left-width: 1px;
+	border-left-color: #000000
+}
+.profile_subnav .first
+{
+	border-left-width: 0px !important;
+}
+
+
+.on
+{
+	background-color: #A7C520;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.on a
+{
+	color: white !important;
+	text-decoration: none;
+}
+
+.errored{
+	background-color: #E9721B !important;
+	color: white !important;
+	text-decoration: none;
+	padding: 2px;
+}
+
+.tab_pointer{
+	margin-left: 56px;
+	color: #E9721B;
+	font-size: 120%;
+	font-weight: bold;
+}
+.indented li {
+margin-left:30px;
+}
+.bullet li{
+
+list-style-type:disc;
+}
+.separator_line
+{
+  border: 0;
+  color: #79973f;
+  background-color: #79973f;
+  height: 1px;
+  width: 100%;
+  text-align: left;
+  margin-top:10px;
+}
+
+#user_gateways img	
+{
+  vertical-align: middle;
+  padding-right:5px;
+}
+
+#user_gateways label
+{
+  padding-bottom:5px;
+  width:auto;
+  margin: 0 5px 0 0;
+}
+.gateway_selection {
+  margin-top:3px !important;
+  clear: both;
+  float: left;
+  width:auto;
+}
+.gateway_tease {
+  margin-top:4px;
+  width:auto;
+  float:inherit;
+  display:block;
+}
+.user_gateway_setup {
+  margin-left: 20px;
+  float: left;
+  clear: both;
+}

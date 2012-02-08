@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--  <%= RAILS_ENV %> -->
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta id="viewport" name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  <link rel="apple-touch-icon" href="/images/iphone/sagespark-iphone-icon.png"/>
+  <script type="text/javascript" charset="utf-8">
+    window.onload = function() {
+      setTimeout(function(){window.scrollTo(0, 1);}, 100);
+    }
+  </script>
+  <script type="text/javascript">
+    function clickclear(thisfield, defaulttext) {
+      if (thisfield.value == defaulttext) {
+        thisfield.value = "";
+      }
+    }
+    function clickrecall(thisfield, defaulttext) {
+      if (thisfield.value == "") {
+        thisfield.value = defaulttext;
+      }
+    }
+  </script>
+  <title><%= _("Billing Boss")%></title>
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	<%= stylesheet_link_tag "/themes/mobile.css" %>
+	<%= yield :stylesheets %>
+	
+	<%= javascript_include_tag 'prototype' %>
+	<%= javascript_include_tag 'effects' %>
+	<!-- load any template-specific javascripts (use by including a content_for block in template) -->
+</head>
+<body>
+  <div id="doc3" class="yui-t8">		
+    <div id="hd">
+      <%= yield :header %>
+    </div>			
+    <div id="yui-main">
+      <%= yield :main %>			
+    </div>
+    <div id="ft">
+      <%= if !@skip_footer then render(:partial => "layouts/main_footer") end %>
+    </div>    
+  </div>
+<%= render :partial => "/layouts/google" %>  
+</body>
+<%= javascript_include_tag 'application' %>	
+<% if RAILS_ENV == 'test' -%>
+  <!-- conditionally include increment_ajax_counter for testing -->
+  <%= javascript_include_tag('increment_ajax_counter') %>
+<% end -%>
+<%= yield :javascripts %>
+
+<%= yield :bottom_javascripts %>
+</html>

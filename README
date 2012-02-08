@@ -1,0 +1,47 @@
+Setup instructions:
+**********************************
+
+Special gem requirements:
+============================
+uuidtools > 2.0.0
+ZenTest > 4.1
+
+Other gem requirements: 
+============================
+(I am not certain that all of these are actually required, the list was taken
+from the deployment.log file)
+
+Linguistics
+RedCloth
+babel
+builder
+cached_model
+capistrano
+capistrano-ext
+facets
+fastercsv
+hoe
+hpricot
+json
+json_pure
+log4r
+memcache-client
+mocha
+money
+mongrel
+mongrel_cluster
+rcov
+rmagick
+rspec
+tzinfo
+uuidtools
+validatable
+webgen
+xmpp4r
+
+Other important notes:
+=========================
+
+The test suite will not run correctly without first running:
+
+  rake sage:makemo

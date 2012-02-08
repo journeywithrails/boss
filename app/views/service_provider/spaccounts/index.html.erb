@@ -1,0 +1,45 @@
+<h1>Service Provider accounts</h1>
+
+<table>
+  <tr>
+    <th>Account name</th>
+    <th>Company</th>    
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>State/Province</th>
+    <th>Country</th>    
+    <th>Postal/ZIP code</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Fax</th>        
+    <th>Status</th>
+    <th>Comment</th>        
+  </tr>
+
+<% for spaccount in @spaccounts %>
+  <tr>
+    <td><%=h spaccount.spaccount_name %></td>
+    <td><%=h spaccount.company %></td>    
+    <td><%=h spaccount.first_name %></td>
+    <td><%=h spaccount.last_name %></td>
+    <td><%=h spaccount.address %></td>
+    <td><%=h spaccount.city %></td>
+    <td><%=h spaccount.state_prov %></td>
+    <td><%=h spaccount.zip_postal %></td>
+    <td><%=h spaccount.email %></td>
+    <td><%=h spaccount.phone %></td>
+    <td><%=h spaccount.fax %></td>        
+    <td><%=h spaccount.status %></td>
+    <td><%=h spaccount.comment %></td>        
+    <td><%= link_to 'Show', spaccount %></td>
+    <td><%= link_to 'Edit', edit_service_provider_spaccount_url(spaccount) %></td>
+    <td><%= link_to 'Destroy', spaccount, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New account', new_service_provider_spaccount_path %>

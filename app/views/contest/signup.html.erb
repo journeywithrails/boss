@@ -1,0 +1,55 @@
+<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= stylesheet_link_tag "/themes/static.css" %>	
+	<%= default_theme_controller %>	
+	<%= stylesheet_link_tag "/themes/default/contest-signup.css"  %>
+  <%= stylesheet_ie6 %>
+<% end %>
+	
+
+
+<% content_for :header do %>	    	
+	<%= render :partial => "header" %>
+<% end %>   
+	 
+
+<% content_for :main do %>
+<div id="bd">
+		<div class="yui-g">
+		
+			<div id="left_main">
+			
+				<span class="span-with-left-margin"><img width="495" height="436" alt="Build your business with our FREE invoicing tool: Effortlessly track status of invoices, Easily create & send invoices, Efficiently receive payment!" src="/images/contest/bb_diagram.gif"/></span>
+				
+			</div>
+			
+			<div id="right_main">
+			
+				<div id="signup_top">
+					<img width="384" height="56" align="absbottom" alt="Sign up now!" src="/images/contest/signup_top.gif"/>
+				</div>
+				
+				<div id="signup_form">
+				      <% if !logged_in? %>
+              <%= contest_create_account_link %>							
+							<% else %>
+	<div style="margin-left: 20px; margin-right: 20px">
+		<br/>
+		<%= _("As a registered user (%{name}), you have already been entered to the Build Your Business Sweepstakes.") % {:name => "#{current_user.sage_username}"} %>
+		<br/><br/>
+		<%= _("You can increase your chances to win by %{referring_friends_link}") % {:referring_friends_link => "<a href='/contest/tell_a_friend/'>referring friends!</a>"} %><br/><br/>
+		<a href='/'><%= _('Back to Billing Boss >>') %></a><br/><br/>
+	</div>
+							<% end %>
+				</div>
+				
+				<div id="signup_bottom">
+					<img width="384" height="66" align="top" src="/images/contest/signup_bottom.gif"/>
+				</div>				
+						
+				
+			</div>		
+	
+		</div>
+</div>
+<% end %>

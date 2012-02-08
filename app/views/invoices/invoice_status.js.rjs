@@ -1,0 +1,2 @@
+page.replace invoice_status_html_id(@invoice), invoice_status(@invoice)
+page.visual_effect :highlight, invoice_status_html_id(@invoice)

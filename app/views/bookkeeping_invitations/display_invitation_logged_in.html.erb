@@ -1,0 +1,35 @@
+<% content_for "stylesheets" do %>
+  <%= stylesheet_theme_controller("session") %>
+<% end %>
+  
+<% content_for("main")  do %> 
+						
+  <div class="yui-u">      
+    <div class="corner_large_tr">
+				<div class="corner_large_tl">
+          <%= @content_for_infobox.blank? ? "&nbsp;" : @content_for_infobox %>	
+				</div>
+    </div> 
+    <div class="content">
+      	<br style="clear:both"/>      
+    		<%= _("Do you accept access to the invoice activity data of %{name}") % {:name => "<span id='invitor_name'>#{h invitor_name}</span>"} %> 
+      	<br/>        
+      	<br/>                
+        <div>
+             <div>
+               <div style="float:left">
+          		  <%= button_to _('Accept'), :action => 'accept', :id => @key %>
+              </div>
+              <div style="float:right">            
+          			<%= button_to _('Decline'), :action => 'decline', :id => @key %>
+              </div>          
+              &nbsp;
+            </div>
+        </div>      
+        <br/>     
+    </div>             
+    <%= bottom_corners() %>                   
+  </div> 
+<% end %>  
+
+<%= render 'layouts/bookkeepers_inner' %>

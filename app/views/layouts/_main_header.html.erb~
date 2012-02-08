@@ -1,0 +1,43 @@
+<div id="header_new">
+	
+	<div id="header_inner">
+		<div id="logo">
+        <%# anchor tag named "logo-top" is used to scroll dialogs into view %>
+	  	<a name="logo-top" href="/"><img src="/themes/default/images/spark/billing-boss-logo.gif" alt="Sage Spark" /></a>
+	  </div>
+ 
+		<div id="search_bg_rt">&nbsp;</div>
+			<div class="container-inline search_cnt_logout" id="search">
+              <ul id="top_nav">
+                <li><a href="/"><%= _("Home") %></a></li>
+			   	<% if ::AppConfig.contest.bybs %><li><a href="/contest"><%= _('Contest') %></a></li><% end %>
+			  	<span class="divide">|</span><li><a href="/invite_a_friend"><%= _('Invite a Friend') %></a></li>
+			  	<span class="divide">|</span><li><%= link_to _("Feedback"), {:controller => :feedback} %></li>
+                <span class="divide">|</span>
+                <li>
+                  <%= link_to_logout( _("%{log_out} (%{current_user})") % { :log_out => _("Log out"), :current_user => h(current_user.sage_username)} ) %>
+                </li>
+			  </ul> 
+		   </div>
+	
+		<div id="search_bg_lt">&nbsp;</div>
+  	<div id="change_language"><%= render :partial => '/layouts/change_language' %></div>
+		
+		<div class="clear"></div>
+		
+	   <div id="primary_nav_bar">
+				<%= if !@static_menu then menu_builder(@page_id) end %>
+		    <div class="clearspace"></div>
+		 </div>
+		 <div class="sub-menu">
+       <div class="sub-menu-left">
+       	<%= yield :submenu %>
+       </div>
+		   <div class="clear"></div>
+      </div>
+		
+     <div class="clear"></div>
+		
+	</div><!-- /header_inner -->  
+</div><!-- /header_new -->    
+

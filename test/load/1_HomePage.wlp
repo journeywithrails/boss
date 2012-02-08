@@ -1,0 +1,418 @@
+<Project><PRODUCT_VERSION><ProjectCreatedProductVersion>WebLOADPro Version 8.2.1.053.00  Supports 128 bit SSL </ProjectCreatedProductVersion><LastProjectSavedProductVersion>WebLOAD Version 8.1.0.141.00  Supports 128 bit SSL </LastProjectSavedProductVersion></PRODUCT_VERSION><PROJECT_TYPE>Protocol</PROJECT_TYPE><AGENDA_OPTIONS><AgendaName xmlns=" Default Project Options"/><Options><DiagnosticOptions><bSyntaxCheck>0</bSyntaxCheck><bTraceCheck>0</bTraceCheck><bAutomaticStateCheck>0</bAutomaticStateCheck><bSaveCSJSCheck>0</bSaveCSJSCheck><bCSJSDiagnosticMessages>0</bCSJSDiagnosticMessages></DiagnosticOptions><FunctionalTestingOptions><bTransFailed>0</bTransFailed><nFailedTime>20</nFailedTime><nSeverity>2</nSeverity><sTextSearch></sTextSearch><bCheckCRC>0</bCheckCRC><bCheckCompareValues>0</bCheckCompareValues><VarificationData><nCompareTitle>2</nCompareTitle><nFramesNumber>0</nFramesNumber><nTextSearch>0</nTextSearch><nVerifyLink>0</nVerifyLink><nCompareLinks>0</nCompareLinks><nCompareForms>0</nCompareForms><nCompareImages>0</nCompareImages><nCompareTables>0</nCompareTables></VarificationData></FunctionalTestingOptions><SleepTimeControlOptions><nSleepControlType>2</nSleepControlType><nBetween>2</nBetween><nAnd>10</nAnd><nDeviationPersent>10</nDeviationPersent></SleepTimeControlOptions><IE_OPTIONS Option_version="19">
+			<IE_DIALOG name="Alert">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Confirm">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Prompt">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Input"></field>
+			</IE_DIALOG>
+			<IE_DIALOG name="Print">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Cookie_IE6">
+				<Answer>
+					<value>Allow</value>
+					<value>Block</value>
+					<default>Allow</default>
+				</Answer>
+				<field type="checkbox" name="ApplyToAll">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="Cookie">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FormSubmit">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FormResubmit">
+				<Answer>
+					<value>Retry</value>
+					<value>Cancel</value>
+					<default>Retry</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="SwitchNonSecure">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SwitchSecure">
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="NonSecureOnSecure">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientAuthentication">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="string" name="Domain"></field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ConnectToMS_WinXP">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Email"></field>
+				<field type="string" name="Password"></field>
+				<field type="checkbox" name="AutoSignIn">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientAuthentication_WinXP">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientCertificate">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Certificate">
+					<default>0</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="HostCertificate">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload_IE6">
+				<Answer>
+					<value>Open</value>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload_IE6_XP">
+				<Answer>
+					<value>Open</value>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SaveFile">
+				<Answer>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="string" name="FileName"></field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SaveFileConfirmation">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ActiveXInstall">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysTrust">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="RunActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="UnsafeActiveX">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ScriptAccessingActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="NavigateSubFrames">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ActiveScripting">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="JavaScripting">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Redirection">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="AutoComplete">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="RememberPassword">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+				<field type="checkbox" name="DoNotOffer">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FtpAuthentication">
+				<Answer>
+					<value>Login</value>
+					<value>Cancel</value>
+					<default>Login</default>
+				</Answer>
+				<field type="string" name="Server"></field>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="string" name="Email"></field>
+				<field type="checkbox" name="Anonymous">
+					<default>unchecked</default>
+				</field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FtpFolderError">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="DocumentModified">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<value>Cancel</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="JavascriptError">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="WindowClosing">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="SuspiciousActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Reboot">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="YesNoCancel">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<value>Cancel</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="YesNo">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="OkCancel">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Ok">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+		</IE_OPTIONS><PlayBackOptions><nNavigationTimeOut>60</nNavigationTimeOut><nFileDownloadTimeout>0</nFileDownloadTimeout><nStartNavigationTimeOut>3</nStartNavigationTimeOut><bClearCache>0</bClearCache><bClearCookies>0</bClearCookies><nPlaybackMode>1</nPlaybackMode><bUseDOROptimizer>0</bUseDOROptimizer></PlayBackOptions><PassFailDefinition><bCheckErrors>1</bCheckErrors><bCheckSevere>1</bCheckSevere><bCheckWarnings>0</bCheckWarnings><nErrorNum>1</nErrorNum><nRuleCheck>15</nRuleCheck><nWarningNum>15</nWarningNum></PassFailDefinition><ErrorHandling><SubmitButton>1</SubmitButton><NavObject>9</NavObject><Page>4</Page><PageRetryNum>3</PageRetryNum><Object>6</Object></ErrorHandling><EmulationPlaybackOptions><bUseOptimizer>1</bUseOptimizer><bUseHistory>0</bUseHistory><nHistoryLimit>1</nHistoryLimit><bCodeFormatter>0</bCodeFormatter><bCSJSRecovery>1</bCSJSRecovery></EmulationPlaybackOptions><WebServices><sBasicPassword></sBasicPassword><sUserName></sUserName><sProxyHost></sProxyHost><sProxyPassword></sProxyPassword><sProxyUser></sProxyUser><sProxyPort></sProxyPort><nWSClientType>1</nWSClientType></WebServices><BrowserEmulationOptions><bDNSCache>1</bDNSCache><bSSLCache>1</bSSLCache><bKeepAlive>1</bKeepAlive><bRedirectionEnabled>1</bRedirectionEnabled><nRedirectionLimit>10</nRedirectionLimit><strBrowserType>Default</strBrowserType><strUserAgent></strUserAgent><strEncodingValue>0</strEncodingValue><bEnforceEncoding>0</bEnforceEncoding></BrowserEmulationOptions><HTTPParametersOptions><bGZipSupport>0</bGZipSupport><bHTTPVersion>1</bHTTPVersion><bMultiIPSupport>0</bMultiIPSupport><bEncodeFormData>1</bEncodeFormData><bAcceptLanguage>0</bAcceptLanguage><strAcceptLanguage></strAcceptLanguage></HTTPParametersOptions><Authentication><sUserName></sUserName><sPassWord></sPassWord><sNTUserName></sNTUserName><sNTUserPassword></sNTUserPassword><sProxyUserName></sProxyUserName><sProxyPassWord></sProxyPassWord><sProxyHost></sProxyHost><sProxyPort></sProxyPort><sSSLClientCertificateFile></sSSLClientCertificateFile><sSSLClientCertificatePassword></sSSLClientCertificatePassword></Authentication><BrowserCacheOptions><bFilterApplets>0</bFilterApplets><bFilterDynamicPages>0</bFilterDynamicPages><bFilterImages>0</bFilterImages><bFilterJSFiles>0</bFilterJSFiles><bFilterStaticPages>0</bFilterStaticPages><bFilterStyleSheets>0</bFilterStyleSheets><bFilterXMLFiles>0</bFilterXMLFiles><nCacheType>2</nCacheType><nCacheScope>5</nCacheScope><nCacheFilter>7</nCacheFilter></BrowserCacheOptions><JavaOptions><strSelectedJVM>Default</strSelectedJVM></JavaOptions></Options></AGENDA_OPTIONS><ADDITIONAL_INFORMATION><ProjectComments></ProjectComments><CreatedBy></CreatedBy><Custom1></Custom1><Custom2></Custom2><Custom3></Custom3><Subject></Subject><TestDescription></TestDescription><ResultsDescription></ResultsDescription><VersionBuild></VersionBuild><Title>C:\Documents and Settings\lanro08\My Documents\WebLOAD\Sessions\1_HomePage.wlp</Title></ADDITIONAL_INFORMATION><ORACLE_PROJECT_INCLUDE_PATH></ORACLE_PROJECT_INCLUDE_PATH><VisualAgenda><Agenda CallBack="Do_Agenda" ClonedXML="0"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0"/><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript></NodeScript><NodeID Visible="0">1</NodeID><InitAgenda Type="JavaScript" ReadOnly="0">
+hostName = "http://mybillingboss.com/"
+
+footer_link = "http://www.sagesoftware.ca"
+</InitAgenda><InitClient Type="JavaScript" ReadOnly="0"></InitClient><TerminateAgenda Type="JavaScript" ReadOnly="0"></TerminateAgenda><TerminateClient Type="JavaScript" ReadOnly="0"></TerminateClient><JSNodeCounter Visible="0">8</JSNodeCounter></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="GlobalVariables"><System Type="Array" ReadOnly="0"><Variable Name="ClientNum" Description="Returns the main thread number for each client"/><Variable Name="GeneratorName()" Description="Returns the name of this load generator as a string"/><Variable Name="GMTDate()" Description="Current date in GMT/UTC as a string"/><Variable Name="Hours()" Description="Current Hour (0-23)"/><Variable Name="LocalDate()" Description="Current date in local time as a string"/><Variable Name="Milliseconds()" Description="Current ms value"/><Variable Name="Minutes()" Description="Current minutes (0-59)"/><Variable Name="RandomNumber()" Description="Generate a random number"/><Variable Name="RoundNum" Description="Returns the number of rounds for the specific client"/><Variable Name="Seconds()" Description="Current seconds (0-59)"/><Variable Name="ThisYear()" Description="Current Year (4-digit, e.g. 2001)"/><Variable Name="Time()" Description="Time in ms since 1/1/1970"/><Variable Name="TodaysDate()" Description="Current date (1-31)"/><Variable Name="TodaysDay()" Description="Current Day (0-6, 0==Sunday)"/><Variable Name="TodaysMonth()" Description="Current Month (0-11)"/><Variable Name="VCUniqueID()" Description="Returns a string unique to this VC"/></System><UserDefined Type="Array" ReadOnly="0"/><InputParameters Type="Array" ReadOnly="0"/><OutputParameters Type="Array" ReadOnly="0"/><GlobalInputFilesParams Type="Array" ReadOnly="0"/><FileCounter>0</FileCounter></PropertyPage></Properties><JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="0"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:5 *****/
+function check_footer_link()
+{
+	url = wlHtml.GetUri()
+  	index = document.links.length - 1
+  	
+ 	if (index &lt; 0)
+		ErrorMessage(url + " did not load")
+  	
+ 	if (index &gt;= 0)
+ 		if (document.links[index].href != footer_link)
+ 			ErrorMessage(url + " did not load")
+}
+ 
+ // END WLIDE</NodeScript><NodeID Visible="0">5</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="1"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:6 *****/
+function check_url(expected)
+ {
+ 	url = wlHtml.GetUri()
+	InfoMessage(url + " RoundNum: " + RoundNum+ " ClientNum: " + ClientNum)
+	if (url != expected)	 
+		ErrorMessage(expected + " is expected but " + url + " loaded.")
+ }
+ // END WLIDE</NodeScript><NodeID Visible="0">6</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="2"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:7 *****/
+try{
+ // END WLIDE</NodeScript><NodeID Visible="0">7</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="3"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://staging.billingboss.com/</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://staging.billingboss.com/ - ID:4 *****/ 
+wlHttp.Get(hostName)
+check_footer_link()
+check_url('/')
+ // END WLIDE</NodeScript><NodeID Visible="0">4</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://ec2-75-101-213-86.compute-1.amazonaws.com/ HTTP/1.0" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727)" Type="Request"/><HeaderItem Text="Host: ec2-75-101-213-86.compute-1.amazonaws.com" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="HTTP/1.1 200 OK" Type="Response"><HeaderItem Text="Date: Mon, 21 Apr 2008 20:22:48 GMT" Type="Response"/><HeaderItem Text="Server: Mongrel 1.1.4" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.00594" Type="Response"/><HeaderItem Text="ETag: &quot;e207904b0a3d657dfa912f874c034179&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 9541" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7BzoMY3NyZl9pZCIlMzM3MTkwMTQwNDQ4OTcxYjNmNWFiODJjYjI3YTM2%250ANmUiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7AAY6CkB1c2VkewA%253D--a47a028f2c8a819c4fb5b29ff1683cd5022814a7; path=/" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Keep-Alive: timeout=15, max=100" Type="Response"/><HeaderItem Text="Connection: Keep-Alive" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/><IsProtocolRecordedNode Visible="0">true</IsProtocolRecordedNode><TestTalkMessage Visible="0">27 \'20 $PROXYREQUESTHEADERS \'627 11 \'16 $AATHEADERVALUE0 \'164 image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */* \'16 $AATHEADERVALUE2 \'82 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727) \'14 $AATHEADERKEY1 \'15 Accept-Language \'16 $AATHEADERVALUE4 \'10 Keep-Alive \'14 $AATHEADERKEY0 \'6 Accept \'14 $AATHEADERKEY3 \'4 Host \'16 $AATHEADERVALUE1 \'5 en-us \'14 $AATHEADERKEY2 \'10 User-Agent \'16 $AATHEADERVALUE3 \'41 ec2-75-101-213-86.compute-1.amazonaws.com \'13 $NUMOFHEADERS \'1 5 \'14 $AATHEADERKEY4 \'16 Proxy-Connection  \'15 $PROXYPROXYNAME \'0  \'25 $PROXYPROXYUSESAMESSLNAME \'4 true \'16 $PROTOCOLMESSAGE \'3 Yes \'12 $PROXYSTATUS \'15 HTTP/1.1 200 OK \'16 $REDIRECTIONPATH \'0  \'16 $PROXYNTUSERNAME \'0  \'19 $PROXYRQSTFIRSTLINE \'62 GET http://ec2-75-101-213-86.compute-1.amazonaws.com/ HTTP/1.0 \'14 $PROXYUSERNAME \'0  \'17 $PROXYCONTENTTYPE \'0  \'18 $PROXYPROXYSSLNAME \'0  \'20 $RESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'20 $PROXYPOSTDATALENGTH \'1 0 \'22 $PROXYPROXYSSLPASSWORD \'0  \'13 $RESPONSEBODY \'0  \'10 $SESSIONID \'10 1208809313 \'16 $PROXYNTPASSWORD \'0  \'22 $PROXYPROXYSSLUSERNAME \'0  \'25 $PROXYRESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'19 $PROXYPROXYUSERNAME \'0  \'5 $FROM \'45 LGCommunicator2448Sender12@10.152.19.130:9000 \'12 $PROXYMETHOD \'3 GET \'9 $PROXYURL \'49 http://ec2-75-101-213-86.compute-1.amazonaws.com/ \'14 $PROXYPOSTDATA \'0  \'14 $PROXYPASSWORD \'0  \'19 $PROXYPROXYPASSWORD \'0  \'18 $PROXYREPLYHEADERS \'1142 25 \'14 $AATHEADERKEY7 \'14 Content-Length \'16 $AATHEADERVALUE7 \'4 9541 \'14 $AATHEADERKEY6 \'12 Content-Type \'16 $AATHEADERVALUE9 \'15 Accept-Encoding \'16 $AATHEADERVALUE0 \'29 Mon, 21 Apr 2008 20:22:48 GMT \'16 $AATHEADERVALUE2 \'6 200 OK \'14 $AATHEADERKEY1 \'6 Server \'16 $AATHEADERVALUE4 \'34 \"e207904b0a3d657dfa912f874c034179\" \'15 $AATHEADERKEY11 \'10 Connection \'17 $AATHEADERVALUE11 \'10 Keep-Alive \'14 $AATHEADERKEY0 \'4 Date \'16 $AATHEADERVALUE6 \'24 text/html; charset=utf-8 \'15 $AATHEADERKEY10 \'10 Keep-Alive \'17 $AATHEADERVALUE10 \'19 timeout=15, max=100 \'14 $AATHEADERKEY3 \'9 X-Runtime \'16 $AATHEADERVALUE8 \'221 _tornado_session=BAh7BzoMY3NyZl9pZCIlMzM3MTkwMTQwNDQ4OTcxYjNmNWFiODJjYjI3YTM2%250ANmUiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7AAY6CkB1c2VkewA%253D--a47a028f2c8a819c4fb5b29ff1683cd5022814a7; path=/ \'16 $AATHEADERVALUE1 \'13 Mongrel 1.1.4 \'14 $AATHEADERKEY2 \'6 Status \'14 $AATHEADERKEY9 \'4 Vary \'16 $AATHEADERVALUE3 \'7 0.00594 \'14 $AATHEADERKEY5 \'13 Cache-Control \'14 $AATHEADERKEY8 \'10 Set-Cookie \'13 $NUMOFHEADERS \'2 12 \'14 $AATHEADERKEY4 \'4 ETag \'16 $AATHEADERVALUE5 \'35 private, max-age=0, must-revalidate  </TestTalkMessage><RecordingCallback Visible="0">OnGet</RecordingCallback><ContentType Visible="0"></ContentType></PropertyPage><preview domid="2"/></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="4"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:8 *****/
+}
+
+catch(e){
+	myException = new wlException(e,"1_HomePage threw an exception")
+ 	
+	//things to do in case of error
+	if (myException.GetSeverity() == WLError) {
+		// Do one set of Error activities
+		myException.ReportLog()
+		throw myException
+	}
+	else {
+		// Do a different set of Severe Error activities
+		throw myException
+	}
+}
+ // END WLIDE</NodeScript><NodeID Visible="0">8</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+		</Agenda>
+	</VisualAgenda><BreakPointsMap/></Project>

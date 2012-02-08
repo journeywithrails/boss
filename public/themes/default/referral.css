@@ -1,0 +1,20 @@
+.error_in_cell input{
+	border-color: #FF0000;
+	border-width: 2px;
+} 
+.referrer_row{
+	background-color: #A7C520;
+}
+
+#invitations tr td, #invitations tr th{
+	padding-left: 15px;
+}
+
+input{
+	width: 200px !important
+}
+
+.form_button {
+	background-color: transparent !important;
+	border: none !important;
+}

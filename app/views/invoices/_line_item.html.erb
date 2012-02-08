@@ -1,0 +1,41 @@
+<% fields_for "invoice[line_items_attributes][]", line_item do |line_item_fields| -%>
+<%  row_id ||= ""
+    row_id = row_id.blank? ? db_agnostic_id('line_item', line_item) : row_id
+    line_item.row_id = row_id
+    row_id_str = "id=\"#{row_id}\""  -%>
+		
+
+  <tr class="child_item" <%= row_id_str -%>>
+	<% if @invoice.tax_1 && !@invoice.tax_1.name.blank? %>
+	<td style="display: none">
+    <%= line_item_fields.text_field :tax_1_enabled, :index => nil, :size=>"5", :style => "", :class=>'tax_1_value' %>
+	</td>
+	<% end %>
+	<% if @invoice.tax_2 && !@invoice.tax_2.name.blank? %>
+	<td style="display: none"  >
+	  <%= line_item_fields.text_field :tax_2_enabled, :index => nil, :size=>"5", :style => "", :class=>'tax_2_value' %>
+	</td>
+	<% end %>
+    <td class="quantity number_input"><%= line_item_fields.text_field :quantity, :index => nil, :size=>"0", :value => number_to_currency(line_item.quantity) || 1 %></td>
+	  <td class="descrip"><%= line_item_fields.text_area :description, :index => nil,:size=>"0" %></td>
+    <td class="price number_input"><%= line_item_fields.text_field :price, :index => nil, :size=>"0", :value => number_to_currency(line_item.price) %></td>
+    <td class="subtotal"><div><%=(testable_field "subtotal", format_amount(line_item.subtotal)).untaint %></div></td>
+	<% if @invoice.tax_1 && !@invoice.tax_1.name.blank? %>
+    <td class="tax_1_checkbox cover"><%= check_box_tag "cover_tax_1", 'tax_1', line_item.tax_1_enabled, {:id => nil, :class => "cover_input", :size=>"5", :style => show_if_tax_enabled(@invoice, 'tax_1', "table-cell")} %></td>
+	<% end %>
+	<% if @invoice.tax_2 && !@invoice.tax_2.name.blank? %>
+	<td class="tax_2_checkbox cover"><%= check_box_tag "cover_tax_2", 'tax_2',line_item.tax_2_enabled, {:id => nil, :class => "cover_input", :size=>"5", :style => show_if_tax_enabled(@invoice, 'tax_2', "table-cell")} %></td>
+	<% end %>
+	<td class="remove">
+      <% if line_item.new_record? %>
+        <div><%= link_to_function localized_image_tag("/themes/#{user_style}/images/deleteitem.gif", :alt => _("delete line")) , "$(this).up('.child_item').remove();Sage.update_invoice_totals()", :name => 'remove' %></div>
+      <% else -%>
+        <div><%= link_to_function localized_image_tag("/themes/#{user_style}/images/deleteitem.gif", :alt => _("delete line")), "Sage.mark_for_destroy(this);Sage.update_invoice_totals()", :name => 'remove' %></div>
+      <% end -%>
+      <%= line_item_fields.hidden_field :row_id, :index => nil, :class => 'row_id' %>
+      <%= line_item_fields.hidden_field :should_destroy, :index => nil, :class => 'should_destroy' %>
+      <%# I was not able to find any way to get id to not return nil. If you use alias method to override LineItem#id, it just doesn't work %>
+      <%= hidden_field_tag 'invoice[line_items_attributes][][id]', line_item.id.nil? ? '' : line_item.id, :index => nil %> 
+    </td>
+  </tr>
+<% end %>

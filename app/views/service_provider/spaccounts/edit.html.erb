@@ -1,0 +1,86 @@
+<h1>Editing account</h1>
+
+<%= error_messages_for :spaccount %>
+
+<% form_for(:spaccount, :url => service_provider_spaccounts_path) do |f| %>
+  <p>
+    <b>Account name</b><br />
+    <%= f.text_field :spaccount_name %>
+  </p>
+  
+  <p>
+    <b>Company</b><br />
+    <%= f.text_field :company %>
+  </p>
+
+  <p>
+    <b>First name</b><br />
+    <%= f.text_field :first_name %>
+  </p>
+
+  <p>
+    <b>Last name</b><br />
+    <%= f.text_field :last_name %>
+  </p>
+
+  <p>
+    <b>Address</b><br />
+    <%= f.text_field :address %>
+  </p>
+
+  <p>
+    <b>City</b><br />
+    <%= f.text_field :city %>
+  </p>
+
+  <p>
+    <b>Province</b><br />
+    <%= f.text_field :state_prov %>
+  </p>
+
+  <p>
+    <b>Postal/ZIP code</b><br />
+    <%= f.text_field :zip_postal %>
+  </p>
+  
+  <p>
+    <b>Country</b><br />
+    <%= f.text_field :country %>
+  </p>
+
+  <p>
+    <b>Email</b><br />
+    <%= f.text_field :email %>
+  </p>
+  
+  <p>
+    <b>Phone</b><br />
+    <%= f.text_field :phone %>
+  </p>
+  
+  <p>
+    <b>Fax</b><br />
+    <%= f.text_field :fax %>
+  </p>
+  
+  <p>
+    <b>Status</b><br />
+    <%= f.text_field :status %>
+  </p>  
+  
+  <p>
+    <b>Comment</b><br />
+    <%= f.text_field :comment %>
+  </p>  
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<p><%= link_to 'Service Provider Subscriptions', service_provider_spaccount_spsubscriptions_path(@spaccount) %></p>
+
+<p>
+<%= link_to 'Show', service_provider_spaccount_path(@spaccount) %> |
+<%= link_to 'List', service_provider_spaccounts_path %>
+</p>

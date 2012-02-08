@@ -1,0 +1,3 @@
+User comment from <%=@user_email%>:
+
+<%=@user_msg%>

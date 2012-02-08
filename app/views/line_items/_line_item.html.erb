@@ -1,0 +1,8 @@
+  <tr>
+    <td><%=h line_item.position %></td>
+    <td><%=h line_item.unit %></td>
+    <td><%=h line_item.description %></td>
+	<td><%= link_to_remote _('Add another item'), :url => invoice_line_items_path(:invoice_id => @invoice, :after => line_item), :method => :post %></td>
+    <td><%= link_to _('Edit'), edit_invoice_line_item_path(:invoice_id => @invoice, :id => line_item) %></td>
+    <td><%= link_to_remote _('Destroy'), :url => invoice_line_item_path(:invoice_id => @invoice, :id => line_item), :confirm => _('Are you sure?'), :method => :delete %></td>
+  </tr>

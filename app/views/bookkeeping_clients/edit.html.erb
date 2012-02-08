@@ -1,0 +1,12 @@
+<h1><%= _('Editing bookkeeping_clients') %></h1>
+
+<%= error_messages_for :bookkeeping_clients %>
+
+<% form_for(@bookkeeping_client) do |f| %>
+  <p>
+    <%= f.submit _("Save") %>
+  </p>
+<% end %>
+
+<%= link_to _('Show'), @bookkeeping_client %> |
+<%= link_to _('Back'), bookkeeping_clients_path %>

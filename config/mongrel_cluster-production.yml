@@ -1,0 +1,5 @@
+---
+port: 8000
+pid_file: log/mongrel.pid
+servers: 8
+environment: production

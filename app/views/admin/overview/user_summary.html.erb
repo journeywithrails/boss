@@ -1,0 +1,83 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+                    <h1>Users summary</h1>
+                    <br/>
+
+                    <%# RADAR fix this route link_to _('Save as CSV file'), admin_overview_user_summary_path('user_summary', :format => 'csv')  %>
+                    <a href="/admin/overview/user_summary?format=csv"><%=  _('Save as CSV file') %></a>
+                    <br/><br/>
+
+                    <table border="1" cellpadding="2" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <td>Invoices</td>
+                          <td>Email</td>
+                          <td>Type</td>
+                          <td>Signup</td>
+                          <td>Last Invoice</td>
+                          <td>Mail opt-in</td>
+                          <td>Bogus</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% AdminManager.users_summary.each do |c| %>
+                          <tr>
+                            <td align="right">
+                              <%= c[1] %>
+                            </td>
+                            <td>
+                              <a href="/admin/overview/user/<%= c[0] %>"><%= h c[2] %></a>
+                            </td>
+                            <td>
+                              <%= h c[3] %>
+                            </td>
+                            <td>
+                              <%= c[4] %>
+                            </td>
+                            <td>
+                              <%= c[5] %>
+                            </td>
+                            <td align="center">
+                              <%= c[6] %>
+                            </td>
+                            <td align="center">
+                              <%= link_to_remote c[7] == "1" ? "true" : "false", 
+                                                 :url => {:action => 'toggle_bogus_user', :id => c[0] }, 
+                                                 :html => {:id => "user_"+c[0] },
+                                                 :before => "document.getElementById('user_#{c[0]}').disabled = 1;",
+                                                 :success => "var xax = document.getElementById('user_#{c[0]}'); if (xax.innerHTML == 'true') { xax.innerHTML = 'false' } else { xax.innerHTML = 'true'; } document.getElementById('user_#{c[0]}').disabled = 0; ", 
+                                                 :failure => "document.getElementById('user_#{c[0]}').disabled = 0; alert('HTTP Error ' + request.status + '!');" %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+		<% end %>
+		<%= render_inner_layout %>  

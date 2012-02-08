@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+FILE=billingboss_production_`date +%Y_%m_%d-%H%M`.sql.gz
+cd /var/www/apps/billingboss/backup
+/opt/csw/mysql5/bin/mysqldump -ubillingboss_production -pakxG48ad4dahthDy --opt billingboss_production | /usr/bin/gzip > $FILE
+chmod og-r $FILE

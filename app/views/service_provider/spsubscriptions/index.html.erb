@@ -1,0 +1,35 @@
+<h1>Subscriptions for <%= @spaccount.spaccount_name %> </h1>
+
+<p>
+
+</p>
+
+<table>
+  <tr>
+    <th>Service Code</th>
+    <th>New Qty</th>
+    <th>Old Qty</th>
+    <th>Status</th>
+    <th>Comment</th>
+  </tr>
+
+  
+<% for spsubscription in @spsubscriptions %>
+  <tr>
+    <td><%=h spsubscription.service_code %></td>
+    <td><%=h spsubscription.qty %></td>
+    <td><%=h spsubscription.status %></td>
+    <td><%=h spsubscription.comment %></td>
+    <td><%= link_to 'Show', spaccount_spsubscription_url(@spaccount.id, spsubscription) %></td>
+    <td><%= link_to 'Edit...', edit_spaccount_spsubscription_url(@spaccount.id, spsubscription) %></td>
+    <td><%= link_to 'Destroy', spaccount_spsubscription_url(@spaccount.id, spsubscription), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p><%= link_to 'New subscription', new_spaccount_spsubscription_url(@spaccount.id) %></p>
+<p><%= link_to 'Back to Account', @spaccount %></p>
+
+

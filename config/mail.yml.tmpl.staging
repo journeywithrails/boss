@@ -1,0 +1,10 @@
+# where to fetch bounced emails from
+staging:
+  type: imap
+  server: imap.gmail.com
+  username: @@APP_BB_EMAIL_USERNAME@@
+  password: @@APP_BB_EMAIL_PASSWORD@@
+  ssl: SSL
+  use_login: LOGIN
+  port: 993
+  processed_folder: processed

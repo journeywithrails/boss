@@ -1,0 +1,114 @@
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>	
+	
+<% end -%>
+
+<% @content_for_infobox = capture do %>
+	<%= formatted_flash_always %>
+<% end %>
+
+<% @content_for_main = capture do %>
+
+	<div class="simply_wrapper">
+		<p class="one-line-space">
+		<%= _('	You can get quick payments from your customers by setting up an online payment processor to use with your Billing Boss account. The processor will be a method of payment available to your customers for every invoice you send through Billing Boss. This can be updated at any time from your Billing Boss settings page.') %>
+		</p>
+		<p class="one-line-space"><%= _('Currently available options are') %>:</p>
+		<div class="payment-option-box" id="sps-payment-options">
+			<h1><%= _('Sage Payment Solutions') %></h1>
+			<p class="one-line-space"><%= _('[Sage Payment Solutions description]') %></p>
+			<a href="#" id="sps-toggle-link"><%= _('[+] I want to use Sage Payment Solutions') %></a>
+			<script>
+				Event.observe('sps-toggle-link', 'click', function(){
+					$('sps-outer').toggle();
+				});
+			</script>
+			<div class="yui-g" id="sps-outer" style="display:none;">
+				<% in_simply_rounded_box(:label=>'sps-signup', :content_style=>'height:115px;',
+							:first=>true, :caption=>_('I want to sign up for an SPS account')) do -%>
+					<p class="small_simply_text one-line-space">
+			    <%= _("If you don't have a Sage Payment Solutions account...") %>
+					</p>
+					<a id="sps-go-there-now-link" href="/sage_vcheck_help.html" onclick="window.open(this.href);return false;"><%= _('Go There To Sign Up Now') %></a>
+					<p class="small_simply_text one-line-space">
+						<%= _("Once you have your account, go to your #{link_to 'Billing Boss settings', profiles_path} to enter your Sage Payment Solutions information and activate it as a customer payment method.") %>
+					</p>
+				<% end -%>
+				<% in_simply_rounded_box(:label=>'sps-credentials', :content_style=>'height:115px;',
+				 	:caption=>'I already have a SPS account') do -%>
+						<% form_for(:profile, @profile, :url => { :controller => 'user_gateways', :action => "update" }, :html => { :method => :put, :id =>'sps-form' }) do |f| %>
+							<%= hidden_field_tag 'user_gateway[gateway_name]', SageGateway.gateway_name-%>
+              <%= render :partial => 'user_gateways/sage_vcheck_form', :locals => {:skip_info => true, :user_gateway => SageVcheckUserGateway.new}  %>
+					    <%= submit_tag "Make This My Payment Processor" %>
+						<% end -%>
+				<% end -%>
+			</div>
+		</div>
+
+		<div class="payment-option-box" id="beanstream-payment-options">
+			<h1>Beanstream</h1>
+			<p class="one-line-space"><%= _('[Beanstream description]') %></p>
+			<a href="#" id="beanstream-toggle-link"><%= _('[+] I want to use Beanstream') %></a>
+			<script>
+				Event.observe('beanstream-toggle-link', 'click', function(){
+					$('beanstream-outer').toggle();
+				});
+			</script>
+			<div class="yui-g" id="beanstream-outer" style="display:none;">
+				<% in_simply_rounded_box(:label=>'beanstream-signup', :content_style=>'height:125px;',
+							:first=>true, :caption=>_('I want to sign up for a Beanstream account')) do -%>
+					<p class="small_simply_text one-line-space">
+			    <%= _("If you don't have a Beanstream account...") %>
+					</p>
+					<a id="beanstream-go-there-now-link" href="/beanstream_help.html" onclick="window.open(this.href);return false;"><%= _("Go There To Sign Up Now") %></a>
+					<p class="small_simply_text one-line-space">
+						<%= _("Once you have your account, go to your #{link_to 'Billing Boss settings', profiles_path} to enter your Beanstream information and activate it as a customer payment method.") %>
+					</p>
+				<% end -%>
+				<% in_simply_rounded_box(:label=>'beanstream-credentials', :content_style=>'height:125px;',
+				 	:caption=>_('I already have a Beanstream account')) do -%>
+						<% form_for(:profile, @profile, :url => { :controller => 'user_gateways', :action => "update" }, :html => { :method => :put, :id =>'beanstream-form' }) do |f| %>
+							<%= hidden_field_tag 'user_gateway[gateway_name]', BeanStreamGateway.gateway_name -%>
+              <%= render :partial => 'user_gateways/beanstream_form', :locals => {:skip_info => true, :user_gateway => BeanStreamUserGateway.new }  %>
+					    <%= submit_tag _("Make This My Payment Processor") %>
+						<% end -%>
+				<% end -%>
+			</div>
+		</div>
+
+		<div class="payment-option-box" id="paypal-payment-options">
+			<h1>PayPal</h1>
+			<p class="one-line-space"><%= _('[PayPal description]') %></p>
+			<a href="#" id="paypal-toggle-link"><%= _('[+] I want to use PayPal') %></a>
+			<script>
+				Event.observe('paypal-toggle-link', 'click', function(){
+					$('paypal-outer').toggle();
+				});
+			</script>
+			<div class="yui-g" id="paypal-outer" style="display:none;">
+				<% in_simply_rounded_box(:label=>'paypal-signup', :content_style=>'height:110px;',
+							:first=>true, :caption=>_('I want to sign up for an PayPal account')) do -%>
+					<p class="small_simply_text one-line-space">
+			    <%= _("If you don't have a PayPal account...") %>
+					</p>
+					<a id="paypal-go-there-now-link" href="/paypal_help.html" onclick="window.open(this.href);return false;">Go There To Sign Up Now</a>
+					<p class="small_simply_text one-line-space">
+						<%= _("Once you have your account, go to your #{link_to 'Billing Boss settings', profiles_path} to enter your PayPal information and activate it as a customer payment method.") %>
+					</p>
+				<% end -%>
+				<% in_simply_rounded_box(:label=>'paypal-credentials', :content_style=>'height:110px;',
+				 	:caption=>_('I already have a PayPal account')) do -%>
+						<% form_for(:profile, @profile, :url => { :controller => 'user_gateways', :action => "update" }, :html => { :method => :put, :id =>'paypal-form' }) do |f| %>
+							<%= hidden_field_tag 'user_gateway[gateway_name]', PaypalGateway.gateway_name-%>
+              <%= render :partial => 'user_gateways/paypal_form', :locals => {:skip_info => true, :user_gateway => PaypalExpressUserGateway.new }  %>
+					    <%= submit_tag _("Make This My Payment Processor") %>
+						<% end -%>
+				<% end -%>
+			</div>
+		</div>
+
+
+  </div>
+<% end %>
+<%= render_inner_layout('norounded') %>

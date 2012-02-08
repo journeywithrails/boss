@@ -1,0 +1,226 @@
+<% content_for "stylesheets" do%>
+
+<% end %>
+
+<% content_for "javascripts" do%>
+
+<% end %>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		<h1><%= _("Edit Inv. %{num}") % { :num => @invoice.unique } %></h1>
+		<%= link_to _("Cancel"), "/invoices/#{@invoice.id}", :id => "backButton" %>
+		<%= link_to_function _("Save"), "Sage.dirty_page = false;$('invoice_form').submit()", :id => "save_button", :class => "nav Action" %>
+	</div>
+<% end %>
+
+<% @content_for_main_top = capture do %>
+<% end %>
+
+<% form_for(:invoice, @invoice, :url => invoice_path(@invoice), :html => {:method => 'put', :id => 'invoice_form' }) do |f| %>
+	<% @content_for_lnav = capture do %>
+	<% end %>
+			
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+
+	<% @content_for_infobox = capture do %>
+	<% end %>
+
+	<% @content_for_main = capture do %>
+
+		<div id="secondary_header" ><table style=" width: 100%; font-size: 12px !important;">
+			<tr>
+				<td id="invoice_customer_button_cell" class="menu_button enabled_menu_button_small" style="width: 20%">
+					<a id="invoice_customer_button" type="invoice_customer" onclick="Sage.switch_to_tab(this);"><%= _("Customer") %></a>
+				</td>
+				<td id="invoice_terms_button_cell" class="menu_button" style="width: 20%">
+					<a id="invoice_terms_button" type="invoice_terms" onclick="Sage.switch_to_tab(this);"><%= _("Terms") %></a>
+				</td>
+				<td id="invoice_items_button_cell" class="menu_button" style="width: 20%">
+					<a id="invoice_items_button" type="invoice_items" onclick="Sage.switch_to_tab(this);"><%= _("Items") %></a>
+				</td>
+				<td id="invoice_charges_button_cell" class="menu_button" style="width: 20%">
+					<a id="invoice_charges_button" type="invoice_charges" onclick="Sage.switch_to_tab(this);"><%= _("Charges") %></a>
+				</td>
+				<td id="invoice_summary_button_cell" class="menu_button" style="width: 20%">
+					<a id="invoice_summary_button" type="invoice_summary" onclick="Sage.switch_to_tab(this);"><%= _("Summary") %></a>
+				</td>
+			</tr>
+		</table>
+		</div>
+	
+		<%#fixme: braindead way of finding whether flash has errors or just empty placeholder %>
+		<% unless (formatted_flash.size < 10) || formatted_flash.include?("empty") || !(error_messages_for :customer).blank? %>
+		    <ul><li><%= formatted_flash %></li></ul>
+		<% end %>
+		<% unless (error_messages_for 'customer', :object => @invoice.customer).blank? %>
+			<ul><li><%= error_messages_for 'customer', :object => @invoice.customer %></li></ul>
+		<% end %>
+		<% unless (error_messages_for :invoice).blank? %>
+			<ul><li><%= error_messages_for :invoice %></li></ul>
+		<% end %>
+		<% if taken_auto(@invoice) != "" %>
+			<ul id='unique_taken'><li><%= _("Invoice unique number has already been taken.") %></li></ul>
+		<% end%>
+
+		<%= render :partial => "/invoices/mobile/form", :object => @invoice, :locals => {:f => f} %>
+	<% end %>
+
+<%= render_inner_mobile_layout("nomenu") %>
+<% end %>
+
+<% content_for "bottom_javascripts" do -%>
+
+  <%= db_agnostic_id_js('line_item') %>
+
+  <% unless current_user.customers.empty? -%>
+    <%= observe_field("invoice_customer_id", {:function => "Sage.toggle_customer()"}) %>
+
+    <script type="text/javascript">
+      // toggle_customer will replace on the on_the_fly_attributes div
+      // with customer address and contact data
+      // it will also show or hide the edit-button depending
+      // if a customer is selected
+      Sage.toggle_customer = function()
+      {
+		if ($('invoice_customer_id').value != "")
+		{
+			$('on_the_fly_attributes').innerHTML = "<%= is_loading_string %>";
+			<%= remote_function(
+		      :url => { :controller => 'invoices', :action => 'toggle_customer' },
+		      :with => "'&selected=' + $('invoice_customer_id').value" ) %> ;
+		}
+      };
+    </script>
+
+  <% end -%>
+
+  <script type="text/javascript">
+		Sage.switch_to_tab = function(caller) {
+			var sections = ["invoice_customer", "invoice_terms", "invoice_items", "invoice_charges", "invoice_summary"];
+			
+			sections.each(
+				function(str){
+					$(str).hide();
+						$(str + "_button").up("td").removeClassName("enabled_menu_button_small");
+			    }
+			);
+			
+			$(caller.type).show();
+				$((caller.id + "_cell")).addClassName('enabled_menu_button_small');
+		};
+	
+  <%  if @invoice.new_record?
+    recalc_url = recalculate_new_invoice_path();
+  else
+    recalc_url = recalculate_invoice_path(@invoice)
+  end
+  -%>
+  
+	Sage.toggle_tax_line_items = function(){
+	    taxes = ["tax_1", "tax_2"]
+		taxes.each( 
+			function(tax){
+				var gcb = document.getElementById('invoice_' + tax + '_enabled');
+				var hd = document.getElementById(tax + '_header');
+				if (gcb.checked == 0)
+					$(hd).hide();
+				else
+					$(hd).show();
+			    
+				if (tax == "tax_1")
+					var ts = Sage.get_line_item_tax_1_fields('line_items_list');
+				else
+					var ts = Sage.get_line_item_tax_2_fields('line_items_list');
+			
+				ts.each(
+					function(t)
+					{
+						if (gcb.checked == 0)
+							t.style.display = 'none';
+						else
+							t.style.display = '';
+				    }
+				);
+			}
+		);
+	}
+
+    Sage.update_real_tax_fields = function(cover){
+      var tax_name = cover.value;
+      var real_value = cover.up('tr').down('input.'+tax_name+'_value');
+      real_value.value = cover.checked ? '1' : '0';
+    };
+
+    Sage.update_invoice_totals = function(){<%= remote_function :url => recalc_url, :with_hash => "$H(Sage.serializedFormWithoutMethod('invoice_form', true))" %>; };
+      Sage.update_invoice_totals_fields = Sage.get_line_item_mobile_watch_fields('line_items_list');
+      Sage.update_invoice_totals_fields.push($('invoice_discount_value'), $('invoice_discount_type')); // thank you ECMAScript for coming up with the brilliant idea of a push function that does not return the array.
+      Sage.update_invoice_totals_fields=Sage.update_invoice_totals_fields.concat(Sage.get_tax_rate_watch_fields());
+	  Sage.update_invoice_totals_fields.each(
+      function(elm){
+        Event.observe(elm, 'change', Sage.update_invoice_totals);
+      }
+    );
+      Sage.get_tax_checkbox_watch_fields().each(
+      function(elm){
+        Event.observe(elm, 'click', Sage.toggle_tax_line_items);
+        Event.observe(elm, 'click', Sage.update_invoice_totals);
+      }
+    );
+      Sage.get_cover_watch_fields('line_items_list').each(
+      function(elm){
+
+        Event.observe(elm, 'click', function(elm){Sage.update_real_tax_fields(Event.element(elm))});
+
+      }
+    );
+      Ext.onReady(function(){
+        var trigger = Ext.get('unique_taken');
+        if (trigger) {
+
+          win = new Ext.Window({
+            el: 'auto-number-taken',
+            layout: 'fit',
+            width: 350,
+            height: 120,
+            closeAction: 'hide',
+            plain: true,
+
+            items: new Ext.Panel({
+              el: 'auto-number-taken-fields',
+              waitMsgTarget: true,
+              autoHeight: true,
+              border: false,
+              frame: false,
+              header: false
+            }),
+            buttons: [{
+                text: 'Yes',
+                handler: function(){
+                  // Set invoice unique
+                  unique = $('invoice_unique');
+                  unique.value = $('available_auto').innerHTML;
+                  // submit form
+                  f = $('invoice_form');
+                  f.submit();
+                  //win.hide();
+                }
+              }, {
+                text: 'No',
+                handler: function(){
+                  $('invoice_unique').value = "";
+                  win.hide();
+                }
+              }]
+          });
+
+          win.show();
+        };});
+  </script>
+  <img src='/images/loading.gif' style="display: none">
+
+  <% end %>
+  <% content_for "bottom_javascripts" do %>
+    <%= protect_form('invoice_form') %>
+  <% end %>

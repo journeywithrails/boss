@@ -1,0 +1,41 @@
+<table border="0" width="580" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" style="font-family: Arial; font-size: 12pt; color: #493F0B;">
+	<tr>
+		<td>&nbsp;</td>
+		<td style="padding-bottom: 20px">
+			<%= localized_image_tag("#{::AppConfig.host}/images/email/email_logo.gif", :border => "0", :width => "175", :height => "90") %>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td style="padding-bottom: 20px">
+    	<p>
+			<%= _("%{name} sent you this e-mail to tell you about %{link} – a FREE online invoicing tool designed for small businesses and freelancers to quickly create, send, and track invoices and payments.") % {:name => @referring_name, :link => link_to(_("Billing Boss"), ::AppConfig.host)} %>
+			<br/><br/>
+			<%= _("With Billing Boss you can:") %>
+			<br/><br/>
+			<ul>
+				<li>
+					<%= _("Take control of your billing in minutes – quick and easy set up.") %>
+				</li>
+				<li>
+					<%= _("Get paid faster – receive online payments immediately.") %>
+				</li>
+				<li>
+					<% share_data = s_("share_data_link|Share data") %>
+					<%= _("%{share_data_link} with your accountant or bookkeeper securely – no sending files back and forth!") % 
+					{:share_data_link => "<a href='#{@bookkeeper_url}>#{share_data}</a>"}%>
+				</li>
+			</ul>
+			<br/><br/>
+			<% video_link_text = s_("video_link|2-minute video tour") %>
+			<%= _("It's so simple that you can create and send your first invoice within minutes. Watch our %{video_link} to see how you can get organized and save time.") % {:video_link => "<a href='#{@video_tour_url}'>#{video_link_text}</a>"} %> 
+			<br/><br/>
+			<a href='<%= signup_url %>'><%= _("Get started now >>") %></a>
+		</p>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<br/>
+<p><%= _("Your privacy is very important to us. You received this message because your friend, %{email}, sent you an invitation. This is the only e-mail you will receive from us unless you already are a Billing Boss Email Updates subscriber or if you opt-in to receive further communications. Your email addresses will not be sold or provided to a third party.") % {:email => @referring_email} %></p>

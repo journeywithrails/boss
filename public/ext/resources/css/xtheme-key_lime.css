@@ -1,0 +1,100 @@
+/*
+ * Ext JS Library 2.0 Alpha 1
+ * Copyright(c) 2006-2007, Ext JS, LLC.
+ *
+ * @license LGPL
+ * @author Kemal Tunador <tunador@madrabaz.com>
+ */
+
+.x-grid3-hd-row td{line-height:15px;vertical-align:middle;border-left:1px solid #eee;border-right:1px solid #e0eda8;}
+.x-grid3-row{cursor:default;border:1px solid #e0eda8;border-top-color:#fff;width:100%;}
+.x-grid3-header-pop{border-left:1px solid #e0eda8;float:right;clear:none;}
+td.x-grid3-hd-over,td.sort-desc,td.sort-asc,td.x-grid3-hd-menu-open{border-left:1px solid #e0eda8;border-right:1px solid #e0eda8;}
+.x-panel-header{overflow:hidden;zoom:1;color:#493f0b;font:bold 11px tahoma,arial,verdana,sans-serif;padding:5px 3px 4px 5px;border:1px solid #a7C520;line-height:15px;background:transparent url(../images/key_lime/panel/white-top-bottom.gif) repeat-x 0 -1px;}
+.x-panel-body{border:1px solid #a7c520;border-top:0 none;overflow:hidden;background:white;position:relative;}
+.x-grid3-hd-btn{display:none;position:absolute;width:14px;background:#c3daf9 url(../images/key_lime/grid/grid3-hd-btn.gif) no-repeat left center;right:0;top:0;z-index:2;cursor:pointer;}
+.x-grid3-header{background:#f9f9f9 url(../images/key_lime/grid/grid3-hrow.gif) repeat-x 0 bottom;cursor:default;zoom:1;padding:1px 0 0 0;}
+td.x-grid3-hd-over .x-grid3-hd-inner,td.sort-desc .x-grid3-hd-inner,td.sort-asc .x-grid3-hd-inner,td.x-grid3-hd-menu-open .x-grid3-hd-inner{background:#ebf3fd url(../images/key_lime/grid/grid3-hrow-over.gif) repeat-x left bottom;}
+.x-dd-drag-proxy .x-grid3-hd-inner{background:#ebf3fd url(../images/key_lime/grid/grid3-hrow-over.gif) repeat-x left bottom;width:120px;padding:3px;border:1px solid #aaccf6;overflow:hidden;}
+.x-grid3-hd-btn{display:none;position:absolute;width:14px;background:#c3daf9 url(../images/key_lime/grid/grid3-hd-btn.gif) no-repeat left center;right:0;top:0;z-index:2;cursor:pointer;}
+.sort-desc .x-grid3-sort-icon{background-image:url(../images/key_lime/grid/sort_desc.gif);display:inline;}
+.x-tool{overflow:hidden;width:15px;height:15px;float:right;cursor:pointer;background:transparent url(../images/key_lime/panel/tool-sprites.gif) no-repeat;margin-left:2px;}
+
+/* The following four rules should not be necessary because they are already in ext-all.css.
+  But browsers are buggy. */
+.x-tool-toggle{background-position:0 -60px;}
+.x-tool-toggle-over{background-position:-15px -60px;}
+.x-panel-collapsed .x-tool-toggle{background-position:0 -75px;}
+.x-panel-collapsed .x-tool-toggle-over{background-position:-15px -75px;}
+
+
+/* Window */
+
+.x-window-proxy {
+    background:#363636;
+    border-color:#92c95d;
+}
+
+.x-window-tl .x-window-header {
+    color:#000000;
+}
+.x-window-tc {
+	background-image:url(../images/key_lime/window/top-bottom.png);
+}
+.x-window-tl {
+	background-image:url(../images/key_lime/window/left-corners.png);
+}
+.x-window-tr {
+	background-image:url(../images/key_lime/window/right-corners.png);
+}
+.x-window-bc {
+	background-image:url(../images/key_lime/window/top-bottom.png);
+}
+.x-window-bl {
+	background-image:url(../images/key_lime/window/left-corners.png);
+}
+.x-window-br {
+	background-image:url(../images/key_lime/window/right-corners.png);
+}
+.x-window-mc {
+    border:1px solid #76b23d;
+    background:#b8df92;
+}
+
+.x-window-ml {
+	background-image:url(../images/key_lime/window/left-right.png);
+}
+.x-window-mr {
+	background-image:url(../images/key_lime/window/left-right.png);
+}
+.x-panel-ghost .x-window-tl {
+    border-color:#92c95d;
+}
+.x-panel-collapsed .x-window-tl {
+    border-color:#92c95d;
+}
+
+.x-window-plain .x-window-mc {
+    background: #c3e1a5; /*#92c65e;*/
+    border-left:1px solid #6ca634;
+    border-top:1px solid #6ca634;
+    border-bottom:1px solid #85c447;
+    border-right:1px solid #85c447;
+}
+
+.x-window-plain .x-window-body {
+    border-left:1px solid #93c95e;
+    border-top:1px solid #93c95e;
+    border-bottom:1px solid #76b23d;
+    border-right:1px solid #76b23d;
+    background:white !important;
+}
+
+body.x-body-masked .x-window-mc, body.x-body-masked .x-window-plain .x-window-mc {
+    background-color: #92c65e;
+}
+
+.x-toolbar{
+	border-color:#9acd68;
+    background:#b4da8f url(../images/key_lime/toolbar/bg.gif) repeat-x top left;
+}

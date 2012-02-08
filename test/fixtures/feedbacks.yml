@@ -1,0 +1,81 @@
+open_owned_by_feedback_admin:
+  id: 1
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: Open
+  owned_by: 18
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+in_review_owned_by_feedback_admin:
+  id: 2
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: In review
+  owned_by: 18
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+closed_owned_by_feedback_admin:
+  id: 3
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: Closed
+  owned_by: 18
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+open_owned_by_nobody:
+  id: 4
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: Open
+  owned_by: 0
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+in_review_owned_by_nobody:
+  id: 5
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: In review
+  owned_by: 0
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+closed_owned_by_nobody:
+  id: 6
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: Closed
+  owned_by: 0
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+open_owned_by_master_admin:
+  id: 7
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: Open
+  owned_by: 17
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+in_review_owned_by_master_admin:
+  id: 8
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: In review
+  owned_by: 17
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+closed_owned_by_master_admin:
+  id: 9
+  user_name: test_sender
+  user_email: ""
+  text_to_send: test text
+  response_status: Closed
+  owned_by: 17
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>

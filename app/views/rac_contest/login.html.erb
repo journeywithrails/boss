@@ -1,0 +1,118 @@
+<% login ||= nil -%>
+	<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= stylesheet_link_tag "/themes/static.css" %>	
+
+	<%= default_theme_controller("rac_contest") %>	
+
+  <%= stylesheet_ie6 %>
+<% end %>
+	
+
+
+<% content_for :header do %>	    	
+	<%= render :partial => "/rac_contest/header" %>
+<% end %>   
+	 
+
+<% content_for :main do %>
+<div id="bd">
+		<div class="yui-g">
+		
+<div style="background-color: rgb(167, 197, 32);" id="main">
+			
+			<!-- TOP CORNERS -->
+			
+				<div class="main_tr" style="height: 20px">
+						<div class="main_tl" style="height: 20px">
+
+								    
+						</div>
+				</div>
+
+			<!-- CONTENT -->
+			
+				<div id="content">
+					  <%= formatted_flash_always %>
+				      <%= error_messages_for :user %>
+								<br/>
+					<img alt="Simply fill in the form for your chance to win. (*=required fields)" src="/images/rac_contest/ttl_enter_1.gif"/>				
+
+					
+					
+					<div style="font-size: 10pt; padding-top: 5px; padding-bottom: 10px;">
+					
+
+						<%= _("If you already have a Billing Boss account, simply fill in your e-mail and password.") %>
+					</div>				
+				
+				
+					<!-- TOP CORNERS -->
+					
+						<div class="inner_tr">
+								<div class="inner_tl">
+		
+										    
+								</div>
+						</div>
+						<% secure_form_tag({:controller => 'session', :action => 'create'}, {:id => 'login_form'}) do %>
+					<!-- FORM CONTENT -->	
+						
+						<div class="content_form">
+						
+							
+							<table cellspacing="0" cellpadding="0" border="0" width="100%">
+								<tbody><tr>
+									<td width="50%">
+										<label>E-mail</label>
+										<%= text_field_tag 'login', params[:login] || login.unless_nil?('',''), :class => "text_entry"%>
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									<td width="50%">
+										<label>Password</label>
+										<%= password_field_tag 'password', nil, :class => "text_entry" %>						
+									
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										 </td>
+									<td width="20">
+										 </td>
+									<td width="50%">
+										 </td>
+								</tr>
+							</tbody></table>
+							
+							
+							
+						</div>
+						
+					<!-- BOTTOM CORNERS -->
+						<div class="inner_br">
+								<div class="inner_bl">    </div>
+						</div>					
+
+						
+						<div id="next">
+								<%= image_submit_tag '/images/rac_contest/btn_next.gif', :id => "login_button" %> 
+						</div>
+														<br/>
+											New to Billing Boss? <a href="/rac_contest/enter">Create a new account!</a>
+				<% end %>
+				</div>				
+				
+			
+			<!-- BOTTOM CORNERS -->
+				<div class="main_br" style="height: 20px">
+						<div class="main_bl" style="height: 20px">    </div>
+				</div>			
+				
+
+
+			</div>	
+	
+		</div>
+</div>
+<% end %>

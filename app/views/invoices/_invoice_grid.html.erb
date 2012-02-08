@@ -1,0 +1,202 @@
+<% 
+  url ||= "/invoices/overview"
+  url_params ||= {}
+  url_params[request_forgery_protection_token.to_s] = form_authenticity_token
+  url += "?"
+  url += url_params.collect { |k, v| "#{k}=#{v}"}.join("&")
+
+  elm ||= 'invoices_grid'
+  
+  title ||= label || 'invoices'
+  record_count ||= nil
+  unless record_count.nil?
+    title = "#{title} (#{record_count})" 
+  end
+  label = [label, _('invoices')].compact.join(' ')
+  title = title.titleize
+  
+  page_size ||= 10
+  height ||= 368
+  action_link ||= nil
+  action_dialog ||= nil
+  action_name ||= 'pay'
+
+  window_title ||= ""
+  
+  action_link = "<a class=\"grid_link\" id=\"#{elm}-{0}-action-link\" href=\"#{action_link}\">"+_(action_name)+"</a>" unless action_link.nil?
+  # the {0} is a place holder javascript style interpolation
+  action_link = "<a class=\"grid_link\" id=\"#{elm}-{0}-action-link\" href=\"#\" onclick=\"Sage.#{action_dialog}.setup({0}, Sage.invoice_grids[\\'#{elm}\\'], \\'#{window_title}\\');return false;\">"+_(action_name)+"</a>" unless action_dialog.nil?
+
+  grid_for ||= "invoice"
+-%>
+
+
+<script type="text/javascript">
+
+if (Sage.invoice_grids == undefined) Sage.invoice_grids = new Hash;
+Ext.onReady(function(){
+  
+	var reader = new Ext.data.JsonReader({
+          root: 'invoices',
+          totalProperty: 'total',
+          id: 'id'
+      },
+			 [
+      {name: 'date', type: 'date', dateFormat: 'Y/m/d'},
+//      {name: 'status'},
+      {name: 'unique'},
+      {name: 'customer_name'},
+			{name: 'currency'},
+      {name: 'customer_id'},
+      {name: 'total_amount'},
+      {name: 'amount_owing'},
+      {name: 'invoice_type_for_css'}
+      ]);
+		
+  var store = new Ext.data.Store({
+	    proxy: new Ext.data.HttpProxy({url: '<%= url %>'}),
+	    reader: reader,	        
+      remoteSort: true	
+  });
+
+  // RADAR brittleness
+    var invoice_link = function(value, meta, row, rowIndex, colIndex, ds){
+      if(colIndex == 0){
+				value = Ext.util.Format.date(value);
+      } else if (colIndex == 3 || colIndex == 4) {
+				// format value here
+      } else {
+        if(value == null){
+          value = '';
+        } else {
+          value = Sage.json_to_escaped_html( value );
+        }
+      }
+      html = '<a id="<%= elm %>-'+row.id+'-edit-link-'+colIndex+'\" href="/invoices/'+row.id + '">' + value + '</a>';
+      return html;
+    }
+
+    <% unless action_link.nil? -%>
+    var action_link = function(value, cell, row, rowIndex, colIndex, ds){
+      return String.format('<%= action_link %>', row.id);
+    }
+    <% end -%>
+    
+		
+  var cm = new Ext.grid.ColumnModel
+  	([{
+				  id: "inv-date",
+          header: "<%= _('Date') %>",
+          dataIndex: "date",
+          renderer: invoice_link,
+          sortable: true				          
+      },{
+          id: 'inv-unique',
+          header: "<%= elm == "quote_invoices_grid" ? _('Quote No.') : _('Invoice No.') %>",
+          dataIndex: 'unique',
+          renderer: invoice_link,
+          sortable: true
+      },{ 
+          id: 'cust-name',
+          header: "<%= _('Customer Name') %>",
+          dataIndex: 'customer_name',
+          renderer: invoice_link,
+          width: 260,
+          sortable: true
+      },{  
+          header: "<%= _('Total Amt.') %>",
+          dataIndex: 'total_amount',
+          sortable: true,
+          renderer: invoice_link,
+          align: "right"
+      },{  
+          header: "<%= _('Amt. Owing') %>",
+          dataIndex: 'amount_owing',
+          sortable: true,
+          renderer: invoice_link,
+          align: "right"
+      },{  
+		      header: "<%= _('Currency') %>",
+		      dataIndex: 'currency',
+		      sortable: true,
+		      renderer: invoice_link,
+		      align: "right"
+					},{
+    	      id: "inv-action",
+            header: "   ",
+            <% unless action_link.nil? -%>
+            renderer: action_link,
+            <% else %>
+            renderer: function(){return '';},
+            <% end -%>
+            sortable: false,
+            selectable: 'off',
+            align: 'center',
+            width: 88
+      }]);
+      
+  cm.defaultSortable = true;
+
+  Sage.invoice_grids['<%= elm %>'] = new Ext.grid.GridPanel({
+      el: '<%= elm %>',
+      autoHeight: true,
+      autoWidth: true,
+      autoExpandColumn: "cust-name",
+
+      collapsible: true,
+      animCollapse: false,        
+      enableColumnMove: false,
+      titleCollapse : true,
+      title: "<%= h(title) %>",
+
+      cm: cm,
+      autoFill : true,
+      trackMouseOver:true,
+      // sm: new Ext.grid.RowSelectionModel({selectRow:Ext.emptyFn}),
+      loadMask: true,
+      viewConfig: {
+          forceFit:true,
+          autoHeight:true
+      },
+      store: store,
+
+      bbar: new Ext.PagingToolbar({
+          pageSize: <%= page_size %>,
+          store: store,
+          displayInfo: true,
+          displayMsg: "<%= _("Displaying %{what} \{0\} - \{1\} of \{2\}") % {:what => label} %>",
+          emptyMsg: "<%= _("No %{what} to display") % { :what => label } %>",
+          hideMode: 'display'
+      })
+  });
+
+  Sage.invoice_grids['<%= elm %>'].getView().getRowClass = function(record, index){
+    return (record.data.invoice_type_for_css + '-row');
+  };
+
+  // render it
+  Sage.invoice_grids['<%= elm %>'].render();
+  Event.observe(window, 'resize', function(){Sage.invoice_grids['<%= elm %>'].syncSize();});
+  
+  store.on("load", function(){
+  <%= increment_ajax_counter %>
+    count = this.getTotalCount();
+    Sage.invoice_grids['<%= elm %>'].setTitle("<%= h(title) %> ("+count+")");
+    if (count <= <%= page_size %>) {
+      Sage.invoice_grids['<%= elm %>'].getBottomToolbar().hide();
+    } else {
+      Sage.invoice_grids['<%= elm %>'].getBottomToolbar().show();
+    }
+    if (count == 0){
+      Sage.invoice_grids['<%= elm %>'].collapse();
+    }
+
+  });
+  store.load({params:{start:0, limit:<%= page_size %>}});
+//if (this.getTotalCount() <= <%= page_size %>)
+//	{ Sage.invoice_grids['<%= elm %>'].bbar.hide();}
+
+});
+</script>
+
+

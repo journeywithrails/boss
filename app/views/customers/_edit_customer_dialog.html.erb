@@ -1,0 +1,37 @@
+<div id="customer-dialog-inner">
+	<% @customer ||= Customer.new %>
+	<div>
+	<%= error_messages_for(:customer) %>
+	<%= error_messages_for(:contact, :object => @customer.default_contact) %>
+	</div>
+	<div id="remote_customer_form">
+	<% remote_form_for 'customer', @customer, 
+			:update => 'customer-dialog-inner', 
+			:html => {:id => 'customer-popup', :method => :put },
+			:url => {:action => 'update', :controller => 'customers'} do |f| %>
+			  <div class="customer_fields">
+				<%= render :partial => "customers/form", 
+					:locals => {:f => f}, 
+					:object => @customer %>
+				</div>
+	<% end %>
+	</div>
+</div>	
+
+<%# do not put in bottom_javascripts -- gets returned with no layout %>
+<script type="text/javascript">
+	<% if @close_window %>
+		// set the select list text to the customer name in case it was changed	
+		var customerSelect = $('invoice_customer_id');
+		var customerIndex = customerSelect.selectedIndex;
+		customerSelect.options[customerIndex].text = '<%= @customer.name %>';
+
+	  Sage.customer_dialog.win[Sage.customer_dialog.win.closeAction]();
+	  // Sage.toggle_customer(); //TODO: Breaks Watir
+		<%= remote_function( 
+		  :url => { :controller => 'invoices', :action => 'toggle_customer' }, 
+		  :with => "'&selected=' + $('invoice_customer_id').value" ) %> 
+	<% end %>		
+	<%= increment_ajax_counter %>	
+</script>
+

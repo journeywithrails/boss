@@ -1,0 +1,1 @@
+curl -v -H "Content-Type: application/xml; charset=utf-8" --data-ascii @signupbrowsalerror.xml http://localhost:3000/browsals

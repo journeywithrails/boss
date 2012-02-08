@@ -1,0 +1,18 @@
+sbs_user_vcheck_gateway:
+  id: 1
+  type: SageVcheckUserGateway
+  user_id: 27
+  gateway_name: sage_vcheck
+  merchant_id: 749253511373
+  merchant_key: H7D7U7C7A6K6
+  active: 1
+
+sbs_user_cc_gateway:
+  id: 2
+  type: SageSbsUserGateway
+  user_id: 27
+  gateway_name: sage_sbs
+  merchant_id: 749253511373
+  merchant_key: H7D7U7C7A6K6
+  currency: CAD
+  active: 1

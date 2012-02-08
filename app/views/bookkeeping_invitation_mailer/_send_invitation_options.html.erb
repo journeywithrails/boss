@@ -1,0 +1,21 @@
+<div id="recipients-block" style="position: relative;">
+  <% if delivery.mail_options[:show_recipients] %>
+    <label for="delivery[recipients]"><%= _("To") %></label><%= f.text_field :recipients %>    
+  <% else %>
+    <b><%= _("To") %></b>&nbsp;<%= delivery.recipients %>
+  <% end %>
+</div>
+
+<div>
+<label for="delivery[subject]"><%= _("Subject") %></label><%= f.text_field :subject %>
+</div>
+
+<div>
+  <label><%= _("Message") %></label>
+  <%= f.text_area :body %>
+</div>
+
+
+<p>
+  <a href="#" onclick="Sage.send_dialog.win.getUpdater().refresh();"><%= _("reload") %></a>
+</p>

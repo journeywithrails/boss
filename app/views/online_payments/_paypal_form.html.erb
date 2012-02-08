@@ -1,0 +1,4 @@
+<!-- paypal gateway -->
+<% form_tag invoice_online_payment_path(:invoice_id => @key, :id => 'paypal'), :method => :get do %>
+<%= submit_tag(_("Pay now with PayPal")) %>
+<% end %>

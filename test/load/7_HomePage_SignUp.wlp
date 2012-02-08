@@ -1,0 +1,454 @@
+<Project><PRODUCT_VERSION><ProjectCreatedProductVersion>WebLOADPro Version 8.2.1.053.00  Supports 128 bit SSL </ProjectCreatedProductVersion><LastProjectSavedProductVersion>WebLOAD Version 8.1.0.141.00  Supports 128 bit SSL </LastProjectSavedProductVersion></PRODUCT_VERSION><PROJECT_TYPE>Protocol</PROJECT_TYPE><AGENDA_OPTIONS><AgendaName xmlns=" Default Project Options"/><Options><DiagnosticOptions><bSyntaxCheck>0</bSyntaxCheck><bTraceCheck>0</bTraceCheck><bAutomaticStateCheck>0</bAutomaticStateCheck><bSaveCSJSCheck>0</bSaveCSJSCheck><bCSJSDiagnosticMessages>0</bCSJSDiagnosticMessages></DiagnosticOptions><FunctionalTestingOptions><bTransFailed>0</bTransFailed><nFailedTime>20</nFailedTime><nSeverity>2</nSeverity><sTextSearch></sTextSearch><bCheckCRC>0</bCheckCRC><bCheckCompareValues>0</bCheckCompareValues><VarificationData><nCompareTitle>2</nCompareTitle><nFramesNumber>0</nFramesNumber><nTextSearch>0</nTextSearch><nVerifyLink>0</nVerifyLink><nCompareLinks>0</nCompareLinks><nCompareForms>0</nCompareForms><nCompareImages>0</nCompareImages><nCompareTables>0</nCompareTables></VarificationData></FunctionalTestingOptions><SleepTimeControlOptions><nSleepControlType>2</nSleepControlType><nBetween>2</nBetween><nAnd>10</nAnd><nDeviationPersent>10</nDeviationPersent></SleepTimeControlOptions><IE_OPTIONS Option_version="19">
+			<IE_DIALOG name="Alert">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Confirm">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Prompt">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Input"></field>
+			</IE_DIALOG>
+			<IE_DIALOG name="Print">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Cookie_IE6">
+				<Answer>
+					<value>Allow</value>
+					<value>Block</value>
+					<default>Allow</default>
+				</Answer>
+				<field type="checkbox" name="ApplyToAll">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="Cookie">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FormSubmit">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FormResubmit">
+				<Answer>
+					<value>Retry</value>
+					<value>Cancel</value>
+					<default>Retry</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="SwitchNonSecure">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SwitchSecure">
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="NonSecureOnSecure">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientAuthentication">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="string" name="Domain"></field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ConnectToMS_WinXP">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Email"></field>
+				<field type="string" name="Password"></field>
+				<field type="checkbox" name="AutoSignIn">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientAuthentication_WinXP">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientCertificate">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Certificate">
+					<default>0</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="HostCertificate">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload_IE6">
+				<Answer>
+					<value>Open</value>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload_IE6_XP">
+				<Answer>
+					<value>Open</value>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SaveFile">
+				<Answer>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="string" name="FileName"></field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SaveFileConfirmation">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ActiveXInstall">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysTrust">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="RunActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="UnsafeActiveX">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ScriptAccessingActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="NavigateSubFrames">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ActiveScripting">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="JavaScripting">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Redirection">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="AutoComplete">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="RememberPassword">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+				<field type="checkbox" name="DoNotOffer">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FtpAuthentication">
+				<Answer>
+					<value>Login</value>
+					<value>Cancel</value>
+					<default>Login</default>
+				</Answer>
+				<field type="string" name="Server"></field>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="string" name="Email"></field>
+				<field type="checkbox" name="Anonymous">
+					<default>unchecked</default>
+				</field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FtpFolderError">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="DocumentModified">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<value>Cancel</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="JavascriptError">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="WindowClosing">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="SuspiciousActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Reboot">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="YesNoCancel">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<value>Cancel</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="YesNo">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="OkCancel">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Ok">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+		</IE_OPTIONS><PlayBackOptions><nNavigationTimeOut>60</nNavigationTimeOut><nFileDownloadTimeout>0</nFileDownloadTimeout><nStartNavigationTimeOut>3</nStartNavigationTimeOut><bClearCache>0</bClearCache><bClearCookies>0</bClearCookies><nPlaybackMode>1</nPlaybackMode><bUseDOROptimizer>0</bUseDOROptimizer></PlayBackOptions><PassFailDefinition><bCheckErrors>1</bCheckErrors><bCheckSevere>1</bCheckSevere><bCheckWarnings>0</bCheckWarnings><nErrorNum>1</nErrorNum><nRuleCheck>15</nRuleCheck><nWarningNum>15</nWarningNum></PassFailDefinition><ErrorHandling><SubmitButton>1</SubmitButton><NavObject>9</NavObject><Page>4</Page><PageRetryNum>3</PageRetryNum><Object>6</Object></ErrorHandling><EmulationPlaybackOptions><bUseOptimizer>1</bUseOptimizer><bUseHistory>0</bUseHistory><nHistoryLimit>1</nHistoryLimit><bCodeFormatter>0</bCodeFormatter><bCSJSRecovery>1</bCSJSRecovery></EmulationPlaybackOptions><WebServices><sBasicPassword></sBasicPassword><sUserName></sUserName><sProxyHost></sProxyHost><sProxyPassword></sProxyPassword><sProxyUser></sProxyUser><sProxyPort></sProxyPort><nWSClientType>1</nWSClientType></WebServices><BrowserEmulationOptions><bDNSCache>1</bDNSCache><bSSLCache>1</bSSLCache><bKeepAlive>1</bKeepAlive><bRedirectionEnabled>1</bRedirectionEnabled><nRedirectionLimit>10</nRedirectionLimit><strBrowserType>Default</strBrowserType><strUserAgent></strUserAgent><strEncodingValue>0</strEncodingValue><bEnforceEncoding>0</bEnforceEncoding></BrowserEmulationOptions><HTTPParametersOptions><bGZipSupport>0</bGZipSupport><bHTTPVersion>1</bHTTPVersion><bMultiIPSupport>0</bMultiIPSupport><bEncodeFormData>1</bEncodeFormData><bAcceptLanguage>0</bAcceptLanguage><strAcceptLanguage></strAcceptLanguage></HTTPParametersOptions><Authentication><sUserName></sUserName><sPassWord></sPassWord><sNTUserName></sNTUserName><sNTUserPassword></sNTUserPassword><sProxyUserName></sProxyUserName><sProxyPassWord></sProxyPassWord><sProxyHost></sProxyHost><sProxyPort></sProxyPort><sSSLClientCertificateFile></sSSLClientCertificateFile><sSSLClientCertificatePassword></sSSLClientCertificatePassword></Authentication><BrowserCacheOptions><bFilterApplets>0</bFilterApplets><bFilterDynamicPages>0</bFilterDynamicPages><bFilterImages>0</bFilterImages><bFilterJSFiles>0</bFilterJSFiles><bFilterStaticPages>0</bFilterStaticPages><bFilterStyleSheets>0</bFilterStyleSheets><bFilterXMLFiles>0</bFilterXMLFiles><nCacheType>2</nCacheType><nCacheScope>5</nCacheScope><nCacheFilter>7</nCacheFilter></BrowserCacheOptions><JavaOptions><strSelectedJVM>Default</strSelectedJVM></JavaOptions></Options></AGENDA_OPTIONS><ADDITIONAL_INFORMATION><ProjectComments></ProjectComments><CreatedBy></CreatedBy><Custom1></Custom1><Custom2></Custom2><Custom3></Custom3><Subject></Subject><TestDescription></TestDescription><ResultsDescription></ResultsDescription><VersionBuild></VersionBuild><Title>C:\Documents and Settings\lanro08\My Documents\WebLOAD\Sessions\7_HomePage_SignUp.wlp</Title></ADDITIONAL_INFORMATION><ORACLE_PROJECT_INCLUDE_PATH></ORACLE_PROJECT_INCLUDE_PATH><VisualAgenda><Agenda CallBack="Do_Agenda" ClonedXML="0"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0"/><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript></NodeScript><NodeID Visible="0">1</NodeID><InitAgenda Type="JavaScript" ReadOnly="0">
+hostName = "http://staging.billingboss.com/"
+	users = hostName + "users"
+	profiles = hostName + "profiles"
+	logout = hostName + "logout"
+	
+	footer_link = "http://www.sagesoftware.ca"
+</InitAgenda><InitClient Type="JavaScript" ReadOnly="0"></InitClient><TerminateAgenda Type="JavaScript" ReadOnly="0"></TerminateAgenda><TerminateClient Type="JavaScript" ReadOnly="0"></TerminateClient><JSNodeCounter Visible="0">48</JSNodeCounter></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="GlobalVariables"><System Type="Array" ReadOnly="0"><Variable Name="ClientNum" Description="Returns the main thread number for each client"/><Variable Name="GeneratorName()" Description="Returns the name of this load generator as a string"/><Variable Name="GMTDate()" Description="Current date in GMT/UTC as a string"/><Variable Name="Hours()" Description="Current Hour (0-23)"/><Variable Name="LocalDate()" Description="Current date in local time as a string"/><Variable Name="Milliseconds()" Description="Current ms value"/><Variable Name="Minutes()" Description="Current minutes (0-59)"/><Variable Name="RandomNumber()" Description="Generate a random number"/><Variable Name="RoundNum" Description="Returns the number of rounds for the specific client"/><Variable Name="Seconds()" Description="Current seconds (0-59)"/><Variable Name="ThisYear()" Description="Current Year (4-digit, e.g. 2001)"/><Variable Name="Time()" Description="Time in ms since 1/1/1970"/><Variable Name="TodaysDate()" Description="Current date (1-31)"/><Variable Name="TodaysDay()" Description="Current Day (0-6, 0==Sunday)"/><Variable Name="TodaysMonth()" Description="Current Month (0-11)"/><Variable Name="VCUniqueID()" Description="Returns a string unique to this VC"/></System><UserDefined Type="Array" ReadOnly="0"/><InputParameters Type="Array" ReadOnly="0"/><OutputParameters Type="Array" ReadOnly="0"/><GlobalInputFilesParams Type="Array" ReadOnly="0"><Email Name="Email" Value="" Type="String"/><Password Name="Password" Value="" Type="String"/></GlobalInputFilesParams><FileCounter>1</FileCounter></PropertyPage></Properties><JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="0"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:44 *****/
+function check_footer_link()
+{
+	url = wlHtml.GetUri()
+  	index = document.links.length - 1
+  	
+ 	if (index &lt; 0)
+		ErrorMessage(url + " did not load")
+  	
+ 	if (index &gt;= 0)
+ 		if (document.links[index].href != footer_link)
+ 			ErrorMessage(url + " did not load")
+}
+ 
+ // END WLIDE</NodeScript><NodeID Visible="0">44</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="1"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:45 *****/
+function check_url(expected)
+ {
+ 	url = wlHtml.GetUri()
+	InfoMessage(url + " RoundNum: " + RoundNum+ " ClientNum: " + ClientNum)
+	if (url != expected)	 
+		ErrorMessage(expected + " is expected but " + url + " loaded.")
+ }
+ // END WLIDE</NodeScript><NodeID Visible="0">45</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="2"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:48 *****/
+function randomNumber()
+ {
+	return parseInt(Math.random() * 100000).toString()
+ }
+ // END WLIDE</NodeScript><NodeID Visible="0">48</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="3"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:46 *****/
+try{
+ // END WLIDE</NodeScript><NodeID Visible="0">46</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="4"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://staging.billingboss.com/</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://staging.billingboss.com/ - ID:33 *****/ 
+wlHttp.Get(hostName)
+authenticity_token = document.forms[0].elements[0].value
+check_footer_link()
+check_url('/')
+ // END WLIDE</NodeScript><NodeID Visible="0">33</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://www.billingboss.com/ HTTP/1.0" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Cookie: __utma=194486078.1689301174.1208556736.1208560697.1208806978.4; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727)" Type="Request"/><HeaderItem Text="Host: www.billingboss.com" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="HTTP/1.0 200 OK" Type="Response"><HeaderItem Text="Date: Mon, 21 Apr 2008 22:53:44 GMT" Type="Response"/><HeaderItem Text="Server: JWS 1.2" Type="Response"/><HeaderItem Text="Served-By: Joyent" Type="Response"/><HeaderItem Text="With: SecretSauce" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.01240" Type="Response"/><HeaderItem Text="ETag: &quot;6337b14fd2a3f36f3a87a0a40af23f3f&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 11839" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7CDoMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2IgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--062cc4cde721c38468efa4cde89c0ad69cecd51f; path=/" Type="Response"/><HeaderItem Text="Via: 1.0 www.billingboss.com" Type="Response"/><HeaderItem Text="MS-Author-Via: DAV" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Connection: close" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/><IsProtocolRecordedNode Visible="0">true</IsProtocolRecordedNode><TestTalkMessage Visible="0">27 \'20 $PROXYREQUESTHEADERS \'802 13 \'16 $AATHEADERVALUE0 \'164 image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */* \'16 $AATHEADERVALUE2 \'141 __utma=194486078.1689301174.1208556736.1208560697.1208806978.4; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none) \'14 $AATHEADERKEY1 \'15 Accept-Language \'16 $AATHEADERVALUE4 \'19 www.billingboss.com \'14 $AATHEADERKEY0 \'6 Accept \'14 $AATHEADERKEY3 \'10 User-Agent \'16 $AATHEADERVALUE1 \'5 en-us \'14 $AATHEADERKEY2 \'6 Cookie \'16 $AATHEADERVALUE3 \'82 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727) \'14 $AATHEADERKEY5 \'16 Proxy-Connection \'13 $NUMOFHEADERS \'1 6 \'14 $AATHEADERKEY4 \'4 Host \'16 $AATHEADERVALUE5 \'10 Keep-Alive  \'15 $PROXYPROXYNAME \'0  \'25 $PROXYPROXYUSESAMESSLNAME \'4 true \'16 $PROTOCOLMESSAGE \'3 Yes \'12 $PROXYSTATUS \'15 HTTP/1.0 200 OK \'16 $REDIRECTIONPATH \'0  \'16 $PROXYNTUSERNAME \'0  \'19 $PROXYRQSTFIRSTLINE \'40 GET http://www.billingboss.com/ HTTP/1.0 \'14 $PROXYUSERNAME \'0  \'17 $PROXYCONTENTTYPE \'0  \'18 $PROXYPROXYSSLNAME \'0  \'20 $RESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'20 $PROXYPOSTDATALENGTH \'1 0 \'22 $PROXYPROXYSSLPASSWORD \'0  \'13 $RESPONSEBODY \'0  \'10 $SESSIONID \'10 1208818358 \'16 $PROXYNTPASSWORD \'0  \'22 $PROXYPROXYSSLUSERNAME \'0  \'25 $PROXYRESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'19 $PROXYPROXYUSERNAME \'0  \'5 $FROM \'45 LGCommunicator2084Sender14@10.152.19.130:9000 \'12 $PROXYMETHOD \'3 GET \'9 $PROXYURL \'27 http://www.billingboss.com/ \'14 $PROXYPOSTDATA \'0  \'14 $PROXYPASSWORD \'0  \'19 $PROXYPROXYPASSWORD \'0  \'18 $PROXYREPLYHEADERS \'1401 31 \'14 $AATHEADERKEY7 \'13 Cache-Control \'16 $AATHEADERVALUE7 \'35 private, max-age=0, must-revalidate \'14 $AATHEADERKEY6 \'4 ETag \'16 $AATHEADERVALUE9 \'5 11839 \'17 $AATHEADERVALUE14 \'5 close \'16 $AATHEADERVALUE0 \'29 Mon, 21 Apr 2008 22:53:44 GMT \'17 $AATHEADERVALUE13 \'15 Accept-Encoding \'16 $AATHEADERVALUE2 \'6 Joyent \'17 $AATHEADERVALUE12 \'3 DAV \'14 $AATHEADERKEY1 \'6 Server \'16 $AATHEADERVALUE4 \'6 200 OK \'15 $AATHEADERKEY11 \'3 Via \'17 $AATHEADERVALUE11 \'23 1.0 www.billingboss.com \'14 $AATHEADERKEY0 \'4 Date \'16 $AATHEADERVALUE6 \'34 \"6337b14fd2a3f36f3a87a0a40af23f3f\" \'15 $AATHEADERKEY10 \'10 Set-Cookie \'17 $AATHEADERVALUE10 \'298 _tornado_session=BAh7CDoMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2IgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--062cc4cde721c38468efa4cde89c0ad69cecd51f; path=/ \'14 $AATHEADERKEY3 \'4 With \'16 $AATHEADERVALUE8 \'24 text/html; charset=utf-8 \'15 $AATHEADERKEY13 \'4 Vary \'16 $AATHEADERVALUE1 \'7 JWS 1.2 \'14 $AATHEADERKEY2 \'9 Served-By \'14 $AATHEADERKEY9 \'14 Content-Length \'15 $AATHEADERKEY12 \'13 MS-Author-Via \'16 $AATHEADERVALUE3 \'11 SecretSauce \'14 $AATHEADERKEY5 \'9 X-Runtime \'14 $AATHEADERKEY8 \'12 Content-Type \'13 $NUMOFHEADERS \'2 15 \'14 $AATHEADERKEY4 \'6 Status \'16 $AATHEADERVALUE5 \'7 0.01240 \'15 $AATHEADERKEY14 \'10 Connection  </TestTalkMessage><RecordingCallback Visible="0">OnGet</RecordingCallback><ContentType Visible="0"></ContentType></PropertyPage><preview domid="24"/></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="5"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://staging.billingboss.com/users</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://staging.billingboss.com/users - ID:35 *****/ 
+wlHttp.Header["Referer"] = hostName
+wlHttp.ContentType = "application/x-www-form-urlencoded"
+wlHttp.FormData["authenticity_token"] = authenticity_token
+wlHttp.FormData["user[login]"] = "User-" + randomNumber() + "@hotmail.com"
+wlHttp.FormData["user[password]"] = "mySecretPassword"
+wlHttp.FormData["user[password_confirmation]"] = "mySecretPassword"
+wlHttp.FormData["user[terms_of_service]"] = "1"
+wlHttp.FormData["user[!terms_of_service]"] = "0"
+//wlHttp.FormData["captcha"] = "ABCDEF"
+wlHttp.FormData["x"] = "76"
+wlHttp.FormData["y"] = "16"
+wlHttp.Post(users)
+
+ // END WLIDE</NodeScript><NodeID Visible="0">35</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="POST https://www.billingboss.com/users HTTP/1.0" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Referer: http://www.billingboss.com/" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Content-Type: application/x-www-form-urlencoded" Type="Request"/><HeaderItem Text="Connection: Keep-Alive" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727)" Type="Request"/><HeaderItem Text="Host: www.billingboss.com" Type="Request"/><HeaderItem Text="Content-Length: 245" Type="Request"/><HeaderItem Text="Cache-Control: no-cache" Type="Request"/><HeaderItem Text="Cookie: __utma=194486078.1689301174.1208556736.1208806978.1208818400.5; __utmb=194486078.1.10.1208818399968; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmc=194486078; _tornado_session=BAh7CDoMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2IgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--062cc4cde721c38468efa4cde89c0ad69cecd51f" Type="Request"/><HeaderItem Text="authenticity_token=8e9b3ef503216676d40b7dcfa54db18313b46de4&amp;user%5Blogin%5D=abcd01@hotmail.com&amp;user%5Bpassword%5D=test01&amp;user%5Bpassword_confirmation%5D=test01&amp;user%5Bterms_of_service%5D=1&amp;user%5B%21terms_of_service%5D=0&amp;captcha=FAHUGS&amp;x=34&amp;y=22" Type="FormData"/><HeaderItem Text="HTTP/1.0 200 OK" Type="Response"><HeaderItem Text="Date: Mon, 21 Apr 2008 22:55:14 GMT" Type="Response"/><HeaderItem Text="Server: JWS 1.2" Type="Response"/><HeaderItem Text="Served-By: Joyent" Type="Response"/><HeaderItem Text="With: SecretSauce" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.73645" Type="Response"/><HeaderItem Text="ETag: &quot;bde5e7799b859cfefa1f5fff24ee4799&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 132" Type="Response"/><HeaderItem Text="Set-Cookie: auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7CToMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2Ogl1c2VyaXkiCmZsYXNoSUM6J0FjdGlvbkNvbnRy%250Ab2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlIldUaGFua3MgZm9y%250AIHNpZ25pbmcgdXAhIFBsZWFzZSB0YWtlIGEgbW9tZW50IHRvIGZpbGwgb3Vy%250AIHlvdXIgYnVzaW5lc3MgaW5mb3JtYXRpb24uBjoKQHVzZWR7BjsJVA%253D%253D--723003cc7e22e3ebb11d8d672a9f10510cefa093; path=/" Type="Response"/><HeaderItem Text="Via: 1.0 www.billingboss.com" Type="Response"/><HeaderItem Text="MS-Author-Via: DAV" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Connection: close" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/><IsProtocolRecordedNode Visible="0">true</IsProtocolRecordedNode><TestTalkMessage Visible="0">27 \'20 $PROXYREQUESTHEADERS \'1458 21 \'14 $AATHEADERKEY7 \'14 Content-Length \'16 $AATHEADERVALUE7 \'3 245 \'14 $AATHEADERKEY6 \'4 Host \'16 $AATHEADERVALUE9 \'488 __utma=194486078.1689301174.1208556736.1208806978.1208818400.5; __utmb=194486078.1.10.1208818399968; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmc=194486078; _tornado_session=BAh7CDoMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2IgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsA--062cc4cde721c38468efa4cde89c0ad69cecd51f \'16 $AATHEADERVALUE0 \'164 image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */* \'16 $AATHEADERVALUE2 \'5 en-us \'14 $AATHEADERKEY1 \'7 Referer \'16 $AATHEADERVALUE4 \'10 Keep-Alive \'14 $AATHEADERKEY0 \'6 Accept \'16 $AATHEADERVALUE6 \'19 www.billingboss.com \'14 $AATHEADERKEY3 \'12 Content-Type \'16 $AATHEADERVALUE8 \'8 no-cache \'16 $AATHEADERVALUE1 \'27 http://www.billingboss.com/ \'14 $AATHEADERKEY2 \'15 Accept-Language \'14 $AATHEADERKEY9 \'6 Cookie \'16 $AATHEADERVALUE3 \'33 application/x-www-form-urlencoded \'14 $AATHEADERKEY5 \'10 User-Agent \'14 $AATHEADERKEY8 \'13 Cache-Control \'13 $NUMOFHEADERS \'2 10 \'14 $AATHEADERKEY4 \'10 Connection \'16 $AATHEADERVALUE5 \'82 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727)  \'15 $PROXYPROXYNAME \'0  \'25 $PROXYPROXYUSESAMESSLNAME \'4 true \'16 $PROTOCOLMESSAGE \'3 Yes \'12 $PROXYSTATUS \'15 HTTP/1.0 200 OK \'16 $REDIRECTIONPATH \'0  \'16 $PROXYNTUSERNAME \'0  \'19 $PROXYRQSTFIRSTLINE \'47 POST https://www.billingboss.com/users HTTP/1.0 \'14 $PROXYUSERNAME \'0  \'17 $PROXYCONTENTTYPE \'33 application/x-www-form-urlencoded \'18 $PROXYPROXYSSLNAME \'0  \'20 $RESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'20 $PROXYPOSTDATALENGTH \'3 245 \'22 $PROXYPROXYSSLPASSWORD \'0  \'13 $RESPONSEBODY \'0  \'10 $SESSIONID \'10 1208818358 \'16 $PROXYNTPASSWORD \'0  \'22 $PROXYPROXYSSLUSERNAME \'0  \'25 $PROXYRESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'19 $PROXYPROXYUSERNAME \'0  \'5 $FROM \'45 LGCommunicator2084Sender14@10.152.19.130:9000 \'12 $PROXYMETHOD \'4 POST \'9 $PROXYURL \'33 https://www.billingboss.com/users \'14 $PROXYPOSTDATA \'245 authenticity_token=8e9b3ef503216676d40b7dcfa54db18313b46de4&amp;user%5Blogin%5D=abcd01@hotmail.com&amp;user%5Bpassword%5D=test01&amp;user%5Bpassword_confirmation%5D=test01&amp;user%5Bterms_of_service%5D=1&amp;user%5B%21terms_of_service%5D=0&amp;captcha=FAHUGS&amp;x=34&amp;y=22 \'14 $PROXYPASSWORD \'0  \'19 $PROXYPROXYPASSWORD \'0  \'18 $PROXYREPLYHEADERS \'1677 33 \'14 $AATHEADERKEY7 \'13 Cache-Control \'16 $AATHEADERVALUE7 \'35 private, max-age=0, must-revalidate \'14 $AATHEADERKEY6 \'4 ETag \'16 $AATHEADERVALUE9 \'3 132 \'17 $AATHEADERVALUE15 \'5 close \'17 $AATHEADERVALUE14 \'15 Accept-Encoding \'16 $AATHEADERVALUE0 \'29 Mon, 21 Apr 2008 22:55:14 GMT \'17 $AATHEADERVALUE13 \'3 DAV \'16 $AATHEADERVALUE2 \'6 Joyent \'17 $AATHEADERVALUE12 \'23 1.0 www.billingboss.com \'14 $AATHEADERKEY1 \'6 Server \'16 $AATHEADERVALUE4 \'6 200 OK \'15 $AATHEADERKEY11 \'10 Set-Cookie \'17 $AATHEADERVALUE11 \'456 _tornado_session=BAh7CToMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2Ogl1c2VyaXkiCmZsYXNoSUM6J0FjdGlvbkNvbnRy%250Ab2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlIldUaGFua3MgZm9y%250AIHNpZ25pbmcgdXAhIFBsZWFzZSB0YWtlIGEgbW9tZW50IHRvIGZpbGwgb3Vy%250AIHlvdXIgYnVzaW5lc3MgaW5mb3JtYXRpb24uBjoKQHVzZWR7BjsJVA%253D%253D--723003cc7e22e3ebb11d8d672a9f10510cefa093; path=/ \'14 $AATHEADERKEY0 \'4 Date \'16 $AATHEADERVALUE6 \'34 \"bde5e7799b859cfefa1f5fff24ee4799\" \'15 $AATHEADERKEY10 \'10 Set-Cookie \'17 $AATHEADERVALUE10 \'58 auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT \'14 $AATHEADERKEY3 \'4 With \'16 $AATHEADERVALUE8 \'24 text/html; charset=utf-8 \'15 $AATHEADERKEY13 \'13 MS-Author-Via \'16 $AATHEADERVALUE1 \'7 JWS 1.2 \'14 $AATHEADERKEY2 \'9 Served-By \'14 $AATHEADERKEY9 \'14 Content-Length \'15 $AATHEADERKEY12 \'3 Via \'16 $AATHEADERVALUE3 \'11 SecretSauce \'14 $AATHEADERKEY5 \'9 X-Runtime \'14 $AATHEADERKEY8 \'12 Content-Type \'15 $AATHEADERKEY15 \'10 Connection \'13 $NUMOFHEADERS \'2 16 \'14 $AATHEADERKEY4 \'6 Status \'16 $AATHEADERVALUE5 \'7 0.73645 \'15 $AATHEADERKEY14 \'4 Vary  </TestTalkMessage><RecordingCallback Visible="0">OnPost</RecordingCallback><ContentType Visible="0">application/x-www-form-urlencoded</ContentType></PropertyPage><preview domid="25"/></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="6"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://staging.billingboss.com/profiles</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://staging.billingboss.com/profiles - ID:37 *****/ 
+wlHttp.Get(profiles)
+check_footer_link()
+check_url("/profiles")
+ // END WLIDE</NodeScript><NodeID Visible="0">37</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://www.billingboss.com/profiles HTTP/1.0" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Pragma: no-cache" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727)" Type="Request"/><HeaderItem Text="Host: www.billingboss.com" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="Cookie: __utma=194486078.1689301174.1208556736.1208806978.1208818400.5; __utmb=194486078.1.10.1208818399968; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmc=194486078; _tornado_session=BAh7CToMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2Ogl1c2VyaXkiCmZsYXNoSUM6J0FjdGlvbkNvbnRy%250Ab2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlIldUaGFua3MgZm9y%250AIHNpZ25pbmcgdXAhIFBsZWFzZSB0YWtlIGEgbW9tZW50IHRvIGZpbGwgb3Vy%250AIHlvdXIgYnVzaW5lc3MgaW5mb3JtYXRpb24uBjoKQHVzZWR7BjsJVA%253D%253D--723003cc7e22e3ebb11d8d672a9f10510cefa093" Type="Request"/><HeaderItem Text="HTTP/1.0 200 OK" Type="Response"><HeaderItem Text="Date: Mon, 21 Apr 2008 22:55:16 GMT" Type="Response"/><HeaderItem Text="Server: JWS 1.2" Type="Response"/><HeaderItem Text="Served-By: Joyent" Type="Response"/><HeaderItem Text="With: SecretSauce" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.08595" Type="Response"/><HeaderItem Text="ETag: &quot;74014dceac32256813dcee31e7e8b09b&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 26721" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7CToMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2IgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsAOgl1c2VyaXk%253D--27008d272bff0a2464889448a903548930f721cb; path=/" Type="Response"/><HeaderItem Text="Via: 1.0 www.billingboss.com" Type="Response"/><HeaderItem Text="MS-Author-Via: DAV" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Connection: close" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/><IsProtocolRecordedNode Visible="0">true</IsProtocolRecordedNode><TestTalkMessage Visible="0">27 \'20 $PROXYREQUESTHEADERS \'1369 15 \'14 $AATHEADERKEY6 \'6 Cookie \'16 $AATHEADERVALUE0 \'164 image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */* \'16 $AATHEADERVALUE2 \'8 no-cache \'14 $AATHEADERKEY1 \'15 Accept-Language \'16 $AATHEADERVALUE4 \'19 www.billingboss.com \'14 $AATHEADERKEY0 \'6 Accept \'16 $AATHEADERVALUE6 \'646 __utma=194486078.1689301174.1208556736.1208806978.1208818400.5; __utmb=194486078.1.10.1208818399968; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmc=194486078; _tornado_session=BAh7CToMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2Ogl1c2VyaXkiCmZsYXNoSUM6J0FjdGlvbkNvbnRy%250Ab2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlIldUaGFua3MgZm9y%250AIHNpZ25pbmcgdXAhIFBsZWFzZSB0YWtlIGEgbW9tZW50IHRvIGZpbGwgb3Vy%250AIHlvdXIgYnVzaW5lc3MgaW5mb3JtYXRpb24uBjoKQHVzZWR7BjsJVA%253D%253D--723003cc7e22e3ebb11d8d672a9f10510cefa093 \'14 $AATHEADERKEY3 \'10 User-Agent \'16 $AATHEADERVALUE1 \'5 en-us \'14 $AATHEADERKEY2 \'6 Pragma \'16 $AATHEADERVALUE3 \'82 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727) \'14 $AATHEADERKEY5 \'16 Proxy-Connection \'13 $NUMOFHEADERS \'1 7 \'14 $AATHEADERKEY4 \'4 Host \'16 $AATHEADERVALUE5 \'10 Keep-Alive  \'15 $PROXYPROXYNAME \'0  \'25 $PROXYPROXYUSESAMESSLNAME \'4 true \'16 $PROTOCOLMESSAGE \'3 Yes \'12 $PROXYSTATUS \'15 HTTP/1.0 200 OK \'16 $REDIRECTIONPATH \'0  \'16 $PROXYNTUSERNAME \'0  \'19 $PROXYRQSTFIRSTLINE \'48 GET http://www.billingboss.com/profiles HTTP/1.0 \'14 $PROXYUSERNAME \'0  \'17 $PROXYCONTENTTYPE \'0  \'18 $PROXYPROXYSSLNAME \'0  \'20 $RESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'20 $PROXYPOSTDATALENGTH \'1 0 \'22 $PROXYPROXYSSLPASSWORD \'0  \'13 $RESPONSEBODY \'0  \'10 $SESSIONID \'10 1208818358 \'16 $PROXYNTPASSWORD \'0  \'22 $PROXYPROXYSSLUSERNAME \'0  \'25 $PROXYRESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'19 $PROXYPROXYUSERNAME \'0  \'5 $FROM \'45 LGCommunicator2084Sender14@10.152.19.130:9000 \'12 $PROXYMETHOD \'3 GET \'9 $PROXYURL \'35 http://www.billingboss.com/profiles \'14 $PROXYPOSTDATA \'0  \'14 $PROXYPASSWORD \'0  \'19 $PROXYPROXYPASSWORD \'0  \'18 $PROXYREPLYHEADERS \'1417 31 \'14 $AATHEADERKEY7 \'13 Cache-Control \'16 $AATHEADERVALUE7 \'35 private, max-age=0, must-revalidate \'14 $AATHEADERKEY6 \'4 ETag \'16 $AATHEADERVALUE9 \'5 26721 \'17 $AATHEADERVALUE14 \'5 close \'16 $AATHEADERVALUE0 \'29 Mon, 21 Apr 2008 22:55:16 GMT \'17 $AATHEADERVALUE13 \'15 Accept-Encoding \'16 $AATHEADERVALUE2 \'6 Joyent \'17 $AATHEADERVALUE12 \'3 DAV \'14 $AATHEADERKEY1 \'6 Server \'16 $AATHEADERVALUE4 \'6 200 OK \'15 $AATHEADERKEY11 \'3 Via \'17 $AATHEADERVALUE11 \'23 1.0 www.billingboss.com \'14 $AATHEADERKEY0 \'4 Date \'16 $AATHEADERVALUE6 \'34 \"74014dceac32256813dcee31e7e8b09b\" \'15 $AATHEADERKEY10 \'10 Set-Cookie \'17 $AATHEADERVALUE10 \'314 _tornado_session=BAh7CToMY3NyZl9pZCIlNTE2YTcwMGY2Mjk4N2IwYjhhNWQ0YTNhYTRmOWUz%250ANWI6E3NpbXBsZV9jYXB0Y2hhIi1lZmE3NzE0ZDA2NTZjNDk0NzNlNWFhMmMw%250AZGZjZThmYTJhMTg3MmQ2IgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsAOgl1c2VyaXk%253D--27008d272bff0a2464889448a903548930f721cb; path=/ \'14 $AATHEADERKEY3 \'4 With \'16 $AATHEADERVALUE8 \'24 text/html; charset=utf-8 \'15 $AATHEADERKEY13 \'4 Vary \'16 $AATHEADERVALUE1 \'7 JWS 1.2 \'14 $AATHEADERKEY2 \'9 Served-By \'14 $AATHEADERKEY9 \'14 Content-Length \'15 $AATHEADERKEY12 \'13 MS-Author-Via \'16 $AATHEADERVALUE3 \'11 SecretSauce \'14 $AATHEADERKEY5 \'9 X-Runtime \'14 $AATHEADERKEY8 \'12 Content-Type \'13 $NUMOFHEADERS \'2 15 \'14 $AATHEADERKEY4 \'6 Status \'16 $AATHEADERVALUE5 \'7 0.08595 \'15 $AATHEADERKEY14 \'10 Connection  </TestTalkMessage><RecordingCallback Visible="0">OnGet</RecordingCallback><ContentType Visible="0"></ContentType></PropertyPage><preview domid="26"/></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="7"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://staging.billingboss.com/logout</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://staging.billingboss.com/logout - ID:43 *****/
+wlGlobals.GetFrames = false 
+wlHttp.Header["Referer"] = profiles
+wlHttp.Get(logout)
+
+ // END WLIDE</NodeScript><NodeID Visible="0">43</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://staging.billingboss.com/logout HTTP/1.0" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Referer: http://staging.billingboss.com/profiles" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727)" Type="Request"/><HeaderItem Text="Host: staging.billingboss.com" Type="Request"/><HeaderItem Text="Cookie: __utma=194486078.1689301174.1208556736.1208818400.1208881092.6; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _tornado_session=BAh7CToMY3NyZl9pZCIlNjZkZGRiZGI3NDY4ZTRhMGI4MWJkYjQyYzQxODVh%250ANzY6E3NpbXBsZV9jYXB0Y2hhIi00ZjAxYWE5OGIwNmM1ZmY2YzUxODU2NGNl%250AOWFhM2FiMWFjYTRhYmJiIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsAOgl1c2VyaSE%253D--c0ecd86ec38afa3cecdab5710e3234b46b2ee881" Type="Request"/><HeaderItem Text="HTTP/1.0 302 Moved Temporarily" Type="Response"><HeaderItem Text="Date: Wed, 23 Apr 2008 16:50:57 GMT" Type="Response"/><HeaderItem Text="Server: JWS 1.2" Type="Response"/><HeaderItem Text="Served-By: Joyent" Type="Response"/><HeaderItem Text="With: SecretSauce" Type="Response"/><HeaderItem Text="Status: 302 Found" Type="Response"/><HeaderItem Text="Location: http://staging.billingboss.com/" Type="Response"/><HeaderItem Text="X-Runtime: 0.00845" Type="Response"/><HeaderItem Text="Cache-Control: no-cache" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 97" Type="Response"/><HeaderItem Text="Set-Cookie: auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%250ASGFzaHsGOgtub3RpY2UiHllvdSBoYXZlIGJlZW4gbG9nZ2VkIG91dC4GOgpA%250AdXNlZHsGOwZU--019156d1b556b5e4bbd9fb5ad74535bcdb97b6fd; path=/" Type="Response"/><HeaderItem Text="Via: 1.0 staging.billingboss.com" Type="Response"/><HeaderItem Text="MS-Author-Via: DAV" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Connection: close" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/><IsProtocolRecordedNode Visible="0">true</IsProtocolRecordedNode><TestTalkMessage Visible="0">27 \'20 $PROXYREQUESTHEADERS \'1209 15 \'14 $AATHEADERKEY6 \'6 Cookie \'16 $AATHEADERVALUE0 \'164 image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */* \'16 $AATHEADERVALUE2 \'5 en-us \'14 $AATHEADERKEY1 \'7 Referer \'16 $AATHEADERVALUE4 \'82 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; InfoPath.1; .NET CLR 2.0.50727) \'14 $AATHEADERKEY0 \'6 Accept \'16 $AATHEADERVALUE6 \'449 __utma=194486078.1689301174.1208556736.1208818400.1208881092.6; __utmz=194486078.1208556736.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _tornado_session=BAh7CToMY3NyZl9pZCIlNjZkZGRiZGI3NDY4ZTRhMGI4MWJkYjQyYzQxODVh%250ANzY6E3NpbXBsZV9jYXB0Y2hhIi00ZjAxYWE5OGIwNmM1ZmY2YzUxODU2NGNl%250AOWFhM2FiMWFjYTRhYmJiIgpmbGFzaElDOidBY3Rpb25Db250cm9sbGVyOjpG%250AbGFzaDo6Rmxhc2hIYXNoewAGOgpAdXNlZHsAOgl1c2VyaSE%253D--c0ecd86ec38afa3cecdab5710e3234b46b2ee881 \'14 $AATHEADERKEY3 \'16 Proxy-Connection \'16 $AATHEADERVALUE1 \'39 http://staging.billingboss.com/profiles \'14 $AATHEADERKEY2 \'15 Accept-Language \'16 $AATHEADERVALUE3 \'10 Keep-Alive \'14 $AATHEADERKEY5 \'4 Host \'13 $NUMOFHEADERS \'1 7 \'14 $AATHEADERKEY4 \'10 User-Agent \'16 $AATHEADERVALUE5 \'23 staging.billingboss.com  \'15 $PROXYPROXYNAME \'0  \'25 $PROXYPROXYUSESAMESSLNAME \'4 true \'16 $PROTOCOLMESSAGE \'3 Yes \'12 $PROXYSTATUS \'30 HTTP/1.0 302 Moved Temporarily \'16 $REDIRECTIONPATH \'31 http://staging.billingboss.com/ \'16 $PROXYNTUSERNAME \'0  \'19 $PROXYRQSTFIRSTLINE \'50 GET http://staging.billingboss.com/logout HTTP/1.0 \'14 $PROXYUSERNAME \'0  \'17 $PROXYCONTENTTYPE \'0  \'18 $PROXYPROXYSSLNAME \'0  \'20 $RESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'20 $PROXYPOSTDATALENGTH \'1 0 \'22 $PROXYPROXYSSLPASSWORD \'0  \'13 $RESPONSEBODY \'0  \'10 $SESSIONID \'10 1208969402 \'16 $PROXYNTPASSWORD \'0  \'22 $PROXYPROXYSSLUSERNAME \'0  \'25 $PROXYRESPONSECONTENTTYPE \'24 text/html; charset=utf-8 \'19 $PROXYPROXYUSERNAME \'0  \'5 $FROM \'45 LGCommunicator2376Sender11@10.152.19.130:9000 \'12 $PROXYMETHOD \'3 GET \'9 $PROXYURL \'37 http://staging.billingboss.com/logout \'14 $PROXYPOSTDATA \'0  \'14 $PROXYPASSWORD \'0  \'19 $PROXYPROXYPASSWORD \'0  \'18 $PROXYREPLYHEADERS \'1409 33 \'14 $AATHEADERKEY7 \'13 Cache-Control \'16 $AATHEADERVALUE7 \'8 no-cache \'14 $AATHEADERKEY6 \'9 X-Runtime \'16 $AATHEADERVALUE9 \'2 97 \'17 $AATHEADERVALUE15 \'5 close \'17 $AATHEADERVALUE14 \'15 Accept-Encoding \'16 $AATHEADERVALUE0 \'29 Wed, 23 Apr 2008 16:50:57 GMT \'17 $AATHEADERVALUE13 \'3 DAV \'16 $AATHEADERVALUE2 \'6 Joyent \'17 $AATHEADERVALUE12 \'27 1.0 staging.billingboss.com \'14 $AATHEADERKEY1 \'6 Server \'16 $AATHEADERVALUE4 \'9 302 Found \'15 $AATHEADERKEY11 \'10 Set-Cookie \'17 $AATHEADERVALUE11 \'209 _tornado_session=BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%250ASGFzaHsGOgtub3RpY2UiHllvdSBoYXZlIGJlZW4gbG9nZ2VkIG91dC4GOgpA%250AdXNlZHsGOwZU--019156d1b556b5e4bbd9fb5ad74535bcdb97b6fd; path=/ \'14 $AATHEADERKEY0 \'4 Date \'16 $AATHEADERVALUE6 \'7 0.00845 \'15 $AATHEADERKEY10 \'10 Set-Cookie \'17 $AATHEADERVALUE10 \'58 auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT \'14 $AATHEADERKEY3 \'4 With \'16 $AATHEADERVALUE8 \'24 text/html; charset=utf-8 \'15 $AATHEADERKEY13 \'13 MS-Author-Via \'16 $AATHEADERVALUE1 \'7 JWS 1.2 \'14 $AATHEADERKEY2 \'9 Served-By \'14 $AATHEADERKEY9 \'14 Content-Length \'15 $AATHEADERKEY12 \'3 Via \'16 $AATHEADERVALUE3 \'11 SecretSauce \'14 $AATHEADERKEY5 \'8 Location \'14 $AATHEADERKEY8 \'12 Content-Type \'15 $AATHEADERKEY15 \'10 Connection \'13 $NUMOFHEADERS \'2 16 \'14 $AATHEADERKEY4 \'6 Status \'16 $AATHEADERVALUE5 \'31 http://staging.billingboss.com/ \'15 $AATHEADERKEY14 \'4 Vary  </TestTalkMessage><RecordingCallback Visible="0">OnGet</RecordingCallback><ContentType Visible="0"></ContentType></PropertyPage><preview domid="30"/></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="8"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:47 *****/
+}
+
+catch(e){
+	myException = new wlException(e,"14_Login_InvoiceOverview_NewInvoice threw an exception")
+ 	
+	//things to do in case of error
+	if (myException.GetSeverity() == WLError) {
+		// Do one set of Error activities
+		myException.ReportLog()
+		throw myException
+	}
+	else {
+		// Do a different set of Severe Error activities
+		throw myException
+	}
+}
+ // END WLIDE</NodeScript><NodeID Visible="0">47</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+		</Agenda>
+	</VisualAgenda><BreakPointsMap/></Project>

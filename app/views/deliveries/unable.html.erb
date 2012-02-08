@@ -1,0 +1,12 @@
+<% 
+deliverable_name = @deliverable.class.name.underscore
+-%>
+<div id="new_delivery_container">
+
+<div id="validation-errors">
+	<%= error_messages_for :delivery %>
+	<%= error_messages_for deliverable_name.to_sym, :object => @deliverable, :header_message => _("This %{what} cannot be mailed because:") % {:what => deliverable_name}, :message => nil %>
+	<p style="color: red"><%= flash[:notice] %></p>
+</div>
+
+</div>

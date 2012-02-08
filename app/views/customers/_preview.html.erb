@@ -1,0 +1,46 @@
+<% content_for "stylesheets" do %>
+    <%= stylesheet_theme_controller %>
+    <%= stylesheet_theme_controller_printable(print?) %>
+<% end %>
+<div id="preview_customer_content" >
+  	<div class="wrap">
+  	  <div class="row_without_top_margin">
+        <div class="cell_value"><span id="customer_address1"><%=h preview.address1 %></span></div>
+	  </div>
+	  <div class="row_without_top_margin">
+        <div class="cell_value"><span id="customer_address2"><%=h preview.address2 %></span></div>
+	  </div>
+	  <div class="row_without_top_margin">
+        <div class="cell_value">
+        	<span id="customer_city"><%=h preview.city %></span>
+					<span id="customer_province_state"><%=h preview.province_state %></span>
+				</div>
+	  </div>
+	  <div class="row_without_top_margin">
+	      <div class="cell_value">
+	      	<span id="customer_country"><%=h localized_country(preview.country) %></span>
+					<span id="customer_postalcode_zip"><%=h preview.postalcode_zip %></span>
+				</div>
+	  </div>
+	  <div class="row_without_top_margin">
+	      <div class="cell_value">
+	      	<% unless (preview.contacts.nil? or preview.contacts.size == 0) %>
+				  		<h3><%= _('Language') %></h3>
+				  		<span><%= localize_language(preview.language) %></span>
+						<h3><%= _('Attention') %></h3>
+		      	<% if (preview.contacts.size == 1) %>
+							<input id="invoice_contact_id" type="hidden" name="invoice[contact_id]" value=<%= preview.default_contact.id %> />
+		      		<span id="span_contact_name"><%=h preview.default_contact.name %></span>
+						<% else %>
+							<%= select("invoice", "contact_id", 
+								(preview.contacts.collect	{|p| [ p.name, p.id ] }).sort_by {
+													|a| a[0].nil? ? "" : a[0]; 
+										}, 
+								:selected => preview.default_contact.id ) %>
+						<% end %>
+					<% end %>					
+	      </div>	  	
+	  </div>
+    </div>
+</div>
+

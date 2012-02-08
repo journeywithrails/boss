@@ -1,0 +1,69 @@
+<% content_for "stylesheets" do %>
+
+<% end %>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		
+		<h1><%= _("Customers") %></h1>
+		<%= link_to _("Back"), "/customers/overview", :id => "backButton" %>
+		<%= link_to _("Modify"), "/customers/#{@customer.id}/edit", :class => "nav Action" %>
+
+
+	</div>
+<% end %>
+
+	<% @content_for_main = capture do %>
+
+	<div class="blue"><%= h @customer.name %></div>
+		<ul class="field">
+			<% if !@customer.phone.blank? %>
+				<li class="arrow"><h3><%= _("Phone") %></h3> <%= link_to(h(@customer.phone), "tel:+#{h(@customer.phone)}")%></li>
+			<% end %>
+			<% if !@customer.address1.blank? || !@customer.address2.blank? %>
+				<li class="arrow"><h3><%= _("Address") %></h3> <%= link_to(h("#{h(@customer.address1)} #{@customer.address2} #{@customer.city} #{@customer.province_state} #{localized_country(@customer.country)}"), "http://www.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=#{h(@customer.address1)} #{h(@customer.address2)} #{h(@customer.city)} #{h(@customer.province_state)} #{h(@customer.country)}")%></li>
+			<% end %>
+			<% if !@customer.postalcode_zip.blank? %>
+				<li class="arrow"><h3><%= _("Postal/ZIP") %></h3> <%= link_to(h(@customer.postalcode_zip), "http://www.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=#{h(@customer.postalcode_zip)}")%></li>
+			<% end %>
+			<% if !@customer.website.blank? %>
+				<li class="arrow"><h3><%= _("Website") %></h3> <%= link_to(h(@customer.website), "http://#{h(@customer.website)}")%></li>
+			<% end %>
+			<% if !@customer.fax.blank? %>
+				<li><h3><%= _("Fax") %></h3> <%= h(@customer.fax) %></li>
+			<% end %>
+			<% if @customer.amount_owing > 0 %>
+				<li><h3><%= _("Amt. Owed") %></h3><%=h format_amount(@customer.amount_owing) %></li>
+			<% end %>
+		</ul>
+		<% if @customer.default_contact && !@customer.default_contact.name.blank? %>
+		<h1><%= _("Contact") %></h1>
+		
+			<ul class="field">
+					<li><h3><%= _("Name") %></h3> <%= h(@customer.default_contact.name) %></li>
+			<% if !@customer.default_contact.email.blank? %>
+				<li class="arrow">
+					<h3><%= _("Email") %></h3> <%= link_to(h(@customer.default_contact.email), "mailto:#{h(@customer.default_contact.email)}")  %>
+				</li>
+			<% end %>
+			<% if !@customer.default_contact.phone.blank? %>
+				<li class="arrow">
+					<h3><%= _("Phone") %></h3> <%= link_to(h(@customer.default_contact.phone), "tel:+#{h(@customer.default_contact.phone)}")  %>
+				</li>
+			<% end %>
+			</ul>
+		<% end %>
+		<h1><%= _("Actions") %></h1><a name="actions"></a>
+		<ul>
+			<li class="arrow"><%= link_to _('Invoice this customer'), "/invoices/new?customer=#{@customer.id}" %></li>
+			<li class="arrow"><%= link_to _('Edit this customer'), "/customers/#{@customer.id}/edit" %></li>
+			<li class="arrow"><%= link_to _('Delete this customer'), customer_path(@customer), :confirm => _('Are you sure you want to delete this customer?'), :method => :delete %></li>
+		</ul>
+
+	<% end %>
+
+	<%= render_inner_mobile_layout("nomenu") %>
+
+<% content_for "bottom_javascripts" do %>
+
+<% end %>

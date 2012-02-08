@@ -1,0 +1,47 @@
+
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+ <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+	<% @content_for_lnav = capture do %>
+	<% end %>
+    
+  <% @content_for_infobox = capture do %>
+	  <%= formatted_flash %>
+  <% end %>
+  
+	<% @content_for_main = capture do %>
+	<h1><%= _('Listing bookkeeping clients') %></h1>
+  <br/>
+	<table class="entity-list">
+	  <thead>
+		  <tr>
+        <th><%= _('E-mail') %></th>
+        <th><%= _('Name') %></th>        
+        <th></th>
+        <th></th>
+		  </tr>
+    </thead>
+
+    <tbody>
+		<% for b in @bookkeeping_clients %>
+		  <tr>
+		    <td><%=h b.user.sage_username %></td>
+		    <td><%=h b.user.profile.company_name %></td>        
+        <td><%= link_to _("View Client's Data"), bookkeeping_client_path(:id => b.id) + '/reports/' %></td>
+        <!-- b is a biller -->
+		    <td><%= link_to _("Unsubscribe From Client's Data"), bookkeeping_client_path(:id => b.id), 
+					:confirm => _("Warning! This action cannot be undone. Do you wish to delete access to view this client’s invoicing data?"), 
+					:method => :delete %></td>
+		  </tr>
+		<% end %>
+    </tbody>
+	</table>
+	<% end %>
+	<%= render_inner_layout('nomenu') %>

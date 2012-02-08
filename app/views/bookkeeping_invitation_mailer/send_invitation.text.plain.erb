@@ -1,0 +1,7 @@
+<%= @message %>
+
+<%= _("To accept or decline this invitation and view the data of %{name} you will need to register for an account at Billing Boss by clicking on this link below:") % {:name => "#{@mail_options[:name]}"} %>
+
+<%= link_to _('Join Billing Boss Now'), @bookkeeper_invitation_url %>
+
+<%= _("If you cannot click on the link provided, please copy the link %{link} to your browser and try again.") % {:link => "#{@bookkeeper_invitation_url}"} %>

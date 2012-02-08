@@ -1,0 +1,44 @@
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			
+<% end %>
+
+<% content_for :header do %>	    	
+	<%= render :partial => "home/header" %>
+<% end %>
+
+<% content_for("main")  do %>
+<div class="yui-b">
+  <div class="yui-gc"> 
+      <div class="yui-u first">
+        <div class="corner_large_tr">
+  					<div class="corner_large_tl">
+        			<%= formatted_flash_always %>     
+  					</div>
+        </div>						
+        
+        <div class="content">
+        	<br/>
+          
+        <div>
+          <p><%= _("You have been invited by %{name} to join Billing Boss.") % {:name => "<span id='invitor_name'>#{h invitor_name}</span>"} %></p>
+          <p><%= _("You will be able to see %{name} invoicing data if you accept this invitation.") % {:name => "<span id='invitor_name'>#{h invitor_name}</span>"} %></p>          
+          <p><%= _('To accept this invitation, you must log in using your existing Billing Boss account. If you do not have a Billing Boss account, you can create a new one.') %></p>
+          <br/>
+        </div>
+        <div id="invitation-button-container">
+          <form>
+          <%= submit_tag _("login"), :class => "go_button", :onclick => "document.location.href='#{secure_login_url}';return false;", :id => 'large-login-button' %> 
+          </form>
+        </div>
+
+      		<%= _('Not an existing user?') %> <%= link_to _("Create a new account..."), signup_path(:login => @invitation.recipient) %>
+        </div>      
+        <%= bottom_corners() %>
+      </div>
+      <div class="yui-u" >&nbsp;</div>
+  </div>
+</div>
+<div class="yui-b"></div>
+  
+<% end %>

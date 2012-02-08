@@ -1,0 +1,4 @@
+<div id="lnav_ad">
+  <% group_name.nil? ? @ad = pick_sagespark_ad() : @ad = pick_sagespark_ad(group_name) %>
+  <%=link_to(image_tag(@ad[0]), @ad[1], :id=>'lnav_ad', :target=>'_blank')%>
+</div>

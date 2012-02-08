@@ -1,0 +1,4 @@
+#!/bin/bash
+rake sage:svn_version
+svn delete http://sage.svnrepository.com/svn/sage/tornado/tags/staging -m "delete tornado/tags/staging (via script/trunk_to_staging)"
+svn copy http://sage.svnrepository.com/svn/sage/tornado/trunk http://sage.svnrepository.com/svn/sage/tornado/tags/staging -m "copy trunk:`cat config/svn_version` to tornado/tags/staging (via script/trunk_to_staging)"

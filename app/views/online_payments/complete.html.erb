@@ -1,0 +1,23 @@
+<% content_for("stylesheets") do%>
+	<%= stylesheet_theme_controller("invoices") %>
+	<%= stylesheet_theme_controller_printable(print?, "invoices")%>		
+<% end -%>
+
+<% @content_for_sidebar = capture do %>
+  <div class="invoice_lnav">
+    <h2 class="state"><small><%= _('Invoice Options') %></small></h2>
+    <ul class="lnav_ul">
+      <li>
+        <%= link_to(_('View Invoice'), display_invoice_invoice_path(:id => access_key)) %>
+      </li>
+    </ul>
+  </div>	
+<% end %>
+
+<% @content_for_main = capture do %>
+  <%=render :partial => "company_brand", :locals => { :profile => @profile } %>
+  <div class="page_header"><%= _("Payment is successfully recorded. Thank You.")%></div>
+<% end %>
+
+
+<%= render_inner_layout %>

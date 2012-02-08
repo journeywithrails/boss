@@ -1,0 +1,25 @@
+<% content_for "stylesheets" do %>
+  <%= stylesheet_theme_controller("session") %>
+<% end %>
+  
+<% content_for("main")  do %> 
+						
+  <div class="yui-u">      
+    <div class="corner_large_tr">
+				<div class="corner_large_tl">
+          <%= @content_for_infobox.blank? ? "&nbsp;" : @content_for_infobox %>	
+				</div>
+    </div> 
+      <div class="content">
+      	<br style="clear:both"/>
+        <%= error_messages_for :invitation, :header_message => "", :message => nil %>
+        <%= error_messages_for :invitation, :header_message => "", :message => nil %>
+        <br/>
+      </div>      
+    <%= bottom_corners() %>                   
+  </div> 
+<% end %>  
+
+<%= render 'layouts/bookkeepers_inner' %>
+
+  

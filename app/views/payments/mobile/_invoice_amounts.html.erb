@@ -1,0 +1,28 @@
+<%= f.hidden_field :customer_id, :value => field_if_not_blank(@customer){@customer.id} %>
+	
+	<table style="width: 100%">
+		<tr>
+			<td class="mobile_label"><% _("Customer name:") %> </td>
+			<td class="mobile_value"><span name='customer'><%=h @customer.name %></span></td>
+		</tr>
+		<tr>
+			<td class="mobile_label"><% _("Invoice number:") %> </td>
+			<td class="mobile_value"><span name='unique'><%= h @invoice.unique %></span></td>
+		</tr>
+		<tr>
+			<td class="mobile_label"><% _("Invoice date:") %> </td>
+			<td class="mobile_value"><%=format_date(_("%B %d, %Y")) { @invoice.date } %></td>
+		</tr>
+		<tr>
+			<td class="mobile_label"><% _("Reference number:") %> </td>
+			<td class="mobile_value"> <% @invoice.reference %></td>
+		</tr>	
+		<tr>
+			<td class="mobile_label"><% _("Invoice Amount:") %> </td>
+			<td class="mobile_value"><span id="invoice_total"><%=format_amount( @invoice.total_amount) %></span></td>
+		</tr>
+		<tr>
+			<td class="mobile_label"><% _("Amount Owing:") %> </td>
+			<td class="mobile_value"><span id='invoice_amount_owing'><%=format_amount( @invoice.amount_owing) %></span></td>
+		</tr>
+	</table>

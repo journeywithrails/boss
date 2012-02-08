@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--  <%=h RAILS_ENV %> -->
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%=h page_title %></title>
+  <%= stylesheet_global %>
+  <%= default_theme %>
+   <%= stylesheet_ie6 %>
+  <%= default_theme_controller("simply") %> 
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	<%= yield :stylesheets %>
+
+	<%= javascript_include_tag :defaults %>
+	<!-- load any template-specific javascripts (use by including a content_for block in template) -->
+	<%= yield :javascripts %>
+	<%= javascript_include_tag "simply.js" %>	
+	<% if RAILS_ENV == 'test' -%>
+	  <!-- conditionally include increment_ajax_counter for testing -->
+	  <%= javascript_include_tag('increment_ajax_counter') %>
+	<% end -%>
+	
+	<!-- Utility for leak-free, browser-safe cueing up of onload type stuff. Use instead of onload -->
+	<%= javascript_include_tag 'fastinit' %>
+	<!-- ajax tabs management -->
+	<%= javascript_include_tag 'control_tabs' %>
+	<!-- multiple select widget -->
+	<%= javascript_include_tag 'control_select_multiple' %>
+
+</head>
+
+<body>
+
+  <!-- simply/external_main -->
+  <!-- IE6 minimum width hack, opening -->
+  <div id="MinWidthContainer"><div id="PageContainer"><div id="PageContentContainer">
+
+  <div id="doc3" class="yui-t8">		
+	  <div id="hd" style="height: 75px; background-image: none;">
+  		<div id="header_bottom_simply" style="height: 75px; background-image: url('/images/simply/background_top.gif')">
+      	<div id="header_simply">
+      	  <div id="right_corner_simply" >
+            <div id="logo_simply"></div>
+      	  </div>
+        </div>
+      </div>
+  	</div>			
+	 	<div id="yui-main">
+	 	  <br/>
+      <%= yield :main %>			
+	  </div>
+    <div id="ft">
+
+    </div>    
+  </div>
+
+  <!-- IE6 minimum width hack, closing -->
+  </div></div></div>
+  
+<%= render :partial => "/layouts/google" %> 
+<%= render :partial => "/layouts/simply_close" %>
+<%= render :partial => "/layouts/simply/main_footer" %>
+</body>
+</html>

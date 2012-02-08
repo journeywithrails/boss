@@ -1,0 +1,1 @@
+page.replace_html("line_items_list", :partial => "list", :invoice_id => @invoice)

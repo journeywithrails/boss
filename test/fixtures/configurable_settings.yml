@@ -1,0 +1,208 @@
+<% i = 0 %>
+
+basic_user_profile_1:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_name
+  value_type: string      
+  value: --- "basic_user_profile_name"
+	
+basic_user_profile_2:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_address1
+  value_type: string      
+  value: --- "basic_user_profile_address1"	
+	
+basic_user_profile_3:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_address2
+  value_type: string      
+  value: --- "basic_user_profile_address2"	
+	
+basic_user_profile_4:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_city
+  value_type: string      
+  value: --- "basic_user_profile_city"	
+	
+basic_user_profile_5:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_state
+  value_type: string      
+  value: --- "basic_user_profile_state"	
+		
+basic_user_profile_6:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_country
+  value_type: string      
+  value: --- "BI"	
+	
+basic_user_profile_7:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_phone
+  value_type: string      
+  value: --- "604-555-1212"	
+		
+basic_user_profile_8:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: company_fax
+  value_type: string      
+  value: --- "604-555-1313"		
+  
+basic_user_profile_9:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User
+  name: heard_from
+  value_type: string
+  value: --- "Banks"
+  
+basic_user_profile_tax_1_enabled:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_enabled
+  value_type: FalseClass
+  value: --- false
+  
+basic_user_profile_tax_1_name:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_1_name
+  value_type: string      
+  value: --- "GST"		
+  
+basic_user_profile_tax_1_rate:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_1_rate
+  value_type: string      
+  value: --- "6.0"		
+ 
+basic_user_profile_tax_1_desc:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_1_desc
+  value_type: string      
+  value: --- "Goods and Services Tax"		
+
+basic_user_profile_tax_2_name:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_2_name
+  value_type: string      
+  value: --- "BC PST"		
+  
+basic_user_profile_tax_2_rate:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_2_rate
+  value_type: string      
+  value: --- "7.0"
+  
+basic_user_profile_tax_2_desc:
+  id: <% i=i+1 %>
+  configurable_id: 1
+  configurable_type: User  
+  name: tax_2_desc
+  value_type: string      
+  value: --- "B.C. Provincial Sales Tax"		
+
+complete_user_profile_tax_enabled:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: tax_enabled
+  value_type: TrueClass
+  value: --- true
+
+complete_user_profile_company_name:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: company_name
+  value_type: string
+  value: --- "Complete User Co."
+
+complete_user_profile_company_address1:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: company_address1
+  value_type: string
+  value: --- "123 Bob St."
+
+complete_user_profile_company_city:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: company_city
+  value_type: string
+  value: --- "Bobville"
+
+complete_user_profile_company_country:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: company_country
+  value_type: string
+  value: --- "CA"
+
+complete_user_profile_company_state:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: company_state
+  value_type: string
+  value: --- "British Columbia"
+
+
+complete_user_profile_company_postalcode:
+  id: <% i=i+1 %>
+  configurable_id: 2
+  configurable_type: User  
+  name: company_postalcode
+  value_type: string
+  value: --- "V1V 1V1"
+
+
+
+
+
+
+invoice_60_for_complete_user_profile_tax_1_enabled:
+  id: <% i=i+1 %>
+  configurable_id: 60
+  configurable_type: Invoice
+  name: tax_1_enabled
+  value_type: TrueClass
+  value: --- true
+  
+invoice_60_for_complete_user_profile_tax_2_disabled:
+  id: <% i=i+1 %>
+  configurable_id: 60
+  configurable_type: Invoice
+  name: tax_2_enabled
+  value_type: FalseClass
+  value: --- false
+

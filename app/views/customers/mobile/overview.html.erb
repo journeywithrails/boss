@@ -1,0 +1,32 @@
+<% content_for "stylesheets" do %>
+
+<% end %>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		<h1><%= _("Customers") %></h1>
+		<%= link_to _("Menu"), "/", :id => "backButton" %>
+		<%= link_to s_("Customer|New"), "/customers/new", :class => "nav Action" %>
+	</div>
+<% end %>
+
+	<% @content_for_main = capture do %>
+		<% if @customers.size > 0 %>
+		<ul>
+		    <% for customer in @customers
+		        contact = customer.default_contact %>
+			<li class="arrow"><a href="/customers/details/<%= customer.id %>">
+				<%= h(customer.name) %></a>
+			</li>
+		<% end %>
+		</ul>
+		<% else %>
+		<p><%= _("No customers.") %></p>
+		<% end %>
+	<% end %>
+
+	<%= render_inner_mobile_layout("nomenu") %>
+
+<% content_for "bottom_javascripts" do %>
+
+<% end %>

@@ -1,0 +1,121 @@
+<% customer_new_url = new_customer_path
+   customer_edit_url = "/customers/{0}/edit"
+   customer_url_params = "{#{request_forgery_protection_token.to_s}: '#{form_authenticity_token}'}"
+-%>
+
+<div id="customer-dialog" class="x-hidden">
+</div>
+
+<% content_for 'bottom_javascripts' do -%>
+<script type="text/javascript">
+Ext.onReady(function(){
+	
+		Sage.customer_dialog = {
+          win: nil,
+          on_success: function() {
+          },
+          on_failure: function() {
+          },
+          url: {url: '<%= customer_new_url %>', 
+								params: <%= customer_url_params %>,
+								method: "GET",
+								scripts: true
+					},
+          setup_new: function() {
+            Sage.customer_dialog.url.url = '<%= customer_new_url %>';
+          	// create the window on the first click and reuse on subsequent clicks
+            if(!Sage.customer_dialog.win){
+              Sage.customer_dialog.win = new Ext.Window({
+                  el:'customer-dialog',
+                  layout:'fit',
+                  allowDomMove: true,
+                  autoHeight: false,
+                  autoWidth: false,
+                  width:<%= ::AppConfig.invoice.customer_dialog.width %>,
+                  height:<%= ::AppConfig.invoice.customer_dialog.height %>,
+                  resizable: true,
+                  closeAction:'hide',
+                  plain: true,
+									title: "<%= _('New Customer') %>",
+									autoScroll: true,
+                  autoLoad: Sage.customer_dialog.url,
+
+                  buttons: [{
+                      text:"<%= _('Add') %>",
+                      id: 'customer-dialog-add-button',
+                      handler: this.onAdd
+                  },{
+                      text: "<%= _('Cancel') %>",
+                      id: 'customer-dialog-cancel-button',
+                      handler: this.onCancel
+                  }] // buttons
+              }); // Ext.Window
+						} // if
+          	else {
+              Sage.customer_dialog.win.load(Sage.customer_dialog.url);
+          	}
+					  Sage.customer_dialog.win.setTitle("<%= _('New Customer') %>");
+						// the first button is the Add button, the second is the Cancel							
+						Sage.customer_dialog.win.buttons[0].setText("<%= _('Add') %>");
+            Sage.customer_dialog.win.show(this);            
+					}, // setup_new
+					
+          setup_edit: function(id) {
+            Sage.customer_dialog.url.url = String.format('<%= customer_edit_url %>', id);
+          	// create the window on the first click and reuse on subsequent clicks
+            if(!Sage.customer_dialog.win){
+              Sage.customer_dialog.win = new Ext.Window({
+                  el:'customer-dialog',
+                  layout:'fit',
+                  allowDomMove: true,
+                              autoScroll: false,
+                              autoHeight: false,
+                              autoWidth: false,
+                  width:<%= ::AppConfig.invoice.customer_dialog.width %>,
+                  height:<%= ::AppConfig.invoice.customer_dialog.height %>,
+                  resizable: true,
+                  closeAction:'hide',
+                  plain: true,
+                  title: '<%= _("Edit Customer") %>',
+                  autoScroll: true,									
+                  autoLoad: Sage.customer_dialog.url,
+
+                  buttons: [{
+                      text:'Update',
+                      id: 'customer-dialog-update-button',
+                      handler: this.onUpdate
+                  },{
+                      text: "<%= _('Cancel') %>",
+                      id: 'customer-dialog-cancel-button',
+                      handler: this.onCancel
+                  }] // buttons
+              }); // new Ext Window
+            } // if
+          	else {
+              Sage.customer_dialog.win.load(Sage.customer_dialog.url);
+          	}
+						
+						Sage.customer_dialog.win.setTitle("<%= _('Edit Customer') %>");
+						// the first button is the Update button, the second is the Cancel	
+						Sage.customer_dialog.win.buttons[0].setText("<%= _('Update') %>");
+            Sage.customer_dialog.win.show(this);            
+          }, // setup_edit function
+          
+			onUpdate: function() {
+        Sage.customer_dialog.win.getEl().child('form#customer-popup').dom.onsubmit();											
+      },
+          
+			onAdd: function() {
+				Sage.customer_dialog.win.getEl().child('form#customer-popup').dom.onsubmit();																							
+      },
+			
+      onCancel: function() {
+				Sage.customer_dialog.win[Sage.customer_dialog.win.closeAction]();
+    	} 			
+			
+	 }; // sage_customer_dialog
+}); // Ext.OnReady
+
+</script>
+
+<% end -%>

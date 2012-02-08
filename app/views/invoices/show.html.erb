@@ -1,0 +1,147 @@
+<% @custom_title  = i_(@invoice, 'Invoice %{num}') % {:num => @invoice.unique.to_s} %>
+
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  <%= xpath_theme %>
+  <%= stylesheet_theme_controller %>
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>
+
+  <%= javascript_include_tag "/javascripts/homepage/jquery-1.3.2.min.js" %>
+
+  <%= javascript_include_tag "/javascripts/homepage/shadow/shadow.js" %>
+  <script type="text/javascript">
+    jQuery.noConflict(); //avoid conflict with prototype
+
+    jQuery(document).ready(function(){
+      jQuery("#preview_invoice_content").dropShadow({left: 6, top: 10, opacity: 0.5, blur: 5});
+     });
+  </script>
+
+<% end -%>
+
+<% @content_for_main_top = capture do %>
+  <div class="yui-g page_title"> 
+    <%=link_to_create_invoice %> 
+    <%=link_to_create_quote %> 
+    <div class="page_header"><%=(invoice_status(@invoice)).untaint %>
+    </div> 
+	</div>
+<% end %>
+
+
+<% @content_for_lnav = capture do %>
+    <%= render :partial => "/invoices/options_for_#{@invoice.invoice_or_quote.downcase}" %>
+
+    <div>
+        <%= render :partial=> "layouts/sagespark_ads", :locals=>{:group_name=>"regular"} %>
+    </div>
+<% end %>
+
+<% @content_for_sidebar = capture do %>
+    <%= render :partial=>'recurring_info' if @invoice.recurring? %>
+
+    <br/><br/>
+
+    <% if @invoice.recurring_invoice_id %>    
+      <%= render :partial => "automatically_generated_info" %>
+    <% end %>
+<% end %>
+  
+<% @content_for_infobox = capture do %>
+    <%= formatted_flash %>
+<% end %>    
+
+  <% @content_for_main = capture do %>
+    <br />
+    <div id="invoice_and_template_container">
+       <div id="preview_template_selector">
+       <%= render :partial => "/invoices/invoice_template/selector", :locals => { :profile => @profile } %>
+        </div>
+    <div id="preview_container">
+        <%= render :partial => "/invoices/invoice_template/#{get_invoice_template(@invoice, @selected_template)}", :locals => { :profile => @profile } %>
+    </div>
+    </div>
+
+		<% unless @invoice.deliveries.blank? %>
+		<!-- invoice access -->
+		<div id="invoice_access_container">
+			<%= link_to_function(_("Show/Hide invoice recipient information")) do |page|
+						page.toggle("invoice_access_table_container") 
+		 			end %>
+			<div id="invoice_access_table_container" style="display:none;">
+				<br/>
+				<table id="invoice_history">
+					<tr id="invoice_history_heading">
+						<th><%= _("Date sent") %></th>
+						<th><%= _("Recipient(s)") %></th>
+						<th></th>
+					</tr>
+						<%= render :partial => "/deliveries/delivery", :collection => @invoice.deliveries %>
+				</table>
+			</div>
+		</div>
+		<!-- end invoice access -->
+		<% end -%>
+		<br/>
+    <!-- history -->
+    <div id="history_container">
+      <%= link_to_function(_("Show/Hide History")) do |page|
+            page.toggle("invoice_history_table_container") 
+          end %>
+      <div id="invoice_history_table_container" style="display:none;">
+        <br/>
+        <table id="invoice_history">
+          <tr id="invoice_history_heading">
+            <th class="invoice_history_date"><%= _("Date") %></th>
+            <th class="invoice_history_amount"><%= _("Action") %></th>
+          </tr>
+          <%= render :partial => @activities %>
+        </table>
+      </div>
+    </div>
+    <!-- end history -->
+  <% end %>
+  
+  <% if @invoice.pay_applications.size > 0 %>
+    <% @content_for_secondary_body = capture do %>
+      <div id="invoice_recorded_payments_container">
+        <br />
+        <table id="invoice_recorded_payments">
+          <tr id="invoice_recorded_payments_heading">
+            <th class="invoice_recorded_payments_date"><%= _('Date') %></th>
+            <th class="invoice_recorded_payments_amount"><%= _('Amount') %> (<%= @invoice.currency %>)</th>
+            <th class="invoice_recorded_payments_type"><%= _('Payment type') %></th>
+            <th class="invoice_recorded_payments_description"><%= _('Description') %></th>
+            <th class="invoice_recorded_payments_action">&nbsp;</th>
+            <th class="invoice_recorded_payments_action">&nbsp;</th>
+          </tr>
+          <% @invoice.pay_applications.sort{|x,y| x.payment.created_at <=> y.payment.created_at }.each do |pa| %>
+            <tr>
+              <td class="invoice_recorded_payments_date"><%= pa.payment.date %></td>
+              <td class="invoice_recorded_payments_amount"><%= format_amount(pa.amount) %></td>
+              <td class="invoice_recorded_payments_type"><%= pa.payment.pay_type_display %></td>
+              <td class="invoice_recorded_payments_description">
+								<div style="text-overflow: ellipsis;overflow: hidden;">
+										<%= h(pa.payment.description) %>
+								</div>
+							</td>
+              <td class="invoice_recorded_payments_action">
+                 <%if (pa.payment.manual_payment?)%>
+                   <%= @invoice.customer.nil? ? link_to_function(_('Edit'), "alert('"+_("Cannot edit payment without customer. Please edit the invoice and add a customer.") + "')" ): link_to(_('Edit'), :controller => "payments", :action => "edit", :id => pa.payment.id) %>
+                 <%end%>
+              </td>
+              <td class="invoice_recorded_payments_action"><%= link_to _('Delete'), "/payments/#{pa.payment.id}", :confirm => _("Are you sure you want to delete this payment?"), :method => :delete, :id => 'destroy' %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+  <% end %>
+  <%= localized_image_tag('/images/loading.gif', :style => 'display: none') %>
+  <%= render_inner_layout %>
+<div id="dialog-content" style="display:none;"> dialog box content</div>

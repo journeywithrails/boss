@@ -1,0 +1,6 @@
+<tr style="width: 100%;" class="child_item">
+	<td><input id="new_draw_date" type="text" size="10" name="winners[<%= @num %>][draw_date]"/></td>
+	<td><input id="new_prize"  type="text" size="40" name="winners[<%= @num %>][prize]"/></td>
+	<td><input id="new_winner_name"  type="text" size="22" name="winners[<%= @num %>][winner_name]"/></td>
+	<td><div><%= link_to_function image_tag("/themes/#{user_style}/images/deleteitem.gif", :alt => "delete line") , "$(this).up('.child_item').remove();", :name => 'remove' %></div></td>
+</tr>

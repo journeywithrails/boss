@@ -1,0 +1,54 @@
+<pre>
+	
+	1. link_to invoices_path:
+		
+		<% puts 'link_to("link", invoices_path)' -%>
+		<%= h link_to("link", invoices_path) %>
+		<% puts 'link_to("link", invoices_url)' -%>
+		<%= h link_to("link", invoices_url) %>
+
+	2. invoices_path / invoices_url
+
+	helpers will be wrong by themselves:
+	<% puts 'invoices_path' -%>
+	<%= h invoices_path %>
+	<% puts 'invoices_url' -%>
+	<%= h invoices_url %>
+
+
+	if not in a link_to, wrap helpers with url_for
+	<% puts 'url_for(invoices_path)' -%>
+	<%= h url_for(invoices_path) %>
+	<% puts 'url_for(invoices_url)' -%>
+	<%= h url_for(invoices_url) %>
+		
+		
+	3. link_to "invoices/1/edit":
+
+		<% puts 'link_to("link", invoices/1/edit)' -%>
+		<%= h link_to("link", "invoices/1/edit") %>
+		absolute:
+		<% puts 'link_to("link", /invoices/1/edit)' -%>
+		<%= h link_to("link", "/invoices/1/edit") %>
+		
+
+	4. url_for "invoices/1/edit"
+
+		<% puts 'url_for(invoices/1/edit)' -%>
+		<%= h url_for("invoices/1/edit") %>
+		absolute:
+		<% puts 'url_for(/invoices/1/edit)' -%>
+		<%= h url_for("/invoices/1/edit") %>
+
+	5. url_for in controller:
+		
+		<%= h @url_for_named_route %>
+		<%= h @url_for_string %>
+		<%= h @url_for_absolute_string %>
+		
+	6. url_for with options:
+
+	<%= h url_for(:controller => '/invoices', :action => 'index') %>
+	
+
+</pre>

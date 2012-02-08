@@ -1,0 +1,33 @@
+<h1>New subscription.</h1>
+
+<%= error_messages_for :spsubscription %>
+
+<% form_for(@spsubscription, :url => service_provider_spaccount_spsubscriptions_path(params[:spaccount_id]), :html => {:method => :post} ) do |f| %>
+
+  <p>
+    <b>Service Code</b><br />
+    <%= text_field_tag("spsubscription[service_code]") %>
+  </p>
+
+  <p>
+    <b>Qty</b><br />
+    <%= text_field_tag("spsubscription[qty]") %>
+  </p>
+
+  <p>
+    <b>Status</b><br />
+    <%= text_field_tag("spsubscription[status]") %>
+  </p>
+
+  <p>
+    <b>Comment</b><br />
+    <%= text_field_tag("spsubscription[comment]") %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', service_provider_spaccount_spsubscriptions_path(params[:spaccount_id]) %>
+

@@ -1,0 +1,23 @@
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..') if $0 == __FILE__
+require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/acceptance_test_helper'
+
+# Test cases for User Story XXX
+class ___TEST_CLASS___ < Test::Unit::TestCase
+  include AcceptanceTestSession
+  fixtures :users
+  
+  def setup
+    @user = watir_session.with(:basic_user)
+    @user.logs_in
+  end
+  
+  def teardown
+   @user.teardown
+  end
+
+  
+  def test_case
+    assert true
+  end
+end

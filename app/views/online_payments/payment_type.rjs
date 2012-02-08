@@ -1,0 +1,1 @@
+page.replace_html 'payment_gateway_form', :partial => @gateway.form_partial

@@ -1,0 +1,95 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+                    <h1>Invoices by Currency</h1>
+                    <br/>
+                    <p>Invoices broken down by the currency in which they are
+                    entered.  Please note that the totals take raw numbers and
+                    do not perform exchange rates. Also, the users total shows
+                    all users who have created invoices, and is not a sum of the
+                    numbers above it.</p>
+                    <br/>
+                    <%# RADAR fix this route link_to _('Save as CSV file'), admin_overview_invoices_by_currency_path('invoices_by_currency', :format => 'csv')  %>
+                    <a href="/admin/overview/invoices_by_currency?format=csv"><%=  _('Save as CSV file') %></a>
+                    <br/>
+                    <br/>
+                    <table border="1" cellpadding="2" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <td><b>Currency</b></td>
+                          <td><b># Invoices</b></td>
+                          <td><b># Users</b></td>
+                          <td><b>Avg Amt</b></td>
+                          <td><b>Total Amt</b></td>
+                          <td><b>Avg Pmt</b></td>
+                          <td><b>Total Pmts</b></td>
+                          <td><b>Avg Owing</b></td>
+                          <td><b>Total Owing</b></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% AdminManager.invoices_by_currency.each do |c| %>
+                          <tr>
+                            <td align="center">
+                              <% if Currency.valid_currency?(c[0]) %>
+                                <b><a style="text-decoration:none;" href="<%= Currency.currency_url(c[0])%>" title="<%= Currency.currency_name(c[0]) %>"><%= h c[0] %></a></b>
+                              <% else %>
+                                <b><%= h c[0] %></b>
+                              <% end %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[1] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[2] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[3] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[4] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[5] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[6] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[7] %>
+                            </td>
+                            <td align="right">
+                              <%= AdminManager.commify_result c[8] %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+		<% end %>
+		<%= render_inner_layout %>  

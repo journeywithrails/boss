@@ -1,0 +1,13 @@
+th{
+	font-weight: bold;
+}
+.center-cell{
+	text-align: center;
+}
+td, th{
+  padding-bottom: 5px !important;
+}
+.login-field-cell{
+	text-align: center;
+}
+

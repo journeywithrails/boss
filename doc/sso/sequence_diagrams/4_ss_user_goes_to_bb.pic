@@ -1,0 +1,145 @@
+.PS
+
+copy "sequence.pic";
+movewid=.8;
+boxwid=1.1;
+
+title("\fB4. Logged-in SageSpark User goes to BillingBoss\fP");
+
+actor(U,"\fBSSUser\fP");
+object(SAM,"\fBSAM\fP");
+object(BB,"\fBBillingBoss\fP");
+object(CAS,"\fBCAS\fP");
+object(SS,"\fBSageSpark\fP");
+object(PE,"\fBProvEngine\fP");
+step4();
+
+# Logged in Sage Spark User goes to BB
+comment(BB,C1,down 0.3 right 3, wid 2.1 ht 0.7 "User does not" "exist in Billing Boss")
+# lconstraint(BB,"{User doesn't exist}");
+
+#begin
+	action(U,BB,"""goes to Billing Boss""(any page except login or signup)");
+	#begin
+		message(BB,CAS,"Logged in?");
+		return_message(CAS,BB,"Yes");
+		inactive(CAS);
+		step();
+	#end
+	#begin
+		step();
+		message_self(BB, "user exists?");
+		return_message_self(BB, "NO");
+	#end
+	return_message(BB,U,"Show page for un-logged-in user");
+	inactive(BB);
+#end
+step3();
+
+#begin
+	action(U,BB,"clicks login OR signup");
+	#begin
+		message(BB,CAS,"Logged in?");
+		return_message(CAS,BB,"NO");
+		inactive(CAS);
+		step();
+	#end
+	#begin
+		step();
+		message_self(BB, "user exists?");
+		return_message_self(BB, "NO");
+	#end
+
+# Billing Boss notifies user they must signup thru SageSpark, with link
+	message(BB,SS,"redirect to add BB to your SS account page");
+	inactive(BB);
+	return_message(SS,U,"""""Show add BB to your SS account page");
+	inactive(SS);
+#end
+step3();
+
+# User clicks link to signup thru SageSpark
+#begin
+	action(U,SS,"clicks add BB to your SS account link");
+	step();
+	return_message(SS,U,"""show page""cart billing_info");
+	comment(SS,C2,up 0.1 right 2, wid 3 ht 0.9 "billing_info page of cart" "collects business information""for BB profile");
+	inactive(SS);
+#end
+step3();
+
+#begin
+	action(U,SS,"submits bus. info");
+	#begin
+		message(SS,CAS,"Logged in?");
+		return_message(CAS,SS,"Yes");
+		inactive(CAS);
+		step();		
+	#end
+	
+	async();
+	message(SS,PE,"Provision Billing Boss");
+	sync();
+	return_message(SS,U,"Provisioning");
+	inactive(SS);
+#end
+
+#begin
+	active(PE);
+	message(PE,PE,"provisioning loop()");
+	async();
+	message(PE,BB,"Create Billing Boss User");
+	inactive(PE);
+	step();
+	inactive(PE);
+	inactive(BB);
+#end
+
+
+elapsed_time();
+
+
+# User polls to see if Billing Boss is ready
+#begin
+	action(U,SS,"Provisioned?");
+		message(SS,PE,"Provisioned?");
+			message_self(PE,"Provisioned?");
+			return_message_self(PE,"YES");
+			return_message(PE,SS,"Yes");
+			inactive(PE);
+		return_message(SS,U,"Yes");
+		inactive(SS);
+#end
+
+elapsed_time();
+
+# User clicks on button to use Billing Boss
+#begin
+	action(U,SS,"Use Billing Boss");
+	message(SS,BB,"redirect user/home");
+	inactive(SS);
+	step();
+	#begin
+		message(BB,CAS,"Logged in?");
+		return_message(CAS,BB,"Yes");
+		inactive(CAS);
+	#end
+	#begin
+		step();
+		message_self(BB, "user exists?");
+		return_message_self(BB, "YES");
+	#end
+	return_message(BB,U,"show User Home Page");
+	inactive(BB);
+	step();
+#end
+
+complete(U);
+complete(BB);
+complete(CAS);
+complete(SS);
+complete(PE);
+step4();
+step4();
+
+.PE

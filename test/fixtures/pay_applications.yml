@@ -1,0 +1,89 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+pay_app_for_partially_paid_invoice:
+  id: 1
+  invoice_id: 47
+  payment_id: 2
+  amount: 500.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 6
+pay_app_for_fully_paid_invoice:
+  id: 2
+  invoice_id: 48
+  payment_id: 3
+  amount: 1201.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 6
+  
+pay_app_for_invoice_10:
+  id: 3
+  invoice_id: 10
+  payment_id: 4
+  amount: 100.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 1
+
+pay_app_for_multiple_invoice_1:
+  id: 4
+  invoice_id: 49
+  payment_id: 5
+  amount: 1000.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 1
+  
+pay_app_for_multiple_invoice_2:
+  id: 5
+  invoice_id: 50
+  payment_id: 5
+  amount: 1000.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 1
+
+customer_all_paid_pay_app_1:
+  id: 6
+  invoice_id: 51
+  payment_id: 6
+  amount: 1000.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 8
+
+customer_all_paid_pay_app_2:
+  id: 7
+  invoice_id: 52
+  payment_id: 7
+  amount: 1000.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 8
+
+customer_partially_paid_pay_app_1:
+  id: 8
+  invoice_id: 53
+  payment_id: 8
+  amount: 200.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 8
+
+customer_partially_paid_pay_app_2:
+  id: 9
+  invoice_id: 54
+  payment_id: 9
+  amount: 200.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 8
+
+pay_app_for_invoice_75:
+  id: 10
+  invoice_id: 75
+  payment_id: 10
+  amount: 50.00
+  created_at: 2007-11-14 14:26:06
+  updated_at: 2007-11-14 14:26:06
+  created_by_id: 6

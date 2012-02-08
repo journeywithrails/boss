@@ -1,0 +1,173 @@
+<% content_for "stylesheets" do %>
+
+<% end %>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		<h1><%= _("Invoices") %></h1>
+		<%= link_to _("Menu"), "/", :id => "backButton" %>
+		<%= link_to s_("Invoice|New invoice"), "/invoices/new/invoice", :class => "nav Action" %>
+                <%= link_to s_("Quote|New quote"), "/invoices/new?is_quote=1", :class => "nav Action", :style=> "right:100px;" %>
+	</div>
+<% end %>
+
+	<% @content_for_main = capture do %>
+		<div id="secondary_header" ><table style="width: 100%; font-size: 13px !important;">
+			<tr>
+                                <td id="outstanding_button_cell" class="menu_button" style="width: 25%">
+					<a id="outstanding_button" type="outstanding_invoices" onclick="Sage.switch_to_tab(this);">
+						<%= _("Sent (%{num})") % {:num => @outstanding_invoices.size} %></a>
+				</td>
+				<td id="past_due_button_cell" class="menu_button enabled_menu_button" style="width: 25%">
+					<a id="past_due_button" type="past_due_invoices" onclick="Sage.switch_to_tab(this);">
+						<%= _("Late (%{num})") % {:num => @past_due_invoices.size} %></a>
+				</td>
+				<td id="quote_button_cell" class="menu_button" style="width: 25%">
+					<a id="quote_button" type="quote_invoices" onclick="Sage.switch_to_tab(this);">
+						<%= _("Quote (%{num})") % {:num => @quote_invoices.size} %></a>
+				</td>
+				<td id="draft_button_cell" class="menu_button" style="width: 25%">
+					<a id="draft_button" type="draft_invoices" onclick="Sage.switch_to_tab(this);">
+						<%= _("Draft (%{num})") % {:num => @draft_invoices.size} %></a>
+				</td>
+				<td id="paid_button_cell" class="menu_button" style="width: 25%">
+					<a id="paid_button" type="paid_invoices" onclick="Sage.switch_to_tab(this);">
+						<%= _("Paid (%{num})") % {:num => @paid_invoices.size} %></a>
+				</td>
+			</tr>
+		</table>
+		</div>
+
+		
+		
+		<div id="outstanding_invoices" style="display: none">
+			<% if @outstanding_invoices.size > 0 %>
+			<ul>
+				<% for invoice in @outstanding_invoices %>
+					<li class="arrow">
+						<a href="/invoices/<%= invoice.id %>">
+							<% if invoice.customer && !invoice.customer.name.blank? %>
+								<% if !invoice.due_date.blank? %>
+                                    <%= _("Inv. \#%{num} for %{custname}<br/>%{amt} %{currency} due in %{days} days") % { :num => h(invoice.unique), :custname => h(invoice.customer.name), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency), :days => (invoice.due_date - Date.today) } %>
+								<% else %>
+                                    <%= _("Inv. \#%{num} for %{custname}<br/>%{amt} %{currency} due") % { :num => h(invoice.unique), :custname => h(invoice.customer.name), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency) } %>
+								<% end %>
+							<% else %>
+								<% if !invoice.due_date.blank? %>
+                                    <%= _("Inv. \#%{num}<br/>%{amt} %{currency} due in %{days} days") % { :num => h(invoice.unique), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency), :days => (invoice.due_date - Date.today) } %>
+								<% else %>
+                                    <%= _("Inv. \#%{num}<br/>%{amt} %{currency} due") % { :num => h(invoice.unique), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency) } %>
+								<% end %>
+							<% end %>
+						</a>
+					</li>
+				<% end %>
+			</ul>
+			<% else %>
+			<p><%= _("No outstanding invoices.") %></p>
+			<% end %>
+		</div>
+
+                <div id="past_due_invoices">
+			<% if @past_due_invoices.size > 0 %>
+			<ul>
+				<% for invoice in @past_due_invoices %>
+						<li class="arrow">
+							<a href="/invoices/<%= invoice.id %>">
+								<% if invoice.customer && !invoice.customer.name.blank? %>
+                                    <%= _("Inv. \#%{num} for %{cust}<br/>%{amt} %{currency} is %{days} days late") % {:num => h(invoice.unique), :cust => h(invoice.customer.name), :amt => format_amount(invoice.owing_amount), :currency => h(invoice.currency), :days => (Date.today - invoice.due_date)} %>
+								<% else %>
+                                    <%= _("Inv. \#%{num}<br/>%{amt} %{currency} is %{days} days late") % {:num => h(invoice.unique), :amt => format_amount(invoice.owing_amount), :currency => h(invoice.currency), :days => (Date.today - invoice.due_date)} %>
+								<% end %>
+							</a>
+						</li>
+				<% end %>
+			</ul>
+			<% else %>
+			<p><%= _("No past due invoices.") %></p>
+			<% end %>
+		</div>
+
+                <div id="quote_invoices" style="display: none">
+		<% if @quote_invoices.size > 0 %>
+			<ul>
+				<% for invoice in @quote_invoices %>
+						<li class="arrow">
+							<a href="/invoices/<%= invoice.id %>">
+								<% if invoice.customer && !invoice.customer.name.blank? %>
+                                    <%= _("Inv. \#%{num} for %{custname}<br/>%{amt} %{currency} total") % { :num => h(invoice.unique), :custname => h(invoice.customer.name), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency) } %>
+                                <% else %>
+                                    <%= _("Inv. \#%{num}<br/>%{amt} %{currency} total") % { :num => h(invoice.unique), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency) } %>
+                                <% end %>
+							</a>
+						</li>
+				<% end %>
+			</ul>
+			<% else %>
+			<p><%= _("No quote invoices") %></p>
+			<% end %>
+		</div>
+		
+		<div id="draft_invoices" style="display: none">
+		<% if @draft_invoices.size > 0 %>
+			<ul>
+				<% for invoice in @draft_invoices %>
+						<li class="arrow">
+							<a href="/invoices/<%= invoice.id %>">
+								<% if invoice.customer && !invoice.customer.name.blank? %>
+                                    <%= _("Inv. \#%{num} for %{custname}<br/>%{amt} %{currency} total") % { :num => h(invoice.unique), :custname => h(invoice.customer.name), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency) } %>
+                                <% else %>
+                                    <%= _("Inv. \#%{num}<br/>%{amt} %{currency} total") % { :num => h(invoice.unique), :amt => format_amount(invoice.total_amount), :currency => h(invoice.currency) } %>
+                                <% end %>
+							</a>
+						</li>
+				<% end %>
+			</ul>
+			<% else %>
+			<p><%= _("No draft invoices") %></p>
+			<% end %>
+		</div>
+		
+		<div id="paid_invoices" style="display: none">
+			<% if @paid_invoices.size > 0 %>
+			<ul>
+				<% for invoice in @paid_invoices %>
+					<li class="arrow">
+						<a href="/invoices/<%= invoice.id %>">
+							<% if invoice.customer && !invoice.customer.name.blank? %>
+                                <%= _("Inv. \#%{num} for %{custname}<br/>%{amt} %{currency} paid") % { :num => h(invoice.unique), :custname => h(invoice.customer.name), :amt => format_amount(invoice.paid_amount), :currency => h(invoice.currency) } %>
+                            <% else %>
+                                <%= _("Inv. \#%{num}<br/>%{amt} %{currency} paid") % { :num => h(invoice.unique), :amt => format_amount(invoice.paid_amount), :currency => h(invoice.currency) } %>
+                            <% end %>
+						</a>
+					</li>
+				<% end %>
+			</ul>
+			<% else %>
+			<p><%= _("No paid invoices.") %></p>
+			<% end %>
+		</div>
+		
+	<% end %>
+
+	<%= render_inner_mobile_layout("nomenu") %>
+
+<% content_for "bottom_javascripts" do %>
+	<script type="text/javascript" language="javascript">
+	  
+	Sage.switch_to_tab = function(caller) {
+		var sections = ["past_due", "outstanding", "draft", "paid", "quote"];
+		sections.each(
+			function(str){
+
+				$(str + "_invoices").hide();
+				$(str + "_button").up("td").removeClassName("enabled_menu_button");
+				//alert($("user_" + str + "_link").up('tr').innerHTML);
+    		}
+		);
+
+		$(caller.type).show();
+		$(   (caller.id + "_cell")  ).addClassName('enabled_menu_button');
+	};
+	</script>
+<% end %>

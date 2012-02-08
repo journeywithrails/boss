@@ -1,0 +1,16 @@
+<%#used for display things that are outside of the corners %>
+<div>
+  <%= @content_for_main_top %>	
+</div>
+
+<div> 
+
+    <%= @content_for_infobox.blank? ? "" : @content_for_infobox %>	
+					
+   
+  	<div class="content">
+
+      <%= @content_for_main %>			
+	  </div>
+
+</div> 

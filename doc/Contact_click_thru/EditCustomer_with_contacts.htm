@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Edit Customer</title>
+    <style>
+    .new_field {
+      color: #ddd;
+    }
+    
+    .not_new_field {
+      color: black;
+    }
+    
+    </style>
+</head>
+<body>
+    <div>
+        Edit Customers
+        <br />
+        <table style="width: 100%;">
+            <tr>
+                <td><span>Name</span></td>
+                <td><input id="Text1" type="text" value="Customer 1" /></td>
+            </tr>
+            <tr>
+                <td><span>Address 1</span></td>
+                <td><input id="Text2" type="text" value="Address 1" /></td>
+            </tr>
+            <tr>
+                <td><span>Address 2</span></td>
+                <td><input id="Text3" type="text" value="Address 2"/></td>
+            </tr>
+        </table>
+        <br />
+        <span>Contacts</span>
+        <div id="contacts" >
+        <hr />
+        <table style="width: 100%;">
+            <tr>
+              <td><span>Action</span></td>              
+              <td><span>First Name</span></td>
+              <td><span>Last Name</span></td>
+              <td><span>Email Name</span></td>
+              <td><span>Phone</span></td>
+              <td><span>Primary</span></td>              
+            </tr>
+            <tr>
+                <td>
+                  <input id="Button3" type="button" value="X" onclick="window.location = 'DeleteContactOk.htm'"/>
+                    </td>
+                <td><input id="Text11" type="text" value="Joe" /></td>
+                <td><input id="Text12" type="text" value="Blow" /></td>
+                <td><input id="Text13" type="text" value="joe@mac.com" /></td>
+                <td><input id="Text14" type="text" value="(604) 555-1212" /></td>
+                <td><input id="Radio1" type="radio" name="primary" checked='checked' /></td>
+            </tr>
+            <tr>
+                <td>
+                  <input id="Button4" type="button" value="X" onclick="window.location = 'DeleteContactNotOk.htm'" />
+                </td>
+                <td><input id="Text8" type="text" value="Jane" /></td>
+                <td><input id="Text9" type="text" value="Doe" /></td>
+                <td><input id="Text10" type="text" value="jane@mac.com" /></td>
+                <td><input id="Text15" type="text" value="(604) 555-1313" /></td>
+                <td><input id="Radio2" type="radio" name="primary"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input id="Text16" type="text" class="new_field" onclick="touch_field('Text16');" value="Bob" /></td>
+                <td><input id="Text17" type="text" class="new_field" onclick="touch_field('Text17');"  value="Bob" /></td>
+                <td><input id="Text18" type="text" class="new_field" onclick="touch_field('Text18');"  value="Bob" /></td>
+                <td><input id="Text19" type="text" class="new_field" onclick="touch_field('Text19');"  value="Bob" /></td>
+                <td><input id="Radio3" type="radio" name="primary"/></td>
+            </tr>
+            <tr>
+              <td align="right" colspan="6"><a href="javascript:window.location.href='AddContact.htm'">add blank contact [+]</a></td>
+            </tr>
+         </table> 
+        <hr />          
+        </div>
+        <br />
+        <div>
+            <input id="Button1" type="button" value="Update" onclick="window.location = 'NewInvoice.htm';"/>        
+        </div> 
+
+      <script>
+      function touch_field(f){
+        document.getElementById('Button7').disabled = false;
+        document.getElementById(f).value='';
+        document.getElementById(f).className='not_new_field';
+      }
+      </script>
+    </div>
+
+</body>
+</html>

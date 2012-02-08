@@ -1,0 +1,16 @@
+<p>
+  <b><%= _('Client name:') %></b>
+  <span id="invitor_name"><%=h @client.user.sage_username %></span>
+</p>
+
+<p>
+  <b><%= _('Total invoice amounts:') %></b>
+  <span id="total_invoice_amounts"><%=h total_invoice_amounts %></span>
+</p>
+
+<p>
+  <b><%= _('Total amount owing:') %></b>
+  <span id="total_amount_owing"><%=h total_amount_owing %></span>
+</p>
+
+<%= link_to _('Back'), bookkeeping_clients_path %>

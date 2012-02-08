@@ -1,0 +1,115 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf330
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww11980\viewh17120\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 Questions:\
+1. On screen 3a, if the text (where customer receipts will be sent) can be moved to the help text, then the signup box is identical to the regular signup box and it can be re-used with no extra work/code.\
+\
+\
+\
+1. Create a PaymentGateway resource\
+	REST:\
+	index: -- lists available gateways, and/or gateways user has enabled\
+	show: -- shows summary of settings for a gateway\
+         edit: edit settings of  a gateway\
+         destroy: -- stop using a gateway\
+         create: -- start using a gateway, with settings entered\
+         update: -- edit settings of enabled gateway\
+\
+\
+2. the simply signup should be 1 view and swap in more questions with javascript show hidden div. I recommend doing terms & conditions as hidden div too (but make print & save as pdf separate actions)\
+\
+\
+3. Plan for integrating browsals (which may have custom flow) in existing controllers:\
+\
+	1. at key points in existing controllers, use the following construct:\
+\
+		browsal_redirect_for(:success) || redirect_to login_path\
+			or\
+		browsal_render(:success) || render ....\
+\
+	in app controller, implement browsal_redirect to call redirect_for on the browsal passing the symbol, the controller.name and controller.action name. similarly with browsal_render. If the browsal returns a path / render dictionary, do the redirect or render. otherwise return false. \
+\
+	in individual browsals, implement redirect_to and render and handle various combos of controller, action and state. Return false if don't want to do anything special\
+\
+-- the browsal has controller in instance variable, so can do url_helpers etc.\
+	\
+-- in the various app/views, segregate the simply views into folders rather than using prefaces. Render dictionaries can then add simply. Means may not be able to use the url helpers -- oh well.\
+\
+-- probably in the browsals use a combination of state machine & inspection of objects to determine flow control\
+\
+\
+possibly may have to add in some controllers sending events to browsal if it exists, ie: browsal.user_invalid! \
+\
+to avoid cluttering controllers with conditional logic, if we have to do this we will put a dummy browsal that ignores such event messages. \
+\
+
+\b Pages
+\b0 \
+3a, 3b (3c?)\
+-- users/simply/new.html.erb\
+-- switch in info with javascript\
+-- possibly also implement T&C with js\
+\
+3d, 3e (thankyou part. This would also be displayed if only in signupbrowsal\
+-- tha.html.erb\
+-- 3d: users/simply/_thankyou_pending_invoice.html.erb\
+-- 3e: users/simply/_thankyou_select_payment.html.erb\
+-- maybe don't need these as partials, just conditional blocks of content in thankyou.html.erb\
+\
+\'95 email-now button -> 4c: is a GET deliveries/new\
+-- email later button -> on 3d, goes to 3f. On 3e, cancels out of browsal\
+\
+3f\
+action: payment_gateways index action\
+--payment_gateways/simply/index.html.erb\
+\'95 make this my payment processor -> payment_gateways/update (or possibly profiles/update if not enough time to implement)\
+\'95 go there to sign up now: defer\
+\
+4a\
+/session/simply/new\
+work normally\
+\
+4b\
+-- action GET payment_gateways/switch_to_sps\
+-- store redirect_location(4c)\
+-- payment_gateways/simply/switch_to_sps.html.erb \
+\'95 YES: POST payment_gateways/switch_to_sps. this action redirects to stored redirect_location (4c)\
+\'95 NO -- links to stored redirect_location\
+\
+4c (send invoice)\
+invoices/simply/send_invoice_preview.html.erb\
+-- get here by doing deliveries/new\
+-- browsal overrides to use template invoices/simply/send_invoice\
+\'95 NO  -- call window.external.browsal_cancelled(). SA will then pass cancelled when asking for status\
+\'95 YES -- POST deliveries/create\
+\
+4d.a (empty window that just calls browsal close)\
+browsals/simply/close.js.erb (rjs)\
+\
+4d\
+invoices/simply/invoice_sent.html.erb\
+\'95 Close This Window -- calls window.external.browsal_completed()\
+\'95 Go To My Billing Boss (defer for this sprint)\
+\'95 I don't want to see this confirmation anymore: PUT to profiles/update, call window.external.browsal_completed()\
+\
+\
+
+\b Implementation\
+
+\b0 1. "What is this" (2b, 2c)\
+SA:\
+-- request a SignupBrowsal\
+BB:\
+-- create SignupBrowsal\
+POST to http://localhost:3000/browsals\
+<browsal>\
+	<browsal-type>SignupBrowsal</browsal-type>\
+</browsal>\
+-- returns current-url\
+\
+\
+\
+}

@@ -1,0 +1,29 @@
+
+<table width="100%" border="1px" id="invoice_print_table">
+	<%= _("Payments Report for %{company} (%{num} payments)") % {:company => short_company_title, :num => @payments.length} %> <br/><br/>
+    <%= report_filter_caption %>
+	<th><%= _("Customer") %></th>
+	<th><%= _("Invoice \#") %></th>	
+	<th><%= _("Payment Type") %></th>
+	<th><%= _("Paid") %></th>
+	<th><%= _("Date") %></th>
+
+	<% @payments.each do |pay| %>
+		<% @amount += pay.amount || 0 %>	
+		<tr>
+			<td><%= pay.customer ? h(pay.customer.name) : "" %></td>
+			<td><%= h pay.invoice_no %></td>
+			<td><%= pay.pay_type %></td>
+			<td><%= format_amount(pay.amount) %></td>
+			<td><%= pay.date %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td><%= _("Total") %>:</td>
+		<td></td>
+		<td></td>
+		<td><%= format_amount(@amount) %></td>
+		<td></td>
+	</tr>
+</table>
+<span id="total_rows" style="display: none"><%= @payments.length %></span>

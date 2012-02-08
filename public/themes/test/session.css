@@ -1,0 +1,27 @@
+#container {	
+	width: 819px;
+	height: 800px;
+	margin: 0 auto;
+	text-align: center; /*THIS BY-PASSES ISSUE IN IE.5 REGARDING CENTERING OF CONTENT IN BROWSER */	background-image: url('/images/login_page.gif');
+	background-repeat: repeat-y;
+	background-position: top right;
+	background-color: #FFFFFF;		
+  
+}
+
+#login_background {
+	height: 500px;
+	/* background-image: url('/images/Login_bg.jpg'); */
+	background-repeat: no-repeat;
+}
+
+
+label {
+	font-size:120%;
+}
+
+input {
+	font-size:110%;
+	}
+  
+  

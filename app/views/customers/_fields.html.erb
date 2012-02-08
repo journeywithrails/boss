@@ -1,0 +1,59 @@
+<div class="yui-g">
+  <div class="yui-u first">
+    <div class="row">
+      <div class="cell_label"><%= f.label :name, _('Name:') %></div>
+      <div class="cell_value"><%= f.text_field :name, :class => "colored_field" %></div>
+    </div>
+    <div class="row">
+      <div class="cell_label"><%= f.label :address1, _('Address 1:') %></div>
+      <div class="cell_value"><%= f.text_field :address1, :class => "colored_field" %></div>
+    </div>
+    <div class="row">
+      <div class="cell_label"><%= f.label :address2, _('Address 2:') %></div>
+      <div class="cell_value"><%= f.text_field :address2, :class => "colored_field" %></div>
+    </div>
+    <div class="row">
+      <div class="cell_label"><%= f.label :city, _('City:') %></div>
+      <div class="cell_value"><%= f.text_field :city, :class => "colored_field" %></div>
+    </div>
+    <div class="row">
+      <div class="cell_label"><%= f.label :country, _('Country:') %></div>
+      <div class="cell_value">
+        <div id="div_customer_country">
+          <%= country_select(:customer, :country, [$COUNTRY.to_s, ['Canada', 'CA'], ['United States', 'US']]) %>
+        </div>
+      </div>
+    </div>
+    <div id="div_country_dependent">
+      <%= render :partial => 'shared/' + fields.country_settings.partial, :object => fields %>
+    </div>
+  </div>
+  <div class="yui-u">
+    <div class="row">
+      <div class="cell_label"><%= f.label :phone, _('Phone:') %></div>
+      <div class="cell_value"><%= f.text_field :phone, :class => "colored_field" %></div>
+    </div>
+    <div class="row">
+      <div class="cell_label"><%= f.label :fax, _('Fax:') %></div>
+      <div class="cell_value"><%= f.text_field :fax, :class => "colored_field" %></div>
+    </div>
+    <div class="row">
+      <div class="cell_label"><%= f.label :website, _('Website:') %></div>
+      <div class="cell_value"><%= f.text_field :website, :class => "colored_field" %></div>
+    </div>
+    <% if !::AppConfig.hide_localization %>
+      <div class="row">
+        <div class="cell_label"><%= f.label :language, _('Language:') %></div>
+        <div class="cell_value"><%= f.select :language, select_languages_localized, :selected => customer_language(@customer) %></div>
+      </div>
+    <% end -%>
+  </div>
+</div>		
+<% if params["_dc"] #this is the only way i seem to have found to distinguish on-the-fly vs regular pages %>
+	<%= render :partial => "/customers/customer_state_province_js_toggle" %>
+<% else %>
+	<% content_for "bottom_javascripts" do -%>
+		<%= render :partial => "/customers/customer_state_province_js_toggle" %>
+	<% end # content_for "bottom_javascripts"
+     %>		
+<% end %>

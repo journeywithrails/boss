@@ -1,0 +1,58 @@
+<% content_for "stylesheets" do%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= xpath_theme %>
+    <%= stylesheet_theme_controller %>
+<% end %>
+
+<% content_for "javascripts" do%>
+ <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+ <%= javascript_include_tag "/ext/ext-all.js" %>
+ <%= javascript_include_tag "RowExpander" %>
+ <%= javascript_include_tag "/ext/ext-fix.js" %> 
+ <%= javascript_include_tag "/ext/source/locale/ext-lang-#{locale.language}.js" %>
+<% end%>
+
+
+<% @content_for_main_top = capture do %>
+ <div class="yui-g">
+    <%=css_button_link_to _("Add New Customer"),  {:controller=>"customers", :action=>"new"}, {:id=>"new_customer", :class=>"button_orange"} %>
+    <%=link_to_create_invoice %>
+    <%=link_to_create_quote %>
+    <div class="page_header"><%= _('Customer List') %></div>   
+</div>
+<%= formatted_flash %>
+
+<% end %>
+
+
+		<% @content_for_sidebar = capture do %>
+			<h2 class="state"><small><%= _("Options") %></small></h2>
+			<ul class="lnav_ul">
+				<li class="center_link"><%= link_to _('Export Customer list'), formatted_customers_path(:csv) %></li>
+				<li class="center_link"><%= render :partial => "/customers/import" %></li>
+			</ul>
+
+            <div>
+              <%= render :partial=> "layouts/sagespark_ads", :locals=>{:group_name=>"regular"} %>
+            </div>
+		<% end %>
+		
+		
+		<% @content_for_main = capture do %>
+    
+		<% form_for( :filters, :url => { :action => "filter" }, :html => { :method => :put} ) do |f| %>
+		
+			<div class="yui-g">  
+  			<br style="clear: both;"/>
+  			<%= render :partial => "customer_grid", :locals => {
+  			  :elm => 'customers_grid',  
+  			  :label => _('customers'),
+  			  :page_size => 10,
+  			  :action_link => '/customers/{0}/edit',
+  			  :action_name => 'edit'
+  			} %>
+  			<div id="customers_grid"></div>
+			</div>
+	    	<% end %>
+		<% end %>
+		<%= render_inner_layout %>

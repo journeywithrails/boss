@@ -1,0 +1,32 @@
+<table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" style="font-family: Arial; font-size: 12pt; color: #493F0B;">
+
+	<tr>
+		<td style="padding-bottom: 20px"><img border="0" src="<%= ::AppConfig.host %>/images/email/email_logo.gif" width="175" height="90"></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>    
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td style="padding-bottom: 20px">
+      <br/><br/>
+      <%= @message %>
+      <br/><br/>
+       <%= _('To accept or decline this invitation and view the data of %{name} you will need to register for an account at Billing Boss by clicking on this link below:' % {:name => "#{@mail_options[:name]}"})%>
+      <br/><br/>
+      <%= link_to _('Join Billing Boss Now'), @bookkeeper_invitation_url %>
+      <br/><br/>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+
+
+</table>
+<br/>
+<p><%= _("If you cannot click on the link provided, please copy the link %{link} to your browser and try again.") % {:link => "#{@bookkeeper_invitation_url}"} %> </p>

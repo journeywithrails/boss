@@ -1,0 +1,14 @@
+ServerAlias billingboss.com
+
+#cache static files
+ExpiresActive On
+ExpiresByType image/gif "now plus 1 week"
+ExpiresByType image/jpeg "now plus 1 week"
+ExpiresByType text/css "now plus 1 week"
+ExpiresByType image/png "now plus 1 week"
+ExpiresByType image/jpg "now plus 1 week"
+ExpiresByType application/x-javascript "now plus 1 week"                          
+#gzip js files
+AddOutputFilterByType DEFLATE application/x-javascript
+#disable etag because of multiple front ends
+FileETag none

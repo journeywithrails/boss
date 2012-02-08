@@ -1,0 +1,134 @@
+/*
+TODO:
+  - Fonts inconsistent...
+  - Better spacing for the invoice and total sections.
+  - Bill-To instead of To as the header for the customer address?
+  - Bold font is only used for the total... doesn't look balanced.
+  - Page numbering font.
+  - Make Print Preview look like the PDF? 
+*/
+
+@media print {
+  /* reduce the min-width so it'll fit on a printed page, and respect the margins */
+    #doc, #doc2, #doc3, #doc4, .yui-t1, .yui-t2, .yui-t3, .yui-t4, .yui-t5, .yui-t6, .yui-t7 {
+      min-width:550px !important;
+    }            
+  /* temp hack to preent truncating the Quantity column label */
+    #preview_line_items th.quantity{
+      width:6em !important;	
+    }
+  @page {
+    /* margin for PDF */
+      margin: 0.5in !important;
+    /* prince page numbers */
+      @bottom {
+        font-family: Verdana !important;
+        content: "Page " counter(page) " of " counter(pages) !important
+      }
+  }
+}
+
+/* print preview works accross multiple pages for IE */
+  .clearfix {
+    display: inline !important;
+  }
+  
+/* print preview accross multiple pages for FireFox */
+  #bd:after,
+  .yui-g:after,
+  .yui-gb:after, 
+  .yui-gc:after, 
+  .yui-gd:after, 
+  .yui-ge:after, 
+  .yui-gf:after {
+    display: inline !important;
+  }
+  
+/* Remove the New Invoice button. */
+  a#new_invoice {
+      display: none !important;
+  }
+
+/* Remove the header and footer */
+  div#hd {
+    display: none !important;
+  }
+  div#ft {
+    display: none !important;
+  }	
+
+/* Remove the lnav div and make the main one span the whole page. */
+  div#lnav {
+    display: none !important;
+  }
+  
+  .yui-t1 #yui-main .yui-b {
+    margin-left: 0 !important;
+  }
+  
+  div.corner_large_tl {
+    background: none !important;
+  }
+  
+  div.corner_large_tr {
+    background: none !important;
+  }
+
+  div.corner_large_bl {
+    background: none !important;
+  }
+
+  div.corner_large_br {
+    background: none !important;
+  }
+  
+  div#content_container {
+		width: 100% !important;
+		float: left !important;
+  }
+  
+  div.content {
+    background: none !important;
+    border: none !important;
+  }
+
+/* more spacing for the longer printed page */
+  #preview_line_items {
+    margin-top: 4em !important;
+  }
+
+
+/* white background */
+  #preview_container {
+    background-image: none !important; 
+    background-color: white !important;
+  }
+  #content_container {
+      background-color: white !important;
+  }
+  
+/* grey line items column heading */
+  #preview_line_items_heading{
+    color: white !important; 
+    background-color: #999999 !important;
+  }
+
+
+/* font */
+  body {
+    background-image: none !important;
+    font-size: 8pt !important;
+    font-family: Verdana !important; 
+  }
+
+/* black line above the total amount */
+  #preview_footer_summary_total{
+    border-top: 1px solid black !important;
+  }
+
+  .hiddenprintimage{
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+  }
+

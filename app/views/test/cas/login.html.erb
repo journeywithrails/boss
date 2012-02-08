@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <title>CAS Central Login</title>
+  </head>
+  <body onload="if (document.getElementById('username')) document.getElementById('username').focus()">
+    <table id="login-box">
+      <tr>
+        <td colspan="2">
+          <div id="headline-container"><strong>CAS</strong> Central Login</div>
+        </td>
+      </tr>
+      <tr>
+        <td id="logo-container">
+        </td>
+        <td id="login-form-container">
+          <form action="mock/cas" onsubmit="submitbutton = document.getElementById('login-submit'); submitbutton.value='Please wait...'; submitbutton.disabled=true; return true;" method="post" id="login-form">
+            <table id="form-layout">
+              <tr>
+                <td id="username-label-container">
+                  <label for="username" id="username-label">Username</label>
+                </td>
+                <td id="username-container"><input type="text" tabindex="1" size="32" name="username" id="username" accesskey="u"/>
+                </td>
+              </tr>
+              <tr>
+                <td id="password-label-container">
+                  <label for="password" id="password-label">Password</label>
+                </td>
+                <td id="password-container">
+                  <input type="password" tabindex="2" autocomplete="off" size="32" name="password" id="password" accesskey="p"/>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td id="submit-container">
+                  <input type="hidden" value="LT-FAKETICKET" name="lt" id="lt"/>
+                  <input type="hidden" value="" name="service" id="service"/><input type="hidden" value="" name="warn" id="warn"/>
+                  <input type="submit" tabindex="4" class="button" value="LOGIN" id="login-submit" accesskey="l"/>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" id="infoline">Powered by <a href="http://code.google.com/p/rubycas-server/">RubyCAS-Server</a>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

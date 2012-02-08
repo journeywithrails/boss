@@ -1,0 +1,36 @@
+@invoice.calculate_discounted_total
+if is_mobile?
+  page.replace_html 'invoice_line_items_total', format_amount(@invoice.line_items_total)
+  page.replace_html 'invoice_discount_amount', format_amount(@invoice.discount_amount)
+  @invoice.taxes.each do |tax|
+    page.replace_html "invoice_#{tax.profile_key}_amount", format_amount(tax.amount)
+  end
+  page.replace_html 'invoice_total', format_amount(@invoice.total_amount)
+  @invoice.line_items.each do |line_item|
+  
+    page.select( "##{line_item.row_id} .subtotal").each do |value|
+        page << "value.innerHTML = '<h3>" + _("Total:") + "</h3>'"
+        page << "value.innerHTML += '#{testable_field('subtotal', format_amount(line_item.subtotal))}';"
+    end
+  end
+else
+  page.replace_html 'invoice_line_items_total', format_amount(@invoice.line_items_total)
+  page.replace_html 'invoice_discount_amount', format_amount(@invoice.discount_amount)
+  @invoice.taxes.each do |tax|
+    page.replace_html "invoice_#{tax.profile_key}_amount", format_amount(tax.amount)
+  end
+  if @invoice.total_amount > 0
+    page.replace_html "line_items_notice", "&nbsp;"
+  else
+    page.replace_html "line_items_notice", no_line_item_warning(@invoice)
+  end
+  page.replace_html 'invoice_total', format_amount(@invoice.total_amount)
+  page.replace_html "calculation_notice", "&nbsp;"
+  @invoice.line_items.each do |line_item|
+  
+    page.select( "##{line_item.row_id} .subtotal").each do |value|
+        page << "value.innerHTML = '#{testable_field('subtotal', format_amount(line_item.subtotal))}';"
+    end
+  end
+end
+page.increment_ajax_counter_rjs

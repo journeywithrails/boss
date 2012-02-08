@@ -1,0 +1,140 @@
+.PS
+
+copy "sequence.pic";
+movewid=1.5
+boxwid=1.8
+
+title("\fBHomepage Gateway Authentication (BillingBoss)\fP");
+
+actor(U,"\fBUser\fP");
+object(FF,"\fBBrowser\fP");
+object(BB,"\fBBillingBoss\fP");
+object(RCASF,"\fBRubycas-Client\fP");
+object(RCASC,"\fBRubycas-Client\fP");
+object(CAS,"\fBCAS\fP");
+step();
+step();
+
+# user goes to billingboss
+#begin
+action(U,FF,"User goes to billingboss");
+	#begin
+	message(FF,BB,"HTTP-GET: /");
+		#begin
+		create_message(BB,RCASF,"GatewayFilter");
+			active(RCASF);
+			create_message(RCASF,RCASC,"CASClient");
+			step();
+			#begin
+			message(RCASF,BB,"read_last_service_ticket");
+			comment(BB,C2,up 0.1 left .2, wid 2 ht 1.1 "tickets are stored in""a db table, with the""record id stored in""the session");
+				active(BB);
+				return_message(BB,RCASF,"no stored ticket");
+				inactive(BB);
+				step();
+			#end
+			#begin
+			message(RCASF,BB,"read_ticket");
+				active(BB);
+				return_message(BB,RCASF,"no ticket in request");
+				inactive(BB);
+				step();
+			#end
+			#begin
+			message(RCASF,BB,"returning_from_gateway?");
+				return_message(BB,RCASF,"no");
+				inactive(BB);
+				step();
+				lconstraint(RCASF,"no ticket and not returning from");
+				lconstraint(RCASF,"gateway, so redirect to cas for");
+				lconstraint(RCASF," authentication");
+				return_message(RCASF,BB,"""redirect:""/login?service=billingboss.com/");
+				inactive(RCASF);
+				step();
+			#end
+			return_message(BB,FF,"""""HTTP-REDIRECT:" "/login" "?service=billingboss.com/");
+			inactive(BB);
+		#end
+			step();
+		step();
+	#end
+	#begin
+	message(FF,CAS,"""HTTP-GET:" "/login?service=billingboss.com/");
+		message(CAS,CAS,"has TGT? (ie, logged in)");
+		step();
+		lconstraint(CAS,"{NO}");
+		return_message(CAS,FF,"""HTTP RESP:" "login form");
+		inactive(CAS);
+	return_message(FF,U,"display CAS login");
+	inactive(FF);
+	#end
+	step();
+	step();
+#end
+action(U,FF,"""enters credentials" "and clicks submit");
+	message(FF,CAS,"""HTTP-POST:" "/login?username=xxx...service=billingboss.com/");
+		message(CAS,CAS,"valid_user?");
+		step();
+		lconstraint(CAS,"{YES}");
+		message(CAS,CAS,"create TGT");
+		step();
+		lconstraint(CAS,"redirect back to service...");
+		return_message(CAS,FF,"""HTTP-REDIRECT:" "billingboss.com/?ticket=xxxx");
+		inactive(CAS);
+		step();
+	message(FF,BB,"""HTTP-GET:" "/?ticket=xxxx");
+		create_message(BB,RCASF,"GatewayFilter");
+			create_message(RCASF,RCASC,"CASClient");
+			step();
+			message(RCASF,BB,"read_last_service_ticket");
+				return_message(BB,RCASF,"no stored ticket");
+				inactive(BB);
+				step();
+			message(RCASF,BB,"read_ticket");
+				return_message(BB,RCASF,"found ticket in request");
+				inactive(BB);
+				step();
+				message(RCASF,RCASC,"validate_service_ticket(ticket)");
+					step();
+					message(RCASC,CAS,"""""HTTP-POST:" "/serviceValidate""?ticket=xxxx&service=xxxx");
+						step();
+						step();
+						step();
+						lconstraint(CAS,"{valid ticket for service}");
+						return_message(CAS,RCASC,"""""HTTP XML RESP:" "valid ticket response" "with user attributes");
+						inactive(CAS);
+						step();
+					step();
+					step();
+					message(RCASC,RCASC,"add response to ticket");
+					return_message(RCASC,RCASF,"");
+					inactive(RCASC);
+					step();
+				step();
+				lconstraint(RCASF,"{ticket is valid}");
+				message(RCASF,BB,"set_username");
+				message(RCASF,BB,"set_extra_attributes");
+				comment(BB,C3,up 1.4 left .3, wid 2.1 ht 1.2 "email, first_name," "last_name, username," "profile, source," "created_at");
+				message(RCASF,BB,"write_last_service_ticket");
+				comment(BB,C3,up 0.1 left .2, wid 2 ht 1.2 "on future requests" "rubycas client will load" "this and not need to" "redirect to cas");
+				inactive(BB);
+				step();
+				return_message(RCASF,BB,"true");
+				inactive(RCASF);
+				step();
+			return_message(BB,FF,"""HTTP-RESPONSE:" "requested page");
+			inactive(BB);
+			step();
+		return_message(FF,U,"""display" "requested page");
+		inactive(FF);
+		step();
+
+
+complete(U);
+complete(FF);
+complete(RCASF);
+complete(RCASC);
+complete(BB);
+complete(CAS);
+
+.PE

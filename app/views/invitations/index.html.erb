@@ -1,0 +1,17 @@
+<h1><%= _('Listing invitations') %></h1>
+
+<table>
+  <tr>
+    <th><%= _('To') %></th>
+    <th><%= _('For') %></th>
+  </tr>
+
+<% @invitations.each do |invitation| %>
+  <tr>
+    <td><%= invitation.invitee.nil? ? '' : link_to(invitation.invitee.name, "javascript: alert(_('implement show user'))") %></td>
+    <td><%= invitation.short_description %></td>
+    <td><%= link_to _('Edit'), edit_invitation_path(invitation) %></td>
+  </tr>
+<% end %>
+
+</table>

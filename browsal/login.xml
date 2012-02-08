@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simply-request>
+  <version>Simply-US-16.00.0.0120-071209</version>
+  <browsal>
+    <browsal-type>SignupBrowsal</browsal-type>
+    <start-status>login</start-status>
+    <language>en</language>
+  </browsal>
+</simply-request>

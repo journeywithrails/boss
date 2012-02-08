@@ -1,0 +1,5 @@
+---
+port: 8500
+pid_file: log/mongrel.pid
+servers: 2
+environment: staging

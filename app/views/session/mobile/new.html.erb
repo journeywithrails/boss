@@ -1,0 +1,28 @@
+<% content_for "stylesheets" do -%>
+		
+<% end -%>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		<h1><%= _("Existing User") %></h1>
+		<%= link_to _("Home"), home_path, :id => "backButton" %>
+	</div>
+<% end %>
+
+<%content_for("main")  do %>
+
+
+		<%= formatted_flash_always %>      	
+					
+    	  
+        <div class="content">
+        <br/>
+        <div class="page_header"><%= _("Please enter your email address and password if you have an account") %></div>
+          <%= render :partial=> "session/mobile/form" %>
+      		<!-- Uncomment this if you want this functionality
+      		<p><label for="remember_me"><%= _("Remember me:") %></label>
+      		<%= check_box_tag 'remember_me' %></p>
+      		-->		
+      		<ul class="individual"><li><%= link_to _("New account"), signup_path %></li></ul>
+        </div>      
+<%end%> 

@@ -1,0 +1,52 @@
+
+<table width="100%" border="1px" id="invoice_print_table">
+	<%= _("Invoices Report for %{company} (%{num} invoices)") % {:company => short_company_title, :num => @invoices.length} %> <br/><br/>
+    <%= report_filter_caption %>
+	<th><%= _('Invoice #') %></th>
+	<th><%= _('Customer') %></th>
+	<th><%= _('Ref #') %></th>
+	<th><%= _('Date') %></th>
+	<th><%= _('Tax 1') %></th>
+	<th><%= _('Tax 2') %></th>
+	<th><%= _('Discount') %></th>
+	<th><%= _('Subtotal') %></th>
+	<th><%= _('Total') %></th>
+	<th><%= _('Paid') %></th>
+	<th><%= _('Owed') %></th>
+	<% @invoices.each do |inv| %>
+		<% @tax_1 += inv.tax_1_amount || 0 %>
+		<% @tax_2 += inv.tax_2_amount || 0 %>
+		<% @discount_amount += inv.discount_amount || 0 %>
+		<% @subtotal_amount += inv.subtotal_amount || 0 %>
+		<% @total_amount += inv.total_amount || 0 %>
+		<% @paid_amount += inv.paid_amount || 0 %>
+		<% @owing_amount += inv.owing_amount || 0 %>	
+		<tr>
+			<td><%= h inv.unique %></td>
+			<td><%= inv.customer ? h(inv.customer.name) : "" %></td>
+			<td><%= h inv.reference %></td>
+			<td><%= inv.date %></td>
+			<td><%= (inv.tax_1 and inv.tax_1_enabled) ? format_amount(inv.tax_1_amount) : "0.00" %></td>
+			<td><%= (inv.tax_2 and inv.tax_2_enabled) ? format_amount(inv.tax_2_amount) : "0.00" %></td>
+			<td><%= format_amount(inv.discount_amount) %></td>
+			<td><%= format_amount(inv.subtotal_amount) %></td>
+			<td><%= format_amount(inv.total_amount) %></td>
+			<td><%= format_amount(inv.paid_amount) %></td>
+			<td><%= format_amount(inv.owing_amount) %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td><%= _('Total') %>:</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= format_amount(@tax_1) %></td>
+		<td><%= format_amount(@tax_2) %></td>
+		<td><%= format_amount(@discount_amount) %></td>
+		<td><%= format_amount(@subtotal_amount) %></td>
+		<td><%= format_amount(@total_amount) %></td>
+		<td><%= format_amount(@paid_amount) %></td>
+		<td><%= format_amount(@owing_amount) %></td>
+	</tr>
+</table>
+<span id="total_rows" style="display: none"><%= @invoices.length %></span>

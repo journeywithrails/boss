@@ -1,0 +1,24 @@
+<br/>
+<div class="info">
+<h2 class="state">Recurring invoice</h2>
+
+  <div class="schedule-info">
+   Invoice generated:<br/>
+   <b><%= recurring_schedule_description(@invoice) %></b><br/>
+   Next invoice:<br/>
+   <b><%= format_date(_("%b %d, %Y")) { @invoice.date } %> </b><br />
+  </div>
+
+ <% unless @invoice.send_recipients.blank? %>
+   Automatically sent to:<br />
+   <b><%= @invoice.send_recipients %></b><br />
+ <% end %>
+
+
+ <% if @invoice.generated_invoices.count == 0 %>
+   <p><%= _("No invoices generated yet") %></p>
+ <% else %>
+   <p><%= _("%{num} invoices generated so far from this recurring invoice") % { :num=>@invoice.generated_invoices.count } %><br />
+   <%= link_to _("view generated invoices"), generated_invoice_path(@invoice) %></p>
+ <% end %>
+</div>

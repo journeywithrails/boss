@@ -1,0 +1,46 @@
+<% content_for "stylesheets" do %>
+    <%= stylesheet_theme_controller %>
+<% end %>
+
+<% @content_for_main_top = capture do %>
+ <div class="yui-g">
+   <div class="yui-u first"> 
+      <div class="page_header"><%= _('New Customer') %></div>
+   </div>   
+  	<div  class="yui-u" >
+    	  <div style="float:right">
+        <%=link_to_create_invoice %>
+        </div>        
+    </div>    
+</div>
+<% end %>
+
+	<% @content_for_lnav = capture do %>
+<h2 class="state"><small><%= _('Options') %></small></h2>
+   <ul class="lnav_ul">  
+     <li><%= link_to _('Customer List'), "/customers/overview"%></li>
+   </ul>
+	<% end %>
+    
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+  
+	<% @content_for_infobox = capture do %>
+		<%= error_messages_for :customer %>
+ 	<% end %>
+
+	<% @content_for_main = capture do %>
+		<% form_for(:customer, :url => customers_path, :html => {:id => 'customer_form' }) do |f| %>
+			<%= render :partial => "form", :locals => {:f => f}, :object => @customer %>
+		  <div>
+		    <br/>
+		    <div class="right_aligned_with_margin"><%= submit_tag _("Save Customer"), :class => "form_submit" %></div>
+		  </div>
+		
+		<% end %>
+	<% end %>
+	<%= render_inner_layout %>
+
+<% content_for "bottom_javascripts" do %>
+	<%= protect_form('customer_form') %>
+<% end %>

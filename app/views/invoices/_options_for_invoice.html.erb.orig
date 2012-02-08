@@ -1,0 +1,73 @@
+
+<div class="invoice_lnav">
+      <h2 class="state"><%= _('Options') %></h2>
+        <ul class="lnav_ul">
+        <li> 
+          <% if @invoice.sendable? %>
+            <%= render :partial => "invoices/send_invoice_dialog", :locals => {:show_link => true} %>
+          <% else %>
+            <%= link_to_remote _('Send'), :id => "show-send-dialog-btn", :url => "/invoices/send_notice/#{@invoice.id}",
+                  :method => :put, :update => invoice_status_html_id(@invoice), :before => status_action_js %>
+          <% end %>
+        </li>
+        <% if @invoice.meta_status == Invoice::META_STATUS_DRAFT %>
+          <li>
+            <span id="mark_sent">
+              <%= link_to_remote(_('Mark as sent'), :url => mark_sent_invoice_path(@invoice),
+                    :method => :put, :update => invoice_status_html_id(@invoice), :before => status_action_js) %>
+            </span>
+          </li>
+        <% end %>
+        <li>
+          <span id="preview_customer_copy">
+            <% @link = "#{::AppConfig.mail.host}/access/#{@access_key}" %>
+            <%= link_to(_("Preview customer copy"), @link, {:id => "invoice_link", :name => @access_key, :target => "_blank"}) %>
+          </span>
+        </li>
+        <li>
+          <span id="record_payment">
+            <% if @invoice.payment_recordable? %>
+              <%= link_to _('Record a payment'), new_invoice_payment_path(@invoice.id), :name => 'record_payment' %>
+            <% else %>
+                <%= link_to_remote _('Record a payment'), :url => "/invoices/mark_record_payment/#{@invoice.id}",
+                      :method => :put, :update => invoice_status_html_id(@invoice), :before => status_action_js %>
+            <% end %>
+          </span>
+        </li>
+        <% unless @invoice.recurring? %>
+          <li><%= link_to _('Save as PDF'), invoice_path(@invoice) + '.pdf' %></li>
+				<!-- should link to open new window with PDF displayed and load window.print() -->
+          <li><%= link_to _('Print'), "javascript:print()" %></li>
+          <li><%= link_to _('Edit this invoice'), edit_invoice_path(@invoice) %></li>
+        <% end %>
+        <li><%= link_to _('Delete this invoice'), invoice_path(@invoice), :confirm => delete_warn_string(@invoice), :method => :delete, :id => 'destroy' %></li>
+
+        <% if @all_payment_types and @all_payment_types.any? %>
+          <br/>
+          <% form_for(:invoice, :url => update_payment_methods_invoice_path(@invoice), :html => { :method => :put }) do |fff| %>
+          <li><h2 class="state"><%= _('Allowed Online<br/> Payment Method') %></h2></li>
+          <%= choose_payment_types_list(@invoice, 'invoice') %>
+          <li><%= submit_tag(_('Save')) %></li>
+          <% end %>
+        <% end %>       
+      </ul>
+     
+    <% if !@invoice.recurring? &&  !@invoice.recurring_invoice %>
+      <br/>
+      <h2 class="state"><%= _('Create Recurring Invoice') %></h2>
+      <ul class="lnav_ul">
+        <li>
+<<<<<<< HEAD
+          <%= link_to "Set up schedule", create_recurring_form_invoice_path(@invoice), :onclick=>"return Lightbox.showBoxByAJAX(this,'Send Dialog Box','700', '600' );" %>
+        </li>         
+=======
+          <%= link_to "Set up schedule", create_recurring_form_invoice_path(@invoice), :onclick=>"return Lightbox.showBoxByAJAX(this,'Send Dialog Box','700', '600' );", :id=>"setup-schedule" %>
+        </li>
+         
+>>>>>>> origin/wojciech_1560_6
+      </ul>
+    <% end  %>
+        
+
+
+    </div>

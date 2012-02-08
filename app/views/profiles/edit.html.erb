@@ -1,0 +1,93 @@
+<% content_for "stylesheets" do%>
+	<%= stylesheet_theme_controller %>
+  <% if request.path == first_profile_edit_path %>
+	<SCRIPT language="JavaScript" type="text/javascript">
+	<!-- Yahoo! Inc.
+	window.ysm_customData = new Object();
+	window.ysm_customData.conversion = "transId=,currency=,amount=";
+	var ysm_accountid  = "1NHK2BHD23A5IFPBQ9OIP2EIEC4";
+	document.write("<SCR" + "IPT language='JavaScript' type='text/javascript' "
+	+ "SRC=//" + "srv1.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid
+	+ "></SCR" + "IPT>");
+	// -->
+	</SCRIPT>
+  <% end %>
+<% end%>
+
+<% content_for "bottom_of_body" do %>
+  <% if request.path == "/profiles/new_edit" %>
+    <!-- Google Code for Sign Up Conversion Page -->
+    <script language="JavaScript" type="text/javascript">
+      <!--
+      var google_conversion_id = 1036236928;
+      var google_conversion_language = "en_US";
+      var google_conversion_format = "1";
+      var google_conversion_color = "ffffff";
+      var google_conversion_label = "IgScCKiNhAEQgPGO7gM";
+      //-->
+    </script>
+    <script language="JavaScript" src="http://www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <img height="1" width="1" border="0" src="http://www.googleadservices.com/pagead/conversion/1036236928/?label=IgScCKiNhAEQgPGO7gM&amp;guid=ON&amp;script=0"/>
+    </noscript>
+  <% end %>
+<% end %>
+
+<% content_for "submenu" do %>
+    <div id="tabcontent" class="clearfix">
+      <ul class="selected">
+      	<li>
+      		<a id="user_addressing_link" href="/addressing_settings" class="<%= @designated_tab == "addressing" ? "active" : "" %>"><%= _('Business Information') %></a> 
+		</li>
+		<li>
+			<a id="user_taxes_link" href="/tax_settings" class="<%= @designated_tab == "taxes" ? "active" : "" %>"><%= _('Taxes') %></a>
+		</li>
+		<li>
+			<a id="user_logo_link" href="/logo_settings" class="<%= @designated_tab == "logo" ? "active" : "" %>"><%= _('Company Logo') %></a>
+		</li>  
+		<li>
+			<a id="user_communication_link" href="/communication_settings" class="<%= @designated_tab == "communications" ? "active" : "" %>"><%= _('Communications') %></a>
+		</li>  
+		<li>
+			<a id="user_payments_link" href="/online_payments_settings" class="<%= @designated_tab == "payments" ? "active" : "" %>"><%= _('Online Payments') %></a>
+		</li>       
+      </ul>
+
+	</div>	 	 
+
+<% end %>
+
+<% @content_for_main_top = '' %>
+
+<% form_for(:profile, @profile, :url => { :action => "update" }, :html => { :id => 'profile_form', :method => :put, :multipart => true }) do |f| %>
+  <% @content_for_sidebar = '' %>  
+	<% @content_for_infobox = capture do %>
+
+	<br/>
+    <%= formatted_flash unless formatted_flash.include?("empty") %>
+	
+		<%= error_messages_for :profile %>
+    <%= error_messages_for :object => @user_gateways, :object_name => 'payment gateway' %>
+    <%= error_messages_for 'logo' %>  
+
+	<br/>  
+ 	<% end %>  
+
+	<% @content_for_main = capture do %>
+
+	<br clear="all"/>
+	<div class="user_profile">
+	  <%= render :partial => form_for_designated_profiles_tab, :locals => {:f => f} %>
+	  </div>
+	  <div class="yui-g" style="float: right">
+	    <%= submit_tag _("Save and Continue"), :class => "form_submit" %>
+    </div>
+	<br clear="all"/>
+	<br/>
+	<% end %>
+	<%= render_inner_layout('nomenu') %>  
+<% end %>
+<% content_for "bottom_javascripts" do %>
+	<%= protect_form('profile_form') %>
+<% end %>

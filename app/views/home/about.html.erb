@@ -1,0 +1,62 @@
+<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/themes/static.css" %>
+<% end %>
+<% content_for :header do %>
+	<%= render :partial => "home/header" %>
+<% end %>
+<% content_for :main do %>
+	<div id="content_container">
+	    <!-- ROUNDED CORNERS - WITH INFOBOX -->
+	    <div class="corner_large_tr" style="clear: both;">
+	        <div class="corner_large_tl">
+	            <div class="infobox">
+	                <p>
+	                    <%= _('About Billing Boss') %>
+	                </p>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- CONTENT SECTION -->
+	    <div class="content">
+          <div class="about_video">
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+              codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
+              width="330" height="240" id="SageSparkBBInfo">
+              <param name="flashvars" value="file=http://video.billingboss.com/bb-spark-tour.flv" />
+              <param name="movie" value="http://video.billingboss.com/mediaplayer.swf" />
+              <param name="allowFullScreen" value="true" />
+              <param name="quality" value="best" />
+              <embed src="http://video.billingboss.com/mediaplayer.swf" width="330" height="240"
+                allowfullscreen="true" quality="best" type="application/x-shockwave-flash"
+                pluginspage="http://www.macromedia.com/go/getflashplayer"
+                flashvars="file=http://video.billingboss.com/bb-spark-tour.flv" />
+            </object>
+            <br/>
+            <a class="attrib_link" href="http://www.ballisticarts.com/asylum/2009/07/sage-north-america-billing-boss-video/">produced by Ballistic Arts</a>
+          </div>
+          <br/>
+          <h1><%= _('About Us') %></h1>
+          <span><%= _('Billing Boss is a product of Sage, a leading supplier of business management software and services to 5.5 million customers worldwide. From small start-ups to larger organizations, we make it easier for companies to manage their business processes. Billing Boss was developed by a small dynamic, sugar and coffee driven team within Sage. We love the internet and believe that the internet can help small business grow and succeed.') %> </span>
+          <h1><%= _('About Sage Spark') %></h1>
+          <span><%= _("For business owners focused on success, <a href='http://sagespark.com'>SageSpark.com</a> is your trusted and experienced team available 24/7 to help you deliver your vision. SageSpark.com allows you to tap into advice from experts, fellow entrepreneurs within your industry, and access time-saving business management tools and services so you can get on with doing what you do best.") %></span>
+          <h1><%= _('About Sage') %></h1>
+          <span><%= _('Sage is the North American business of UK-based The Sage Group plc. Sage supports the needs, dreams, and challenges of small and midsized businesses (SMB) by offering leading business management products and services. More than 2.8 million North American small and midsized businesses currently rely on Sage applications.') %>
+              <br/>
+              <br/>
+              <%= _('For more than 30 years, Sage has delivered easy-to-use, scalable, and customizable software for accounting, customer relationship management, human resources, merchant services, time tracking, and the specialized needs of the construction, distribution, healthcare, manufacturing, nonprofit, and real estate industries.') %>
+          </span>
+
+          <a name="staying_connected"><h1><%= _('Staying Connected') %></h1></a>
+          <%= render :partial => "/home/staying_connected" %>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+	    <!-- BOTTOM CORNERS -->
+	    <div class="corner_large_bl">
+	        <div class="corner_large_br">
+	        </div>
+	    </div>
+	    <!-- END OF ROUNDED CORNERS -->
+	</div>
+<% end %>

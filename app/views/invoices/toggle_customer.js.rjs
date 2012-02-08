@@ -1,0 +1,18 @@
+if is_mobile?
+  if (params[:selected].blank?)
+    page.replace_html 'on_the_fly_attributes', ''
+  else  
+    customer = Customer.find(:first, :conditions => {:id => params[:selected]})
+    page.replace_html 'on_the_fly_attributes', :partial => '/customers/mobile/preview', :object => customer
+  end
+else
+  if (params[:selected].blank?)
+  page['edit-btn'].hide 
+  page.replace_html 'on_the_fly_attributes', ''
+else  
+  page['edit-btn'].show 
+  customer = Customer.find(:first, :conditions => {:id => params[:selected]})
+  page.replace_html 'on_the_fly_attributes', :partial => '/customers/preview', :object => customer
+end
+end
+page.increment_ajax_counter_rjs

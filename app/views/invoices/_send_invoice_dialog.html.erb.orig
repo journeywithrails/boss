@@ -1,0 +1,152 @@
+
+<% send_url =  @invoice ? send_object_by_mail_link(nil, @invoice, 'send').gsub('&amp;', '&') : hardcoded_send_invoice_link_for_javascript
+  send_url_params = "{#{request_forgery_protection_token.to_s}: '#{form_authenticity_token}'}"
+-%>
+
+<% content_for "bottom_javascripts" do -%>
+
+<script type="text/javascript">
+  /*
+   * Ext JS Library 2.0
+   * Copyright(c) 2006-2007, Ext JS, LLC.
+   * licensing@extjs.com
+   * <%= remote_function(:url => invoice_status_invoice_path(@invoice), :method => :get) %>;  
+   * http://extjs.com/license
+   */
+
+
+  Ext.onReady(function(){
+<% if show_link -%>
+      var button = Ext.get('show-send-dialog-btn');
+<% end -%>
+      Sage.check_valid_callback = function () {
+		if($('validation-errors')){
+            var send_btn = Sage.send_dialog.win.buttons[0];
+            var close_btn = Sage.send_dialog.win.buttons[1];
+			Sage.send_dialog.state = 'invalid';
+			send_btn.disable();
+			close_btn.enable();
+		}
+      }
+      Sage.send_dialog = function () {
+        return {
+          win: nil,
+          grid: nil,
+          // RADAR: this is a somewhat yucky bit of coupling between the Ext window controls and the remote-form
+          // in the delivery template.
+          state: 'setup',
+          on_success: function() {
+            Sage.send_dialog.state = 'confirm';
+            var send_btn = Sage.send_dialog.win.buttons[0];
+            var close_btn = Sage.send_dialog.win.buttons[1];
+            send_btn.setText('Send Again');
+            send_btn.enable();
+            close_btn.enable();    
+<% if show_link -%>            
+            <%= remote_function(:url => invoice_status_invoice_path(@invoice), :method => :get) %>;
+<% else %>
+            Sage.send_dialog.grid.getBottomToolbar().onClick('refresh');
+            Sage.invoice_grids_action('did_send');
+<% end -%>
+      
+          },
+          on_failure: function() {
+            Sage.send_dialog.state = 'form';
+            var send_btn = Sage.send_dialog.win.buttons[0];
+            var close_btn = Sage.send_dialog.win.buttons[1];
+            send_btn.setText('Send');
+            send_btn.enable();
+            close_btn.enable();    
+<% if show_link -%>            
+            <%= remote_function(:url => invoice_status_invoice_path(@invoice), :method => :get) %>;
+<% end -%>
+          },
+          url: {url: '<%= send_url %>', params: <%= send_url_params %>,
+            callback: Sage.check_valid_callback, scripts: true, method: 'GET'
+          },
+          setup: function (id, grid, window_title) {
+<% unless show_link -%>
+            Sage.send_dialog.url.url = String.format('<%= send_url %>', id);
+            Sage.send_dialog.grid = grid;
+<% end -%>
+
+          // create the window on the first click and reuse on subsequent clicks
+            if(!Sage.send_dialog.win){
+                Sage.send_dialog.win = new Ext.Window({
+                    el:'send-dialog-container',
+            
+                    allowDomMove: true,
+                    autoScroll: true,
+                    autoHeight: false,
+                    width:<%= ::AppConfig.invoice.send_dialog.width %>,                   
+                    height: <%= ::AppConfig.invoice.send_dialog.height %>, 
+                    resizable: true,
+                    closeAction:'hide',                   
+                    plain: true,                    
+                    // modal: true,
+                    autoLoad: Sage.send_dialog.url,
+
+                    buttons: [{
+                        text:"<%= _('Send') %>",
+                        id: 'send-dialog-send-button',
+                        handler: function() {
+                          var close_btn = Sage.send_dialog.win.buttons[1];
+                          if(Sage.send_dialog.state == 'form'){
+                            Sage.send_dialog.state = 'sending'
+                            Sage.send_dialog.win.getEl().child('form#new_delivery').dom.onsubmit();
+                            close_btn.setText('<%= _('Close') %>');
+                            close_btn.disable();
+                            this.disable();                          
+                          } else if(Sage.send_dialog.state == 'confirm') {
+                            Sage.send_dialog.state = 'form'
+                            Sage.send_dialog.win.load(Sage.send_dialog.url);
+                            close_btn.setText('<%= _('Cancel') %>');
+                          }
+                        }
+                    },{
+                        text: "<%= _('Cancel') %>",
+                        id: 'send-dialog-cancel-button',
+                        handler: function(){
+                            Sage.send_dialog.win.hide();
+                        }
+                    }]
+                });
+
+                Sage.send_dialog.win.on('render', function(){
+                  if(Sage.send_dialog.state == 'setup') Sage.send_dialog.state = 'form';                 
+                });
+
+            } else {
+               
+              Sage.send_dialog.win.load(Sage.send_dialog.url);
+              Sage.send_dialog.state = 'form';
+            }            
+            Sage.send_dialog.win.show(this);
+            Sage.send_dialog.win.getEl().child('.x-window-header').update(window_title);
+              
+          }
+        };
+      }();
+
+<% if show_link -%>
+      button.on('click', function(){
+<<<<<<< HEAD
+        Sage.send_dialog.setup(nil,nil,'<%= i_(@invoice,'Send Invoice') %>');
+=======
+        Sage.send_dialog.setup(nil,nil,'<%= send_invoice_label @invoice %>');
+
+>>>>>>> origin/wojciech_1560_12
+        return false;
+      });
+<% end -%>
+
+  });
+</script>  
+<% end -%>
+
+<% if show_link -%>
+<a href="#logo-top" id="show-send-dialog-btn"><%= send_button_text_for_status(@invoice) %></a>
+<% end -%>
+<div id="send-dialog-container" class="x-hidden">
+    <div class="x-window-header"></div>
+</div>

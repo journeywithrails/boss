@@ -1,0 +1,179 @@
+<% 
+  url ||= "/customers/overview"
+  url_params ||= {}
+  url_params[request_forgery_protection_token.to_s] = form_authenticity_token
+  url += "?"
+  url += url_params.collect { |k, v| "#{k}=#{v}"}.join("&")
+
+  elm ||= 'customers_grid'
+  
+  title ||= label || 'customers'
+  record_count ||= nil
+  unless record_count.nil?
+    title = "#{title} (#{record_count})" 
+  end
+  label = [label, 'customers'].compact.join(' ')
+  title = title.titleize
+  
+  page_size ||= 10
+  height ||= 368
+  action_link ||= nil
+  
+-%>
+
+<% content_for "bottom_javascripts" do -%>
+  <script>
+
+  if (Sage.customer_grids == undefined) Sage.customer_grids = new Hash;
+  Ext.onReady(function(){
+
+  	var reader = new Ext.data.JsonReader({
+            root: 'customers',
+            totalProperty: 'total',
+            id: 'id'
+        },
+  			 [
+        {name: 'created_at', type: 'date', dateFormat: 'Y/m/d'},
+  //      {name: 'status'},
+        {name: 'name'},
+        {name: 'contact_name'},
+        {name: 'contact_email'},
+        {name: 'phone'},
+        {name: 'amount_owing'}
+        ]);
+
+    var store = new Ext.data.Store({
+  	    proxy: new Ext.data.HttpProxy({url: '<%= url %>'}),
+  	    reader: reader,	        
+        remoteSort: true	
+    });
+
+    // RADAR brittleness
+      var customer_link = function(value, cell, row, rowIndex, colIndex, ds){
+        html = '<a id="<%= elm %>-'+row.id+'-action-link\" href="/customers/'+row.id + '/edit">' + unugly_renderer(value) + '</a>';
+        return html;
+      }
+
+      <% unless action_link.nil? -%>
+      var action_link = function(value, cell, row, rowIndex, colIndex, ds){
+        return String.format('<%= action_link %>', row.id);
+      }
+      <% end -%>
+
+      var unugly_renderer = function(value){
+        if((value == null) || (value == undefined)){
+          return '';
+        } else if(typeof value == "string" ) {
+          return Sage.json_to_escaped_html( value );
+        } else {
+          return value;
+        }
+      };
+
+    var cm = new Ext.grid.ColumnModel
+      ([{
+            id: "cust-name",
+            header: "<%= _('Customer') %>",
+            dataIndex: "name",
+            renderer: customer_link,
+            sortable: true,
+            selectable: 'on',
+            width: 130
+        },{
+            id: "cust-phone",
+            header: "<%= _('Telephone') %>",
+            dataIndex: "phone",
+            renderer: customer_link,
+            sortable: true,
+            width: 80
+        },{
+            id: 'cust-contact-name',
+            header: "<%= _('Contact Name') %>",
+            dataIndex: 'contact_name',
+            renderer: customer_link,
+            sortable: true,
+            width: 110
+        },{  
+            id: 'cust-contact-email',
+            header: "<%= _('Email') %>",
+            dataIndex: 'contact_email',
+            renderer: customer_link,
+            sortable: true,
+            width: 110
+        },{  
+            id: 'cust-amt-owing',
+            header: "<%= _('Amount Owing') %>",
+            dataIndex: 'amount_owing',
+            sortable: true,
+            renderer: customer_link,
+            align: "right",
+            width: 80
+        }]);
+
+    cm.defaultSortable = true;
+
+    Sage.customer_grids['<%= elm %>'] = new Ext.grid.GridPanel({
+        el: '<%= elm %>',
+        // layout: 'fit',
+        autoHeight: true,
+        autoWidth: true,
+        autoExpandColumn: "cust-name",
+
+        collapsible: true,
+        animCollapse: false,        
+        enableColumnMove: false,
+        titleCollapse : true,
+        title: '<%= title %>',
+        cm: cm,
+        // autoFill : true,
+        trackMouseOver:true,
+        // sm: new Ext.grid.RowSelectionModel({selectRow:Ext.emptyFn}),
+        loadMask: true,
+        viewConfig: {
+            forceFit: true
+        },
+        store: store,
+        monitorResize: true,
+        bbar: new Ext.PagingToolbar({
+            pageSize: <%= page_size %>,
+            store: store,
+            displayInfo: true,
+            displayMsg: "<%= _("Displaying %{what} \{0\} - \{1\} of \{2\}") % {:what => label} %>",
+            emptyMsg: "<%= _("No %{what} to display") % {:what => label} %>"
+        })
+    });
+
+    // Sage.viewport = new Ext.Viewport( {
+    //         layout:"border",
+    //         items:[{
+    //           region:"center",
+    //           items : [Sage.customer_grids['<%= elm %>']]
+    //           }]
+    //  })
+    // currently not doing this because tests would have to be refactored and it would be yucky
+    // if we want to do this, change the column renderers to unugly_renderer
+    //
+    // Sage.customer_grids['<%= elm %>'].on('cellclick', function(grid, rowIndex, columnIndex, e) {
+    //         var record = grid.getStore().getAt(rowIndex);  // Get the Record
+    //         console.debug(record);
+    //         window.location = '/customers/'+ record.id + '/edit';
+    //     }
+    // );
+    // render it
+    Sage.customer_grids['<%= elm %>'].render();
+    Event.observe(window, 'resize', function(){Sage.customer_grids['<%= elm %>'].syncSize();});
+    store.on("load", function(){
+    <%= increment_ajax_counter %>
+    	count = this.getTotalCount();
+      Sage.customer_grids['<%= elm %>'].setTitle('<%= title %> ('+count+')');
+  	if (count <= <%= page_size %>)
+  	{ Sage.customer_grids['<%= elm %>'].bbar.hide();}
+    });
+    store.load({params:{start:0, limit:<%= page_size %>}});
+  //if (this.getTotalCount() <= <%= page_size %>)
+  //	{ Sage.customer_grids['<%= elm %>'].bbar.hide();}
+
+  });
+  </script>
+<% end # content_for "bottom_javascripts"
+     %>

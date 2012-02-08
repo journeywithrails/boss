@@ -1,0 +1,228 @@
+<% 
+  url_params ||= {}
+  url_params[request_forgery_protection_token.to_s] = form_authenticity_token
+  url += "?"
+  url += url_params.collect { |k, v| "#{k}=#{v}"}.join("&")
+
+  elm ||= 'payments_grid'
+  
+  record_count ||= nil
+  unless record_count.nil?
+    title = "#{title} (#{record_count})" 
+  end
+  title = title.titleize
+  
+  page_size ||= 10
+
+  client_report = !@client.nil?
+%>
+
+<% content_for "bottom_javascripts" do -%>
+	<%= render :partial => "layouts/calendar_date_select_locale" %>
+
+  <script>
+
+  if (Sage.payment_report_grids == undefined) Sage.payment_report_grids = new Hash;
+  Ext.onReady(function(){
+
+    	var reader = new Ext.ux.data.JsonReaderWithSummary({
+              root: 'payments',
+              totalProperty: 'total', //ie, the number of records
+							paytotalsProperty: 'paytotals',
+              summaryProperty: 'summary',
+              id: 'id'
+          },
+    			 [
+          {name: 'customer_name'},
+          {name: 'invoice_no'},
+          {name: 'invoice_full_amount'},
+          {name: 'pay_type_display'},
+          {name: 'amount'},
+          {name: 'date', type: 'date', dateFormat: 'Y/m/d'}
+          ]);
+
+    // method of url must be GET for routing to work
+    var store = new Ext.ux.data.StoreWithSummary({
+  	    proxy: new Ext.data.HttpProxy({url: '<%= url %>', method: 'GET'}),
+  	    reader: reader,	        
+        remoteSort: true	
+    });
+		
+    // RADAR brittleness
+      var payment_link = function(value, meta, row, rowIndex, colIndex, ds){
+        if(colIndex == 5){ //'date' column
+          value = Ext.util.Format.date(value);
+        } else if (colIndex == 4) { //'amount' column
+
+        } else {
+          if(value == null){
+            value = '';
+          } else {
+            value = Sage.json_to_escaped_html( value );
+          }
+        }
+        if (<%= client_report %>) {
+          html = '<span>' + value + '</span>';
+        }
+        else {
+          html = value ;
+        }
+        return html;
+      };
+
+    var summary_renderer   = function(value, meta, row, rowIndex, colIndex, ds){
+      if(value == null){
+        value = '';
+      } else {
+        if (value < 0) {
+          cardinality = 'negative';
+        } else {
+          cardinality = 'positive';
+        }
+        // FIXME not good
+        value = '<span class="report_summary '+cardinality+'">' + value + '</span>';
+      }
+      return value;
+    };
+
+    var inverse_summary_renderer = function(value, meta, row, rowIndex, colIndex, ds){
+      value = 0 - value;
+      return summary_renderer(value, meta, row, rowIndex, colIndex, ds);
+    };
+
+    var summary_blank = function(value, meta, row, rowIndex, colIndex, ds){
+      return '';
+    };
+
+
+    var summary = new Ext.ux.grid.GridSummary({
+      useStoreSummary : true,
+      showLabels : true,
+      labels : {
+				amount : "<%= _('Paid') %>"
+			}
+    });
+
+    Sage.payment_report_grids.summary = summary;
+    //alert( summary.getHeight() );
+    var cm = new Ext.grid.ColumnModel
+    	([{ 
+            id: 'cust-name',
+            header: "<%= _('Customer') %>",
+            dataIndex: 'customer_name',
+            renderer: payment_link,
+            summaryRenderer: summary_blank,
+            sortable: true
+        },{  
+	        	id: 'inv-unique',
+            header: "<%= _('Invoice. No.') %>",
+            dataIndex: 'invoice_no',
+            sortable: false,
+            renderer: payment_link,
+            summaryRenderer: summary_blank
+         },{
+            header: "<%= _('Invoice Amount') %>",
+            dataIndex: 'invoice_full_amount',
+            sortable: true,
+            renderer: payment_link,
+            summaryRenderer: summary_renderer
+         },{
+            header: "<%= _('Payment Type') %>",
+            dataIndex: 'pay_type_display',
+            sortable: true,
+            renderer: payment_link,
+            summaryRenderer: summary_blank
+		     },{  
+            header: "<%= _('Payment Amount') %>",
+            dataIndex: 'amount',
+            sortable: true,
+            renderer: payment_link,
+            summaryRenderer: summary_renderer
+        },{  
+            id: "date",
+            header: "<%= _('Date') %>",
+            dataIndex: "date",
+            renderer: payment_link,
+            summaryRenderer: summary_blank,
+            sortable: true				          
+		   }]);
+
+    cm.defaultSortable = true;
+
+    Sage.payment_report_grids['<%= elm %>'] = new Ext.ux.grid.GridPanelWithSummary({
+        el: '<%= elm %>',
+        autoHeight: true,
+        autoWidth: true,
+        autoExpandColumn: "cust-name",
+
+        enableColumnMove: false,
+        title: "<%= h(title) %>",
+
+        cm: cm,
+        autoFill : true,
+        trackMouseOver:true, // We should make links go away and use selectionModel
+        // sm: new Ext.grid.RowSelectionModel({selectRow:Ext.emptyFn}),
+        loadMask: true, // grow up
+        viewConfig: {
+            forceFit:true,
+            autoHeight:true
+        },
+        store: store,
+        plugins: [summary],
+        bbar: new Ext.PagingToolbar({
+            pageSize: <%= page_size %>,
+            store: store,
+            displayInfo: true,
+            displayMsg: "<%= _("Displaying %{what} \{0\} - \{1\} of \{2\}") % {:what => label} %>",
+            emptyMsg: "<%= _("No %{what} to display") % {:what => label} %>",
+            hideMode: 'display'
+        })
+    });
+
+		// summary grid
+		var propertyGrid = new Ext.grid.PropertyGrid({
+			title: "<%= _('Totals') %>",
+		  id: 'propGrid',
+		  autoHeight: true,
+		  width: 300,
+		  renderTo: 'payment_totals_grid',
+		  source: {}
+		});
+		propertyGrid.startEditing = function(){   };
+		propertyGrid.getColumnModel().setConfig([
+			{header: "<%= _('Payment Type') %>", sortable: true, dataIndex: 'name', id:'name',allowBlank:true},
+			{header: "<%= _('Amount') %>", sortable: true, dataIndex: 'value', id:'value',allowBlank:true}
+		]);
+		//  end summary grid
+		
+    // render it
+    Sage.payment_report_grids['<%= elm %>'].render();
+
+    Event.observe(window, 'resize', function(){Sage.payment_report_grids['<%= elm %>'].syncSize();});
+
+
+    store.on("load", function(){
+			var propGrid = Ext.getCmp('propGrid');			
+							if (propGrid) { 
+								var total_summary = superResult["paytotals"].json; 
+								propGrid.setSource(total_summary); 
+							};
+			
+    <%= increment_ajax_counter %>
+    	count = this.getTotalCount();
+      Sage.payment_report_grids['<%= elm %>'].setTitle("<%= h(title) %>");
+      if (count <= <%= page_size %>) {
+        Sage.payment_report_grids['<%= elm %>'].getBottomToolbar().hide();
+      } else {
+        Sage.payment_report_grids['<%= elm %>'].getBottomToolbar().show();
+      }
+    });
+    store.load({params:{start:0, limit:<%= page_size %>}});
+
+  //if (this.getTotalCount() <= <%= page_size %>)
+  //	{ Sage.payment_report_grids['<%= elm %>'].bbar.hide();}
+  });	
+	
+  </script>
+<% end # content_for "bottom_javascripts"
+     %>

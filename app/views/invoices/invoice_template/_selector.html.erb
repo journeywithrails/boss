@@ -1,0 +1,15 @@
+<div id="template_header"><%= _("Choose a style") %></div>
+<hr style="width:120px;size:1;color:#A7C520;margin: 5px 0 10px -15px;"/>
+
+<ul>
+  <%get_template_list_name().each do |template| %>
+    <li>
+      <%if @invoice.template_name == template[0]%>
+        <%= template[1]%>
+      <%else%>
+        <a href="<%=invoice_path(@invoice)%>?template=<%= template[0]%>"><%= template[1]%></a>
+      <% end %>     
+    </li>
+  <%end%>
+</ul>
+

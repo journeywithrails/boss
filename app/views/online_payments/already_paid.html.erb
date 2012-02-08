@@ -1,0 +1,10 @@
+<%@skip_header=true%>
+<% content_for "stylesheets" do %>
+	<%= stylesheet_theme_controller("invoices") %>
+	<%= stylesheet_theme_controller_printable(print?, "invoices")%>		
+<% end %>
+
+<% content_for("main") do %>
+  <%=render :partial => "company_brand", :locals => { :profile => @profile } %>
+  <div class="page_header"><%= _("This invoice has already been fully paid. Thank you.") %></div>
+<% end %>

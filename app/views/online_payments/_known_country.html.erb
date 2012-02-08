@@ -1,0 +1,7 @@
+<%= label :state, _("%{state_prompt}:") % { :state_prompt => _( known_country.country_settings.state_label)} %>
+<%= province_state_selector_for_payment(known_country) %>
+<br clear="all" />
+
+<%= label :zip, _("%{postalcode_prompt}:") % { :postalcode_prompt => _( known_country.country_settings.postalcode_label)} %>
+<%= text_field(:billing_address, :zip) %>
+<br clear="all" />

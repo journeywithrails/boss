@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simply-request>
+  <version>Simply-US-16.00.0.0109-071209</version>
+  <user>
+    <login>simply@innatesoftware.com</login>
+  </user>
+  <browsal>
+    <browsal-type>SendInvoiceBrowsal</browsal-type>
+    <start-status>send-invoice</start-status>
+    <language>en</language>
+  </browsal>
+  <user_gateway>
+    <gateway_name>sage_sbs</gateway_name>
+    <merchant_id>123</merchant_id>
+    <merchant_key>axe</merchant_key>
+  </user_gateway>
+  <delivery>
+    <reply-to>test@innatesoftware.com</reply-to>
+    <recipients>test@innatesoftware.com</recipients>
+    <subject>Bill 18020 from UNIVERSAL CONSTRUCTION</subject>
+    <body>If you are unable to view the attached invoice, please contact us immediately.</body>
+  </delivery>
+  <invoice>
+    <invoice-type>SimplyAccountingInvoice</invoice-type>
+    <simply-guid>c9b7f554768b004cab9641630291b8d8</simply-guid>
+    <simply-amount-owing>10.82</simply-amount-owing>
+    <date>2008-06-30</date>
+    <due-date>2008-08-29</due-date>
+    <unique>18021</unique>
+    <subtotal-amount>10.00</subtotal-amount>
+    <discount-before-tax type="boolean">false</discount-before-tax>
+    <discount-type>Amount</discount-type>
+    <discount-amount>0.00</discount-amount>
+    <discount-value>0.00</discount-value>
+    <total-amount>10.82</total-amount>
+    <currency>USD</currency>
+    <description>Thank you for your business!</description>
+    <tax-amount>0.82</tax-amount>
+    <taxes type="array">
+      <tax>
+        <name>State Tax</name>
+        <rate>6.50</rate>
+        <included>false</included>
+        <rate-is-mixed>false</rate-is-mixed>
+        <included-is-mixed>false</included-is-mixed>
+        <amount>0.65</amount>
+        <included-amount>0.00</included-amount>
+        <not-included-amount>0.00</not-included-amount>
+        <included-nonrefundable-amount>0.00</included-nonrefundable-amount>
+        <not-included-nonrefundable-amount>0.65</not-included-nonrefundable-amount>
+      </tax>
+      <tax>
+        <name>King County</name>
+        <rate>1.70</rate>
+        <included>false</included>
+        <rate-is-mixed>false</rate-is-mixed>
+        <included-is-mixed>false</included-is-mixed>
+        <amount>0.17</amount>
+        <included-amount>0.00</included-amount>
+        <not-included-amount>0.00</not-included-amount>
+        <included-nonrefundable-amount>0.00</included-nonrefundable-amount>
+        <not-included-nonrefundable-amount>0.17</not-included-nonrefundable-amount>
+      </tax>
+    </taxes>
+    <customer>
+      <simply-guid>84290da95b08084aa327f88b5546e45f</simply-guid>
+      <name>Gigi&apos;s Pasta &amp; Pizza</name>
+      <contact-name>Naz Gigliotti</contact-name>
+      <preferred-language>en</preferred-language>
+    </customer>
+    <invoice-file-attributes>
+      <content-type>application/pdf</content-type>
+      <filename>invoice.pdf</filename>
+      <temp_data64 type="binary" encoding="base64">JVBERi0xLjQNCiX/////DQo0IDAgb2JqDTw8DS9UeXBlIC9QYWdlDS9QYXJlbnQgMyAwIFIN
+L01lZGlhQm94IFswIDAgNjEyIDc5Ml0NL0Nyb3BCb3ggWzAgMCA2MTIgNzkyXQ0vUmVzb3Vy
+Y2VzIDw8DS9Qcm9jU2V0IFsvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJXQ0v
+Rm9udCA8PCAvRjEgNyAwIFIgL0YyIDkgMCBSID4+DT4+DS9Db250ZW50cyBbNSAwIFJdDT4+
+DWVuZG9iag01IDAgb2JqDTw8IC9MZW5ndGggNiAwIFIgL0ZpbHRlciAvRmxhdGVEZWNvZGUg
+Pj4Nc3RyZWFtDQp4Xp1W23LbNhD9Av7D9sG9TYQAIEAC7ktt2UnVdmTXotNnxmZkNhLpIakm
+9td3QQAUmcoik5FHMAScs/ddMPgUvH7DgAlCKSQfgvMkYEDxwyBUhEmIRUhCPNoGP94uF+8u
+b1Znf8L8arlKbm7nyeJq+RMk/wSXSUujXmQJQ7MYFkb5LIwpg8u0buA3/MqLdQ2rZhoRD4m0
+RKssbZpN9gr+TusH5GjKAhgPhZxFsdJ9tsPWCUMUC06YNW+xfHe1mF/ugfywGhbHNJEOV/xb
+5ncZLEtyOhFMI0KtERdpk01ERbH2qOt0PYoSIiYR7SvKFOV0Imqv4e+7AkL6Cjilahq4pyib
+FNQIcU7HVbm5h6YcMy7SrSBOzWJwy/QZ3ubrTV42TT4NzBgRFqxCwUE2D5iEVZb1EvEYnHKf
+0QcSccRsRxEK7ydUPf+hhmushhS+h+v8+Tkd4eCKed/FTo+H/HGC70LG23RC6c6A49KPknBB
+tCX5mgh4NJMk/pYQeDxmqfjWGPjU896bl9ttVjRj3tNRG7oOljykxUd4KnfwoazMWsH7XZ0X
+WV1/N0LlOlrkw5Bk1bY+BX7y2tTbMmvQQAIXuwzOdmvg2tYg8axFEEaAf9tAMGVSGf/fBCv8
+vThusxSCcCvy3Kn6Fc0riqQv1pvsFK6q+6wy8IlozbtSN+k66H+tRQxNxBtbZ523qD2TgpqK
+ac+0IpHsHUt0ZGiMc1fc/strfZYhZHDHwo6wmKkhORsS2b2/RkmsObx169rCFMJCTbhZlNnN
+WGyCV2XB+c8WhpAiYDQ2lWXuauMNtx8q8kWYKQrx/pZRK4Or1teLJtv2g4T8UWTE7vnt/ii/
+52Zct1hHflvkXcEWAcem3Cd2+2nEcdzX+q9dWjR589TLDxXvmc1mEq1plfGe9iKr76r8scn3
+PaLwNdSRu/0k/lDLNq6OP0k/93h12yH3vHY/iVeEauBkuK7woTHS1yT6W5pctLizbbkrRvup
+0m1joNpWJh+5L6Vo89/dZ1g/Yw8LzrlpnEK32lkpMMN2jw0A0GPwK0REnvwCf2D3hrlR+gl/
+w8CdTGSOuZ+mHekIUkpllOkh8T0hR0BeXMRNzA2op/EI1gvcYylhsQdhn1DC9gtcTb8Q+HjD
+Tq3b0seBM4uYqY9hrzjSBIRo7+O0Um7ElE26gWFOdLmv2350aJx0V+y4sSk8GDcvmCt6sjFL
+VJdYXWF0Qv9Hals63+vltkO9Otih8xf0YmFs0l11L+OkSu8+migud9v3WTU+CYdwM8kes3s4
+f5qGxHnj5m/73O3B/gOZdfoFDWVuZHN0cmVhbQ1lbmRvYmoNNiAwIG9iag05NzkNZW5kb2Jq
+DTcgMCBvYmoNPDwNL1R5cGUgL0ZvbnQNL1N1YnR5cGUgL1RydWVUeXBlDS9CYXNlRm9udCAv
+QXJpYWwsQm9sZA0vRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZw0vRmlyc3RDaGFyIDMyDS9M
+YXN0Q2hhciAyNTUNL1dpZHRocyBbIA0yNzggMzMzIDQ3NCA1NTYgNTU2IDg4OSA3MjIgMjM4
+IDMzMyAzMzMgMzg5IDU4NCAyNzggMzMzIDI3OCAyNzggNTU2IDU1NiA1NTYgNTU2IDU1NiA1
+NTYgNTU2IDU1NiA1NTYgNTU2IDMzMyAzMzMgNTg0IDU4NCA1ODQgNjExDTk3NSA3MjIgNzIy
+IDcyMiA3MjIgNjY3IDYxMSA3NzggNzIyIDI3OCA1NTYgNzIyIDYxMSA4MzMgNzIyIDc3OCA2
+NjcgNzc4IDcyMiA2NjcgNjExIDcyMiA2NjcgOTQ0IDY2NyA2NjcgNjExIDMzMyAyNzggMzMz
+IDU4NCA1NTYNMzMzIDU1NiA2MTEgNTU2IDYxMSA1NTYgMzMzIDYxMSA2MTEgMjc4IDI3OCA1
+NTYgMjc4IDg4OSA2MTEgNjExIDYxMSA2MTEgMzg5IDU1NiAzMzMgNjExIDU1NiA3NzggNTU2
+IDU1NiA1MDAgMzg5IDI4MCAzODkgNTg0IDQwMA00MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0
+MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAw
+IDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwDTI3OCAz
+MzMgNTU2IDU1NiA1NTYgNTU2IDI4MCA1NTYgMzMzIDczNyAzNzAgNTU2IDU4NCAzMzMgNzM3
+IDU1MiA0MDAgNTQ5IDMzMyAzMzMgMzMzIDU3NiA1NTYgMjc4IDMzMyAzMzMgMzY1IDU1NiA4
+MzQgODM0IDgzNCA2MTENNzIyIDcyMiA3MjIgNzIyIDcyMiA3MjIgMTAwMCA3MjIgNjY3IDY2
+NyA2NjcgNjY3IDI3OCAyNzggMjc4IDI3OCA3MjIgNzIyIDc3OCA3NzggNzc4IDc3OCA3Nzgg
+NTg0IDc3OCA3MjIgNzIyIDcyMiA3MjIgNjY3IDY2NyA2MTENNTU2IDU1NiA1NTYgNTU2IDU1
+NiA1NTYgODg5IDU1NiA1NTYgNTU2IDU1NiA1NTYgMjc4IDI3OCAyNzggMjc4IDYxMSA2MTEg
+NjExIDYxMSA2MTEgNjExIDYxMSA1NDkgNjExIDYxMSA2MTEgNjExIDYxMSA1NTYgNjExIDU1
+NiBdDS9Gb250RGVzY3JpcHRvciA4IDAgUg0+Pg1lbmRvYmoNOCAwIG9iag08PA0vVHlwZSAv
+Rm9udERlc2NyaXB0b3INL0ZvbnROYW1lIC9BcmlhbCxCb2xkDS9GbGFncyAzMg0vRm9udEJC
+b3ggWyAtNjI4IC0zNzYgMjAwMCAxMDEwIF0NL0F2Z1dpZHRoIDQ3OQ0vU3RlbVYgMA0vQ2Fw
+SGVpZ2h0IDANL0l0YWxpY0FuZ2xlIDANL0FzY2VudCA5MDUNL0Rlc2NlbnQgMjEyDT4+DWVu
+ZG9iag05IDAgb2JqDTw8DS9UeXBlIC9Gb250DS9TdWJ0eXBlIC9UcnVlVHlwZQ0vQmFzZUZv
+bnQgL0FyaWFsDS9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nDS9GaXJzdENoYXIgMzINL0xh
+c3RDaGFyIDI1NQ0vV2lkdGhzIFsgDTI3OCAyNzggMzU1IDU1NiA1NTYgODg5IDY2NyAxOTEg
+MzMzIDMzMyAzODkgNTg0IDI3OCAzMzMgMjc4IDI3OCA1NTYgNTU2IDU1NiA1NTYgNTU2IDU1
+NiA1NTYgNTU2IDU1NiA1NTYgMjc4IDI3OCA1ODQgNTg0IDU4NCA1NTYNMTAxNSA2NjcgNjY3
+IDcyMiA3MjIgNjY3IDYxMSA3NzggNzIyIDI3OCA1MDAgNjY3IDU1NiA4MzMgNzIyIDc3OCA2
+NjcgNzc4IDcyMiA2NjcgNjExIDcyMiA2NjcgOTQ0IDY2NyA2NjcgNjExIDI3OCAyNzggMjc4
+IDQ2OSA1NTYNMzMzIDU1NiA1NTYgNTAwIDU1NiA1NTYgMjc4IDU1NiA1NTYgMjIyIDIyMiA1
+MDAgMjIyIDgzMyA1NTYgNTU2IDU1NiA1NTYgMzMzIDUwMCAyNzggNTU2IDUwMCA3MjIgNTAw
+IDUwMCA1MDAgMzM0IDI2MCAzMzQgNTg0IDQwMA00MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0
+MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAw
+IDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwIDQwMCA0MDAgNDAwDTI3OCAz
+MzMgNTU2IDU1NiA1NTYgNTU2IDI2MCA1NTYgMzMzIDczNyAzNzAgNTU2IDU4NCAzMzMgNzM3
+IDU1MiA0MDAgNTQ5IDMzMyAzMzMgMzMzIDU3NiA1MzcgMjc4IDMzMyAzMzMgMzY1IDU1NiA4
+MzQgODM0IDgzNCA2MTENNjY3IDY2NyA2NjcgNjY3IDY2NyA2NjcgMTAwMCA3MjIgNjY3IDY2
+NyA2NjcgNjY3IDI3OCAyNzggMjc4IDI3OCA3MjIgNzIyIDc3OCA3NzggNzc4IDc3OCA3Nzgg
+NTg0IDc3OCA3MjIgNzIyIDcyMiA3MjIgNjY3IDY2NyA2MTENNTU2IDU1NiA1NTYgNTU2IDU1
+NiA1NTYgODg5IDUwMCA1NTYgNTU2IDU1NiA1NTYgMjc4IDI3OCAyNzggMjc4IDU1NiA1NTYg
+NTU2IDU1NiA1NTYgNTU2IDU1NiA1NDkgNjExIDU1NiA1NTYgNTU2IDU1NiA1MDAgNTU2IDUw
+MCBdDS9Gb250RGVzY3JpcHRvciAxMCAwIFINPj4NZW5kb2JqDTEwIDAgb2JqDTw8DS9UeXBl
+IC9Gb250RGVzY3JpcHRvcg0vRm9udE5hbWUgL0FyaWFsDS9GbGFncyAzMg0vRm9udEJCb3gg
+WyAtNjY1IC0zMjUgMjAwMCAxMDA2IF0NL0F2Z1dpZHRoIDQ0MQ0vU3RlbVYgMA0vQ2FwSGVp
+Z2h0IDANL0l0YWxpY0FuZ2xlIDANL0FzY2VudCA5MDUNL0Rlc2NlbnQgMjEyDT4+DWVuZG9i
+ag0xMSAwIG9iag08PA0vVHlwZSAvQ2F0YWxvZw0vUGFnZXMgMyAwIFINPj4NZW5kb2JqDTIg
+MCBvYmoNPDwNL1Byb2R1Y2VyIChBbXl1bmkgUERGIENyZWF0b3IgMi4wMS1kKQ0vQ3JlYXRv
+ciAoQW15dW5pIFBERiBDcmVhdG9yKQ0+Pg1lbmRvYmoNMyAwIG9iag08PA0vVHlwZSAvUGFn
+ZXMNL0NvdW50IDENL1JvdGF0ZSAwDS9LaWRzIFs0IDAgUiBdDT4+DWVuZG9iag14cmVmDTAg
+MTINMDAwMDAwMDAwMCA2NTUzNSBmIA0wMDAwMDAwMDAwIDAwMDAwIG4gDTAwMDAwMDM4MzIg
+MDAwMDAgbiANMDAwMDAwMzkyMSAwMDAwMCBuIA0wMDAwMDAwMDE3IDAwMDAwIG4gDTAwMDAw
+MDAyMjQgMDAwMDAgbiANMDAwMDAwMTI3OCAwMDAwMCBuIA0wMDAwMDAxMjk3IDAwMDAwIG4g
+DTAwMDAwMDIzNTggMDAwMDAgbiANMDAwMDAwMjU0MyAwMDAwMCBuIA0wMDAwMDAzNjAxIDAw
+MDAwIG4gDTAwMDAwMDM3ODIgMDAwMDAgbiANdHJhaWxlcg08PA0vU2l6ZSAxMg0vUm9vdCAx
+MSAwIFINL0luZm8gMiAwIFINL0lEIFs8N0ZGQjYyODJEMjM4MUQ0N0E3OENEREI1MzY5MkJG
+NzE+PDdGRkI2MjgyRDIzODFENDdBNzhDRERCNTM2OTJCRjcxPl0NPj4Nc3RhcnR4cmVmDTM5
+ODkNJSVFT0YN
+</temp_data64>
+    </invoice-file-attributes>
+  </invoice>
+</simply-request>

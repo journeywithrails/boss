@@ -1,0 +1,41 @@
+List of tests:
+it should 'find an account'
+it should 'login'
+it should 'create an account'
+it should 'create an order with new account'
+it should 'create an order with existing account'
+it should 'show an order preview'
+it should 'process an order'
+it should 'reject an invalid credit card'
+
+it should 'activate live computer support in drupal'
+  goto drupal
+  sign up as a customer
+  logout
+
+  goto csp
+  create customer account
+  create live computer support order
+  process order
+  wait for order to finish processing
+
+  goto drupal
+  login as customer
+  go to live computer support portal
+  verify portal is accessible
+
+it should 'activate virtual bookkeeper support in drupal'
+  goto drupal
+  sign up as as ssan partner
+  logout
+
+  goto_csp
+  create_account :ssan_partner
+  create_virtual_bookkeeper_order
+  process_order
+  wait_for_order_to_finish_processing
+
+  goto drupal
+  login_as :ssan_partner
+  goto virtual_bookkeeper_portal
+  verify portal is accessible

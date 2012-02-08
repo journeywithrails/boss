@@ -1,0 +1,35 @@
+<div class="left_align">
+<br/>
+<h3><%= _('Primary Contact') %></h3>
+</div>
+		<% fields_for 'customer[default_contact]', default do |default_fields| %>
+	<table>
+		<tr class="contact_container">
+		  <thead>
+  			<th class="placeholder"></th>
+  			<th><%= _('First Name') %></th>
+  			<th><%= _('Last Name') %></th>
+  			<th><%= _('Email') %></th>
+  			<th><%= _('Phone') %></th>
+  			<th></th>
+      </thead>
+		</tr>
+
+		<tr class="contact_container">
+			<td class="placeholder"></td>
+	   	<td class="contact_name">
+	   		<%= default_fields.text_field :first_name, :class => "colored_field" %>
+			</td>					
+	   	<td class="contact_name">
+	    	<%= default_fields.text_field :last_name, :class => "colored_field" %>
+			</td>					
+	   	<td class="contact_email">
+	   		<%= default_fields.text_field :email, :class => "colored_field" %>
+			</td>					
+	   	<td class="contact_phone">
+	   		<%= default_fields.text_field :phone, :class => "colored_field" %>					
+			</td>					
+		</tr>
+
+	</table>
+<% end %>

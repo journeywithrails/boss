@@ -1,0 +1,78 @@
+Received: by 10.90.53.20 with HTTP; Sat, 30 Dec 2006 21:07:39 -0800 (PST)
+Message-ID: <967d3b9a0612302107n7faa6fe3w92c8f0c7dc76df83@mail.example.com>
+Date: Sat, 30 Dec 2006 21:07:39 -0800
+From: "Hello World" <helloworld@example.com>
+To: info@billingboss.com
+Subject: Hello World
+MIME-Version: 1.0
+Content-Type: multipart/mixed
+Delivered-To: info@billingboss.com
+
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+This invoice is flawed! Please resend.
+
+> Sent mail:
+>  Date: Fri, 8 May 2009 11:20:30 +0200
+> From: info@billingboss.com
+>Reply-To: mycompany <mycompany@gmail.com>
+>To: sjobs@apple.com
+>Subject: New invoice from mycompany
+>Mime-Version: 1.0
+>Content-Type: multipart/mixed; boundary="mimepart_4a04157f7c79_1281a7a0a216a"
+>X-Delivery-Id: 3
+>
+>
+>
+>
+>Content-Type: text/plain; charset=utf-8
+>Content-Transfer-Encoding: Quoted-printable
+>Content-Disposition: inline
+>
+>Here is the invoice from mycompany.
+>
+>
+>
+>To view or pay this invoice online, please go to http://localhost:3000/ac=
+>cess/d1f88a69c402437f991cd58d5918024b
+>
+>-------------------
+>
+>Sent by Billing Boss - your Free online invoicing tool.
+>
+>Content-Type: text/html; charset=utf-8
+>Content-Transfer-Encoding: Quoted-printable
+>Content-Disposition: inline
+>
+><table border=3D"0" width=3D"580" cellspacing=3D"0" cellpadding=3D"0" bgc=
+>olor=3D"#FFFFFF" style=3D"font-family: Arial; font-size: 12pt; color: #49=
+>3F0B;">
+>	<tr>
+>		<td>&nbsp;</td>
+>		<td style=3D"padding-bottom: 20px"></td>
+>		<td>&nbsp;</td>
+>	</tr>
+>  <tr>
+>    <td>&nbsp;</td>
+>    <td style=3D"padding-bottom: 20px">
+>    <p>
+>Here is the invoice from mycompany.
+>    =
+>
+>    To view or pay this invoice online, please go to <a href=3D"http://lo=
+>calhost:3000/access/d1f88a69c402437f991cd58d5918024b">http://localhost:30=
+>00/access/d1f88a69c402437f991cd58d5918024b</a>
+>    </p>
+>    </td>
+>  </tr>
+></table>
+>
+><p style=3D"text-size: small">
+>Sent by <a href=3D"http://localhost:3000">Billing Boss</a> - your Free on=
+>line invoicing tool.
+></p>
+>
+>
+>

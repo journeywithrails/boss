@@ -1,0 +1,55 @@
+<% content_for "stylesheets" do%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= xpath_theme %>
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>
+<% end %>
+
+<% content_for "javascripts" do%>
+ <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+ <%= javascript_include_tag "/ext/ext-all.js" %>
+ <%= javascript_include_tag "/ext/ext-fix.js" %>
+ <%= javascript_include_tag "/ext/source/locale/ext-lang-#{locale.language}.js" %>
+<% end%>
+
+<% @content_for_main_top = capture do %>
+<div class="yui-g">
+    <%=css_button_link_to _("Add New Customer"),  {:controller=>"customers", :action=>"new"}, {:id=>"new_customer", :class=>"button_orange"} %>
+    <%=link_to_create_invoice %>
+    <%=link_to_create_quote %>
+    <div class="page_header"><%= _('Recurring Invoices') %></div>
+</div>
+<% end %>
+
+	
+
+<% @content_for_infobox = capture do %>
+      <%= formatted_flash %>
+<% end %>
+
+
+<% @content_for_main = capture do %>
+
+
+    <%
+    cols = [
+      {:name=>"Customer Name",      :class=>"customer left",      :data=>Proc.new{|e| link_to(e.customer.name, edit_customer_path(e.customer)) if e.customer}},
+      {:name=>"Frequency",          :class=>"frequency right",    :data=>Proc.new{|e| e.frequency}},
+      {:name=>"Next Date",          :class=>"date right",         :data=>Proc.new{|e| format_date(_("%m/%d/%y")) {e.date}}},
+      {:name=>"Total Amount",       :class=>"total_amount right", :data=>Proc.new{|e| e.total_amount}},
+      {:name=>"Currency",           :class=>"currency right",     :data=>Proc.new{|e| e.currency}},
+      {:name=>"Generated Invoices", :class=>"generated_invoices right", :data=>Proc.new{|e| e.generated_invoices.empty? ? _("no invoices generated") : link_to("view generated invoices", generated_invoice_path(e)) }},
+      {:name=>"",                   :class=>"action center",      :data=>Proc.new{|e| link_to("view invoice", invoice_path(e))}}
+      ]
+  %>
+  <%= grid_body "invoice-grid", "Recurring invoices", @invoices, cols %>
+
+
+<% end %>
+
+
+
+<%= render_inner_layout %>
+	
+
+

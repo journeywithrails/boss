@@ -1,0 +1,75 @@
+<% @custom_title = invoice_text(@invoice, "Edit Invoice") %>
+
+<% content_for "stylesheets" do%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= stylesheet_theme_controller %>
+<% end %>
+
+<% content_for "javascripts" do%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>
+<% end %>
+
+<% @content_for_main_top = capture do %>
+
+<div class="yui-g">
+    <%=css_button_link_to _("Add New Customer"),  {:controller=>"customers", :action=>"new"}, {:id=>"new_customer", :class=>"button_orange"} %>
+    <%=link_to_create_invoice %>
+    <%=link_to_create_quote %>
+    <div class="page_header"> <%=(invoice_status(@invoice)).untaint %> </div>
+</div>
+
+<% end %>
+
+
+
+
+	<% form_for(:invoice, @invoice, :url => invoice_path(@invoice), :html => { :method => :put, :id => 'invoice_form' }) do |f| %>
+		<% @content_for_lnav = capture do %>
+		  <h2 class="state"><%= _('Options') %></h2> 
+			<br />
+<!--	  <%= link_to i_(@invoice,"Preview Invoice"), invoice_path(@invoice.id), :name => 'show' %> <br /> -->
+        <ul class="lnav_ul">
+	 <li><%= link_to i_(@invoice, "Delete this Invoice"), invoice_path(@invoice), :confirm => i_(@invoice, "Are you sure you want to delete this invoice?"), :method => :delete, :id => 'destroy' %> </li>
+        </ul>
+	<% end -%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+		<%= formatted_flash %>
+		<%= error_messages_for :invoice, :line_items, :object => @invoice.line_items %> 
+		<%= error_messages_for 'customer', :object => @invoice.customer %>
+		<% end %>
+		
+      <% @content_for_main = capture do %>
+      <br/>
+	  <div class="section_header"><%= i_(@invoice,"Editing invoice") %></div>
+	  <% end %>
+	
+		<%= render :partial => "form", :object => @invoice, :locals => {:f => f} %>
+		
+		<% @content_for_main += capture do %>
+      <div class="yui-g" >
+	<div>
+	  <%= link_to_remote _("calculate"), :url => recalculate_invoice_path(@invoice), :with_hash => "$H(Sage.serializedFormWithoutMethod('invoice_form', true))" %>
+	</div>
+        <div>
+          <br/>          
+	  <div class="right_aligned_with_margin"><%= submit_tag i_(@invoice,'Save Invoice'), :class => "form_submit" %></div>
+	</div>
+      </div>
+    <% end %>
+		
+		<%= render_inner_layout %>
+		
+    <% end -%>
+
+    <%= render :partial => "customers/customer_dialog" %>
+    <br/>
+
+  <% content_for "bottom_javascripts" do %>
+    <%= protect_form('invoice_form') %>
+  <% end %>

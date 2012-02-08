@@ -1,0 +1,7 @@
+<li class="country-border-fix"><div class="form_field_hdr"><label for="profile_company_state"><%= _("%{state_prompt}:%{mandatory_placeholder}") % { :state_prompt => _( known_country.country_settings.state_label), :mandatory_placeholder => mandatory(@profile, @profile.company_state)} %></label></div>
+<%= state_select( :profile, :company_state, known_country.country_settings.state_key, 
+  {:prompt => _("– Select %{statelabel} –") % { :statelabel => _( known_country.country_settings.state_label)}} ) %>
+</li><li>
+<div class="form_field_hdr"><label for="profile_company_postalcode"><%= _("%{postalcode_prompt}:%{mandatory_placeholder}") % { :postalcode_prompt => _( known_country.country_settings.postalcode_label), :mandatory_placeholder => mandatory(@profile, @profile.company_postalcode)} %></label></div>
+<%= text_field "profile", "company_postalcode" %>
+</li>

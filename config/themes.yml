@@ -1,0 +1,12 @@
+Default:
+  description: This is the default theme
+  style_path: default
+  calendar_path: calendar_date_select
+  ext_path: key_lime 
+  
+Test:
+  description: This is the test theme
+  style_path: test
+  calendar_path: calendar_date_select
+  ext_path: olive
+  

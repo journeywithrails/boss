@@ -1,0 +1,253 @@
+# Filters added to this controller apply to all controllers in the application.
+# Likewise, all the methods added will be available for all controllers.
+
+class ApplicationController < ActionController::Base
+#   before_filter :automatic_login
+#    def automatic_login
+#      user = User.find 2
+#      self.current_user = user
+#      session[:sage_user] = user.sage_username
+#      session[:user] = user.id
+#  end
+#  CASClient::Frameworks::Rails::Filter.class_eval do
+#    def handle_authentication
+#      return true
+#    end
+#  end
+
+  before_filter :set_timezone
+  after_filter :clear_timezone
+  
+  before_init_gettext :init_language
+  init_gettext "billingboss"
+    
+  include Globalizer
+  include Localizer
+  
+  include SimpleCaptcha::ControllerHelpers 
+
+  # FIXME: this may cause unexpected behaviour if two helper modules define the same method name
+  # helper :all # include all helpers, all the time # FIXME -- this may be a performance drag
+
+  helper InvoicesHelper
+  helper LocalizationHelper
+  helper WindowHelper
+  helper SimplyHelper
+
+  protected
+  include SamSupportHelper
+  include CasSystem
+  include MobileSupport
+  include LayoutSupport
+
+  helper_method :logout_current_user
+    
+  layout :internal_or_external_layout
+
+  # before_filter :add_session_key_for_cas
+  before_filter ProcessSignupFilter
+  
+  filter_parameter_logging :password, :password_confirmation
+  
+  # See ActionController::RequestForgeryProtection for details
+  # If you're using the Cookie Session Store you can leave out the :secret
+  protect_from_forgery
+  
+
+  ActionView::Base.register_fallback_format(:pdf, :html)
+
+  # caches_pdfs :storage => ::AppConfig.pdf_storage
+  
+
+  if %w{test}.include?(RAILS_ENV)
+    def default_url_options_with_test_host(options)
+      options ||= {}
+      options = default_url_options_without_test_host(options) || {}
+      options[:host] = Sage::Test::Server.billingboss.host + ':' + Sage::Test::Server.billingboss.port.to_s
+      options
+    end
+    alias_method_chain :default_url_options, :test_host unless method_defined?(:default_url_options_without_test_host)
+  end
+  
+  # used in invoice and payment controllers
+  def set_up_display_invoice
+    #load the company's profile for displaying company address, logo etc...
+    #@profile = Profile.new(@invoice.created_by) # this line is bizarre - I'll try to do without it
+    @profile = @invoice.profile
+    @custom_layout = "main"    
+    @printable = true
+    @skip_header = true
+    @hide_analytics = true
+    @invoice_customer_view = true
+    cookies["lang"].blank? ? set_locale(@invoice.customer.language) : set_locale(cookies["lang"])
+  end
+  
+  def bookkeeper_required
+    return true if not current_user.bookkeeper.nil?
+    render :text=>'' and return false
+  end
+  
+  def find_customer
+    @customer = current_user.customers.find(params[:customer_id]) unless params[:customer_id].blank?
+  end
+  
+  def polling_for(options={})
+    max_time = options[:max_time] || 5.0
+    BillingTest.log "-- polling_for #{max_time}" if $log_concurrency #tmp_on
+    result = yield
+    return unless result
+    interval = options[:interval] || max_time/10
+    interval_decay = options[:interval_decay] || 1.5
+    interval_spread = options[:interval_spread] || 0.3
+    now = Time.now
+    while result and ((waited_for = (Time.now - now)) < max_time)
+      result = yield
+      delta = interval * interval_spread
+      wait = interval - delta + rand(delta*2)
+      sleep [wait, max_time - waited_for].min
+      interval *= interval_decay
+    end
+    if result
+      BillingTest.log "-- polling_for TIMEOUT" if $log_concurrency #tmp_on
+      RAILS_DEFAULT_LOGGER.warn("POLLING_FOR TIMEOUT")
+    end
+    result
+  end
+  
+  # destination must be a string or a hash acceptable to redirect_to.
+  # this does not work in all browsers -- some browsers must use a static page with meta-refresh
+  # use redirect_to_path_dropping_ssl -- but only if you have a path, not an options hash
+  def redirect_and_drop_SSL(destination, force=true)
+    case destination || {}
+    when String
+      if destination.match(/^https:/)
+        destination.gsub!(/^https:/, 'http:') 
+      else
+        destination = 'http://' + request.host_with_port + destination
+      end
+    when Hash
+        destination[:protocol], destination[:only_path] = 'http', false if request.ssl?  
+    end   
+    redirect_to(destination) if (request.ssl? or force)
+  end
+  
+  def stream_csv(filename=nil, &block)
+    require 'fastercsv'
+    filename ||= params[:action] + ".csv"    
+
+    #this is required if you want this to work with IE        
+    if request.env['HTTP_USER_AGENT'] =~ /msie/i
+      headers['Pragma'] = 'public'
+      headers["Content-Type"] = "application/octet-stream" 
+      headers['Cache-Control'] = 'private'
+      headers['Content-Disposition'] = "attachment; filename=\"#{filename}\"" 
+      headers['Expires'] = "0" 
+    else
+      headers["Content-Type"] ||= 'text/csv'
+      headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" 
+    end
+
+    csv = ""
+    csv = FasterCSV.generate(csv, :col_sep => ',', :row_sep => "\r\n", &block) 
+    send_data(csv,
+          :type => 'text/csv; charset=utf-8; header=present',
+          :filename => filename)
+  end
+  
+  def setup_search_filters(default_key, opts={})
+    options = {
+      :page_size => 10      
+    }.merge(opts)
+    options[:parent] ||= current_user
+    options[:current] ||= params[:page]
+  
+    key = params[:filters] && params[:filters].delete(:search_key)
+    key ||= default_key
+    @filters = OpenStruct.new(options[:parent].set_or_get_search!(key, params[:filters]))
+    @filters.page = {:current => options[:current], :size => options[:page_size]} unless options[:page_size].nil?
+    @filters.exclude = []
+  end
+  
+  def rescue_action_in_public(exception)
+     redirect_to '/global_rescue'
+  #  render :text => "<html><body><p>
+  #There was a global error processing your request.</p>
+  #  <!--  #{exception}  --></body></html>" 
+  end
+
+  # used to split a param like :a => "1,2,3" to :a => ["1", "2", "3"]
+  def split_multi_params(multi_params, *keys)
+    return if multi_params.nil?
+    keys = multi_params.keys if keys.empty?
+    keys.each do |k|
+      if multi_params[k] 
+        multi_params[k] = multi_params[k].split(/[, ]+/)
+      end
+    end
+  end
+  
+  def log_trace(message = nil, level = :debug) 
+    return if ::AppConfig.quiet_log
+    if block_given?
+      logger.send(level, "#{ File.split(caller[0]).last }: #{yield}")
+    else
+      logger.send(level, "#{ File.split(caller[0]).last }: #{message}")
+    end
+  end
+  
+  # this does a redirect through a static page so we can change protocols, necessary
+  # because a location header redirect with different protocol does not work on all browsers
+  def redirect_to_path_dropping_ssl(path)
+    @redirect_path = url_for(path)
+    if ::AppConfig.use_ssl
+      @redirect_protocol = 'https'
+    else
+      @redirect_protocol = 'http'
+    end
+    render :template => '/session/redirect', :layout => false
+  end
+  
+  def logout_current_user
+    RAILS_DEFAULT_LOGGER.debug("logout_current_user")     
+    self.current_user.forget_me if logged_in?
+    cookies.delete :auth_token
+    reset_session
+  end
+
+  # Invoice.meta_status comes back as a string in filters; convert faithfully to int
+  def meta_status_from_str( meta_str)
+    meta_val = meta_str
+    meta_val = nil if meta_val == ""
+    meta_val = Integer(meta_val)
+    return meta_val
+  end  
+  
+  # stub that is overridden by controllers that include api_token_support
+  def api_token?
+    false
+  end
+
+  def auto_create_user?(attrs={})
+    # allow Billing Boss user to be automatically created from cas user (sage_username) when in simply browsal
+    api_token? || attrs[:source] =~ /^billingboss/
+  end
+
+  
+  def helpers
+    ActionController::Base.helpers
+  end
+
+  def override_signup_service_url?
+    !@signup_service_url.blank?
+  end
+
+  
+  private
+  def set_timezone
+    TzTime.zone = TZInfo::Timezone.get("#{current_user.profile.tz}") if logged_in? 
+  end
+  def clear_timezone
+    TzTime.reset!
+  end
+end
+

@@ -1,0 +1,2 @@
+page.replace_html 'theme_preview', "<img src='/themes/_previews/#{params[:selected]}.jpg'>"
+page.increment_ajax_counter_rjs

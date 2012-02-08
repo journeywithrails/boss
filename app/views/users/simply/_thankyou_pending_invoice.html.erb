@@ -1,0 +1,60 @@
+<p class="main_simply_text"><%= _('Your Billing Boss account is now active and from here you can choose to send the invoice you were working on in Simply Accounting') %></p>
+<br/><br/>
+
+<div class="yui-g">
+  <div id="send_invoice_now_box" class="yui-u first">
+    <div class="caption"><%= _('Send the invoice now') %></div>
+    <div class="corner_large_tr" style="clear: both; height: 20px;">
+      <div style="height: 20px;" class="corner_large_tl">
+        <div class="infobox_empty">
+        </div>	
+      </div>
+    </div>
+    <div id="send_invoice_now_content" class="white content">
+      <p class="small_simply_text">
+        <%= _('Your customer will receive an email with the invoice attached and a link to view the invoice and payment method in Billing Boss.') %>
+        <br/><br/>
+        <%= _('Note that until you set up an online payment solution, customers will only be able to pay in the usual way (e.g.) mailing you a cheque.') %>
+        <br/><br/>
+      </p>
+      <div class="center">
+        <%= link_to localized_image_tag("/images/simply/btn-email-invoice.gif", :alt => _("E-mail the Invoice")), new_delivery_path, :id => 'email-the-invoice-button' %>
+      </div>
+    </div>
+    <div class="tour_box_bl">
+      <div class="tour_box_br">	
+      </div>								
+    </div>
+  </div>
+
+  <div id="send_invoice_now_box" class="yui-u">
+    <div class="caption"><%= _('Send the invoice later') %></div>
+    <div class="corner_large_tr" style="clear: both; height: 20px;">
+      <div style="height: 20px;" class="corner_large_tl">
+        <div class="infobox_empty">
+        </div>	
+      </div>
+    </div>
+    <div id="send_invoice_now_content" class="white content">
+      <p class="small_simply_text">
+        <%= _('Before you start using Billing Boss, learn about the variety of online payment solutions available, pick the right one for your company and be guided through a signup process.') %>
+        <br/>
+        <%= _('Once your account with the payment solution is active, you can send invoices from Simply Accounting and customers will have the option of quick and easy online payment!') %>
+        <br/><br/>
+        <%= _('You can select online payment methods at any time
+        from your') %>
+        <a onclick="window.open(this.href);return false;" href='<%= "#{::AppConfig.secure_host}/profiles" %>'><%= _('Billing Boss settings') %></a>.
+        <br/><br/>
+      </p>
+      <div class="center">
+        <%= localized_image_submit_tag("/images/simply/btn-close-window.gif", :alt => _("Close this window"), :on_click => "page_complete();return false;", :id => "complete-btn") %>
+        <%#TODO: change link to the payment subpage after profile is split %>
+        <%= link_to localized_image_tag("/images/simply/btn-send-invoice-later.gif", :alt => _("Send Invoice Later")), {:action => "index", :controller => "user_gateways"}, {:id => 'send-invoice-later-button'} %>
+      </div>
+    </div>
+    <div class="tour_box_bl">
+      <div class="tour_box_br">	
+      </div>								
+    </div>
+  </div>
+</div>

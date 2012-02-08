@@ -1,0 +1,21 @@
+#admin is the "generic" admin class that all other admins are members of
+admin:
+  id: 1
+  name: admin
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+master_admin:
+  id: 2
+  name: master_admin
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+feedback_admin:
+  id: 3
+  name: feedback_admin
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+winners_admin:
+  id: 4
+  name: winners_admin
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>

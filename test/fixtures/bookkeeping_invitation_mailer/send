@@ -1,0 +1,3 @@
+BookkeepingInvitationMailer#send
+
+Find me in app/views/bookkeeping_invitation_mailer/send.erb

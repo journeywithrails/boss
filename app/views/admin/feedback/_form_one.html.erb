@@ -1,0 +1,58 @@
+<% f = @f %>
+<% form_for(:feedback, :url => "/admin/feedback/#{@f.id}", :html => {:method => :put} ) do |r| %>
+	<table id="feedback_item_<%= f.id %>" class="feedback_item" width="100%">
+	
+		<tr>
+			<td class="first">Feedback #:</td><td class="second"><%= f.id %><span style="display:none"><%= r.text_field :id, :value => @f.id  %></span></td>
+		</tr>
+		<tr>
+			<td class="first">Sender's name:</td><td class="second"><%= h f.user_name %></td>
+		</tr>
+		<tr>
+			<td class="first">Sender's email:</td><td class="second"><%= h f.user_email %></td>
+		</tr>
+		<tr>
+			<td class="first">Submitted at:</td><td class="second"><%= f.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+		</tr>
+		<tr>
+			<td class="first">Feedback:</td><td class="second"><%= h f.text_to_send %></td>
+		</tr>
+		<tr>
+			<td class="first">Admin's response:</td><td class="second"><%= r.text_area :response_text, :value => f.response_text, :size => '60x8' %></td>
+		</tr>
+		<tr>
+			<td class="first">Status:</td><td class="second"><%= r.select :status, ["Open", "In review", "Closed"], :selected => f.response_status %></td>
+		</tr>
+		<tr>
+			<td class="first">Owned by:</td><td class="second"> 
+			<%= (f.owned_by.blank? or f.owned_by == 0) ? "" : User.find(f.owned_by).sage_username %><br/> 
+			Become or stay owner of this feedback? 
+			<%= r.select :claim, ["Yes", "No"], :selected => am_i_current_owner?(f.owned_by) %></td>
+		</tr>
+		<% if !f.user_email.blank? %>
+		<tr>
+			<td class="first">
+				E-mail user:
+			</td>
+			<td class="second">
+                            <%= r.check_box :email_reply %>Reply to the feedback sender with the admin response text.
+			</td>
+		</tr>
+		<% end %>
+		<tr>
+			<td class="first">Last modified at:</td><td class="second"><%= f.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+		</tr>
+		<tr>
+			<td class="first"></td><td class="second"><%= r.submit( "Update" ) %></td>
+		</tr>
+		<tr><td class="first"></td><td class="second"></td></tr>
+		<tr>
+			<td class="first"></td><td class="second"><%= link_to "Go back", {:controller => "feedback"} %></td>
+		</tr>
+		<tr><td class="first"></td><td class="second"></td></tr>
+		<tr>
+			<td class="first"></td>
+			<td class="second"><%= link_to 'Delete this feedback', "/admin/feedback/#{@f.id}", :confirm => 'If this is a request that requires admin intervention (such as restored password), or any other feedback that is useful to preserve, it should be handled and marked closed instead of deleted. Confirm deletion?', :method => :delete, :id => 'destroy' %></td>
+		</tr>
+	</table>
+<% end %>

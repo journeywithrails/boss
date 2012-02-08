@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--  <%= RAILS_ENV %> -->
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= _('Billing Boss: Build your Business Sweepstakes') %><%= " - #{@current_action.humanize}" unless @current_action.nil? %></title>
+  <%= stylesheet_global %>
+  <%= default_theme_controller %> 
+  <%= stylesheet_ie6 %>
+
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	<%= yield :stylesheets %>
+
+	<%= javascript_include_tag 'prototype' %>
+	<%= javascript_include_tag 'effects' %>
+
+	<!-- load any template-specific javascripts (use by including a content_for block in template) -->
+	<%= yield :javascripts %>
+	
+	
+	
+</head>
+
+<body>
+  
+  <%= admin_popup %>
+
+
+  <div id="doc2" class="yui-t7">		
+	  <div id="hd">
+  		<%= yield :header %>
+  	</div>			
+
+      <%= yield :main %>			
+
+    <div id="ft">
+ 		  <%= if !@skip_footer then render(:partial => "layouts/main_footer") end %>
+    </div>    
+  </div>
+
+
+  
+<%= render :partial => "/layouts/google" %>  
+</body>
+<% if !print? %>
+	<%= javascript_include_tag 'application' %>	
+	<%= javascript_include_tag 'control_select_multiple' %>
+<% end %>
+
+<% if RAILS_ENV == 'test' -%>
+  <!-- conditionally include increment_ajax_counter for testing -->
+  <%= javascript_include_tag('increment_ajax_counter') %>
+<% end -%>
+
+<%= yield :javascripts %>
+
+<%= yield :bottom_javascripts %>
+</html>

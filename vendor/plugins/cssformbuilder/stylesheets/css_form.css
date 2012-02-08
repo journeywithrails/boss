@@ -1,0 +1,109 @@
+
+/* CSS form builder plugin stylesheets.
+  - copy (or link) this file into public/stylesheets/ folder
+  - include in your template (<%= stylesheet_link_tag 'css_form' %>)
+*/
+
+form.cssform, div.css_show {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #eee;
+  padding: 5px;
+  border: 1px solid #444;
+}
+
+form.cssform label, div.css_show label {
+  display: block;
+  float: left;
+  font-size: 90%;
+  padding: 0px 0px 2px 0px;
+  margin: 0px 10px 0px 0px;
+}
+
+form.cssform br, div.css_show br {
+  clear: left;
+}
+
+form.cssform label input,
+form.cssform label select,
+form.cssform label textarea,
+div.css_show label span {
+  float: left;
+  padding: 0px;
+}
+
+form.cssform label input,
+form.cssform label select,
+form.cssform label textarea {
+  border: solid 1px #1F7F00;
+}
+
+div.css_show label span {
+  font-weight: bold;
+  background-color: #f7f7f7;
+  border: solid 1px #1F7F00;
+  width: 150px;
+}
+
+div.css_show label span.textarea{
+  width: 100%;
+  height: 100%;
+  border: solid 1px #1F7F00;
+}
+
+div.css_show label span.checkbox, 
+div.css_show label span.radiobutton{
+  width: 20px;
+}
+
+div.css_show pre{
+  background-color: #f7f7f7;
+}
+
+form.cssform label input.normal-size,
+form.cssform label select.normal-size,
+div.css_show label span.normal-size {
+  width: 150px;
+}
+
+form.cssform label input.double-size,
+form.cssform label select.double-size,
+div.css_show label span.double-size {
+  width: 310px;
+}
+
+form.cssform label input.half-size,
+form.cssform label select.half-size,
+div.css_show label span.half-size {
+  width: 70px;
+}
+
+form.cssform label input.numeric,
+div.css_show label span.numeric {
+  width: 70px;
+  text-align: right;
+}
+
+form.cssform fieldset,
+div.css_show fieldset {
+  margin: 0px 5px 0px 5px;
+  padding-top: 2px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  border: 1px solid #aaa;
+} 
+
+form.cssform fieldset.continue,
+div.css_show fieldset.continue {
+  float: left;
+}
+
+form.cssform legend,
+div.css_show legend {
+  font-weight: bold;
+  font-style: italic;
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #555;
+}

@@ -1,0 +1,96 @@
+basic_biller:
+  id: 1
+  created_at: <%= 5.days.ago.to_s :db %>
+
+complete_biller:
+  id: 2
+  created_at: <%= 10.days.ago.to_s :db %>
+  
+biller_without_profile:
+  id: 3
+  created_at: <%= 5.days.ago.to_s :db %>
+
+biller_without_invoices:
+  id: 4
+  created_at: <%= 5.days.ago.to_s :db %>
+
+# a biller with many customers and invoices
+heavy_biller:
+  id: 5
+  created_at: <%= 5.days.ago.to_s :db %>
+
+biller_for_payments:
+  id: 6
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+email_biller:
+  id: 7
+  created_at: <%= 5.days.ago.to_s :db %>
+
+customer_list_biller:
+  id: 8
+  created_at: <%= 5.days.ago.to_s :db %>
+
+bookkeeper_biller:
+  id: 9
+  created_at: <%= 5.days.ago.to_s :db %>
+
+wants_bookkeeper_biller:
+  id: 11
+  created_at: <%= 5.days.ago.to_s :db %>
+
+doesnt_want_bookkeeper_biller:
+  id: 12
+  created_at: <%= 5.days.ago.to_s :db %>
+
+biller_has_bookkeeping_contract:
+  id: 13
+  created_at: <%= 5.days.ago.to_s :db %>
+
+other_bookkeeper_biller:
+  id: 14
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+unactivated_biller:
+  id: 15
+  created_at: <%= 5.days.ago.to_s :db %>
+
+peon_admin_biller:
+  id: 16
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+master_admin_biller:
+  id: 17
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+feedback_admin_biller:
+  id: 18
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+soho_biller:
+  id: 19
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+ssan_biller:
+  id: 20
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+simply_accounting_biller:
+  id: 21
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+winners_admin_biller:
+  id: 22
+  created_at: <%= 5.days.ago.to_s :db %>
+
+inactive_biller:
+  id: 23
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+active_biller:
+  id: 24
+  created_at: <%= 5.days.ago.to_s :db %>
+
+castest_billingboss_biller:
+  id: 25
+  created_at: <%= 5.days.ago.to_s :db %>

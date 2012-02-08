@@ -1,0 +1,27 @@
+<% form_for(:master, :url => {:action => :create}, :html => {:method => :post} ) do |f| %>
+		  <% admin_roles = admin_roles(true) %> 
+			<table width="100%" id="master_admin_table">
+
+				<th class="center-cell">
+					User login
+				<% admin_roles.each do |r| %>
+				  <th class="center-cell">
+				  	<%= r.humanize %>
+				  </th>
+				<% end %>
+				<% admin_roles = admin_roles %>
+				<tr>
+					<td class="login-field-cell">
+					<%= f.text_field (:sage_username, :class => "login-field") %>
+					</td>
+					<% admin_roles.each do |o| %>
+					  <td class="center-cell">
+					  <%= f.check_box o%>
+					  </td>	 
+					<% end %>
+				</tr>
+			</table>
+			<br/>
+<p style="text-align: center"><%= f.submit( "Create" ) %></p>
+
+<% end %>

@@ -1,0 +1,66 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+                    <h1>User referral sources</h1>
+                    <br/>
+                    This is how the users said they found out about Billing Boss
+                    when asked upon registration in the Settings page.  This is
+                    required of all new users.<br/><br/>
+
+                    <%# RADAR fix this route link_to _('Save as CSV file'), admin_overview_user_referral_sources_path('user_referral_sources', :format => 'csv')  %>
+                    <a href="/admin/overview/user_referral_sources?format=csv"><%=  _('Save as CSV file') %></a>
+                    <br/>
+                    <br/>
+
+                    <table border="1" cellpadding="1" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <td>Count</td>
+                          <td>Source</td>
+                          <td>Details</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% AdminManager.user_referral_sources.each do |c| %>
+                          <tr>
+                            <td align="right">
+                              <%= c[0] %>
+                            </td>
+                            <td>
+                              <%= h c[1] %>
+                            </td>
+                            <td>
+                              <%= h c[2] %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+		<% end %>
+		<%= render_inner_layout %>  

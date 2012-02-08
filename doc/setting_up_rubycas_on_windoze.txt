@@ -1,0 +1,45 @@
+Setting up Windows Box for Single Sign On branch
+
+1. Upgrade rubygems: see http://blog.mmediasys.com/2008/08/04/problems-with-rubygems-find-here-some-handy-tips/
+
+  download latest zip from http://rubyforge.org/frs/?group_id=126
+  unzip
+  cd to the rubygems-XXX dir
+  set RUBYOPT=
+  ruby setup.rb install
+  gem -v to confirm
+  
+  if rake fails, uninstall and re-install with new version of rubygems
+  
+2. Update gems
+  gem update
+
+  if you get a failure with hpricot, uninstall it and its dependencies  
+  then do:
+  gem install hpricot --platform mswin32 --source http://code.whytheluckystiff.net
+  
+  if you get a failure with rmagick, uninstall it and its dependencies
+  then install rmagick from latest windows binary gem: download from http://rubyforge.org/projects/rmagick/
+  follow instructions in readme
+  
+3. Install rubycas-server (we will be rebuilding it later, but this is the easiest way to get the dependencies)
+  gem install rubycas-server
+  
+  
+4. checkout single_sign_on branch
+
+5, setup database.yml and migrate. It is best to make new test & development databases for the single_sign_on branch, otherwise switching development between trunk and single_sign_on branch may be annoying. verify with rake test
+
+6. run rake sage:cas:setup_server from within the single_sign_on branch. You will need the passphrase for the billingboss.com certificate and your mysql root password
+
+7. edit the config file created at c:\etc\rubycas-server\config.yml and adjust credentials if necessary. The database where the sage_users live should be set to the single_sign_on database you are using -- either test or development. Currently there is no way to switch this, you have to switch between test & development by hand.
+
+8. install the local version of rubycas_server
+    touch test/test.log
+    rake install_gem
+    [if this fails at the end on the gem install --local pkg/rubycas-server-0.6.99.XXXX.gem, copy and run that command manually]
+    
+9. to add the SBB admin user to the BB sage_users table that were loaded from test fixtures:
+
+select max(id) from sage_users;
+insert into sage_users (id, encrypted_password, encryption_salt, legacy_password, legacy_salt, username, source, created_at, updated_at) select {MAX-ID + 1}, encrypted_password, encryption_salt, legacy_password, legacy_salt, "admin", source, created_at, updated_at from sage_users limit 1;

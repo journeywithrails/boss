@@ -1,0 +1,60 @@
+# customer_id 1 should not be used (customer 1 has no contacts)
+  
+basic_contact:
+  id: 1
+  first_name: Basic_Contact_First_Name
+  last_name: Basic_Contact_Last_Name
+  email: basic_contact@contact-ville.com
+  phone: (555)555-1234
+  customer_id: 2
+  created_at: 2007-10-12 15:46:35
+  updated_at: 2007-10-12 15:46:35
+    
+alternate_contact:
+  id: 2 
+  first_name: Alternate_Contact_First_Name
+  last_name: Alternate_Contact_Last_Name
+  email: alternate_contact@contact-ville.com
+  customer_id: 2
+  created_at: 2007-10-12 15:46:35
+  updated_at: 2007-10-12 15:46:35
+
+# email_contact is used to test send invoices as html link
+email_contact:
+  id: 3
+  first_name: Email_Contact_First_Name
+  last_name: Email_Contact_Last_Name
+  email: autotest@10.152.17.65
+  customer_id: 7
+  created_at: 2007-10-12 15:46:35
+  updated_at: 2007-10-12 15:46:35
+  
+customer_list_contact_1:
+  id: 4
+  first_name: Customer_List_Contact_1_First_Name
+  last_name: Customer_List_Contact_1_Last_Name
+  email: contact1@example.com
+  phone: (555)555-1234
+  customer_id: 31
+  created_at: 2007-10-12 15:46:35
+  updated_at: 2007-10-12 15:46:35
+
+customer_list_contact_2:
+  id: 5
+  first_name: Customer_List_Contact_2_First_Name
+  last_name: Customer_List_Contact_2_Last_Name
+  email: contact2@different.domain.com
+  phone: (555)555-5678
+  customer_id: 32
+  created_at: 2007-10-12 15:46:35
+  updated_at: 2007-10-12 15:46:35
+
+customer_list_contact_3:
+  id: 6
+  first_name: Customer_List_Contact_3_First_Name
+  last_name: Customer_List_Contact_3_Last_Name
+  email: contact3@example.com
+  phone: (555)555-3456
+  customer_id: 33
+  created_at: 2007-10-12 15:46:35
+  updated_at: 2007-10-12 15:46:35

@@ -1,0 +1,59 @@
+<div class="yui-b" id="lnav">
+  
+  <div class="corner_small_tr">
+			<div class="corner_small_tl">
+				<div id="lnav_top_status">
+          &nbsp;
+				</div>								
+			</div>
+  </div>						
+  
+  <div id="lnav_content">
+  	<div id="lnav_container">
+  		<%= @content_for_lnav %>
+  	</div>
+  	<%= @content_for_sidebar  %>
+	<br/>
+
+
+  </div>
+  
+	<div class="corner_small_bl">
+			<div class="corner_small_br">
+					<div>
+					&nbsp;
+  				</div>								
+			</div>
+	</div>
+  
+</div>
+
+<!-- the main layout -->
+<div id="yui-main"> 
+ 
+    <!--<div class="yui-b">
+      <%= @content_for_main_top %>	
+    </div>-->  
+  
+    <div class="yui-b">
+      <div class="corner_large_tr">
+				<div class="corner_large_tl">
+           <%= @content_for_infobox.blank? ? "&nbsp;" : @content_for_infobox %>	
+				</div>
+      </div>						
+       
+			<div class="content">
+        <%= @content_for_main %>			
+			</div>
+        
+			<!-- BOTTOM CORNERS -->
+			<div class="corner_large_bl">
+			 	<div class="corner_large_br">
+					&nbsp;
+				</div>
+			</div>
+  </div>
+</div> <!-- /yui-main -->
+
+
+

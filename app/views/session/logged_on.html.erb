@@ -1,0 +1,26 @@
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			
+<% end -%>
+
+<% content_for("main")  do %>
+  <!-- the main layout -->
+  <div class="yui-b">
+  <div class="yui-gc"> 
+      <div class="yui-u" >&nbsp;</div>
+      <div class="yui-u first">
+        <div class="corner_large_tr">
+  					<div class="corner_large_tl">
+  					  <%= formatted_flash_always %>
+  					</div>
+        </div>						
+    	  
+        <div class="content">
+        	<br/>
+          <%= _('You have been logged on.') %> 
+        </div>      
+        <%= bottom_corners() %>
+      </div>
+  </div>
+</div>  
+<% end %>

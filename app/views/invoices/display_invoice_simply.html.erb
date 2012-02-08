@@ -1,0 +1,26 @@
+<%@skip_footer=true%>
+<% content_for "stylesheets" do%>
+	<%= stylesheet_theme_controller("invoices") %>
+	<%= stylesheet_theme_controller_printable(print?, "invoices")%>
+<% end -%>
+<% @content_for_sidebar = capture do %>
+<% end %>
+
+<% @content_for_main = capture do %>
+	<% if @invoice.status != "superceded" %>
+	  <div id="preview_container">
+      <%= render :partial => "/invoices/simply/preview", :locals => { :profile => @profile } %>
+      <% if @invoice.selected_payment_types.any? %>
+        <p>
+          <%= _("Click %{link} to pay this invoice now.") % { :link => link_to(_("here"), new_invoice_online_payment_path(:invoice_id => access_key)) } %>
+        </p>
+      <% end %>
+	  </div>
+	<% else %>
+		<% key = @invoice.get_superceding_key %>
+    <span id="superceded" name="<%= key %>">
+      <%= _("This invoice is out of date and has been replaced by a new one. Click %{link} to view the new invoice.") % { :link => link_to(_("here"), "#{::AppConfig.secure_host}/access/#{key}") } %>
+    </span>
+	<% end %>
+<% end %>
+<%= render_inner_layout('nomenu') %>

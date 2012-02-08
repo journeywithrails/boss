@@ -1,0 +1,10 @@
+<% content_for "stylesheets" do %>
+  	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= default_theme_controller("home") %>	
+<% end %>
+ 
+
+<% content_for("main") do %>
+  <%=render :partial => "company_brand", :locals => { :profile => @profile } %>
+  <h1><%= _("Payment Cancelled") %></h1>
+<% end %>

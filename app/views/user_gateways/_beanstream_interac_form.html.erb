@@ -1,0 +1,20 @@
+<% skip_info ||= false -%>
+<label><%= _("User") %> <%= text_field_tag 'user_gateways[beanstream_interac][login]', user_gateway.login, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Password") %> <%= text_field_tag 'user_gateways[beanstream_interac][password]', user_gateway.password, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Merchant ID") %> <%= text_field_tag 'user_gateways[beanstream_interac][merchant_id]', user_gateway.merchant_id, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Currency") %> <%= select_tag('user_gateways[beanstream_interac][currency]', options_for_select(BeanStreamUserGateway.supported_currencies, user_gateway.currency), {:class=>"user_profile_text" }) %></label>
+<br clear="all"/>
+<div class="profile_subtitle">
+  <p><%= _("Important: Please ensure that the currency selected here matches the currency of your BeanStream account. Changing this setting will not affect which currency BeanStream uses to process your transactions.") %></p>
+</div>
+<br clear="all"/>
+<% unless skip_info -%>
+<%= link_to _("Where do I find INTERAC Online information?"), "http://www.interaconline.com/learn" , :popup => true %>
+<br clear="all" />
+<%= link_to _("Where do I find Beanstream information?"), "/beanstream_help.html" , :popup => true %>
+<% end -%>
+<br clear="all"/>
+

@@ -1,0 +1,511 @@
+<Project><PRODUCT_VERSION><ProjectCreatedProductVersion>WebLOAD Version 8.1.0.141.00  Supports 128 bit SSL </ProjectCreatedProductVersion><LastProjectSavedProductVersion>WebLOAD Version 8.1.0.141.00  Supports 128 bit SSL </LastProjectSavedProductVersion></PRODUCT_VERSION><PROJECT_TYPE>Protocol</PROJECT_TYPE><AGENDA_OPTIONS><AgendaName xmlns=" Default Project Options"/><Options><DiagnosticOptions><bSyntaxCheck>0</bSyntaxCheck><bTraceCheck>0</bTraceCheck><bAutomaticStateCheck>0</bAutomaticStateCheck><bSaveCSJSCheck>0</bSaveCSJSCheck><bCSJSDiagnosticMessages>0</bCSJSDiagnosticMessages></DiagnosticOptions><FunctionalTestingOptions><bTransFailed>0</bTransFailed><nFailedTime>20</nFailedTime><nSeverity>2</nSeverity><sTextSearch></sTextSearch><bCheckCRC>0</bCheckCRC><bCheckCompareValues>0</bCheckCompareValues><VarificationData><nCompareTitle>2</nCompareTitle><nFramesNumber>0</nFramesNumber><nTextSearch>0</nTextSearch><nVerifyLink>0</nVerifyLink><nCompareLinks>0</nCompareLinks><nCompareForms>0</nCompareForms><nCompareImages>0</nCompareImages><nCompareTables>0</nCompareTables></VarificationData></FunctionalTestingOptions><SleepTimeControlOptions><nSleepControlType>2</nSleepControlType><nBetween>2</nBetween><nAnd>10</nAnd><nDeviationPersent>10</nDeviationPersent></SleepTimeControlOptions><IE_OPTIONS Option_version="19">
+			<IE_DIALOG name="Alert">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Confirm">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Prompt">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Input"></field>
+			</IE_DIALOG>
+			<IE_DIALOG name="Print">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Cookie_IE6">
+				<Answer>
+					<value>Allow</value>
+					<value>Block</value>
+					<default>Allow</default>
+				</Answer>
+				<field type="checkbox" name="ApplyToAll">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="Cookie">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FormSubmit">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FormResubmit">
+				<Answer>
+					<value>Retry</value>
+					<value>Cancel</value>
+					<default>Retry</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="SwitchNonSecure">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SwitchSecure">
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="NonSecureOnSecure">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientAuthentication">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="string" name="Domain"></field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ConnectToMS_WinXP">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Email"></field>
+				<field type="string" name="Password"></field>
+				<field type="checkbox" name="AutoSignIn">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientAuthentication_WinXP">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="ClientCertificate">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="string" name="Certificate">
+					<default>0</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="HostCertificate">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload_IE6">
+				<Answer>
+					<value>Open</value>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FileDownload_IE6_XP">
+				<Answer>
+					<value>Open</value>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysAsk">
+					<default>checked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SaveFile">
+				<Answer>
+					<value>Save</value>
+					<value>Cancel</value>
+					<default>Save</default>
+				</Answer>
+				<field type="string" name="FileName"></field>
+			</IE_DIALOG>
+			<IE_DIALOG name="SaveFileConfirmation">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ActiveXInstall">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="AlwaysTrust">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="RunActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="UnsafeActiveX">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ScriptAccessingActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="NavigateSubFrames">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="ActiveScripting">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="JavaScripting">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Redirection">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+				<field type="checkbox" name="NeverShow">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="AutoComplete">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="RememberPassword">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+				<field type="checkbox" name="DoNotOffer">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FtpAuthentication">
+				<Answer>
+					<value>Login</value>
+					<value>Cancel</value>
+					<default>Login</default>
+				</Answer>
+				<field type="string" name="Server"></field>
+				<field type="string" name="Username"></field>
+				<field type="string" name="Password"></field>
+				<field type="string" name="Email"></field>
+				<field type="checkbox" name="Anonymous">
+					<default>unchecked</default>
+				</field>
+				<field type="checkbox" name="Save">
+					<default>unchecked</default>
+				</field>
+			</IE_DIALOG>
+			<IE_DIALOG name="FtpFolderError">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="DocumentModified">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<value>Cancel</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="JavascriptError">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="WindowClosing">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="SuspiciousActiveX">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Reboot">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>No</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="YesNoCancel">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<value>Cancel</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="YesNo">
+				<Answer>
+					<value>Yes</value>
+					<value>No</value>
+					<default>Yes</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="OkCancel">
+				<Answer>
+					<value>OK</value>
+					<value>Cancel</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+			<IE_DIALOG name="Ok">
+				<readonly>yes</readonly>
+				<Answer>
+					<value>OK</value>
+					<default>OK</default>
+				</Answer>
+			</IE_DIALOG>
+		</IE_OPTIONS><PlayBackOptions><nNavigationTimeOut>60</nNavigationTimeOut><nFileDownloadTimeout>0</nFileDownloadTimeout><nStartNavigationTimeOut>3</nStartNavigationTimeOut><bClearCache>0</bClearCache><bClearCookies>0</bClearCookies><nPlaybackMode>1</nPlaybackMode><bUseDOROptimizer>0</bUseDOROptimizer></PlayBackOptions><PassFailDefinition><bCheckErrors>1</bCheckErrors><bCheckSevere>1</bCheckSevere><bCheckWarnings>0</bCheckWarnings><nErrorNum>1</nErrorNum><nRuleCheck>15</nRuleCheck><nWarningNum>15</nWarningNum></PassFailDefinition><ErrorHandling><SubmitButton>1</SubmitButton><NavObject>9</NavObject><Page>4</Page><PageRetryNum>3</PageRetryNum><Object>6</Object></ErrorHandling><EmulationPlaybackOptions><bUseOptimizer>1</bUseOptimizer><bUseHistory>0</bUseHistory><nHistoryLimit>1</nHistoryLimit><bCodeFormatter>0</bCodeFormatter><bCSJSRecovery>1</bCSJSRecovery></EmulationPlaybackOptions><WebServices><sBasicPassword></sBasicPassword><sUserName></sUserName><sProxyHost></sProxyHost><sProxyPassword></sProxyPassword><sProxyUser></sProxyUser><sProxyPort></sProxyPort><nWSClientType>1</nWSClientType></WebServices><BrowserEmulationOptions><bDNSCache>1</bDNSCache><bSSLCache>1</bSSLCache><bKeepAlive>1</bKeepAlive><bRedirectionEnabled>1</bRedirectionEnabled><nRedirectionLimit>10</nRedirectionLimit><strBrowserType>Default</strBrowserType><strUserAgent></strUserAgent><strEncodingValue>0</strEncodingValue><bEnforceEncoding>0</bEnforceEncoding></BrowserEmulationOptions><Authentication><sUserName></sUserName><sPassWord></sPassWord><sNTUserName></sNTUserName><sNTUserPassword></sNTUserPassword><sProxyUserName></sProxyUserName><sProxyPassWord></sProxyPassWord><sProxyHost></sProxyHost><sProxyPort></sProxyPort><sSSLClientCertificateFile></sSSLClientCertificateFile><sSSLClientCertificatePassword></sSSLClientCertificatePassword></Authentication><HTTPParametersOptions><bHTTPVersion>1</bHTTPVersion><bMultiIPSupport>0</bMultiIPSupport><bGZipSupport>0</bGZipSupport><bEncodeFormData>1</bEncodeFormData><bAcceptLanguage>0</bAcceptLanguage><strAcceptLanguage></strAcceptLanguage></HTTPParametersOptions><BrowserCacheOptions><bFilterApplets>0</bFilterApplets><bFilterDynamicPages>0</bFilterDynamicPages><bFilterImages>0</bFilterImages><bFilterJSFiles>0</bFilterJSFiles><bFilterStaticPages>0</bFilterStaticPages><bFilterStyleSheets>0</bFilterStyleSheets><bFilterXMLFiles>0</bFilterXMLFiles><nCacheType>2</nCacheType><nCacheScope>5</nCacheScope><nCacheFilter>7</nCacheFilter></BrowserCacheOptions><JavaOptions><strSelectedJVM>Default</strSelectedJVM></JavaOptions></Options></AGENDA_OPTIONS><ADDITIONAL_INFORMATION><ProjectComments></ProjectComments><CreatedBy></CreatedBy><Custom1></Custom1><Custom2></Custom2><Custom3></Custom3><Subject></Subject><TestDescription></TestDescription><ResultsDescription></ResultsDescription><VersionBuild></VersionBuild><Title>C:\Documents and Settings\belbr01\My Documents\WebLOAD\Sessions\test.wlp</Title></ADDITIONAL_INFORMATION><ORACLE_PROJECT_INCLUDE_PATH></ORACLE_PROJECT_INCLUDE_PATH><VisualAgenda><Agenda CallBack="Do_Agenda" ClonedXML="0"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0"/><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript></NodeScript><NodeID Visible="0">1</NodeID><InitAgenda Type="JavaScript" ReadOnly="0">
+InfoMessage("Version 1.0.0.8")
+InFile1 = CopyFile("EmailPassword.txt")
+Open(InFile1)
+strGlobalInputFileLine = GetLine(InFile1,",")
+
+hostName = "http://mybillingboss.com/"
+session = hostName + "session"
+invoices = hostName + "invoices"
+invoices_overview = hostName + "invoices/overview"
+invoices_new = hostName + "invoices/new"
+invoice_edit = /\/invoices\/\d+/  // /invoices/:id
+logout = hostName + "logout"
+
+footer_link = "http://www.sagesoftware.ca"
+</InitAgenda><InitClient Type="JavaScript" ReadOnly="0"></InitClient><TerminateAgenda Type="JavaScript" ReadOnly="0"></TerminateAgenda><TerminateClient Type="JavaScript" ReadOnly="0"></TerminateClient><JSNodeCounter Visible="0">16</JSNodeCounter></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="GlobalVariables"><System Type="Array" ReadOnly="0"><Variable Name="ClientNum" Description="Returns the main thread number for each client"/><Variable Name="GeneratorName()" Description="Returns the name of this load generator as a string"/><Variable Name="GMTDate()" Description="Current date in GMT/UTC as a string"/><Variable Name="Hours()" Description="Current Hour (0-23)"/><Variable Name="LocalDate()" Description="Current date in local time as a string"/><Variable Name="Milliseconds()" Description="Current ms value"/><Variable Name="Minutes()" Description="Current minutes (0-59)"/><Variable Name="RandomNumber()" Description="Generate a random number"/><Variable Name="RoundNum" Description="Returns the number of rounds for the specific client"/><Variable Name="Seconds()" Description="Current seconds (0-59)"/><Variable Name="ThisYear()" Description="Current Year (4-digit, e.g. 2001)"/><Variable Name="Time()" Description="Time in ms since 1/1/1970"/><Variable Name="TodaysDate()" Description="Current date (1-31)"/><Variable Name="TodaysDay()" Description="Current Day (0-6, 0==Sunday)"/><Variable Name="TodaysMonth()" Description="Current Month (0-11)"/><Variable Name="VCUniqueID()" Description="Returns a string unique to this VC"/></System><UserDefined Type="Array" ReadOnly="0"/><InputParameters Type="Array" ReadOnly="0"/><OutputParameters Type="Array" ReadOnly="0"/><GlobalInputFilesParams Type="Array" ReadOnly="0"><Email Name="Email" Value="" Type="String"/><Password Name="Password" Value="" Type="String"/></GlobalInputFilesParams><FileCounter>1</FileCounter></PropertyPage></Properties><JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="0"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">GlobalInputFile : InFile1 (C:\\Documents and Settings\\belbr01\\My Documents\\WebLOAD\\Sessions\\13_EmailPassword.txt)</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - GlobalInputFile : InFile1 (C:\\Documents and Settings\\belbr01\\My Documents\\WebLOAD\\Sessions\\13_EmailPassword.txt) - ID:13 *****/
+strGlobalInputFileLine = GetLine(InFile1,",")
+if (strGlobalInputFileLine.LineNum == 1)
+	strGlobalInputFileLine = GetLine(InFile1,",")
+
+Email = strGlobalInputFileLine[1]
+Password = strGlobalInputFileLine[2]
+
+ // END WLIDE
+ 
+ function check_footer_link()
+{
+	url = wlHtml.GetUri()
+  	index = document.links.length - 1
+  	
+ 	if (index &lt; 0)
+		ErrorMessage(wlHtml.GetUri() + " no links found on page")
+  	
+ 	if (index &gt;= 0)
+ 		if (document.links[index].href != footer_link)
+ 			ErrorMessage(wlHtml.GetUri() + " did not load - footer link not found")
+}
+
+function check_url(expected)
+{
+ 	url = wlHtml.GetUri()
+	InfoMessage(url + " RoundNum: " + RoundNum+ " ClientNum: " + ClientNum)
+	if (url != expected)	 
+		ErrorMessage(expected + " is expected but " + url + " loaded.")
+}</NodeScript><NodeID Visible="0">13</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon></BuildingBlockIcon><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage><preview domid="-1"/></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="1"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">JavaScript</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - JavaScript - ID:16 *****/
+function check_pattern_edit(pattern_edit)
+ {
+ 	url = wlHtml.GetUri()
+ 	InfoMessage(url + " RoundNum: " + RoundNum+ " ClientNum: " + ClientNum)
+    if(!url.match(pattern_edit))
+ 		ErrorMessage(url + " is expected to match pattern " + pattern_edit)   	   		
+ }
+ // END WLIDE
+ 
+try{</NodeScript><NodeID Visible="0">16</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="2"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://ec2-75-101-204-145.compute-1.amazonaws.com/</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://ec2-75-101-204-145.compute-1.amazonaws.com/ - ID:2 *****/
+	wlGlobals.GetFrames = false 
+	wlHttp.Get(hostName)
+	authenticity_token = document.forms[1].elements[0].value
+	check_footer_link()
+	check_url('/')
+ // END WLIDE</NodeScript><NodeID Visible="0">2</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://ec2-75-101-204-145.compute-1.amazonaws.com/ HTTP/1.1" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Accept-Encoding: gzip, deflate" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)" Type="Request"/><HeaderItem Text="Host: ec2-75-101-204-145.compute-1.amazonaws.com" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="HTTP/1.1 200 OK" Type="Response"><HeaderItem Text="Date: Thu, 24 Apr 2008 20:39:36 GMT" Type="Response"/><HeaderItem Text="Server: Mongrel 1.1.4" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.01998" Type="Response"/><HeaderItem Text="ETag: &quot;53d1348548499edf52ba966e8d6b152d&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 11344" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7CDoMY3NyZl9pZCIlMDgzNjRmYjU0NDQ0YTRlNTgwN2NmNWIwNDVkNWZj%250AM2IiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7AAY6CkB1c2VkewA6E3NpbXBsZV9jYXB0Y2hhIi02ZGQ5ODlmYWU5ZWVj%250AODUwZTE4NDVjYTZlNGEyMGE2MWQ2NzE0Yzdi--07bbff50eb526b75f135e97b96697452aaf7b7da; path=/" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Keep-Alive: timeout=15, max=100" Type="Response"/><HeaderItem Text="Connection: Keep-Alive" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="3"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://ec2-75-101-204-145.compute-1.amazonaws.com/session</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://ec2-75-101-204-145.compute-1.amazonaws.com/session - ID:4 *****/ 
+	wlHttp.Header["Referer"] = hostName
+	wlHttp.ContentType = "application/x-www-form-urlencoded"
+	wlHttp.FormData["authenticity_token"] = authenticity_token
+	wlHttp.FormData["login"] = Email
+	wlHttp.FormData["password"] = Password
+	wlHttp.FormData["x"] = "18"
+	wlHttp.FormData["y"] = "23"
+	wlHttp.Post(session)
+
+ // END WLIDE</NodeScript><NodeID Visible="0">4</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="POST http://ec2-75-101-204-145.compute-1.amazonaws.com/session HTTP/1.1" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Referer: http://ec2-75-101-204-145.compute-1.amazonaws.com/" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Content-Type: application/x-www-form-urlencoded" Type="Request"/><HeaderItem Text="Accept-Encoding: gzip, deflate" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)" Type="Request"/><HeaderItem Text="Host: ec2-75-101-204-145.compute-1.amazonaws.com" Type="Request"/><HeaderItem Text="Content-Length: 110" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="Pragma: no-cache" Type="Request"/><HeaderItem Text="Cookie: _tornado_session=BAh7CDoMY3NyZl9pZCIlMDgzNjRmYjU0NDQ0YTRlNTgwN2NmNWIwNDVkNWZj%250AM2IiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7AAY6CkB1c2VkewA6E3NpbXBsZV9jYXB0Y2hhIi02ZGQ5ODlmYWU5ZWVj%250AODUwZTE4NDVjYTZlNGEyMGE2MWQ2NzE0Yzdi--07bbff50eb526b75f135e97b96697452aaf7b7da" Type="Request"/><HeaderItem Text="authenticity_token=2176baa9b31d10073ef8715a9beb0cbc13f5fa27&amp;login=bryan.belyk@sage.com&amp;password=test&amp;x=18&amp;y=23" Type="FormData"/><HeaderItem Text="HTTP/1.1 200 OK" Type="Response"><HeaderItem Text="Date: Thu, 24 Apr 2008 20:40:29 GMT" Type="Response"/><HeaderItem Text="Server: Mongrel 1.1.4" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.00208" Type="Response"/><HeaderItem Text="ETag: &quot;10ffd2ab52481b43438e3c7b483fd90a&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 164" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7CToMY3NyZl9pZCIlMDgzNjRmYjU0NDQ0YTRlNTgwN2NmNWIwNDVkNWZj%250AM2IiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7BjoLbm90aWNlIhtMb2dnZWQgaW4gc3VjY2Vzc2Z1bGx5BjoKQHVzZWR7%250ABjsHVDoJdXNlcmkGOhNzaW1wbGVfY2FwdGNoYSItNmRkOTg5ZmFlOWVlYzg1%250AMGUxODQ1Y2E2ZTRhMjBhNjFkNjcxNGM3Yg%253D%253D--69c34df160d373097091b39bda5d17f3b8fc375c; path=/" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Keep-Alive: timeout=15, max=100" Type="Response"/><HeaderItem Text="Connection: Keep-Alive" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="4"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://ec2-75-101-204-145.compute-1.amazonaws.com/invoices/overview</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://ec2-75-101-204-145.compute-1.amazonaws.com/invoices/overview - ID:6 *****/ 
+	wlHttp.Get(invoices_overview)
+	check_footer_link()
+	check_url("/invoices/overview")
+ // END WLIDE</NodeScript><NodeID Visible="0">6</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://ec2-75-101-204-145.compute-1.amazonaws.com/invoices/overview HTTP/1.1" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Accept-Encoding: gzip, deflate" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)" Type="Request"/><HeaderItem Text="Host: ec2-75-101-204-145.compute-1.amazonaws.com" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="Pragma: no-cache" Type="Request"/><HeaderItem Text="Cookie: _tornado_session=BAh7CToMY3NyZl9pZCIlMDgzNjRmYjU0NDQ0YTRlNTgwN2NmNWIwNDVkNWZj%250AM2IiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7BjoLbm90aWNlIhtMb2dnZWQgaW4gc3VjY2Vzc2Z1bGx5BjoKQHVzZWR7%250ABjsHVDoJdXNlcmkGOhNzaW1wbGVfY2FwdGNoYSItNmRkOTg5ZmFlOWVlYzg1%250AMGUxODQ1Y2E2ZTRhMjBhNjFkNjcxNGM3Yg%253D%253D--69c34df160d373097091b39bda5d17f3b8fc375c" Type="Request"/><HeaderItem Text="HTTP/1.1 200 OK" Type="Response"><HeaderItem Text="Date: Thu, 24 Apr 2008 20:40:30 GMT" Type="Response"/><HeaderItem Text="Server: Mongrel 1.1.4" Type="Response"/><HeaderItem Text="Status: 200 OK" Type="Response"/><HeaderItem Text="X-Runtime: 0.02638" Type="Response"/><HeaderItem Text="ETag: &quot;aee243b5d5fbb99b387807c12321e908&quot;" Type="Response"/><HeaderItem Text="Cache-Control: private, max-age=0, must-revalidate" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 35070" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7CToMY3NyZl9pZCIlMDgzNjRmYjU0NDQ0YTRlNTgwN2NmNWIwNDVkNWZj%250AM2IiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7AAY6CkB1c2VkewA6E3NpbXBsZV9jYXB0Y2hhIi02ZGQ5ODlmYWU5ZWVj%250AODUwZTE4NDVjYTZlNGEyMGE2MWQ2NzE0YzdiOgl1c2VyaQY%253D--bd05cb6180f8c86858d794a6ab1952f17cc22604; path=/" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Keep-Alive: timeout=15, max=100" Type="Response"/><HeaderItem Text="Connection: Keep-Alive" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="5"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://localhost:3000/invoices/new</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://localhost:3000/invoices/new - ID:14 *****/
+wlGlobals.GetFrames = false 
+wlHttp.Header["Referer"] = invoices_overview
+wlHttp.Get(invoices_new)
+check_footer_link()
+check_url("/invoices/new")
+ // END WLIDE</NodeScript><NodeID Visible="0">14</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="6"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://localhost:3000/invoices</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://localhost:3000/invoices - ID:15 *****/ 
+wlHttp.Header["Referer"] = invoices_new
+wlHttp.ContentType = "application/x-www-form-urlencoded"
+wlHttp.FormData["invoice[currency]"] = "USD"
+wlHttp.FormData["authenticity_token"] = authenticity_token
+wlHttp.FormData["invoice[discount_value]"] = "$WL$EMPTY$STRING$"
+wlHttp.FormData["invoice[discount_type]"] = "percent"
+wlHttp.FormData["invoice[customer_id]"] = "$WL$EMPTY$STRING$"
+//wlHttp.FormData["invoice[unique]"] = "1"
+wlHttp.FormData["invoice[date]"] = "2008-04-22"
+wlHttp.FormData["invoice[due_date]"] = "2008-05-22"
+wlHttp.FormData["invoice[reference]"] = "$WL$EMPTY$STRING$"
+wlHttp.FormData["invoice[line_items_attributes][][quantity]"] = "1"
+wlHttp.FormData["invoice[line_items_attributes][][unit]"] = "Hour"
+wlHttp.FormData["invoice[line_items_attributes][][description]"] = "Line 1"
+wlHttp.FormData["invoice[line_items_attributes][][price]"] = "10"
+wlHttp.FormData["invoice[line_items_attributes][][row_id]"] = "line_item_new_1"
+wlHttp.FormData["invoice[line_items_attributes][][should_destroy]"] = "0"
+wlHttp.FormData["invoice[line_items_attributes][][id]"] = "$WL$EMPTY$STRING$"
+wlHttp.FormData["invoice[line_items_attributes][][quantity]"] = "2"
+wlHttp.FormData["invoice[line_items_attributes][][unit]"] = "Hours"
+wlHttp.FormData["invoice[line_items_attributes][][description]"] = "Line 2"
+wlHttp.FormData["invoice[line_items_attributes][][price]"] = "20"
+wlHttp.FormData["invoice[line_items_attributes][][row_id]"] = "line_item_new_2"
+wlHttp.FormData["invoice[line_items_attributes][][should_destroy]"] = "0"
+wlHttp.FormData["invoice[line_items_attributes][][id]"] = "$WL$EMPTY$STRING$"
+wlHttp.FormData["invoice[line_items_attributes][][quantity]"] = "3"
+wlHttp.FormData["invoice[line_items_attributes][][unit]"] = "Hours"
+wlHttp.FormData["invoice[line_items_attributes][][description]"] = "Line 3"
+wlHttp.FormData["invoice[line_items_attributes][][price]"] = "30"
+wlHttp.FormData["invoice[line_items_attributes][][row_id]"] = "line_item_new_3"
+wlHttp.FormData["invoice[line_items_attributes][][should_destroy]"] = "0"
+wlHttp.FormData["invoice[line_items_attributes][][id]"] = "$WL$EMPTY$STRING$"
+wlHttp.FormData["invoice[description]"] = "$WL$EMPTY$STRING$"
+wlHttp.FormData["commit"] = "Create"
+wlHttp.Post(invoices)
+check_footer_link()
+check_pattern_edit(invoice_edit)
+ // END WLIDE</NodeScript><NodeID Visible="0">15</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"/><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+			<JavaScriptObject CallBack="Do_JavaScriptObject" ClonedXML="0" ObjectID="7"><Properties><PropertyPage Name="Attributes"><ItemName ReadOnly="0">http://ec2-75-101-204-145.compute-1.amazonaws.com/logout</ItemName><Comments Type="MultiLineString" ReadOnly="0"/></PropertyPage><PropertyPage Name="JavaScript" Visible="0"><NodeScript ReadOnly="0">/***** WLIDE - URL : http://ec2-75-101-204-145.compute-1.amazonaws.com/logout - ID:12 *****/ 
+	wlHttp.Header["Referer"] = invoices_overview
+	wlHttp.Get(logout)
+	check_footer_link()
+ // END WLIDE
+ 
+}
+
+catch(e){
+	myException = new wlException(e,"14_Login_InvoiceOverview_NewInvoice has an error")
+	
+	//things to do in case of error
+	if (myException.GetSeverity() == WLError) {
+		// Do one set of Error activities
+		myException.ReportLog()
+		throw myException
+	}
+	else {
+		// Do a different set of Severe Error activities
+		throw myException
+	}
+}</NodeScript><NodeID Visible="0">12</NodeID><JSScriptToInitAgenda Visible="0"></JSScriptToInitAgenda><JSScriptToInitClient Visible="0"></JSScriptToInitClient><JSScriptToTerminateAgenda Visible="0"></JSScriptToTerminateAgenda><JSScriptToTerminateClient Visible="0"></JSScriptToTerminateClient></PropertyPage><PropertyPage Name="HTTPHeaders" Visible="0"><HeaderItem Text="GET http://ec2-75-101-204-145.compute-1.amazonaws.com/logout HTTP/1.1" Type="Request"><HeaderItem Text="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, */*" Type="Request"/><HeaderItem Text="Referer: http://ec2-75-101-204-145.compute-1.amazonaws.com/invoices/overview" Type="Request"/><HeaderItem Text="Accept-Language: en-us" Type="Request"/><HeaderItem Text="Accept-Encoding: gzip, deflate" Type="Request"/><HeaderItem Text="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)" Type="Request"/><HeaderItem Text="Host: ec2-75-101-204-145.compute-1.amazonaws.com" Type="Request"/><HeaderItem Text="Proxy-Connection: Keep-Alive" Type="Request"/><HeaderItem Text="Cookie: _tornado_session=BAh7CToMY3NyZl9pZCIlMDgzNjRmYjU0NDQ0YTRlNTgwN2NmNWIwNDVkNWZj%250AM2IiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh%250Ac2h7AAY6CkB1c2VkewA6E3NpbXBsZV9jYXB0Y2hhIi02ZGQ5ODlmYWU5ZWVj%250AODUwZTE4NDVjYTZlNGEyMGE2MWQ2NzE0YzdiOgl1c2VyaQY%253D--bd05cb6180f8c86858d794a6ab1952f17cc22604" Type="Request"/><HeaderItem Text="HTTP/1.1 302 Moved Temporarily" Type="Response"><HeaderItem Text="Date: Thu, 24 Apr 2008 20:40:41 GMT" Type="Response"/><HeaderItem Text="Server: Mongrel 1.1.4" Type="Response"/><HeaderItem Text="Status: 302 Found" Type="Response"/><HeaderItem Text="Location: http://ec2-75-101-204-145.compute-1.amazonaws.com/" Type="Response"/><HeaderItem Text="X-Runtime: 0.01415" Type="Response"/><HeaderItem Text="Cache-Control: no-cache" Type="Response"/><HeaderItem Text="Content-Type: text/html; charset=utf-8" Type="Response"/><HeaderItem Text="Content-Length: 116" Type="Response"/><HeaderItem Text="Set-Cookie: auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT" Type="Response"/><HeaderItem Text="Set-Cookie: _tornado_session=BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%250ASGFzaHsGOgtub3RpY2UiHllvdSBoYXZlIGJlZW4gbG9nZ2VkIG91dC4GOgpA%250AdXNlZHsGOwZU--019156d1b556b5e4bbd9fb5ad74535bcdb97b6fd; path=/" Type="Response"/><HeaderItem Text="Vary: Accept-Encoding" Type="Response"/><HeaderItem Text="Keep-Alive: timeout=15, max=100" Type="Response"/><HeaderItem Text="Connection: Keep-Alive" Type="Response"/></HeaderItem></HeaderItem></PropertyPage><PropertyPage Name="NodeProperties"><BuildingBlockIcon/><StartJSBlockLine Visible="0"/><JSBlockLength Visible="0"/><GetFrames Visible="0"/></PropertyPage></Properties></JavaScriptObject>
+		</Agenda>
+	</VisualAgenda><BreakPointsMap/></Project>

@@ -1,0 +1,45 @@
+		<div class="row">
+		     <div class="cell_label">
+					<div class="section_header"><%= _('Customer Information') %></div>
+		  	</div>
+		</div>	
+		<div class="customer_fields">	
+			<%= render :partial => "fields", :locals => {:f => f}, :object => form_new_popup %>
+		</div>	
+		<div class="row">
+		     <div class="cell_label">
+		     	<br/>
+				<div class="section_header"><%= _('Primary Contact') %></div>
+		  	</div>
+		</div>
+	<div class="customer_fields">
+		<div class="yui-g">
+			<div class="yui-u first">
+			<% fields_for :default, form_new_popup.default_contact do |default_fields| %>
+
+			<div class="row">
+		     <div class="cell_label"><%= f.label :first_name, _('First Name:') %></div>
+			   <div class="cell_value"><%= default_fields.text_field :first_name, :class => "colored_field" %></div>
+			</div>
+			<div class="row">
+		     <div class="cell_label"><%= f.label :last_name, _('Last Name:') %></div>
+			   <div class="cell_value"><%= default_fields.text_field :last_name, :class => "colored_field" %></div>
+			</div>
+			<div class="row">
+		     <div class="cell_label"><%= f.label :email, _('Email:') %></div>
+			   <div class="cell_value"><%= default_fields.text_field :email, :class => "colored_field" %></div>
+			</div>
+			<div class="row">
+		     <div class="cell_label"><%= f.label :phone, _('Phone:') %></div>
+			   <div class="cell_value"><%= default_fields.text_field :phone, :class => "colored_field" %></div>					
+			</div>	
+			<div class="row">
+			   <div class="cell_value"><%= default_fields.hidden_field :id %></div>					
+			</div>	
+		<% end %>
+			</div>
+			<div class="yui-u">
+			</div>
+
+		</div>
+	</div>

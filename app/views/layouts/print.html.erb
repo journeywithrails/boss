@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title></title>
+  <%= stylesheet_global %>
+  <%= stylesheet_theme %>
+  <%= (stylesheet_ie6).untaint %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids", :media => 'screen, print' %>
+
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	<%= yield :stylesheets %>
+
+</head>
+
+<body>
+  	<div id="bd">
+			<%= yield :layout %>
+    </div>
+</body>
+</html>

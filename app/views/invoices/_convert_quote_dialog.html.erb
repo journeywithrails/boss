@@ -1,0 +1,94 @@
+<% send_url =  @invoice ? convert_quote_invoice_path(@invoice) : hardcoded_convert_invoice_link_for_javascript
+  send_url_params = "{#{request_forgery_protection_token.to_s}: '#{form_authenticity_token}'}"
+-%>
+
+<% content_for "bottom_javascripts" do -%>
+
+<script type="text/javascript">
+
+Ext.onReady(function(){
+<% if show_link -%>
+      var button = Ext.get('show-convert-dialog-btn');
+<% end -%>
+
+Sage.convert_dialog = function () { return {
+  win: nil,
+  grid: nil,
+
+  on_success: function() {
+    <% if show_link -%>            
+      location.reload(true);
+    <% else %>
+      Sage.invoice_grids_action('did_send');
+    <% end -%>
+    Sage.convert_dialog.win.hide();
+  },
+  
+  call_convert: function() {
+    new Ajax.Request( Sage.convert_dialog.url, { method: 'put', onSuccess: Sage.convert_dialog.on_success, parameters : <%= send_url_params %> });
+  },
+
+  on_click_convert: function() {
+    Sage.convert_dialog.call_convert();
+  },
+
+  show_window: function( window_title ) {
+    Sage.convert_dialog.win.on('render', function(){
+      Sage.convert_dialog.win.getEl().child('.x-window-body').update("<p><%= _('Do you really want to convert this quote to an invoice?')%></p>");
+    })
+    
+    Sage.convert_dialog.win.show(this);
+    Sage.convert_dialog.win.getEl().child('.x-window-header').update(window_title);
+  },
+
+  setup_window: function() {
+      Sage.convert_dialog.win = new Ext.Window({
+          el:'convert-dialog-container', allowDomMove: true, autoScroll: true,
+          autoHeight: false, width: 300, height: 150, resizable: true, closeAction:'hide', plain: true, 
+          buttons: [ {
+              text: "<%= _('Convert') %>",
+              id: 'convert-dialog-send-button',
+              handler: Sage.convert_dialog.on_click_convert,
+          }, {
+              text: "<%= _('Cancel') %>",
+              id: 'convert-dialog-cancel-button',
+              handler: function(){
+                Sage.convert_dialog.win.hide();
+              }
+          } ]
+      });
+  },
+
+  setup: function (id, grid, window_title) {
+  
+    <% if show_link -%>
+      Sage.convert_dialog.url = '<%= send_url %>';
+    <% else -%>
+      Sage.convert_dialog.url = String.format('<%= send_url %>', id);
+      Sage.convert_dialog.grid = grid;
+    <% end -%>
+  
+    if(!Sage.convert_dialog.win) {
+      Sage.convert_dialog.setup_window();
+    }
+    Sage.convert_dialog.show_window( window_title );
+    }
+  };
+}();
+
+<% if show_link -%>
+      button.on('click', function(){
+          Sage.convert_dialog.setup(nil,nil,'<%= _('Convert quote into invoice?') %>' );
+        return false;
+      });
+<% end -%>
+
+  });
+</script>
+<% end -%>
+
+
+
+<div id="convert-dialog-container" class="x-hidden">
+    <div class="x-window-header"></div>
+</div>

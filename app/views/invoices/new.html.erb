@@ -1,0 +1,71 @@
+<% @custom_title = i_(@invoice, "New Invoice") %>
+
+<% content_for "stylesheets" do%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= stylesheet_theme_controller %>
+<% end %>
+
+<% content_for "javascripts" do%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>
+<% end %>
+
+<% @content_for_main_top = capture do %> 
+ <div class="yui-g">
+    <%=css_button_link_to _("Add New Customer"),  {:controller=>"customers", :action=>"new"}, {:id=>"new_customer", :class=>"button_orange"} %>
+    <%=link_to_create_invoice %>
+    <%=link_to_create_quote %>
+    <div class="page_header"><%=(invoice_status(@invoice)).untaint %></div>
+</div>
+<% end %>
+                <%
+                  #TODO: make this param a hidden field
+                  if params[:is_quote] == "1"
+                    form_url = invoices_path(:is_quote=>"1")
+                  else
+                    form_url = invoices_path()
+                  end
+                %>
+
+		<% form_for(:invoice, @invoice, :url => form_url, :html => {:id => 'invoice_form' }) do |f| %>
+		<% @content_for_lnav = capture do %>
+		  <h2 class="state"><%= _("Options") %></h2> 
+		  <% end %>
+			
+			<% @content_for_sidebar = capture do %>
+			<% end %>
+      
+
+			<% @content_for_infobox = capture do %>
+      <%= formatted_flash %>
+			<!-- Removed :line_items errors from @invoice.errors object -->
+			<%= error_messages_for :invoice, :object => [clear_line_item_errors(@invoice), @invoice.line_items] %>
+			
+			<%= error_messages_for 'customer', :object => @invoice.customer %>
+			<% end %>
+
+			<% @content_for_main = capture do %>
+			  <div id="invoice_container">
+			    <br/>
+				  <h1><%= _('Bill to:') %></h1>
+          <br/>
+				  <% if taken_auto(@invoice) != "" %>
+				  <div id='unique_taken'></div>
+				  <% end %>
+			  </div>
+			<% end %>
+      
+			<%= render :partial => "form", :object => @invoice, :locals => {:f => f} %>
+      
+			<% @content_for_main += capture do %>
+			<div class="right_aligned_with_margin"><%= submit_tag i_(@invoice,'Save Invoice'), :class => "form_submit" %></div>
+			<% end %>
+			<%= render_inner_layout %>
+		<% end %>
+		<%= render :partial => "customers/customer_dialog" %>
+		<%= render :partial => "invoices/auto_number_taken" %>
+		<br/>
+<% content_for "bottom_javascripts" do %>
+	<%= protect_form('invoice_form') %>
+<% end %>

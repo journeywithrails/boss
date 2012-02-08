@@ -1,0 +1,47 @@
+<%@skip_footer= true%>
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>
+<% end -%>
+
+<% @content_for_infobox = capture do %>
+	<%= formatted_flash_always %>
+<% end %>
+
+<% @content_for_main = capture do %>
+	<div class="simply_wrapper">
+		<div id="header_text">
+			<%= _("The invoice will be sent to %{cust} at %{recip}.") % {:cust => @delivery.deliverable.customer.name, :recip => @delivery.recipients} %>
+      <% form_for(:delivery, :url => {:controller => :deliveries, :action => :create}, :html => { :method => :post, :id => 'delivery_form' }) do |f| %>
+        <% if @deliverable.all_payment_types.any? %>
+          <p style="margin-top:5px;">
+            <%= _("Allow the invoice recipient to pay online using one of the methods listed below:") %>
+          </p>
+          <ul>
+            <%= choose_payment_types_list(@deliverable, 'delivery[mail_options]') %>
+          </ul>
+        <% end %>
+        <br/><br/>
+        <%= _('Do you want to send the invoice?') %>
+        <%= submit_tag _("Yes"), :class=>"simply_button" %>
+        <a href="javascript:page_failed()" id="send-invoice-no">
+          <%=_("No")%>
+        </a>
+      <% end %>
+		</div>
+		<br/>
+		<div class="corner_large_tr" style="clear: both; height: 20px;">
+			<div style="height: 20px;" class="corner_large_tl">
+			</div>
+		</div>
+		<div class="white content">
+			<%= render :partial => "/invoices/simply/preview", :locals => {:invoice => @deliverable} %>
+		</div>
+		<div class="tour_box_bl">
+			<div class="tour_box_br">
+			</div>
+		</div>
+		<br/>
+  </div>
+<%end%>
+<%= render_inner_layout('norounded') %>

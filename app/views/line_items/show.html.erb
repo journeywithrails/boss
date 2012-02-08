@@ -1,0 +1,13 @@
+<p>
+  <b><%= _('Unit:') %></b>
+  <%=h @line_item.unit %>
+</p>
+
+<p>
+  <b><%= _('Description:') %></b>
+  <%=h @line_item.description %>
+</p>
+
+
+<%= link_to _('Edit'), edit_invoice_line_item_path(:invoice_id => @invoice.id, :id => @line_item) %> |
+<%= link_to _('Back'), invoice_line_items_path %>

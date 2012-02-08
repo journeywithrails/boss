@@ -1,0 +1,178 @@
+<div id="invoice_customer">
+	<ul>	
+		<li>
+			<div class="form_field_hdr"><%= f.label :name, _("Customer:") %></div>
+			 <%= f.select( :customer_id, current_user.customers.find_for_select, :prompt => _("– Select Customer –"), :selected => (!@the_customer.blank? ? @the_customer.id : "") )%>
+		</li>
+	</ul>
+	<div id="on_the_fly_attributes">
+		<div id="on_the_fly_attributes">
+		<% if !@the_customer.blank? %>
+			<div id="preview_customer_content">
+				<span class="blue"><%= _("Details") %></span>
+				<ul class="field">
+					<% if !@the_customer.address1.blank? %>
+						<li><h3><%= _("Address 1") %></h3>
+							<%= h(@the_customer.address1) unless @the_customer.address1.blank? %>
+						</li>
+					<% end %>
+					<% if !@the_customer.address2.blank? %>
+						<li><h3><%= _("Address 2") %></h3>
+							<%= h(@the_customer.address2) unless @the_customer.address2.blank? %>
+						</li>
+					<% end %>
+					<% if !@the_customer.city.blank? %>
+						<li><h3><%= _("City") %></h3>
+							<%= h(@the_customer.city) unless @the_customer.city.blank? %>
+						</li>
+					<% end %>
+					<% if !@the_customer.province_state.blank? %>
+						<li><h3><%= _("State/Prov.") %></h3>
+							<%= h(@the_customer.province_state) unless @the_customer.province_state.blank? %>
+						</li>
+					<% end %>
+					<% if !@the_customer.country.blank? %>
+						<li><h3><%= _("Country") %></h3>
+							<%= h(@the_customer.country) unless @the_customer.country.blank? %>
+						</li>
+					<% end %>
+					<% if !@the_customer.postalcode_zip.blank? %>
+						<li><h3><%= _("Postal/ZIP") %></h3>
+							<%= h(@the_customer.postalcode_zip) unless @the_customer.postalcode_zip.blank? %>
+						</li>
+					<% end %>
+					<% unless (@the_customer.contacts.nil? or @the_customer.contacts.size == 0) %>
+						<li><h3><%= _("Contact") %></h3>
+							<input id="invoice_contact_id" type="hidden" name="invoice[contact_id]" value=<%= @the_customer.default_contact.id %> />
+							<%=h @the_customer.default_contact.name %>
+						</li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+		</div>
+	</div>
+	<div id="currency_container">
+		<ul>
+			<li><div class="form_field_hdr"><%= _("Currency:") %></div>
+				<%= f.select :currency, Currency.currency_list, :size=>0, :selected => invoice_currency(@invoice) %>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div id="invoice_terms" style="display: none">
+	<div id="invoice_number_block">
+	<ul>
+		<li>
+			<div class="form_field_hdr"><label><%= _("Inv. number:") %></label></div>
+	        	<% if @invoice.new_record? or @invoice.meta_status == Invoice::META_STATUS_DRAFT %>
+	        		<%= f.text_field :unique, :size=>14 %>
+	        	<% else %>
+	        		<label id="invoice_unique_number"><%= @invoice.unique %></label>
+	            <% end %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><label><%= _("Ref. number:") %></label></div>
+			<%= f.text_field :reference, :size=>14 %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><label><%= _("Issue Date: (yyyy-mm-dd)") %></label></div>
+			<%= f.calendar_date_select :date, :size=>0, :default => Date.today %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><label><%= _("Due Date: (yyyy-mm-dd)") %></label></div>
+			<%= f.calendar_date_select :date, :size=>0 %>
+		</li>
+	</ul>
+	<ul>
+		<li><div class="form_field_hdr"><label><%= _("Comment:") %></label></div>
+			<%= f.text_area :description, :size => '32x4' %>
+		</li>
+	</ul>
+	</div>
+</div>
+
+<div id="invoice_items" style="margin-left: -10px; display: none">
+	<table class="entity-list" id="line_items_table" class="line_items_table" style="height:100%; width: 100%; margin-top: -2px">
+      <tbody id="line_items_list">
+  <% if @invoice.line_items.blank? -%>
+    <%= render :partial => '/invoices/mobile/line_item', :object => LineItem.new %>
+  <% else %>
+    <%= render :partial => '/invoices/mobile/line_item', :collection => @invoice.line_items %>
+  <% end -%>
+      </tbody>
+    </table>
+	<table  style="height:100%; width: 100%; margin-top: -2px; margin-bottom: -17px;">
+  <tr class="child_item" align="center">
+  	<td class="add">
+    <% link_content = 'Add new item' %>
+    <%= add_line_item_link link_content, :id => 'add_line_item' %>	  		
+  	</td>
+  </tr>
+	</table>
+    <%# add_line_item_link.  No matter what the font size is, a table allows both the image and label to be vertically centered. %>
+
+</div>
+
+<div id="invoice_charges" style="display: none">
+  <div id="discount_container">
+    <div class="blue"><%= _("Discount") %></div>
+      <ul class="form">
+		<li>
+			<div class="form_field_hdr"><%= _("Amount") %></div>
+			 <%= f.text_field :discount_value, :size=>2%>
+		</li>
+		<li>
+			<div class="form_field_hdr"><%= _("Type") %></div>
+			 <%= f.select :discount_type, Invoice::DiscountTypes, :size=>0 %>
+		</li>         	
+      </ul>
+    </div>
+    <div id="tax_container">
+	  <% t = @invoice.taxes_for_editing %>
+	  <% unless t.empty? %>
+	    <div class="blue"><%= _("Taxes") %></div>
+	    <% t.each do |tax| %>
+		<ul class="form">
+			<li>
+				<%= f.check_box "#{tax.profile_key}_enabled" %> <%= _("Charge %{tax_name}") % { :tax_name => h(tax.name) } %>
+			</li>
+			<li><div class="form_field_hdr"><%= _("Rate (%)") %></div>
+				<%= f.text_field "#{tax.profile_key}_rate", :size=>2 %>
+			</li>			
+		</ul>
+			<% end %>
+		<% end %>
+	</div>
+</div>
+
+<div id="invoice_summary" style="display: none">
+    <div id="invoice_total_block">
+      <div class="blue"><%= _("Invoice summary") %></div>
+      <ul class="field">
+      	<li>
+			<h3><%= _("Subtotal") %></h3>
+			<span id="invoice_line_items_total"><%= format_amount(@invoice.line_items_total) %></span> &nbsp;
+		</li>
+
+        <% discount_block = Proc.new do %>
+	        <li><h3><%= _("Discount") %></h3>
+	            <span id="invoice_discount_amount"><%= format_amount(@invoice.discount_amount) %></span> &nbsp;
+	        </li>
+        <% end %>
+
+        <% show_first_if(@invoice.discount_before_tax, discount_block) do %>
+          <% @invoice.taxes.each do |tax| %>
+              <li><h3><%= !tax.name.blank? ? h(tax.name) : "&nbsp;" %></h3>
+              <span id="<%= "invoice_#{tax.profile_key}_amount" %>"><%= format_amount(tax.amount) %> </span> &nbsp;
+              </li>
+          <% end %>
+        <% end %>
+        <li><h3><%= _("Total") %></h3>
+          <span id="invoice_total"><%= format_amount(@invoice.total_amount) %></span> &nbsp;
+		</li>
+      </ul>
+    </div>
+</div>
+

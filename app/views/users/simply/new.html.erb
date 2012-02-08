@@ -1,0 +1,60 @@
+<%@skip_footer= true%>
+<% content_for "stylesheets" do -%>
+  <%= default_theme_controller("home") %>
+  <%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>
+<% end -%>
+
+<% @content_for_main = capture do %>
+  <!-- the main layout -->
+
+  <%= error_messages_for :user %>
+  <div class="simply_wrapper">
+    <div class="yui-gd" > 
+      <div class="caption">
+        <%= _("Have your customers pay you online quickly and easily with Billing Boss!") %>
+      </div>
+      <br/><br/>
+      <div class="yui-u first">
+        <div class="home_content">
+          <div class="caption"><%= _("Sign up now") %></div><br/>
+          <%= render :partial => "users/form" %>
+        </div>
+        <p align="center"><%=  _("Already have a Billing Boss account?") %><br/> <%= link_to _("Log in"), "/session/new" %>.</p>
+      </div>
+      <div class="yui-u">
+        <table class="switch_table">
+          <tr>
+            <td class="short">
+              <a class="selected" onclick="SignupSwitchView(this); return false;" id="view_main" href="#"><%= _("Introduction") %></a>
+            </td>
+            <td class="short">
+              <a class="unselected" onclick="SignupSwitchView(this); return false;" id="view_questions" href="#"><%= _("More Details") %></a>
+            </td>
+          </tr>
+        </table>
+        <br/>
+        <div id="signup_content">
+          <p class="inline-caption">
+                  <%= _("What is Billing Boss?") %>
+          </p><br/>
+          <p class="main_simply_text"><%= _("Billing Boss (<a href='http://www.billingboss.com' target='new'>www.billingboss.com</a>) is a free, simple online invoicing tool that allows you to send invoices quickly to your customers and get paid online. It is developed and maintained by the same team that brought you Simply Accounting.")%>
+          </p>
+        </div>
+        <div id="detail_content" style='visibility:hidden'>
+          <p class="inline-caption">
+            <% _("What can I use Billing Boss for?") %>
+          </p><br/>
+          <p class="main_simply_text">
+            <ul class="main_bullets">
+              <li><%= _("You can send Simply Accounting invoices to your customers online through Billing Boss.") %></li>
+              <li><%= _("Billing Boss sends the invoice as a PDF attachment via email.") %></li>
+              <li><%= _("If you sign up for online payment in Billing Boss, Billing Boss will send a link with the email for your customer to pay the invoice online.") %></li>
+            </ul>
+          </p>
+        </div>
+        <!--<a href="javascript:window.opener='x';window.close();">Close</a>-->
+      </div>
+    </div>
+  </div>
+<%end%>
+<%= render_inner_layout('nomenu') %>

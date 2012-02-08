@@ -1,0 +1,21 @@
+<% fields_for :contact do |contact_fields| %>
+  <div>
+    <%= _('First Name') %>
+    <%= contact_fields.text_field :first_name, :class => "colored_field" %>
+  </div>
+  <div>
+    <%= _('Last Name') %>
+    <%= contact_fields.text_field :last_name, :class => "colored_field" %>
+  </div>
+  <div>
+    <%= _('Email') %>
+    <%= contact_fields.text_field :email, :class => "colored_field" %>
+  </div>
+  <div>
+    <%= _('Phone') %>
+    <%= contact_fields.text_field :phone, :class => "colored_field" %>
+  </div>
+	<div>
+		<%= contact_fields.hidden_field :id %>
+	</div>
+<% end %>

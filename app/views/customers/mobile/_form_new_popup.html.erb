@@ -1,0 +1,26 @@
+  	<ul class="form">
+
+			<%= render :partial => "/customers/mobile/fields", :locals => {:f => f}, :object => form_new_popup %>
+	</ul>
+	
+	<ul class="form">
+		<% fields_for :default, form_new_popup.default_contact do |default_fields| %>
+		<li>
+			<div class="form_field_hdr"><%= f.label :first_name, _("First Name:") %></div>
+			<%= default_fields.text_field :first_name, :class => "colored_field" %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><%= f.label :last_name, _("Last Name:") %></div>
+			<%= default_fields.text_field :last_name, :class => "colored_field" %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><%= f.label :email, _("Email:") %></div>
+			<%= default_fields.text_field :email, :class => "colored_field" %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><%= f.label :phone, _("Phone:") %></div>
+			<%= default_fields.text_field :phone, :class => "colored_field" %>
+		</li>
+		<%= default_fields.hidden_field :id %>
+		<% end %>
+	</ul>

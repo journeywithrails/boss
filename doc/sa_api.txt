@@ -1,0 +1,87 @@
+1. new resource: browsal
+
+a browsal is a state machine that controls the flow through a set of browser windows running in a chromeless modal window. A remote applictaion can query the state of the browsal, as well as query other information about it.
+
+browsals are implemented with single table inheritance, with a subclass for each flow that is implemented in a browsal
+
+models:
+Browsal
+SignupBrowsal << Browsal
+SendInvoiceBrowsal << Browsal
+
+A browsal has a guid. A remote service can use the guid to track the browsal process or query its metadata. 
+A remote service can launch a browsal process by requesting a browsal, for example, with browsals/new.xml?type=Signup, which will return a start url and a browsal guid.
+A browsal specifies whether it requires authentication
+A browsal has a start url
+A browsal has an url_for_state(state) which returns the url for the appropriate step in the browsal process indicated by the current browsal state
+A browsal has a metadata attr which stores info relating to the browsal process
+
+
+Example:
+
+class Browsal
+  acts_as_state_machine :initial => :created, :column => 'status' 
+  state :finished
+  state :cancelled
+  
+  
+  event :start do
+    transitions :from => :created, :to => :startedaut
+  end
+
+  event :cancel do
+    transitions :from => :ALL, :to => :cancelled
+  end
+  
+  def current_url
+    url_for_state(self.status)
+  end
+end
+
+class SignupBrowsal << Browsal
+  
+  
+  event :created_account do
+    transitions :from => :started, :to => :signed_up
+  end
+
+  
+  def url_for_state(state)
+    # probably make a dsl implementation of this, ie a set of declarations: url_for_state :blah, {:controller => }
+    # unfortunately, cannot use url helpers here, which sucks
+    case state
+    when :created, :started
+      '/signup.bapi' # bapi is our custom format
+    when :signed_up
+      '/login.bapi'
+    end
+  end
+    
+end
+
+To keep things simple for this sprint, we can return the same url (the start url) for every state
+
+
+The Browsal controller implements restful CRUD for browsal resource:
+
+index (with no user, returns all known browsal types. With a user, returns all browsals for user that do not have state finished)
+create  -- expects a param type=> 'Signup' || 'SendInvoice'. instantiates a Browsal of correct type, returns its guid and current_url as the xml response
+show -- gets the current state, current url, and metadata of a browsal. Use guid for id (implement by defining to_param on Browsal)
+destroy -- will cause a cancel event to be fired on the browsal  (don't need to implement this for this sprint)
+update -- expects an event param, can use to fire an event on a browsal (don't need to implement this for this sprint)
+
+
+
+
+map.route_prefix
+
+1. extension to ActionController::Routing::RouteSet::Mapper
+  -- add map.route_prefix
+  -- expects {:prefix => 'xxx', :param => :yyy} optional :required => true/false
+  -- stores on Controller base 
+
+2 . patch controller base redirect_to, link_to, and url_for.
+    call super than add route prefix if params contains route_prefix param
+
+    a. action_view/helpers/url_helper.rb: send string to controller url_for
+    b.

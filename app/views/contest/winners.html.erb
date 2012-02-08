@@ -1,0 +1,54 @@
+
+	<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= stylesheet_link_tag "/themes/static.css" %>	
+	<%= default_theme_controller %>	
+  <%= stylesheet_ie6 %>
+<% end %>
+
+<% content_for :header do %>	    	
+	<%= render :partial => "header" %>
+<% end %>   
+	 
+
+<% content_for :main do %>
+<div id="bd">
+
+		<div class="yui-g">
+	
+			<div id="main_box">
+				<div class="top_corner_left">
+					<div class="top_corner_right">
+							   
+						</div>
+										
+				</div>					
+						
+				<div class="content">
+						
+					<img width="110" height="30" border="0" alt="Winners" src="/images/contest/ttl_winners.gif"/>
+				<br/>
+					<p><%= _('Congratulations to the following winners in the Build your Business Contest:') %>
+<br/><br/><% if session[:signup_type] == "ssan" %>
+<%= render :partial => "/contest/winners_ssan" %>
+<% else %>
+<%= render :partial => "/contest/winners_soho" %>
+<% end %>
+					</p>
+					
+				</div>
+				
+			<div class="bot_corner_left">
+				<div class="bot_corner_right"/>
+			</div>				
+				
+			</div>
+
+			
+			
+			<!--END OF MAIN BOX -->
+			
+		</div>
+
+	</div>
+<% end %>		

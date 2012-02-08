@@ -1,0 +1,36 @@
+db: &db
+  adapter: mysql
+  encoding: utf8
+
+  host: 10.227.15.111
+  
+development:
+  <<: *db
+  database: tornado_development
+  username: root
+  password: 'simply#1'
+
+# Warning: The database defined as 'test' will be erased and
+# re-generated from your development database when you run 'rake'.
+# Do not set this db to the same as development or production.
+test:
+  <<: *db
+  database: tornado_cont_test
+  username: root
+  password: 'simply#1'
+  socket: /var/lib/mysql/mysql.sock
+	
+production:
+  adapter: mysql
+  encoding: utf8
+  database: tornado
+  username: root
+  password:  'simply#1'
+  socket: /var/lib/mysql/mysql.sock
+	
+#registration:
+  #adapter: mysql
+  #database: userreg
+  #username: root
+  #password:  '6825t'
+  #host: localhost  

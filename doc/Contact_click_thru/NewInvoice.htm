@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>New Invoice</title>
+</head>
+<body>
+    <div>
+    New Invoice
+    <br />
+    <select id="Select1">
+        <option>Customer 1</option>
+        <option>Customer 2</option>        
+        <option>Customer 3</option>        
+    </select>
+    <input id="btnEdit" type="button" value="Edit" onclick="mypopup('EditCustomer.htm', 'Edit Customer');"/>
+    <input id="btnNew" type="button" value="New" onclick="mypopup('NewCustomer.htm', 'New Customer');"/>
+    </div>
+    <div>
+    <span>Address 1</span><br />
+    <span>Address 2</span><br />
+    <span>City</span><br />
+    <span>Country</span><br /> 
+    </div>
+		<script type="text/javascript">
+		 mypopup = function(page, title)
+		 {
+		   mywindow = window.open (page, title, "location=1,status=1,scrollbars=1,width=775,height=700");
+		   mywindow.moveTo(100,100);
+		 } 
+		</script>
+	</body>
+</html>

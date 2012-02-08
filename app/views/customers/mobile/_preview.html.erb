@@ -1,0 +1,41 @@
+		<div id="preview_customer_content">
+			<span class="blue"><%= _("Details") %></span>
+			<ul class="field">
+				<% if !preview.address1.blank? %>
+					<li><h3><%= _("Address 1") %></h3>
+						<span id="customer_address1"><%= h(preview.address1) unless preview.address1.blank? %></span>
+					</li>
+				<% end %>
+				<% if !preview.address2.blank? %>
+					<li><h3><%= _("Address 2") %></h3>
+						<span id="customer_address2"><%= h(preview.address2) unless preview.address2.blank? %></span>
+					</li>
+				<% end %>
+				<% if !preview.city.blank? %>
+					<li><h3><%= _("City") %></h3>
+						<span id="customer_city"><%= h(preview.city) unless preview.city.blank? %></span>
+					</li>
+				<% end %>
+				<% if !preview.province_state.blank? %>
+					<li><h3><%= _("State/Prov.") %></h3>
+						<span id="customer_province_state"><%= h(preview.province_state) unless preview.province_state.blank? %></span>
+					</li>
+				<% end %>
+				<% if !preview.country.blank? %>
+					<li><h3><%= _("Country") %></h3>
+						<span id="customer_country"><%= localized_country(preview.country) unless preview.country.blank? %></span>
+					</li>
+				<% end %>
+				<% if !preview.postalcode_zip.blank? %>
+					<li><h3><%= _("Postal/ZIP") %></h3>
+						<span id="customer_postalcode_zip"><%= h(preview.postalcode_zip) unless preview.postalcode_zip.blank? %></span>
+					</li>
+				<% end %>
+				<% unless (preview.contacts.nil? or preview.contacts.size == 0) %>
+					<li><h3><%= _("Contact") %></h3>
+						<input id="invoice_contact_id" type="hidden" name="invoice[contact_id]" value=<%= preview.default_contact.id %> />
+						<span id="span_contact_name"><%=h preview.default_contact.name %></span>
+					</li>
+				<% end %>
+			</ul>
+		</div>

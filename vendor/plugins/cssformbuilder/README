@@ -1,0 +1,77 @@
+CssFormBuilder
+==============
+
+A little plugin containing a form builder that uses css to produce tableless, lined-up forms.
+
+Features:
+ - Each field label is automatically added at the top of the input control.
+ - Each input control appears at the right of the last control (unless there is not enough space)
+ - To force a control in a new row, use <br /> before adding it.
+ - Use html option {:class=>'half-size' } or {:class=>'double-size' } for changing control size.
+ - Use class 'half-size', 'normal-size' or 'double-size' to force select tags size.
+ - Use <% fieldset tag 'legend' %> [block] <% end %> to produce fieldset tags.
+ - By default, a fieldset expands to the right form margin; use html option {:class=>'continue'} to
+   compact the fieldset. Next fieldset will be added to the right.
+ - Support translation of labels and legends using _() function (by first calling CssBuilder.translate_as_gettext) or String.t method 
+    (by first calling CssBuilder.translate_as_globalize)
+ - Support both standard html form (css_form_for) and remote form (remote_css_form_for)
+ - Also support display of field values (show action), using the same template file used for edit (css_show_for)
+    
+    
+Sample usage:
+
+ File app/views/customers/new.rhtml:
+  
+   <% css_form_for :customer, @customer, :url => { :action => "create" } do |@f| %>
+     <%= render :partial => 'form' %>
+     <%= submit_tag 'Create' %>
+   <% end %>
+  
+ File app/views/customers/edit.rhtml:
+
+   <% css_form_for :customer, @customer, :url => { :action => 'update', :id => @customer } do |@f| %>
+     <%= render :partial=> 'form' %>
+     <%= submit_tag 'Edit' %>
+   <% end %>
+  
+ File app/views/customers/show.rhtml:
+  
+   <% css_show_for :customer, @customer,  do |@f| %>
+     <%= render :partial=> 'form' %>
+   <% end %>
+
+ File app/views/customers/_form.rhtml:
+ 
+   <%= error_messages_for 'customer' %>
+   <!--[form:customer]-->
+   <% fieldset_tag 'General data' do %>
+       <%= @f.text_field :code, :class=>'half-size' %>
+       <%= @f.text_field :name, :class=>'double-size' %>
+       <br />
+       <%= @f.select(:bank_id, Bank.to_select, {:include_blank => true}, {:class=>'normal-size'} ) %>
+       <%= @f.check_box :option1  %>
+       <%= @f.hidden_field :field1  %>
+     <% end %>
+   <!--[eoform:customer]-->
+ 
+
+== Installation
+
+ - Automatically, with ruby script/plugin install cssformbuilder
+ - Manually, by downloading and unpacking compressed archive into your vendor/plugins folder
+ 
+ After installation:
+ - copy vendor/plugins/cssformbuilder/stylesheet/css_form.css into your public/stylesheets/ folder.
+ - include css_form.css in your template (<%= stylesheet_link_tag 'css_form' %>)
+ 
+
+== Licence
+
+ MIT
+
+For info about this plugin, write to: gal@addsw.it
+
+Copyright (c) 2006 AD.D. Software (http://www.addsw.it)
+
+
+

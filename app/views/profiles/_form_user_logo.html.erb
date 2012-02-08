@@ -1,0 +1,33 @@
+<% content_for "bottom_javascripts" do -%>
+	&nbsp;
+
+<% end # content_for "bottom_javascripts"
+     %>
+
+<%= hidden_field_tag(:profile_tab, "logo") %>
+  <div id="user_logo">
+	  <div class="profile_title"><%= _('Upload a logo') %></div>
+	  <br clear="all"/>
+      <div class="profile_subtitle"><%= _('You can upload your company logo that will be shown on your invoices:') %></div>      
+      <br clear="all"/>      
+      <% if @logo and @logo.image? %>
+        <%= f.label :logo, _("Current logo:") %>
+		<%# as result of profile rework thumb is no longer needed, show full logo %>
+        <%= image_tag(@logo.public_filename) %>
+		<br clear="all"/><br/>
+        <div class="label_checkbox_pair has_checkbox">
+          <%= check_box_tag 'logo[delete]', "0", false %>
+          <label for="logo[delete]"><%= _('Delete logo') %></label>
+        </div>
+      <br clear="all" /><br/>
+      <% end -%>
+        <%= f.label :logo, _("Upload New Logo:") %>
+        <br clear="all"/>
+        <span class="caption"><%= _('(jpg, gif, png files accepted). Maximum size: 500x150 pixels, 1 megabyte') %>.</span>
+      <br clear="all"/>
+	  <%= file_field 'logo','uploaded_data' %>	  
+ 
+   <br clear="all" /><br/>
+ </div>
+
+

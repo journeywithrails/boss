@@ -1,0 +1,15 @@
+<%= _("Dear %{name},
+
+Thank you for your feedback on Billing Boss. Here is the reviewer's response:
+
+%{response_text}
+
+We hope the response was helpful.
+
+Below is the original feedback text you sent us:
+
+%{text_to_send}
+
+------------------------------------------
+
+You are receiving this e-mail because we received a feedback with this reply-to address. If you didn't send the feedback, please disregard the e-mail.") % {:name => @user_name, :response_text => @response_text, :text_to_send => @text_to_send} %>

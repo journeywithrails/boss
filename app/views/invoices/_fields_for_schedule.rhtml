@@ -1,0 +1,18 @@
+<h2>Recurring invoice schedule</h2>
+<div>
+<%= form.label :frequency, "frequency" %>
+<%= form.select :frequency, [['Yearly','yearly'],['Monthly','monthly'],['Weekly','weekly']] %>
+</div>
+
+<hr />
+
+<h3>Send each generated invoice by email</h3>
+
+<% @invoice.sendable? %>
+<% @invoice.sendable_errors %>
+<%= error_messages_for :invoice %>
+
+<div>  
+  <%= form.label :send_automatically, _("list of recipients:") %>
+  <%= form.text_field :send_recipients, :disabled => ! @invoice.errors.empty? %>
+</div>

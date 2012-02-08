@@ -1,0 +1,37 @@
+<%= error_messages_for(:object_name => 'payment', :object => @payment_data) %>
+<% @card, @billing_address = @payment_data %>
+<% form_tag invoice_online_payments_path(:invoice_id => @key) do %>
+  <!-- sage sbs gateway -->
+  <div><%= _("All fields must be filled in except the fax number.")%></div><br/>
+
+  <div class="gateway_form_section">
+    <% fieldset_tag(_('Credit Card Information'), :id => 'credit_card_info') do %>
+	  <br clear="all" />
+
+	  <%= label :number, 'Credit Card Number' %>
+	  <%= text_field(:card, :number) %>
+	  <br clear="all" />
+
+	  <%= label :first_name, _('Cardholder\'s First Name') %>
+	  <%= text_field(:card, :first_name) %>
+	  <br clear="all" />
+
+	  <%= label :last_name, _('Cardholder\'s Last Name') %>
+	  <%= text_field(:card, :last_name) %>
+	  <br clear="all" />
+
+	  <%= label :month, _('Expiration Date') %>
+	  <%= select(:card, :month, (1..12)) + select(:card, :year, (Time.now.year..(Time.now.year + 9))) %>
+	  <br clear="all" />
+
+	  <%= label :verification_value, _('3-digit CVV Number') %>
+	  <%= text_field(:card, :verification_value) %>
+	  <br clear="all" />
+    <% end %>
+  </div>
+  <div class="gateway_form_section">
+	<%= render :partial => "sage_address", :object => @payment_data %>	
+  </div>
+  <br style="clear: both" />
+  <%= submit_tag(_('Pay Now')) %>
+<% end %>

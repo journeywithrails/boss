@@ -1,0 +1,19 @@
+<%#used for display things that are outside of the corners %>
+<div id ="main_top_div">
+  <%= @content_for_main_top %>	
+</div>
+
+<div id="main_div"> 
+<br/>
+    <div class="corner_large_tr">
+				<div class="corner_large_tl">
+
+              <%= @content_for_infobox.blank? ? "&nbsp;" : @content_for_infobox %>	
+				</div>
+    </div>						
+   
+	 	<div class="content">
+      <%= @content_for_main %>			
+	  </div>
+    <%= bottom_corners() %>
+</div> 

@@ -1,0 +1,30 @@
+a.anchor_button {
+cursor: pointer;
+cursor: hand;
+}
+.label_checkbox_pair {
+clear: both;
+float: none;
+position: relative;
+}
+.label_checkbox_pair input {
+clear: left;
+float: left;
+position: absolute;
+left: 0px;
+top: 4px;
+}
+.label_checkbox_pair label {
+clear: left;
+display: block;
+position: absolute;
+float: left;
+cursor: pointer;
+cursor: hand;
+left: 17px;
+top: 0px;
+width: 200px;
+}
+.hidden{
+	display: none;
+}

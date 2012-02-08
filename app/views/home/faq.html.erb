@@ -1,0 +1,121 @@
+<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/themes/static.css" %>	
+<% end %>
+<% content_for :header do %>	    	
+	<%= render :partial => "home/header" %>
+<% end %>   
+	 
+
+<% content_for :main do %>	 
+
+<div id="content_container">
+	
+      <!-- ROUNDED CORNERS - WITH INFOBOX -->
+      
+      <div class="corner_large_tr" style="clear: both;">
+          <div class="corner_large_tl">
+            <div class="infobox">								
+              <p>
+              <%= _('Frequently Asked Questions') %>								
+              </p>								
+            </div>
+          
+          </div>
+      </div>							
+      
+      
+      <!-- CONTENT SECTION -->
+       
+	<div class="content">
+<br/>	
+
+			   				<h1><%= _('How much is it?') %></h1>
+			   				
+			   				<span>
+			   				<%= _("Let's get this out of the way first. It is Free. Cool, huh?") %>
+							</span>
+							
+							<h1><%= _('What is it?') %></h1>
+							
+							<span><%= _('Billing Boss is a simple online invoicing tool that allows you to send invoices quickly to your customers and get paid online.') %></span>
+														
+							<h1><%= _('Who is it for?') %></h1>
+							
+							<span><%= _("This tool is great for small businesses who want to get invoices out to customers faster so they can get paid faster. Basically, any business can use Billing Boss. Who wouldn't want this?") %></span>
+							
+							
+							<h1><%= _('What can I do with it?') %></h1>
+
+							
+							<div class="secondary_lists">
+							
+								<span class="bold"><%= _('You can:') %></span>
+
+							
+								<ul>
+									<li><%= _('Replace your manual invoicing process and create invoices online using your Internet browser.') %></li>
+									<li><%= _('Send invoices to your customers online.') %></li>
+									<li><%= _('Stay on top of your cash flow by knowing who owes you money, how much, and by when.') %></li>
+									<li><%= _('Keep your customer list online for quick reference.') %></li>
+									<li><%= _('Track taxes collected from invoices.') %></li>
+									<li><%= _('Grant access to your data to your bookkeeper or accountant.') %></li>
+									
+								</ul>
+								
+							</div>
+							
+							<h1><%= _('What can your bookkeeper or accountant do with Billing Boss?') %></h1>
+							
+							<span class="bold"><%= _('They can:') %></span>
+
+							<div class="secondary_lists">							
+								<ul>
+									<li><%= _('Access your invoice and payment information online to prepare your books.') %></li>
+									<li><%= _("Get an accountant's view of your data with information such as taxes collected and total invoices sent.") %></li>
+								</ul>
+							</div>
+							
+							<h1><%= _('How will my invoices be sent?') %></h1>
+
+							<span><%= _('They can be sent either via e-mail or as PDF attachments.') %><br/><br/>
+              <%= _('If you choose, you can also print your invoices and <em>snail mail</em> them.') %>
+            </span>
+							             
+              <h1><%= _('Is my data safe?') %></h1>
+              <span><%= _('It sure is. Billing Boss uses industry-standard 128K SSL encryption at login and payment to ensure the safe transmission and delivery of your data. Billing Boss houses your data in a secure, state-of-the-art off-site data centre that ensures that your privacy and billing transactions are safe.') %></span>
+              
+              <h1><%= _('Why should I use Billing Boss rather than any other online invoicing tool?') %> </h1>
+              <span>               
+                <%= _('We have designed Billing Boss with both you and your accountant or bookkeeper in mind. Where other online invoicing tools do not allow you to easily share your data, Billing Boss allows you to grant your accountant or bookkeeper read only access easily and securely, without having to transfer files back and forth. Since you can see everything online, your workflow and communication between you and your accountant or bookkeeper will be faster, more efficient and more accurate.') %>
+                
+                <br/><br/><%= _("You don't need any accounting experience to run Billing Boss: You will get your data in a way that helps you run your business (a business process oriented view) while your accountant or bookkeeper will get the information from an accounting perspective.  You can quickly become one of your book balancer's favorite clients!") %>
+                
+                <br/><br/><%= _("Why else should you use Billing Boss? Did we mention that it's FREE? Unlike some other online invoicing tools, we don't have a pricing section for Billing Boss. Use it as much as you need to - the more you use it, the better! More invoices mean that your business is growing - and that's what we like to see!") %> 
+
+              </span>
+							<h1><%= _('When can I access it?') %></h1>
+							
+							<span><%= _('Anytime you are connected to the Internet.') %></span>
+
+							<h1><%= _('How do I get started?') %></h1>
+							
+							<span><%= _('Just sign up and start using it. You will need either IE 6.0+, FireFox 2.0+ or Safari 2.0+ for your Internet browser and an Internet connection.') %></span>&nbsp;&nbsp;&nbsp;&nbsp;
+			   				
+			   				<!-- SPACES NEEDED TO REMOVE GAP BETWEEN CONTENT AND BOTTOM CORNERS -->
+			   				&nbsp;&nbsp;&nbsp;&nbsp;
+
+	</div>
+
+      <!-- BOTTOM CORNERS -->
+      <div class="corner_large_bl">
+          <div class="corner_large_br"></div>
+      </div>							
+      <!-- END OF ROUNDED CORNERS -->
+
+
+
+</div>	
+
+<% end %>

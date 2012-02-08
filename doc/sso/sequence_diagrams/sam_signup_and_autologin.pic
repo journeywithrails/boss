@@ -1,0 +1,109 @@
+.PS
+copy "sequence.pic";
+movewid=1.25
+boxwid=1.1
+
+title("SAM signup and auto-login");
+
+actor(U,"\fBSSUser\fP");
+object(FF,"\fBBrowser\fP");
+object(APP,"\fBSage App\fP");
+object(SAM,"\fBSAM\fP");
+object(CAS,"\fBCAS\fP");
+step();
+step();
+
+# user clicks signup in app
+async();
+message(U,FF,"User clicks signup");
+	active(FF);
+	message(FF,APP,"/signup");
+		active(APP);
+		sync();
+		message(APP,APP,"");
+		lconstraint(APP,"construct_service()");
+		async();
+		return_message(APP,FF,"redirect to SAM with service");
+		inactive(APP);
+		step();
+	message(FF,SAM,"/signup?service=xxxx");
+		active(SAM);
+		return_message(SAM,FF,"signup form");
+		inactive(SAM);
+	return_message(FF,U,"signup form");
+	inactive(FF);
+step();
+
+# user fills out info and submits
+message(U,FF,"submit");
+	active(FF);
+	message(FF,SAM,"submit");
+		active(SAM);
+		message(SAM,SAM,"");
+		lconstraint(SAM,"save_user()");
+		message(SAM,CAS,"login via rest");
+			comment(CAS,C3,down 0.3 left 3.3, wid 2 ht 0.5 "restful api built in to" "CAS since 3.3.0");
+			active(CAS);
+			sync();
+			message(CAS,CAS,"");
+			lconstraint(CAS, "valid_user?");
+			message(CAS,CAS,"");
+			lconstraint(CAS, "create TGT");
+			async();
+			return_message(CAS,SAM,"valid TGT");
+			inactive(CAS);
+			step();
+		sync();
+		message(SAM,SAM,"");
+		lconstraint(SAM,"add TGT to service");
+		message(SAM,SAM,"");
+		lconstraint(SAM,"construct CAS/load_ticket url");
+		async();
+	return_message(SAM,FF,"redirect to CAS/load_ticket?service=xxx");
+	inactive(SAM);
+	step();
+	message(FF,CAS,"/load_ticket?service=xxx");
+		comment(CAS,C3,up 1 left 3.3, wid 2 ht 0.5 "loadTicket service is a" "sage addition to CAS");
+		active(CAS);
+		sync();
+		message(CAS,CAS,"");
+		lconstraint(CAS,"valid_ticket?");
+		sync();
+		message(CAS,FF,"set TGT in cookie");
+		async();
+		return_message(CAS,FF,"redirect to service");
+		inactive(CAS);
+		step();
+	message(FF,APP,"service");
+		active(APP);
+		message(APP,APP,"");
+		lconstraint(APP, "returning from cas?");
+		comment(APP,C3,down 1 left 1.2, wid 2.5 ht 1 "because there is a ticket appended" "to the url, the app's CAS client" "thinks we are returning from CAS" "gateway/login check");
+		message(APP,CAS,"valid ticket?");
+			active(CAS);
+			message(CAS,CAS,"");
+			lconstraint(CAS, "valid_ticket?");
+			return_message(CAS,APP,"YES");
+			inactive(CAS);
+		message(APP,APP,"");
+		lconstraint(APP, "create APP user");
+		message(APP,APP,"");
+		lconstraint(APP, "set APP user status logged in");
+		message(APP,APP,"");
+		lconstraint(APP, "store ticket with user");
+		return_message(APP,FF,"logged in welcome page");
+		inactive(APP);
+	return_message(FF,U,"logged in welcome page");
+
+inactive(FF);
+step();
+
+
+
+complete(U);
+complete(FF);
+complete(APP);
+complete(SAM);
+complete(CAS);
+
+.PE

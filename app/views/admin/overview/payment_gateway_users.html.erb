@@ -1,0 +1,60 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+                    <h1>Payment gateway users</h1>
+                    <br/>
+                    These are users of payment gateways.<br/><br/>
+
+                    <%# RADAR fix this route link_to _('Save as CSV file'), admin_overview_payment_gateway_users_path('payment_gateway_users', :format => 'csv')  %>
+                    <a href="/admin/overview/payment_gateway_users?format=csv"><%=  _('Save as CSV file') %></a>
+                    <br/>
+                    <br/>
+
+                    <table border="1" cellpadding="1" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <td>User</td>
+                          <td>Payment gateway</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% AdminManager.payment_gateway_users.each do |c| %>
+                          <tr>
+                            <td>
+                              <a href="/admin/overview/user/<%= c[0] %>"><%= h c[1] %></a>
+                            </td>
+                            <td>
+                              <%= h c[2] %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+		<% end %>
+		<%= render_inner_layout %>  

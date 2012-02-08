@@ -1,0 +1,52 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+inactive_account:
+  id: 1
+  spaccount_name: InactiveSPAccountName
+  company: OneSPCompany
+  first_name: OneSPFirstName
+  last_name: OneSPLastName
+  address: OneSPAddress
+  city: OneSPCity
+  state_prov: AB
+  zip_postal: OneSPPostal
+  country: OneSPCountry
+  email: OneSPEmail
+  phone: OneSPPhone
+  fax: OneSPFax
+  transaction_id: 1
+  user_id: 23
+
+active_account:
+  id: 2
+  spaccount_name: ActiveSPAccountName
+  company: TwoSPCompany  
+  first_name: TwoSPFirstName
+  last_name: TwoSPLastName
+  address: TwoSPAddress
+  city: TwoSPCity
+  state_prov: BC
+  zip_postal: TwoSPPostal
+  country: TwoSPCountry  
+  email: TwoSPEmail
+  phone: TwoSPPhone
+  fax: TwoSPFax
+  transaction_id: 2  
+  user_id: 24
+  
+account_without_subscription:
+  id: 3
+  spaccount_name: WithoutSubscriptionSPAccountName
+  company: ThreeSPCompany  
+  first_name: ThreeSPFirstName
+  last_name: ThreeSPLastName
+  address: ThreeSPAddress
+  city: ThreeSPCity
+  state_prov: BC
+  zip_postal: ThreeSPPostal
+  country: ThreeSPCountry  
+  email: ThreeSPEmail
+  phone: ThreeSPPhone
+  fax: ThreeSPFax
+  transaction_id: 3
+  user_id: 1

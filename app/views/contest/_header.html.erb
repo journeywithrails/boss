@@ -1,0 +1,15 @@
+<div class="<%= ::AppConfig.contest.bybs ? 'contest_wrapper' : 'contest_wrapper_end' %>">
+	
+	<a class="logo_link" href="http://<%= request.host_with_port %>"><img border="0" alt="BillingBoss Link - Enter to win 1 of 30 great prizes!" src="/images/contest/spacer.gif"/></a>
+
+
+		<div id="navbar">
+
+			<ul>
+				<%= contest_menu_builder %>
+			</ul>
+		</div>
+	
+		<img border="0" alt="Build Your Business Sweepstakes!" src="/images/contest/spacer.gif"/>
+		<img border="0" alt="Over $5,000 in prizes!, 1 of 3 Laptops, 1 of 3 - 21 inch Monitors, 1 of 2 Blackberrys, 1 of 4 Wireless Routers, 1 of 4 - 160 gb External Hard Drives, 1 of 16 - 500 mb USB Drives" src="/images/contest/spacer.gif"/>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+inactive_subscription:
+  id: 1  
+  spaccount_id: 1
+  service_code: Product1
+  qty: 1
+  transaction_id: 1  
+
+active_subscription:
+  id: 2
+  spaccount_id: 1
+  service_code: Product2
+  qty: 1
+  transaction_id: 2  

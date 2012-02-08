@@ -1,0 +1,17 @@
+<% skip_info ||= false -%>
+<label><%= _("Merchant ID") %> <%= text_field_tag 'user_gateways[beanstream][merchant_id]', user_gateway.merchant_id, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("User") %> <%= text_field_tag 'user_gateways[beanstream][login]', user_gateway.login, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Password") %> <%= text_field_tag 'user_gateways[beanstream][password]', user_gateway.password, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Currency") %> <%= select_tag('user_gateways[beanstream][currency]', options_for_select(BeanStreamUserGateway.supported_currencies, user_gateway.currency), {:class=>"user_profile_text" }) %></label>
+<br clear="all"/>
+<div class="profile_subtitle">
+  <p><%= _("Important: Please ensure that the currency selected here matches the currency of your BeanStream account. Changing this setting will not affect which currency BeanStream uses to process your transactions.") %></p>
+</div>
+<br clear="all"/>
+<% unless skip_info -%>
+<%= link_to _("Where do I find Beanstream information?"), "/beanstream_help.html" , :popup => true %>
+<% end -%>
+<br clear="all"/>

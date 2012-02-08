@@ -1,0 +1,2 @@
+page.replace_html 'div_country_dependent', :partial => @billing_address.country_settings.partial, :object =>@billing_address
+page.increment_ajax_counter_rjs

@@ -1,0 +1,42 @@
+db: &db
+  adapter: mysql
+  encoding: utf8
+  
+<% if File.exist? "/Applications/MAMP/tmp/mysql/mysql.sock" %>
+  socket: /Applications/MAMP/tmp/mysql/mysql.sock
+<% elsif File.exist? "/opt/local/var/run/mysql5/mysqld.sock" %>
+  socket: /opt/local/var/run/mysql5/mysqld.sock
+<% elsif File.exist? "/var/run/mysqld/mysqld.sock" %>
+  socket: /var/run/mysqld/mysqld.sock
+<% elsif File.exist? "/tmp/mysql.sock" %>
+  socket: /tmp/mysql.sock
+<% end %>
+    
+development:
+  <<: *db
+  database: bb_sso_dev
+  username: root
+  password: 
+
+# Warning: The database defined as 'test' will be erased and
+# re-generated from your development database when you run 'rake'.
+# Do not set this db to the same as development or production.
+test:
+  <<: *db
+  database: bb_sso_test
+  username: root
+  password: 
+
+#  staging:
+#  adapter: mysql
+#  encoding: utf8
+#  database: tornado
+#  username: root
+#  password:  'simply#1'
+  
+#registration:
+  #adapter: mysql
+  #database: userreg
+  #username: root
+  #password:  '6825t'
+  #host: localhost  

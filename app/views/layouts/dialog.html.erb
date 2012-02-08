@@ -1,0 +1,11 @@
+<html>
+<head></head>
+<body>
+<% 
+@window_background = '#ffffff'
+-%>
+<div class="dialog_window_container" style="background: <%= @window_background %>; width: 100%;">
+	<%= yield :layout -%>
+</div>
+</body>
+</html>

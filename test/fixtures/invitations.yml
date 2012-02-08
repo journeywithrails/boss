@@ -1,0 +1,36 @@
+invitation_for_bookkeeper:
+  id: 1
+  created_by_id: 10
+  invitee_id: 9
+  type: 'BookkeepingInvitation'
+  status: 'sent'
+  created_at: 2008-02-21 9:16
+  updated_at: 2008-02-21 10:09
+
+invitation_for_unknown_bookkeeper:
+  id: 2
+  created_by_id: 10
+  invitee_id: nil
+  type: 'BookkeepingInvitation'
+  status: 'sent'
+  created_at: 2008-02-21 9:16
+  updated_at: 2008-02-21 10:09
+
+confirmed_invitation:
+  id: 3
+  created_by_id: 13
+  invitee_id: 9
+  type: 'BookkeepingInvitation'
+  status: 'confirmed'
+  created_at: 2008-02-21 9:16
+  updated_at: 2008-02-21 10:09
+  
+invitation_for_yourself:
+  id: 4
+  created_by_id: 10
+  invitee_id: 10
+  type: 'BookkeepingInvitation'
+  status: 'sent'
+  created_at: 2008-02-21 9:16
+  updated_at: 2008-02-21 10:09
+  

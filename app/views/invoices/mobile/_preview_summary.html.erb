@@ -1,0 +1,82 @@
+<ul class="field">
+	<li class="arrow"><h3><%= _("From") %></h3>
+		<a href="/profiles"><% if !@profile.contact_name.blank? %>
+			<%= h(@profile.contact_name) %>
+		<% end %>
+		<% if !@profile.contact_name.blank? and !@profile.company_name.blank? %>
+			<%= ", " %>
+		<% end %>
+		<% if !@profile.company_name.blank? %>
+			<%= h(@profile.company_name) %>
+		<% end %>
+		<% if @profile.company_name.blank? and @profile.contact_name.blank? %>
+			<% _("Your organization") %>
+		<% end %></a>
+	</li>
+	<% if @invoice.customer && !@invoice.customer.name.blank? %>
+		<li class="arrow"><h3><%= _("To") %></h3>
+			<a href="/customers/details/<%= @invoice.customer.id %>">
+				<%= h(@invoice.customer.name) %>
+			</a>
+		</li>
+	<% end %>
+	<% if !@invoice.date.blank? %>
+		<li>
+			<h3><%= _("Issue date") %></h3>
+				<%= format_date(_("%B %d, %Y")) { @invoice.date } %>
+		</li>
+	<% end %>
+	<% if !@invoice.due_date.blank? %>
+		<li>
+			<h3><%= _("Due date") %></h3>
+				<%= format_date(_("%B %d, %Y")) { @invoice.due_date } %>
+		</li>
+	<% end %>
+	<% if !@invoice.reference.blank? %>
+		<li>
+			<h3><%= _("Reference") %></h3>
+				<%= h(@invoice.reference)%>
+		</li>
+	<% end %>
+	<li>
+		<h3><%= _("Subtotal") %></h3>
+			<%= format_amount(@invoice.line_items_total) %>  <%= invoice_currency(@invoice)%>
+	</li>
+</ul>
+
+<% discount_block = Proc.new do %>
+		<%= discount_div(@invoice)%>
+<% end %>
+
+<% show_first_if(@invoice.created_by.profile.discount_before_tax, discount_block) do %>
+	<% @invoice.taxes.each do |tax| %>
+        <% next if (tax.amount == 0 and tax.name.blank?) or !tax.enabled? %>
+			<li id="<%= "invoice_#{tax.profile_key}" %>">
+			  	<h3><%= h tax.name %></h3>
+				<span id="<%= "invoice_#{tax.profile_key}_amount" %>">
+						  <%= format_amount(tax.amount) %>  <%= invoice_currency(@invoice)%>
+				</span>
+			</li>
+			<% end %>
+		<% end %>
+
+<% if @invoice.paid != 0 %>
+	<li>
+		<h3><%= _("Total") %></h3>
+		<%= format_amount(@invoice.total_amount) %>  <%= invoice_currency(@invoice)%>
+	</li>
+	<li>
+		<h3><%= _("Paid") %></h3>
+		<%= format_amount(@invoice.paid) %>  <%= invoice_currency(@invoice)%>
+	</li>
+<% end %>
+<li>
+	<h3><%= _("Due") %></h3>
+	<%= format_amount(@invoice.amount_owing) %> <%= invoice_currency(@invoice)%>
+</li>
+<% if !@invoice.description_clean.blank? %>
+<li>
+	<h3><%= _("Comment") %></h3>
+	<%= h @invoice.description_clean %>
+</li>
+<% end %>

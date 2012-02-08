@@ -1,0 +1,15 @@
+schedule_for_invoice_91:
+  id: 1
+  invoice_id: 91
+  frequency: monthly
+
+schedule_for_invoice_92:
+  id: 2
+  invoice_id: 92
+  frequency: monthly
+  send_recipients: simon+garfunkel@example.com, pointy-haired-boss@example.com
+
+schedule_for_invoice_93:
+  id: 3
+  invoice_id: 93
+  frequency: monthly

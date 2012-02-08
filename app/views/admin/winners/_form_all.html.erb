@@ -1,0 +1,35 @@
+<% form_for(:winners, :url => "/admin/winners", :html => {:method => :post} ) do |f| %>
+	<%= hidden_field_tag('signup_type', @signup_type) %>
+	<table style="width: 100%">
+	<th>Draw Date</th>
+	<th>Prize</th>
+	<th>Winner</th>
+
+		<% @winners.each_with_index do |w, i|%>
+			<tr class="child_item" style="width: 100%">
+				<td><%= f.text_field "#{i}][draw_date", :id => "#{i}_draw_date", :value => w.draw_date, :size => 10 %></td>
+				<td><%= f.text_field "#{i}][prize", :id => "#{i}_prize_date", :value => w.prize, :size => 40 %></td>
+				<td><%= f.text_field "#{i}][winner_name", :id => "#{i}_winner_name", :value => w.winner_name, :size => 22 %></td>
+				<td><div><%= link_to_function image_tag("/themes/#{user_style}/images/deleteitem.gif", :alt => "delete line") , "$(this).up('.child_item').remove();", :name => 'remove' %></div></td>
+			</tr>
+		<% end %>
+		<tr id="add_winner_row"><td>
+			<%= add_winner_link "Add Winner [+]", :id => 'add_winner' %>
+		</td></tr>
+
+	</table>
+	<br/>
+	<%= f.submit( "Submit" ) %>  
+<% end %>
+<script type="text/javascript">
+
+  $('add_winner').observe('click', function (event) {
+      var r = Math.floor(Math.random()*10000000000)
+	  $('new_draw_date').id = (r + "_draw_date"); 
+	  $(r + '_draw_date').name = ("winners[" + r + "][draw_date]"); 
+	  $('new_prize').id = (r + "_prize"); 
+	  $(r + '_prize').name = ("winners[" + r + "][prize]"); 
+	  $('new_winner_name').id = (r + "_winner_name"); 
+	  $(r + '_winner_name').name = ("winners[" + r + "][winner_name]"); 
+  });
+</script>

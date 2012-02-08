@@ -1,0 +1,23 @@
+<div id="header">
+	<div id="header_inner">
+		<div id="search_bg_rt">&nbsp;</div>
+		<div id="search">
+			<div id="top_nav">
+	  		<%= render :partial => "layouts/external_header_links" %>
+			</div>
+		</div>
+		
+		<div id="search_bg_lt">&nbsp;</div>
+	
+		<div id="logo_text">
+			<a href="/">
+				<%= image_tag("/themes/default/images/spark/billing-boss-logo.gif", :alt => _("Billing Boss by Sage - Invoicing Made Easy"), :altclass => "logo_text") %>
+			</a>
+		</div>		
+		<!-- <div style="cursor: pointer" onclick="location.href='/'" id="logo"></div> -->
+		<div id="login_bar">
+				<%=(user_string_external).untaint %>
+		</div>
+	</div>
+</div>
+<div class="clear"/>

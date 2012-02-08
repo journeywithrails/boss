@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simply-request>
+  <version>Simply-US-16.00.0.0109-071209</version>
+  <user>
+    <login>simply@innatesoftware.com</login>
+  </user>
+  <browsal>
+    <fire-event>received_close</fire-event>
+  </browsal>
+</simply-request>

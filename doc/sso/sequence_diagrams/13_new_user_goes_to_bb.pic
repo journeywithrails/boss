@@ -1,0 +1,78 @@
+.PS
+copy "sequence.pic";
+movewid=0.7
+boxwid=1.2
+
+title("\fB13. New User Goes to BillingBoss\fP");
+
+actor(U,"\fBNew User\fP");
+object(BB,"\fBBillingBoss\fP");
+object(CAS,"\fBCAS\fP");
+object(SS,"\fBSageSpark\fP");
+object(SAM,"\fBSAM\fP");
+object(PE,"\fBProvEngine\fP");
+step();
+step();
+
+# Logged in Sage Spark User goes to BB
+#begin
+	action(U,BB,"                            goes to Billing Boss (not login or signup)");
+	comment(BB,C1,down 0.1 right 3, wid 2.8 ht 0.7 "User does not" "exist in SAM or BB or SS");
+	#begin
+		message(BB,CAS,"Logged in?");
+		return_message(CAS,BB,"NO");
+		inactive(CAS);
+		step();
+	#end
+	return_message(BB,U, """show page for" "non-logged-in users");
+	inactive(BB);
+#end
+step3();
+
+
+# User clicks link to signup thru SageSpark
+#begin
+	action(U,BB,"clicks signup");
+	message(BB,SAM,"""redirect to signup""with service profiles/newedit");
+	inactive(BB);
+	step();
+	return_message(SAM,U,"""Signup Form""(SageSpark theme)");
+	inactive(SAM);
+#end
+
+step3();
+
+#begin
+	action(U,SAM,"submits credentials");
+	message(SAM,CAS,"auto-login");
+	step();
+	inactive(CAS);
+	step();
+	message(SAM,BB,"""redirect to""profiles/newedit");
+	inactive(SAM);
+	step2();
+	#begin
+		message(BB,CAS,"Logged in?");
+		return_message(CAS,BB,"Yes");
+		inactive(CAS);
+		step();
+	#end
+	#begin
+		step();
+		message_self(BB, "user exists?");
+		return_message_self(BB, "NO");
+	#end
+	#begin
+		step();
+		message_self(BB,"create user");
+	#end
+	return_message(BB,U,"Show logged-in profile page");
+#end
+
+complete(U);
+complete(BB);
+complete(CAS);
+complete(SAM);
+complete(PE);
+
+.PE

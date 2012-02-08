@@ -1,0 +1,133 @@
+<% content_for "stylesheets" do -%>
+
+<% end -%>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		<h1><%=_("Inv. \#%{num}") % {:num => h(@invoice.unique) } %></h1>
+		<%= link_to _("Back"), "/invoices/overview", :id => "backButton" %>
+		<a id="invoice_modify_button" type="invoice_actions" onclick="Sage.switch_to_tab(this);" class="nav Action"><%= _("Modify") %></a>
+	</div>
+<% end %>
+<% @content_for_main_top = capture do %>
+
+<% end %>
+	<% form_for(:invoice, :url => invoice_path(@invoice)) do |f| %>
+		<div id="secondary_header" ><table style=" width: 100%; font-size: 13px !important;">
+			<tr>
+				<td id="invoice_summary_button_cell" class="menu_button enabled_menu_button" style="width: 25%">
+					<a id="invoice_summary_button" type="invoice_summary" onclick="Sage.switch_to_tab(this);"><%= _("Summary") %></a>
+				</td>
+				<td id="invoice_items_button_cell" class="menu_button" style="width: 25%">
+					<a id="invoice_items_button" type="invoice_items" onclick="Sage.switch_to_tab(this);"><%= _("Items (%{num})") % { :num => @invoice.line_items.size } %></a>
+				</td>                                
+				<td id="invoice_payments_button_cell" class="menu_button" style="width: 25%; <%= "display:none;" if @invoice.quote? %>">
+					<a id="invoice_payments_button" type="invoice_payments" onclick="Sage.switch_to_tab(this);"><%= _("Payments") %></a>
+				</td>
+                                <td id="quote_convert_button_cell" class="menu_button" style="width: 25%; <%= "display:none;" if !@invoice.quote? %>">
+					<%= link_to _("Convert into invoice"), convert_quote_invoice_path(@invoice), :id => "quote_convert_button", :method => :put%>
+				</td>
+				<td id="invoice_send_button_cell" class="menu_button" style="width: 25%">
+					<a id="invoice_send_button" type="invoice_send" onclick="Sage.switch_to_tab(this);"><%= _("Send") %></a>
+				</td>
+			</tr>
+		</table>
+		</div>
+
+		<% @content_for_main = capture do %>
+      		<% if !flash[:notice].blank? %>
+				<div id="flash_notice"><ul><li><%= flash[:notice] %></li></ul></div>
+			<% end %>
+			
+		<div id="invoice_summary">
+			<%= render :partial => "/invoices/mobile/preview_summary", :locals => {:f => f, :profile => @profile } %>	
+		</div>
+		
+		<div id="invoice_items" style="display: none">
+			<%= render :partial => "/invoices/mobile/preview_items", :locals => {:f => f, :profile => @profile } %>		
+		</div>
+		
+		<div id="invoice_payments" style="display: none">
+			<% if @invoice.pay_applications.size > 0 %>
+				<ul>
+					<% @invoice.pay_applications.sort{|x,y| x.payment.created_at <=> y.payment.created_at }.each do |pa| %>
+						<li class="arrow">
+							<a href="/payments/<%= pa.payment.id %>/edit">
+                                <%= _("%{amt} %{currency} paid %{days} days ago") % { :amt => format_amount(pa.amount), :currency => @invoice.currency, :days => (Date.today - pa.payment.date) } %></a>
+						</li>
+					<% end %>
+				</ul>
+			<% else %>
+				<p><%= _("No payments recorded.") %></p>
+			<% end %>
+			<% if (@invoice.payment_recordable?) %>
+				<ul class="individual">
+					<li><%= link_to _("New payment"), new_invoice_payment_path(@invoice.id), :name => 'record_payment' %></li>
+				</ul>
+			<% end %>
+		</div>
+		
+		<div id="invoice_send" style="display: none">
+			<% if @invoice.sendable? %>
+				<%= render :partial => "/invoices/mobile/send" %>
+			<% else %>
+				<p><%= _("Cannot send because:") %><br/>
+				<ul>
+					<% if !@invoice.customer %>
+						<li>
+                                                  <%= i_(@invoice, "Invoice has no customer") %>
+						</li>
+					<% end %>
+					<% if @invoice.line_items.size == 0 %>
+						<li>
+                                                  <%= i_(@invoice,"Invoice has no line items") %>
+						</li>
+					<% end %>
+					<% if !current_user.profile.is_complete? %>
+						<li>
+							<%= _("Profile addressing info incomplete") %>
+						</li>
+					<% end %>
+				</ul>
+			<% end %>
+		</div>
+
+		<div id="invoice_actions" style="display: none">
+			<ul>
+				<li class="arrow"><%= link_to i_(@invoice, "Edit this invoice"), edit_invoice_path(@invoice) %></li>
+				<li class="arrow"><%= link_to i_(@invoice,"Delete this Invoice"), invoice_path(@invoice), :confirm => delete_warn_string(@invoice), :method => :delete, :id => 'destroy' %></li>
+			</ul>
+		</div>
+
+			
+		<% end %>
+
+	<% end %>
+	<%= render_inner_mobile_layout("nomenu") %>
+	
+	<% content_for "bottom_javascripts" do %>
+		<script type="text/javascript" language="javascript">
+		  
+		Sage.switch_to_tab = function(caller) {
+			var sections = ["invoice_summary", "invoice_items", "invoice_payments", "invoice_send", "invoice_actions"];
+			sections.each(
+				function(str){
+					$(str).hide();
+					if (!(str == "invoice_actions"))
+					{
+						$(str + "_button").up("td").removeClassName("enabled_menu_button");
+					}
+					//alert($("user_" + str + "_link").up('tr').innerHTML);
+    			}
+			);
+
+			$(caller.type).show();
+			if (!(caller.id == "invoice_modify_button"))
+			{
+				$((caller.id + "_cell")).addClassName('enabled_menu_button');
+			}
+		};
+	  
+		</script>
+	<% end %>	
+

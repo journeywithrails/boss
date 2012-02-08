@@ -1,0 +1,16 @@
+<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= default_theme_controller("home") %>
+<% end %>
+  
+<% content_for :header do %>	    	
+  <%= render :partial => "home/header" %>
+<% end %>   
+		 
+<% content_for :main do %>
+  <div class="global_rescue_error">
+  <h1><%= _('An error has occurred.') %></h1><br/>
+  <p><%= _('Something went wrong, and your request cannot be processed. Please try again.') %></p><br/>
+  <p><%= _("If the problem persists, please send us a report using the %{feedback_form_link}. Please be as descriptive as possible, so that we can quickly find and fix the cause of the problem.") % {:feedback_form_link => "#{link_to 'feedback form', {:controller => :feedback}}"} %></p>
+  </div>
+<% end %>

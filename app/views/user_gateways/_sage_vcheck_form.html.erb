@@ -1,0 +1,9 @@
+<% skip_info ||= false -%>
+<label><%= _("Merchant ID") %> <%= text_field_tag 'user_gateways[sage_vcheck][merchant_id]', user_gateway.merchant_id, :class=>"user_profile_text" %></label>
+<br clear="all"/>
+<label><%= _("Merchant Key") %> <%= text_field_tag 'user_gateways[sage_vcheck][merchant_key]', user_gateway.merchant_key, :class=>"user_profile_text" %></label>
+<br clear="all"/>
+<% unless skip_info -%>
+<%=link_to _("Where do I find information on this payment method?"), "/sage_vcheck_help.html" , :popup => true %>
+<% end -%>
+<br clear="all"/>

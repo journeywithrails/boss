@@ -1,0 +1,78 @@
+<% form_for( :filters, :url => customers_url, :html => { :method => :put}) do |f| %>
+	<% @content_for_lnav = capture do %>
+	<% end %>
+    
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+
+	<% @content_for_main = capture do %>
+		<h1><%= _('Customers') %></h1>
+		
+		<div style="float:right">
+		 <%= link_to localized_image_tag("/themes/#{user_style}/images/btn_NewCustomer.gif", :border=>0, :alt => _("New Customer")), new_customer_path %> 
+		 <%= link_to localized_image_tag("/themes/#{user_style}/images/btn_NewInvoice_lg.gif", :border=>0, :alt => _("New Invoice")), {:controller=>"invoices", :action=>"new"}, {:id=>"new_invoice"} %>
+		</div>
+		<br /><br />
+			
+		<div>
+		  <p>
+		    <b><%= _('Find by name') %>: </b>
+		    <%= f.text_field :name %>
+		  </p>
+			<br />
+		  <p>
+		    <b><%= _('Find by contact') %>: </b>
+		    <%= f.text_field :contact_name %>
+		  </p>
+			<br />
+		  <p>
+		    <b><%= _('Find by phone number') %>: </b>
+		    <%= f.text_field :contact_phone %>
+		  </p>
+			<br />
+		  <p>
+		    <b><%= _('Find by e-mail') %>: </b>
+		    <%= f.text_field :contact_email %>
+		    <%= submit_tag _("Filter") %>
+		    <%= submit_tag _("Clear"), :name => "filters[clear]" %>
+		  </p>
+		</div>
+		
+		<table class="entity-list">
+		  <thead>
+		    <tr>
+		      <th><%= _('Customer') %></th>
+		      <th><%= _('Contact name') %></th>
+		      <th><%= _('Phone') %> #</th>
+		      <th><%= _('E-mail') %></th>
+		      <th><%= _('Balance owing') %></th>
+		      <th></th>
+		      <th></th>
+		      <th></th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		    <% for customer in @customers
+		        contact = customer.default_contact %>
+		      <tr>
+		        <td><%=h customer.name %></td>
+		        <td><%=h field_if_not_blank(contact){contact.name} %></td>
+		        <td><%=h field_if_not_blank(contact){contact.phone} %></td>
+		        <td><%=h field_if_not_blank(contact){contact.email} %></td>
+		        <td class="amount_owing"><%=h format_amount(customer.amount_owing) %></td>
+		        <td><%= link_to _('Edit'), edit_customer_path(customer) %></td>
+		        <td><%= link_to _('Delete'), customer_path(customer), :confirm => _('Are you sure?'), :method => :delete %></td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+		
+		<% if @customers.kind_of? PagingEnumerator %>
+		  <%= render(:partial => 'shared/paginate', :locals => {:collection => @customers }) -%>
+		<% end -%>
+<br />
+	<% end %>
+	<%= render_inner_layout %>
+<% end %>
+

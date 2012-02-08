@@ -1,0 +1,36 @@
+<% content_for("stylesheets") do%>
+	<%= stylesheet_theme_controller("invoices") %>
+  <%= stylesheet_theme_controller("invoices_customer_view") %>
+<% end -%>
+<% @content_for_sidebar = capture do %>
+  <div class="invoice_lnav">
+    <h2 class="state"><small><%= _('Invoice Options') %></small></h2>
+    <ul class="lnav_ul">
+      <% if @invoice.can_pay? && BigDecimal.new(@invoice.owing_amount.to_s) > BigDecimal.new("0.0") %>
+        <li>
+          <%= link_to(_('Pay Invoice'), new_invoice_online_payment_path(:invoice_id => access_key)) %>
+        </li>
+      <% end %>
+      <li>
+        <%= link_to_function(_('Print'), "window.print()") %>
+				<% if @invoice.customer %>
+					<% unless @invoice.created_by? current_user %>
+					
+						<%= select_tag "language",
+						 		options_for_select(select_languages_native, @invoice.customer.language).sort, 
+								:onChange => remote_function(:url => languages_path(:invoice_id => @invoice.id) , :with => "'language=' + value") %> 
+								
+						<% end -%>
+				<% end -%>
+      </li>
+    </ul>
+  </div>	
+<% end %>
+
+<% @content_for_main = capture do %>
+  <br>
+  <div id="preview_container">
+    <%= render :partial => "/invoices/invoice_template/#{get_invoice_template(@invoice)}", :locals => { :profile => @profile } %>
+  </div>
+<% end %>
+<%= render_inner_layout %>

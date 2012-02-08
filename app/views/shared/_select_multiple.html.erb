@@ -1,0 +1,114 @@
+<% 
+  # variables:
+  #             collection
+  #             selected_value
+  #             value_method
+  #             label_method
+  #             name
+  #             options
+  #               container_id
+  #               options_id
+  #               options_var
+  #               options_container_id
+  #               options_header
+  #               options_header_id
+  #               options_opener
+  #               options_opener_id
+  #               options_opener_text
+  #               options_closer
+  #               options_closer_id
+  #               options_closer_text
+  
+  options ||= {}
+  prefix = options[:prefix].blank? ? "" : "#{options[:prefix]}_"
+  container_id = options[:container_id] || "#{prefix}select_multiple_container"
+  options_id = options[:options_id] || "#{prefix}select_multiple"
+  options_var = options[:options_var] || options_id
+  name ||= options_id
+  
+  options_container_id = options[:options_container_id] || "#{prefix}options_container"
+  options_header = options[:options_header] || _("Select&nbsp;Multiple")
+  options_opener_id = options[:options_opener_id] || "#{prefix}options_opener"
+  options_opener_text = options[:options_opener_text] || _("Select&nbsp;Multiple")
+  options_closer_id = options[:options_closer_id] || "#{prefix}options_closer"
+  options_closer_text = options[:options_closer_text] || _("Done")
+  value_method ||= :id
+  label_method ||= :name
+-%>
+
+<div id="<%= container_id %>" style="position:relative">
+	<select id="<%= options_id %>" name="<%= name %>">
+	  <% if options[:blank_option] -%>
+	    <option value=""><%= options[:blank_option] %></option>
+	  <% end -%>
+	  <% if options[:collection_is_options] -%>
+	    <%= options_for_select collection, selected_value %>
+	  <% else -%>
+      <%= options_for_select collection.collect{|c| [c.send(label_method), c.send(value_method)]}, selected_value %>
+	  <% end -%>
+	</select>
+	<a href="" id="<%= options_opener_id %>"><%= options_opener_text %></a>
+	<div style="display:none;" id="<%= options_container_id %>" class="select_multiple_container">
+		<div class="select_multiple_header"><%= options_header %></div>
+		<table cellspacing="0" cellpadding="0" class="select_multiple_table" width="100%">
+		  <% collection.each do |item| -%>
+			<tr class="<%= cycle('odd','even') %>">
+				<td class="select_multiple_name"><%=h item.send(label_method) %></td>
+				<td class="select_multiple_checkbox"><input type="checkbox" value="<%= item.send(value_method) %>" id="direct_<%= item.send(value_method) %>"/></td>
+			</tr>
+			<% end -%>
+		</table>
+		<div class="select_multiple_submit"><input type="button" value="<%= _("Done") %>" id="<%= options_closer_id %>"/></div>
+	</div>
+</div>
+
+
+<% content_for "bottom_javascripts" do -%>
+<script type="text/javascript">
+
+		var <%= options_var %> = new Control.SelectMultiple('<%= options_var %>','<%= options_container_id %>',{
+			checkboxSelector: 'table.select_multiple_table tr td input[type=checkbox]',
+			nameSelector: 'table.select_multiple_table tr td.select_multiple_name',
+			<%  if selected_value.kind_of? Array -%>
+	      value: '<%= selected_value.join(',') %>',
+	    <% end -%>
+			afterChange: function(){
+				if(<%= options_var %> && <%= options_var %>.setSelectedRows)
+					<%= options_var %>.setSelectedRows();
+			}
+		});
+
+		//adds and removes highlighting from table rows
+		<%= options_var %>.setSelectedRows = function(){
+			this.checkboxes.each(function(checkbox){
+				var tr = $(checkbox.parentNode.parentNode);
+				tr.removeClassName('selected');
+				if(checkbox.checked)
+					tr.addClassName('selected');
+			});
+		}.bind(<%= options_var %>);
+		<%= options_var %>.checkboxes.each(function(checkbox){
+			$(checkbox).observe('click',<%= options_var %>.setSelectedRows);
+		});
+		<%= options_var %>.setSelectedRows();
+
+		//link open and closing
+		$('<%= options_opener_id %>').observe('click',function(event){
+			$(this.select).style.visibility = 'hidden';
+			new Effect.BlindDown(this.container,{
+				duration: 0.3
+			});
+			Event.stop(event);
+			return false;
+		}.bindAsEventListener(<%= options_var %>));
+		$('<%= options_closer_id %>').observe('click',function(event){
+			$(this.select).style.visibility = 'visible';
+			new Effect.BlindUp(this.container,{
+				duration: 0.3
+			});
+			Event.stop(event);
+			return false;
+		}.bindAsEventListener(<%= options_var %>));		
+	</script>
+<% end # content_for "bottom_javascripts"
+     %>

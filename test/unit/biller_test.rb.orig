@@ -1,0 +1,45 @@
+require File.dirname(__FILE__) + '/../test_helper'
+
+class BillerTest < ActiveSupport::TestCase
+  fixtures :billers, :users, :bookkeepers, :bookkeeping_contracts
+  
+  def test_biller_has_bookkeeper_contract
+    bi = billers(:biller_has_bookkeeping_contract)
+    assert_equal 1, bi.bookkeeping_contracts.count
+    bk = bi.bookkeepers.first
+    assert users(:bookkeeper_user).sage_username, bk.user.sage_username
+
+    bi = billers(:doesnt_want_bookkeeper_biller)
+    assert_equal 0, bi.bookkeeping_contracts.count
+  end
+  
+  # ensure biller doesn't break when refactoring methods from user.
+  def test_biller_has_biller_methods
+    bi = billers(:basic_biller)
+    bi.generate_next_auto_number
+  end
+
+  def test_biller_has_user
+    bi = billers(:basic_biller)
+    assert bi.user
+  end
+  
+  def test_total_invoice_amounts
+    bi = billers(:basic_biller)
+<<<<<<< HEAD
+    assert_equal 201.13, bi.total_invoice_amounts
+=======
+    assert_equal 614.38, bi.total_invoice_amounts
+>>>>>>> origin/wojciech_1560_12
+  end
+  
+  def test_total_amount_owing
+    bi = billers(:basic_biller)
+<<<<<<< HEAD
+    assert_equal 101.13, bi.total_amount_owing
+=======
+    assert_equal 514.38, bi.total_amount_owing
+>>>>>>> origin/wojciech_1560_12
+  end
+  
+end

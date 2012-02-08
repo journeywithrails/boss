@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="cell_label" id="province_state_label"><label for="province_state"><%= _("%{state_prompt}:") % { :state_prompt => _( known_country.country_settings.state_label)} %></label></div>
+  <div class="cell_value"><%= state_select( :customer, :province_state, known_country.country_settings.state_key, {:prompt => _("– Select %{statelabel} –") % {:statelabel => _( known_country.country_settings.state_label)}} ) %></div>
+</div>	
+<div class="row">
+  <div class="cell_label" id="postalcode_label"><label for="postalcode_zip"><%= _("%{postalcode_prompt}:") % { :postalcode_prompt => _( known_country.country_settings.postalcode_label)} %></label></div>
+  <div class="cell_value"><%= text_field "customer", "postalcode_zip", :class => "colored_field" %></div>
+</div>

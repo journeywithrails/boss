@@ -1,0 +1,6 @@
+<% if !::AppConfig.hide_localization %>
+      <%=_("Change language")%>
+			<% selected = cookies["lang"].blank? ? default_language : cookies["lang"] %>
+			<%= select_tag "language", options_for_select(select_languages_native, selected).sort, 
+				:onChange => remote_function(:url => languages_path, :with => "'language=' + value")%> 
+<% end -%>

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= page_title %></title>
+  <%= stylesheet_global %>
+  <%= default_theme %>
+   <%= stylesheet_ie6 %>
+  <%= default_theme_controller("simply") %> 
+  
+  <%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids", :media => 'screen, print' %>  
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	<%= yield :stylesheets %>
+
+	<!-- load any template-specific javascripts (use by including a content_for block in template) -->
+
+	<%= javascript_include_tag "simply.js" %>	
+	
+  <% if !print? %>
+	<%= javascript_include_tag 'prototype' %>
+	<%= javascript_include_tag 'effects' %>
+  <% end %>
+       
+  <%= calendar_date_select_includes %>
+</head>
+
+<body>
+  <!-- simply/main -->
+  <!-- IE6 minimum width hack, opening -->
+  <div id="MinWidthContainer"><div id="PageContainer"><div id="PageContentContainer">
+
+  <div id="doc3" class="yui-t1">		
+	  <div id="hd">
+		 	<%= if !@skip_header then render(:partial => "layouts/simply/main_header" ) end  %>
+ 		</div>			
+
+		<div id="bd">
+			<% if @show_simply_back_button -%>
+			<p><%= link_to 'Back', :back, {:id => 'back-link-top'} %></p>
+			<% end -%>
+			<%= yield :layout %>
+			<% if @show_simply_back_button -%>
+			<p><%= link_to 'Back', :back, {:id => 'back-link-bottom'} %></p>
+			<% end -%>
+	  </div> <!-- /bd -->
+    <div id="ft">   
+		  <%= if !@skip_footer then render(:partial => "layouts/simply/main_footer") end %>
+    </div>    
+  </div>
+
+  <!-- IE6 minimum width hack, closing -->
+  </div></div></div>
+  
+<%= render :partial => "/layouts/google" %> 
+<%= render :partial => "/layouts/simply_close" %>  
+<!-- multiple select widget -->
+
+<% if !print? %>
+	<%= javascript_include_tag 'application' %>	
+	<%= javascript_include_tag 'control_select_multiple' %>
+<% end %>
+
+<% if RAILS_ENV == 'test' -%>
+  <!-- conditionally include increment_ajax_counter for testing -->
+  <%= javascript_include_tag('increment_ajax_counter') %>
+<% end -%>
+
+<%= yield :javascripts %>
+<%= yield :bottom_javascripts %>
+</body>
+</html>

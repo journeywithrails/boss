@@ -1,0 +1,16 @@
+<%= link_to_remote _("Add Item [+]"), :url => invoice_line_items_path(@invoice), :method => :post %> 
+
+<table>
+  <thead>
+  <tr>
+    <th><%= _('Name') %></th>
+    <th><%= _('Description') %></th>
+  </tr>
+  </thead>
+
+  <tbody id="line_items_list">
+  <%= render :partial => "line_items/line_item", :collection => @line_items %>
+  </tbody>
+</table>
+
+<br />

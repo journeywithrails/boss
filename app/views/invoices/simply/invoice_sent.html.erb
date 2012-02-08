@@ -1,0 +1,72 @@
+<%@skip_footer= true%>
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>	
+	
+<% end -%>
+
+<% @content_for_infobox = capture do %>
+<% end %>
+
+<% @content_for_main = capture do %>
+  <!-- the main layout -->
+<div class="simply_wrapper">
+
+
+<div class="yui-gc">
+	<div class="yui-u first">
+
+    <p class="caption black" style="margin-top:20px;margin-left:140px"><%= _("Your invoice has been sent! Click %{link} to view the invoice") % {:link => link_to('here', {:action => "show", :controller => "invoices", :id => @deliverable.id}, {:id => 'show-invoice'})} %></p>
+    <p class="caption black" style="margin-left:140px;margin-bottom:30px;"><%= _('From here you can:') %></p><br/>
+		<div class="corner_large_tr" style="clear: both; height: 20px;margin-left:140px;">
+			<div style="height: 20px;" class="corner_large_tl">
+				<div class="infobox_empty">
+				</div>	
+			</div>
+		</div>
+		<div id="send_invoice_now_content" style="margin-left:140px;" class="white content">
+			<div class="center">
+			  <%= link_to localized_image_tag("/images/simply/btn-close-window.gif", :alt => _("Close this window"), :altclass => "go_button"), "javascript:page_complete();", :id => "complete-btn" %>
+			</div>
+			<br/><%= _('Close Billing Boss and continue working in Simply Accounting.') %>
+		</div>
+		<div class="tour_box_bl" style="margin-left:140px;">
+			<div class="tour_box_br">	
+			</div>								
+		</div>
+
+   <br clear="all"/><br clear="all"/>
+
+		<div class="corner_large_tr" style="clear: both; margin-left:140px;height: 20px;">
+			<div style="height: 20px;" class="corner_large_tl">
+				<div class="infobox_empty">
+				</div>
+			</div>
+		</div>
+		<div id="send_invoice_now_content" style="margin-left:140px;" class="white content">
+			<div class="center">
+      <a onclick="window.open(this.href);return false;"
+        href='<%= "#{::AppConfig.secure_host}/invoices/overview" %>' >
+				<%= localized_image_tag("/images/simply/btn-go-bb-account.gif", :alt => _("Go To BillingBoss")) %>
+			</a>
+			</div>
+			<br/><%= _('Review your invoices, account settings, and learn more about online payments.') %>
+		</div>
+		<div class="tour_box_bl" style="margin-left:140px;">
+			<div class="tour_box_br">
+			</div>
+		</div>
+	</div>
+	
+	<div class="yui-u">
+    <div style="float:right">
+    <%= render :partial=> "layouts/sagespark_ads", :locals=>{:group_name=>"simply"} %>
+    </div>
+	</div>
+
+	</div>
+ 
+
+</div>  
+<%end%>
+<%= render_inner_layout('norounded') %>

@@ -1,0 +1,33 @@
+<% if !::AppConfig.hide_paypal %>
+  <% content_for "bottom_javascripts" do -%>
+    <script language="javascript">
+      Sage.displayOnlinePayment = function(selected_value, checked) {
+        if (!checked) {
+          Element.update(selected_value + "_form", "");
+        } else {
+          Element.update(selected_value + "_form", '<%= loading_string %>');
+            new Ajax.Request('/user_gateways/show/' + selected_value, { 
+              parameters: <%= request_forgery_protection_token.to_s.inspect %> + '=' + <%= form_authenticity_token.inspect %>,
+              methed: 'get',
+              evalScripts:true,
+              asynchronous:true }); 
+        }
+      }
+    </script>
+  <% end %>
+  <div id="user_gateways" class="user_profile">
+    <div class="profile_title"><%= _("Collect payments online") %></div>
+    <br/>
+    <div class="profile_subtitle"><%= _("Your customers can pay your invoices online using the payment methods listed below.") %> <br/><br/><%= _("Please review your payment information for accuracy before continuing.") %> </div>
+    <br clear="all"/>
+    <p>
+      <%= _("Choose the payment methods you accept in addition to manual payment:") %>
+    </p>
+    <% TornadoGateway.active_gateways.each do |gateway| %>
+      <%= render_gateway(gateway, @user_gateways) %>
+    <% end %>
+    <br clear="all"/>
+    <br clear="all"/>
+  </div>
+  <div id="user_gateway_message"></div>
+<% end %>

@@ -1,0 +1,42 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+		  <p id="master_admin_header">
+			  This is the <b>Master admin</b> section of Billing Boss. Here you can add, remove, or edit other administrators and their permissions (including creating or removing other Master admins). <b>PROCEED WITH CAUTION</b>.<br/><br/>
+				All users listed here belong to the "admin" group. <br/><br/>
+				Membership in the group, by itself, does not give administrative rights to the functions listed below.<br/><br/>
+				The table below outlines all specific administrative rights, and which users can access which functions (functions a user can access are marked with a "Y").<br/><br/>
+				Deleting an admin from the table below will remove <b>all</b> administrative rights the user has, <b>and</b> remove them from the admin group as well.<br/><br/>
+				Also note that users having the "Master admin" permission automatically get permissions to <b>all</b> other admin permissions.<br/><br/>
+		  </p>
+			<%= render :partial => "/admin/master/form_all" %>
+			<br/>
+			<b><a href="/admin/master/new">Create a new admin</a></b>
+			<% end %>
+			
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+		<%= render_inner_layout %>  

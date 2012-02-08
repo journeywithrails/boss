@@ -1,0 +1,82 @@
+	<% form_for( :filters, :url => invoices_url, :html => { :method => :put}) do |f| %>
+		<% @content_for_lnav = capture do %>
+			<%= link_to _('New Invoice'), {:action=>"new"}, {:id=>"new_invoice"} %><br />
+		<% end %>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+
+		<% @content_for_main = capture do %>
+<h1><%= _('Listing invoices') %></h1>
+
+<div>
+	  <p>
+	    <b><%= _('Find by number:') %> </b>
+	    <%= f.text_field :unique %>
+	  </p>
+		<br />
+	  <p>
+	    <b><%= _('Find by customer:') %> </b>
+	    <%= render :partial => "shared/select_multiple", :locals => { :collection => current_user.customers,
+	                                                                :selected_value => @filters.customers,
+	                                                                :name => "filters[customers]",	                                                                
+	                                                                :options => {:option_id => 'customers', :prefix => "customers", :blank_option => s_('dropdown|– All Customers –')}
+	                                                              } %>
+	  </p>
+		<br />
+	  <p>
+	    <b><%= _('Find by status:') %> </b>
+	    <%= render :partial => "shared/select_multiple", :locals => { :collection => Invoice.status_filters,
+                                                          :selected_value => @filters.statuses,
+                                                          :name => "filters[statuses]",
+                                                          :value_method => :value,
+                                                          :options => {:option_id => 'statuses', :prefix => "statuses", :blank_option => s_("dropdown|– All Statuses –")}
+                                                        } %>
+
+	    <%= submit_tag _("Filter") %>
+	    <%= submit_tag _("Clear"), :name => "filters[clear]" %>
+	  </p>
+</div>
+
+<table class="entity-list" id="line_items_table">
+  <thead>
+    <th></th>
+    <th>#</th>
+    <th><%= _('Last Changed') %></th>
+    <th><%= _('Description') %></th>
+    <th><%= _('Customer') %></th>
+    <th><%= _('items') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </thead>
+
+  <tbody>  
+    <% for invoice in @invoices %>
+      <tr class="<%= cycle("odd", "even") %>">
+        <td><%= invoice_status_marker(invoice) %></td>
+        <td><%=h invoice.unique %></td>
+        <td><%=h invoice.updated_at.to_formatted_s(:listing) %></td>
+        <td><%=h invoice.description %></td>
+        <td><%= invoice.customer.nil? ? invoice.customer_name : link_to(invoice.customer_name, edit_customer_url(:id => invoice.customer_id))%></td>
+        <td><%= invoice.line_items.count %>
+        <td><%= link_to _('Show'), invoice_path(invoice) %></td>
+        <td><%= link_to _('Edit'), edit_invoice_path(invoice) %></td>
+        <td><%= link_to _('Delete'), invoice_path(invoice), :confirm => _('Are you sure?'), :method => :delete, :id => "destroy_#{invoice.id}" %></td>
+        <td><%= (invoice.amount_owing!=0) ? link_to(_('Pay'), new_invoice_payment_path(invoice)) : "" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @invoices.kind_of? PagingEnumerator %>
+  <%= render(:partial => 'shared/paginate', :locals => {:collection => @invoices }) -%>
+<% end -%>
+<br />
+
+<%= link_to _('New invoice'), new_invoice_path %>
+
+	  <% end -%>
+		<%= render_inner_layout %>
+	<% end %>

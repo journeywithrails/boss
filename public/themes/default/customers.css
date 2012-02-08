@@ -1,0 +1,209 @@
+/*FROM CUSTOMER.CSS*/
+
+#preview_customer_content{
+  padding-top: 7px;
+  padding-left: 7px;
+}
+
+#customer_address {
+  padding-left: 3px;
+  padding-top: 5px;
+}
+
+.wrap{
+  float:left;	
+  width: 100%; 
+}
+
+.row{
+  float:left;
+  margin-top: 4px;
+  width:95%;
+}
+
+.row_without_top_margin{
+  float:left;
+  width:95%;
+  margin:0;
+  padding:0;
+}
+
+.cell_label{
+  float:left;
+  width:32%;
+	text-align:left;	
+	margin-left:10px;
+  font-size:100%;
+}
+
+.cell_value{
+  float:left;
+  width:45%;
+	text-align:left;	
+  margin:0;	
+	padding:0;	
+}
+
+.cell_value select{
+	width:139px;
+  margin:0;
+	padding:0;	
+}
+
+.cell_value input{
+  width:135px;
+  margin:0;
+  padding:0;
+  font-size:110%;
+}
+
+.cell_value h3 {
+  padding-top: 4px;	
+  font-weight: bold;
+  color: #E9921B;	
+}
+
+.links{
+  float: left;
+  margin-top: 10px;
+}
+
+.master_div
+{
+  margin-left: 10px;
+  width: 100%;
+}
+
+.placeholder
+{
+	width: 10px;
+}
+
+.contacts_container
+{
+	float: left;
+	margin-left: 10px;
+}
+
+.customer_container
+{
+	float: left;
+	width: 100%;
+}
+
+.left-side
+{
+
+	float: left;
+	width: 48%;
+}
+
+.right-side
+{
+	float: left;
+	width: 48%;	
+}
+
+.primary_contact
+{
+	float: left;
+	width: 260px;
+}
+
+.customer_fields
+{
+	width: 580px;
+}
+
+label.small {
+  float:left;
+  margin-top:5px;
+  width:6em;
+}
+
+/*FROM CONTACT.CSS*/
+td.contact_name input{
+	width:95%;
+	margin-right: 3px;
+  margin-top: 5px;
+}
+
+td.contact_email input{
+	width:95%;
+	margin-right: 3px;	
+  margin-top: 5px;  
+}
+
+td.contact_phone input{
+	width:95%;
+	margin-right: 3px;	
+  margin-top: 5px;  
+}
+
+td.contact_delete img{
+	width:95%;
+  margin-top: 5px;  
+}
+
+td.contact_primary input{	
+	margin-right: 3px;
+  margin-top: 5px;  
+}
+
+th {
+  background-color: #79973F;  
+  color:white;
+}
+
+
+th.contact_name {
+	width:120px;
+	margin-right: 3px;
+  font-size:105%;
+}
+
+th.contact_email {
+	width:200px;
+	margin-right: 3px;
+  font-size:105%;
+}
+
+th.contact_phone {
+	width:120px;
+	margin-right: 3px;
+  font-size:105%;
+}
+
+th.contact_delete {
+	width:25px;
+}
+
+th.contact_primary {
+	width:60px;
+	margin-right: 3px;
+  font-size:105%;
+}
+
+td.contact_primary div{
+	text-align:center;
+}
+
+.left_align {
+	text-align:left;
+}
+
+.contacts_container{
+	width: 95%;
+	
+}
+
+.contact_container{
+	width: 95%;
+	text-align: left;
+  color: black;
+}
+
+#add_contact {
+  color:black;
+  font-size:110%;
+}

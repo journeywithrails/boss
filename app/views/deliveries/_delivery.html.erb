@@ -1,0 +1,5 @@
+<tr>
+	<td><%= format_date("%Y-%m-%d %H:%M") {delivery.created_at} %></td>
+	<td><%= delivery.recipients %></td>
+	<td><%= toggle_access_link(delivery.access_key_id, delivery.access_key.uses?) %></td>
+</tr>

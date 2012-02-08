@@ -1,0 +1,22 @@
+<% content_for "bottom_javascripts" do -%>
+&nbsp;
+
+<% end # content_for "bottom_javascripts"
+     %>
+<%= hidden_field_tag(:profile_tab, "communications") %>
+ <div id="user_communications">  
+ <div class="profile_title"><%= _('Subscribe to Billing Boss!') %></div>
+   <br/>
+   <div>  
+      <div id="opt-out" class="user_profile">
+
+        <span class="label_checkbox_pair">
+        <%= f.check_box :mail_opt_in, {:class => "checkbox"} %>
+        <%= f.label :mail_opt_in, _("Sign me up to receive Billing Boss email updates"), :style => "width: 700px" %><br/><br/><hr class="separator_line"/><br/></span>
+		
+		<%= render :partial => "/home/staying_connected" %>
+      </div>
+   </div>
+  </div>
+
+

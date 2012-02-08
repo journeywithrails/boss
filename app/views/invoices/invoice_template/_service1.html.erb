@@ -1,0 +1,184 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_theme_controller("invoices_service") %>
+	<%= stylesheet_theme_controller_printable(print?) %>
+<% end -%>
+
+<div class ="invoice_content" id="preview_invoice_content">  
+  <div id="big_invoice_label_container"><span id="big_invoice_label"><%= invoice_text @invoice, "Invoice" %></span></div>
+  <br/>
+  <div id="preview_company_info">  
+    <div id="preview_remit_to">
+		      <span id="invoice_profile_name"><%=h(@profile.company_name) + "<br/>" unless @profile.company_name.blank? %></span>
+          <span id="invoice_profile_address1"><%=h(@profile.company_address1) + "<br/>" unless @profile.company_address1.blank? %></span>		
+          <span id="invoice_profile_address2"><%=h(@profile.company_address2) + "<br/>" unless @profile.company_address2.blank? %></span>		
+          <span id="invoice_profile_city"><%=h(@profile.company_city) + (@profile.company_state.blank? ? "<br/>" : ", ") unless @profile.company_city.blank? %></span>		
+          <span id="invoice_profile_state"><%=h(@profile.company_state) + "<br/>" unless @profile.company_state.blank? %></span>
+          <span id="invoice_profile_postalcode"><%=h(@profile.company_postalcode) + (@profile.company_country.blank? ? "<br/>" : " ") unless @profile.company_postalcode.blank? %></span>
+          <span id="invoice_profile_country"><%= localized_country(@profile.company_country) + "<br/>" unless @profile.company_country.blank? %></span>		
+          <span id="invoice_profile_phone"> <%= "Tel. %{tel}" % {:tel => h(@profile.company_phone)} + (@profile.company_fax.blank? ? "<br/>" : ", ") unless @profile.company_phone.blank? %></span>		
+          <span id="invoice_profile_fax"><%= _("Fax %{fax}") % {:fax => h(@profile.company_fax)} + "<br/>" unless @profile.company_fax.blank? %></span>				
+          <span id="invoice_profile_website"><%=h(@profile.company_website) + "<br/>" unless @profile.company_website.blank? %></span>
+		  <span class='placeholder_for_printable'><%= placeholder_break(@profile) %></span>			
+     </div>
+     <%= logo_or_upload_link(@profile) %>
+   </div>
+ <br style="clear:both;"/>
+  
+  <%# hack: print preview across multiple pages for FireFox %>
+  	<div id="addressing_container">
+	    <div id="preview_customer">
+	    <% if !@invoice.customer.blank? %>
+	      <b><%= _('Bill to:') %></b><br/>
+          <div id="customer_section">
+           <% if !@invoice.contact.blank? %>
+            <%= _('Attention:') %>
+            <span id="invoice_contact_first_name"><%= h(@invoice.contact.first_name) unless @invoice.contact.first_name.blank? %></span>
+            <span id="invoice_contact_last_name"><%= h(@invoice.contact.last_name) unless @invoice.contact.last_name.blank? %></span><br />
+          <% end %>
+          <span id="invoice_customer_name"><%= h(@invoice.customer.name) %></span><br />
+          <span id="invoice_customer_address1"><%= h(@invoice.customer.address1) + "<br/>" unless @invoice.customer.address1.blank? %></span>
+          <span id="invoice_customer_address2"><%= h(@invoice.customer.address2) + "<br/>" unless @invoice.customer.address2.blank? %></span>
+          <span id="invoice_customer_city"><%= h(@invoice.customer.city) + (@invoice.customer.province_state.blank? ? "<br/>" : ", ") unless @invoice.customer.city.blank? %></span>
+          <span id="invoice_customer_province_state"><%= h(@invoice.customer.province_state) + "<br/>" unless @invoice.customer.province_state.blank? %></span>
+          <span id="invoice_postalcode_zip"><%= h(@invoice.customer.postalcode_zip) + (@invoice.customer.country.blank? ? "<br/>" : " ") unless @invoice.customer.postalcode_zip.blank? %></span>
+          <span id="invoice_customer_country"><%= localized_country(@invoice.customer.country) + "<br/>" unless @invoice.customer.country.blank? %></span>
+          </div>
+		    <br/>
+	     <% end %>
+	     </div>
+	</div>
+
+    <br style="clear:both;"/>  
+    <div id="invoice_ref_block">
+      <div class="invoice_header_left">
+        <span class="row_label"><%= invoice_text @invoice, 'Invoice:' %></span>
+        <span id="invoice_unique" class="row_value"><%= h(@invoice.unique) %></span>
+      </div>
+      <% if @invoice.due_date.nil? %>
+        <div class="invoice_header_right">
+            <span class="row_label"><%= _('Issue date:') %></span>
+            <span id="invoice_date"  class="row_value"><%= format_date(_("%B %d, %Y")) { @invoice.date } %></span>
+        </div>
+      <% else %>
+        <div class="invoice_header_right">
+          <span class="row_label"><%= _('Due date:') %></span>
+          <span id="invoice_due_date"  class="row_value">
+              <%= format_date(_("%B %d, %Y")) { @invoice.due_date } %>
+          </span>
+        </div>
+      <% end %>
+      <br class="seperator"/>
+      <% unless @invoice.reference.blank? %>
+        <div class="invoice_header_left">
+            <span class="row_label"><%= _('Reference No.:') %></span>
+            <span class="row_value"><%= h(@invoice.reference) %></span>
+        </div>
+      <% end %>
+      <% if !@invoice.due_date.nil? %>
+        <div class="invoice_header_right">
+            <span class="row_label"><%= _('Issue date:') %></span>
+            <span id="invoice_date"  class="row_value"><%= format_date(_("%B %d, %Y")) { @invoice.date } %></span>
+        </div>
+      <% end %>
+    </div>
+
+  <div id="preview_line_items_container">
+    <div id="preview_line_items" class="clearfix">
+      <table id="preview_entity_list">
+      <thead >
+        <tr id="preview_line_items_heading">
+        <th class="quantity" ><%= _('Quantity') %></th>
+        <th class="description"><%= _('Description') %></th>
+        <th class="price"><%= _('Price') %></th>
+        <th class="litotal"><%= _('Total') %></th>
+      </tr>
+      </thead>
+  
+      <tbody>
+      <% @invoice.line_items.each do |line_item| -%>
+        <tr class="preview_child_item" >
+          <td class="quantity"><div class="div_quantity"><%= (format_amount(line_item.quantity)).untaint %></div></td>
+          <td class="description"><div class="div_description"><%=h line_item.description %></div></td>
+          <td class="price"><div class="div_price"><%= (format_amount(line_item.price)).untaint %></div></td>
+          <td class="litotal"><div class="div_litotal"><%= (format_amount(line_item.subtotal)).untaint %></div></td>
+        </tr>
+      <% end %>		  	
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <br style="clear:both;"/>
+  
+  <div>
+	
+		<div id="preview_footer_summary">
+		  <table>
+		    <tr>
+			  <td class="preview_footer_summary_label">
+			    <span><%= _('Subtotal:') %></span>
+			  </td>
+			  <td class="preview_footer_summary_amount">
+			    <span id="invoice_line_items_total"><%= (format_amount(@invoice.line_items_total)).untaint %></span>
+			  </td>
+			</tr>
+			<% discount_block = Proc.new do %>
+				<%= (discount_div(@invoice)).untaint %>
+			<% end %>
+			<% show_first_if(@invoice.created_by.profile.discount_before_tax, discount_block) do %>
+				<% @invoice.taxes.each do |tax| %>
+
+        <% next if (tax.amount == 0 and tax.name.blank?) or !tax.enabled? %>
+				<tr id="<%=h "invoice_#{tax.profile_key}" %>">
+			  		<td class="preview_footer_summary_label">
+			  			<span><%=h tax.name %>:</span>
+					</td>
+					<td class="preview_footer_summary_amount">
+						<span id="<%= "invoice_#{tax.profile_key}_amount" %>">
+						  <%= (format_amount(tax.amount)).untaint %>
+						</span>
+					</td>
+				</tr> 
+				<% end %>
+			<% end %>
+      <% if @invoice.paid != 0 %>
+			<tr>
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span><%= _('Total Due:') %></span>
+			  </td>
+			  <td id="preview_footer_summary_total" class="preview_footer_summary_total">
+			    <span id="invoice_total"><%= format_amount(@invoice.total_amount) %></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span><%= _('Less Payments:') %></span>
+			  </td>
+			  <td id="preview_footer_paid" class="preview_footer_paid">
+			    <span id="invoice_paid"><%= format_amount(@invoice.paid) %></span>
+			  </td>
+			</tr>
+      <% end %>
+			<tr id="preview_owing_row">
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span><%= i_(@invoice,'Amount Owing:') %></span>
+			  </td>
+			  <td id="preview_footer_summary_total" class="preview_footer_summary_total">
+			    <span id="invoice_total"><%= (format_amount(@invoice.amount_owing)).untaint %>&nbsp;<span class="footer_caption"><%= (invoice_currency(@invoice)).untaint %></span></span>
+			  </td>
+			</tr>
+		  </table>	
+		</div>
+	</div>
+  <br style="clear:both;"/>
+
+  <div>
+      <% if !@invoice.description_clean.blank? %>
+            <br/><br/>
+            <b><%= _('Comment:') %></b><br/><br/>
+              <%=h @invoice.description_clean %>
+            <br/>
+      <% end %>
+   </div>
+
+</div>

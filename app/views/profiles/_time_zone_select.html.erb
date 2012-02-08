@@ -1,0 +1,2 @@
+<label for="profile_time_zone"><%= _("Time zone") %>:</label>
+<%= time_zone_select 'profile', 'time_zone', TZInfo::Timezone.all.sort, options = {:default => selected, :model => TZInfo::Timezone } %>

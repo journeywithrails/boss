@@ -1,0 +1,17 @@
+<% form_for(:delivery, :url => "#{::AppConfig.host_with_port}/deliveries",  :html => {:id => 'invoice_send_form'}) do |df| %>
+		<%= df.hidden_field(:deliverable_id, :value => @invoice.id) %> 
+		<%= df.hidden_field(:deliverable_type, :value => "Invoice") %> 
+		<%= df.hidden_field(:mail_name, :value => "send") %> 
+		<ul class="form">
+			<li><div class="form_field_hdr"><%= df.label :recipients, _("Recipients:") %></div>
+				<%= df.text_field(:recipients) %>
+			</li>
+			<li><div class="form_field_hdr"><%= df.label :subject, _("Subject:") %></div>
+				<%= df.text_field(:subject) %>
+			</li>
+			<li><div class="form_field_hdr"><%= df.label :body, _("Message:") %></div>
+				<%= df.text_area(:body) %>
+			</li>
+		</ul>
+		<%= link_to_function _("Send!"), "$('invoice_send_form').submit()", :id => "send_invoice_button", :class => "button white margined" %>
+<% end %>

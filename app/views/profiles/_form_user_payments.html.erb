@@ -1,0 +1,12 @@
+<% content_for "bottom_javascripts" do -%>
+&nbsp;
+
+<% end # content_for "bottom_javascripts"
+     %>
+
+
+<%= hidden_field_tag(:profile_tab, "payments") %>
+  <div id="user_payments">
+  	<%= render :partial => 'user_gateways/form' %>
+  </div>
+

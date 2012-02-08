@@ -1,0 +1,9 @@
+first_bookkeeper:
+  id: 1
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+
+other_bookkeeper:
+  id: 2
+  created_at: <%= 5.days.ago.to_s :db %>
+  

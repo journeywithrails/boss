@@ -1,0 +1,160 @@
+<VirtualHost <%= public_ip %>:<%= server_port %>>
+  ServerName <%= server_name %>
+<% unless server_alias.blank? %>
+  ServerAlias <%= server_alias %>
+<% end%>
+  DocumentRoot <%= public_path %>
+ 
+  <Directory "<%= public_path %>/">
+  Options FollowSymLinks
+  AllowOverride None
+  Order allow,deny
+  Allow from all
+  </Directory>
+
+  RewriteEngine On
+
+  # Uncomment for rewrite debugging
+  # RewriteLog /var/log/billingboss_rewrite_log
+  # RewriteLogLevel 9
+
+#  RewriteCond %{HTTP_HOST} !=early.<%= application %>.com
+#  RewriteCond %{SCRIPT_FILENAME} !under_construction.html
+#  RewriteRule ^(.*)$ http://ideawave.sage.com [R=301,L]
+
+  # must specify DOCUMENT_ROOT in rewrite rule because /system exists on server
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ %{DOCUMENT_ROOT}/system/maintenance.html [L]
+  
+  RewriteCond %{HTTP_HOST} ^<%= application %>\.com$ [NC]
+  RewriteRule ^(.*)$ http://www.<%= application %>.com$1 [R=301,L]
+
+  # # Rewrite index to check for static
+  RewriteRule ^/$ %{DOCUMENT_ROOT}/index.html [QSA] 
+  # 
+  # Rewrite to check for Rails cached page
+  RewriteRule ^/([^.]+)$ %{DOCUMENT_ROOT}/cache/$1.html [QSA]
+  
+  # Redirect all non-static requests to cluster
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+  RewriteRule ^/(.*)$ balancer://<%= application %>-mongrels%{REQUEST_URI} [P,QSA,L]
+
+  ExpiresActive On
+  ExpiresByType image/gif "now plus 1 week"
+  ExpiresByType image/jpeg "now plus 1 week"
+  ExpiresByType text/css "now plus 1 week"
+  #    ExpiresByType text/javascript "now plus 1 week" # this is bad because rjs pages are text/javascript
+  ExpiresByType image/png "now plus 1 week"
+  ExpiresByType image/jpg "now plus 1 week"
+   
+  <Proxy balancer://<%= application %>-mongrels><% start_port.upto(end_port) do |port| %>
+    BalancerMember http://127.0.0.1:<%= port %><% end %>
+  </Proxy>
+ 
+  ProxyPass /images !
+  ProxyPass /javascripts !
+  ProxyPass /stylesheets !
+  ProxyPass / balancer://<%= application %>-mongrels/
+  ProxyPassReverse / balancer://<%= application %>-mongrels/
+  ProxyPreserveHost On
+
+
+  # # Deflate
+  # AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/javascript text/css
+  # BrowserMatch ^Mozilla/4 gzip-only-text/html
+  # BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  # BrowserMatch \\bMSIE !no-gzip !gzip-only-text/html
+
+  # Uncomment for deflate debugging
+  #DeflateFilterNote Input input_info
+  #DeflateFilterNote Output output_info
+  #DeflateFilterNote Ratio ratio_info
+  #LogFormat '"%r" %{output_info}n/%{input_info}n (%{ratio_info}n%%)' deflate
+  #CustomLog logs/myapp_deflate_log deflate
+
+</VirtualHost>
+
+<VirtualHost <%= public_ip %>:<%= ssl_server_port %>>
+  
+  ServerName <%= server_name %>
+<% unless server_alias.blank? %>
+  ServerAlias <%= server_alias %>
+<% end%>
+  DocumentRoot <%= public_path %>
+ 
+  SSLEngine on
+  SSLCertificateFile <%= "#{application_root}/#{stage}/shared/" %>ssl.crt/billingboss.crt
+  SSLCertificateKeyFile <%= "#{application_root}/#{stage}/shared/" %>ssl.key/billingboss.key
+
+
+  <Directory "<%= public_path %>/">
+  Options FollowSymLinks
+  AllowOverride None
+  Order allow,deny
+  Allow from all
+  </Directory>
+
+  RewriteEngine On
+
+  # Uncomment for rewrite debugging
+  # RewriteLog /var/log/billingboss_rewrite_log
+  # RewriteLogLevel 9
+
+#  RewriteCond %{HTTP_HOST} !=early.<%= application %>.com
+#  RewriteCond %{SCRIPT_FILENAME} !under_construction.html
+#  RewriteRule ^(.*)$ http://ideawave.sage.com [R=301,L]
+
+  # must specify DOCUMENT_ROOT in rewrite rule because /system exists on server
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ %{DOCUMENT_ROOT}/system/maintenance.html [L]
+  
+  RewriteCond %{HTTP_HOST} ^<%= application %>\.com$ [NC]
+  RewriteRule ^(.*)$ http://www.<%= application %>.com$1 [R=301,L]
+
+  # # Rewrite index to check for static
+  # RewriteRule ^/$ %{DOCUMENT_ROOT}/index.html [QSA] 
+  # 
+  # Rewrite to check for Rails cached page
+  RewriteRule ^([^.]+)$ %{DOCUMENT_ROOT}/$1.html [QSA]
+  
+  # Redirect all non-static requests to cluster
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+  RewriteRule ^/(.*)$ balancer://<%= application %>-mongrels%{REQUEST_URI} [P,QSA,L]
+
+
+    ExpiresActive On
+    ExpiresByType image/gif "now plus 1 week"
+    ExpiresByType image/jpeg "now plus 1 week"
+    ExpiresByType text/css "now plus 1 week"
+#    ExpiresByType text/javascript "now plus 1 week" # this is bad because rjs pages are text/javascript
+    ExpiresByType image/png "now plus 1 week"
+    ExpiresByType image/jpg "now plus 1 week"
+       
+  <Proxy balancer://<%= application %>-mongrels><% start_port.upto(end_port) do |port| %>
+    BalancerMember http://127.0.0.1:<%= port %><% end %>
+  </Proxy>
+ 
+  ProxyPass /images !
+  ProxyPass /javascripts !
+  ProxyPass /stylesheets !
+  ProxyPass / balancer://<%= application %>-mongrels/
+  ProxyPassReverse / balancer://<%= application %>-mongrels/
+  ProxyPreserveHost On
+
+
+  # # Deflate
+  # AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/javascript text/css
+  # BrowserMatch ^Mozilla/4 gzip-only-text/html
+  # BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  # BrowserMatch \\bMSIE !no-gzip !gzip-only-text/html
+
+  # Uncomment for deflate debugging
+  #DeflateFilterNote Input input_info
+  #DeflateFilterNote Output output_info
+  #DeflateFilterNote Ratio ratio_info
+  #LogFormat '"%r" %{output_info}n/%{input_info}n (%{ratio_info}n%%)' deflate
+  #CustomLog logs/myapp_deflate_log deflate
+
+</VirtualHost>

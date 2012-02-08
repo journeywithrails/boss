@@ -1,0 +1,57 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller("invoices") %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+			<%= render :partial => "admin/menu" %>		
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+			<% if @signup_types.include?(@signup_type) %>
+			    You may insert a <%= h "<br/>" %> to make a multi-line entry.
+				<br/><br/>
+				e.g. "John,<%= h "<br/>" %>ABC Company"
+				<br/><br/> 
+				becomes
+				<br/><br/> 
+				"John<br/>ABC Company".
+				<br/><br/>Also, use <%= h("<i>text</i>") %> for italics text, <%= h("<b>text</b>") %> for bold text.
+				<br/><br/>
+				Date must be in format YYYY-MM-DD.
+				<br/><br/>
+				<%= render :partial => "form_all" %>  
+			<% else %>
+				Select which list of winners you want to manage:
+				<br/><br/>
+				<ul>
+					<% @signup_types.each do |t| %>
+						<li>
+							<%= link_to("#{t.upcase} winners", "/admin/winners?signup_type=#{t}") %>
+						</li>
+					<% end %>
+				</ul>
+			<% end %>
+		<% end %>
+		<%= render "layouts/inner" %>  

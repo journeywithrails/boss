@@ -1,0 +1,20 @@
+<%= error_messages_for(:object_name => 'payment', :object => @payment_data) %>
+<% @check, @billing_address = @payment_data %>
+<% form_tag invoice_online_payments_path(:invoice_id => @key) do %>
+  <!-- beanstream gateway -->
+  <div class="gateway_form_section">
+    <% fieldset_tag(_('Check Information')) do %>
+      <table>
+        <%= form_row(_('Institution Number'), text_field(:check, :institution_number)) if @check.include?(:institution_number) %>
+        <%= form_row(_('Transit Number'), text_field(:check, :transit_number)) if @check.include?(:transit_number) %>
+        <%= form_row(_('Routing Number') + '<br/>'+_(' (9 digits)'), text_field(:check, :routing_number)) if @check.include?(:routing_number) %>
+        <%= form_row(_('Account Number'), text_field(:check, :account_number)) if @check.include?(:account_number) %>
+      </table>
+    <% end %>
+  </div>
+  <div class="gateway_form_section">
+    <%= render :partial => "sage_address", :object => @payment_data %>	
+  </div>
+  <br style="clear: both" />
+  <%= submit_tag(_('Pay Now')) %>
+<% end %>

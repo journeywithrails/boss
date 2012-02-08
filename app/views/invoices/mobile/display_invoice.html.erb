@@ -1,0 +1,67 @@
+<% content_for "stylesheets" do -%>
+
+<% end -%>
+
+<% content_for :header do %>	    	
+	<div id="header">
+		<h1><%= _("Inv. %{num}") % { :num => @invoice.unique } %></h1>
+	</div>
+<% end %>
+<% @content_for_main_top = capture do %>
+
+<% end %>
+
+	<% form_for(:invoice, :url => invoice_path(@invoice)) do |f| %>
+
+		<div id="secondary_header" ><table style=" width: 100%; font-size: 13px !important;">
+			<tr>
+				<td id="invoice_summary_button_cell" class="menu_button enabled_menu_button" style="width: 25%">
+					<a id="invoice_summary_button" type="invoice_summary" onclick="Sage.switch_to_tab(this);"><%= _("Summary") %></a>
+				</td>
+				<td id="invoice_items_button_cell" class="menu_button" style="width: 25%">
+					<a id="invoice_items_button" type="invoice_items" onclick="Sage.switch_to_tab(this);"><%= _("Items (%{num})") % { :num => @invoice.line_items.size } %></a>
+				</td>
+			</tr>
+		</table>
+		</div>
+
+		<% @content_for_main = capture do %>
+      		<% if !flash[:notice].blank? %>
+				<div id="flash_notice"><ul><li><%= flash[:notice] %></li></ul></div>
+			<% end %>
+			
+		<div id="invoice_summary">
+			<%= render :partial => "/invoices/mobile/preview_summary_customer", :locals => {:f => f, :profile => @profile } %>	
+		</div>
+		
+		<div id="invoice_items" style="display: none">
+			<%= render :partial => "/invoices/mobile/preview_items", :locals => {:f => f, :profile => @profile } %>		
+		</div>
+		
+		<% end %>
+
+	<% end %>
+	<%= render_inner_mobile_layout("nomenu") %>
+	
+	<% content_for "bottom_javascripts" do %>
+		<script type="text/javascript" language="javascript">
+		  
+		Sage.switch_to_tab = function(caller) {
+			
+			var sections = ["invoice_summary", "invoice_items"];
+			sections.each(
+				function(str){
+	
+					$(str).hide();
+						$(str + "_button").up("td").removeClassName("enabled_menu_button");
+					//alert($("user_" + str + "_link").up('tr').innerHTML);
+			    }
+			);
+	
+			$(caller.type).show();
+				$((caller.id + "_cell")).addClassName('enabled_menu_button');
+		};
+	  
+		</script>
+	<% end %>	
+	

@@ -1,0 +1,16 @@
+<%= @invoice.meta_status_string %>
+<br/>
+<div id='errorExplanation' class='errorExplanation invoice_status_notice'>
+	<h2><%= i_(@invoice,'This invoice cannot be sent because:') %></h2>
+	<ul>
+		<% if @invoice.customer.blank? %>
+			<li><%= i_(@invoice, 'It has no customer. Please edit the invoice and add a customer.') %></li>
+		<% end %>
+		<% if @invoice.total_amount == 0 %>
+			<li><%= i_(@invoice, 'It has no line items. Please edit the invoice and add one or more line items.') %></li>
+		<% end %>
+		<% if !@invoice.created_by.profile.is_complete? %>
+			<li><%= _("Your company address is not complete. You can complete it in %{settings_link}.") % {:settings_link => "<a href='/profiles/edit'>#{_("Settings")}</a>"} %></li>
+		<% end %>
+	</ul>
+</div>

@@ -1,0 +1,38 @@
+			<table width="100%" id="master_admin_table">
+
+				<th class="center-cell">
+					Admins \ Permissions
+				<% AdminManager.admin_roles(true).each do |r| %>
+				  <th class="center-cell">
+				  	<%= r.humanize %>
+				  </th>
+				<% end %>
+				<th>
+&nbsp;
+				</th>
+				<th>
+&nbsp;
+				</th>
+				<% AdminManager.admin_users.each do |u| %>
+				<tr>
+					<td>
+						<%= u.sage_username %>
+					</td>
+					<% AdminManager.admin_roles.each do |o| %>
+					  <td class="center-cell">
+					  <% user_roles = AdminManager.admin_roles_for(u, false, true) %>
+				    <%= "Y" if user_roles.include?(o) %>
+					  </td>	 
+					<% end %>
+					<td>
+							<b><a href="/admin/master/edit/<%= u.id %>">Edit</a></b>
+					</td>
+					<td>
+							<b><a href="/admin/master/delete/<%= u.id %>">Delete</a></b>
+					</td>
+				</tr>
+				<% end %>
+
+			</table>
+
+

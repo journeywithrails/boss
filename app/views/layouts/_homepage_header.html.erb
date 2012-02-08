@@ -1,0 +1,47 @@
+<div class="topwrapper">
+	<div class="topwrapper_inner">
+		<div id="search_bg_rt">
+			&nbsp;
+		</div>
+		<div id="search">
+			<ul id="top_nav">
+				<%= render :partial => "/layouts/external_header_links" %>
+			</ul>
+		</div>
+		<div id="search_bg_lt">
+			&nbsp;
+		</div>
+		<div class="clearspace"></div>
+		<div id="banner">
+			<div id="banner-wrapper">
+				<div id="logo">
+					<a href="/"><%= image_tag("/themes/default/images/homepage/spark/billing-boss-logo.gif", :alt => _("Billing Boss by Sage Logo"), :altclass => "logo_text") %></a>
+				</div>
+				<div class="clearspace"></div><%= link_to(localized_image_tag("/themes/default/images/homepage/spark/watch-tour.png", :alt => _("watch the tour"), :class=>"tour-image"), '/tour') %>
+				<div id="tagline_wrapper">
+					<%= _("What is Billing Boss?") %>
+				</div>
+				<p id="banner_copy">
+					<span class="highlight"><%= _("Billing Boss") %></span> <%= _("is a free online invoicing tool designed for small businesses and freelancers to") %> <span class="highlight"><%= _("create, send and track the status of invoices") %></span>. <%= _("It's so simple to use that you can create and send your first invoice within minutes.") %>
+				</p>
+				<div id="tour-wrapper">
+					<table>
+						<tr>
+							<td>
+								<div class="tour-signup-button">
+									<%= link_to_signup(localized_image_tag("/themes/default/images/homepage/spark/sign-up-now.png", :alt => _("sign up now"), :altclass=>"login_tab")) %>
+								</div>
+							</td>
+							<td>
+								<div class="tour_text">
+									<a href="/tour"><%= _("Or see how easy it is to use in this 2-minute Tour") %> &gt;</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="clearspace"></div>
+			</div>
+		</div><!-- Banner Ends -->
+	</div>
+</div>

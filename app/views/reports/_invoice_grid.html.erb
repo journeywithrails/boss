@@ -1,0 +1,262 @@
+<% 
+  url_params ||= {}
+  url_params[request_forgery_protection_token.to_s] = form_authenticity_token
+  url += "?"
+  url += url_params.collect { |k, v| "#{k}=#{v}"}.join("&")
+
+  elm ||= 'invoices_grid'
+  
+  record_count ||= nil
+  unless record_count.nil?
+    title = "#{title} (#{record_count})" 
+  end
+  	
+  page_size ||= 10
+
+  client_report = !@client.nil?
+%>
+
+<% content_for "bottom_javascripts" do -%>
+	<%= render :partial => "layouts/calendar_date_select_locale" %>
+
+  <script>
+
+  if (Sage.invoice_report_grids == undefined) Sage.invoice_report_grids = new Hash;
+  Ext.onReady(function(){
+
+    	var reader = new Ext.ux.data.JsonReaderWithSummary({
+              root: 'invoices',
+              totalProperty: 'total', //ie, the number of records
+              summaryProperty: 'summary',
+              id: 'id'
+          },
+          [
+          {name: 'unique'},
+          {name: 'customer_name'},
+          {name: 'reference'},
+          {name: 'date', type: 'date', dateFormat: 'Y/m/d'},
+          {name: 'brief_meta_status_string', type: 'string'},
+          {name: 'tax_1_amount', type: 'string'},
+          {name: 'tax_2_amount', type: 'string'},
+          {name: 'discount_amount', type: 'string'},
+          {name: 'subtotal_amount', type: 'string'},
+          {name: 'total_amount', style: 'string'},
+          {name: 'paid_amount', type: 'string'},
+          {name: 'owing_amount', type: 'string'}
+          ]);
+
+    // method of url must be GET for routing to work
+    var store = new Ext.ux.data.StoreWithSummary({
+  	    proxy: new Ext.data.HttpProxy({url: '<%= url %>', method: 'GET'}),
+  	    reader: reader,	        
+        remoteSort: true	
+    });
+
+    // RADAR brittleness
+      var invoice_link = function(value, meta, row, rowIndex, colIndex, ds) {
+        if (colIndex == 3) {
+          value = Ext.util.Format.date(value);
+        }
+        else if (colIndex >= 5 && colIndex <= 10) {
+        }
+        else {
+          if(value == null){
+            value = '';
+          }
+          else {
+            value = Sage.json_to_escaped_html( value );
+          }
+        }
+        if (<%= client_report %>) {
+          html = '<span>' + value + '</span>';
+        }
+        else {
+          html = '<a id="<%= elm %>-' + row.id + '-edit-link-' + colIndex + '\" href="/invoices/' + row.id + '">' + value + '</a>' ;
+        }
+        return html;
+      };
+
+    var summary_renderer   = function(value, meta, row, rowIndex, colIndex, ds){
+      if(value == null){
+        value = '';
+      } else {
+        if (value < 0) {
+          cardinality = 'negative';
+        } else {
+          cardinality = 'positive';
+        }
+        value = '<span class="report_summary '+cardinality+'">' + value + '</span>';
+      }
+      return value;
+    };
+
+    var inverse_summary_renderer = function(value, meta, row, rowIndex, colIndex, ds){
+			// fixme losing the negative 
+      // value = 0 - value;
+      return summary_renderer(value, meta, row, rowIndex, colIndex, ds);
+    };
+
+    var summary_blank = function(value, meta, row, rowIndex, colIndex, ds){
+      return '';
+    };
+
+
+    var summary = new Ext.ux.grid.GridSummary({
+      useStoreSummary : true,
+      showLabels : true,
+      labels : {
+        tax_1_amount : "<%= _('Tax 1') %>",
+        tax_2_amount : "<%= _('Tax 2') %>",
+        discount_amount : "<%= _('Discount') %>",
+        subtotal_amount : "<%= _('Subtotal') %>",
+        total_amount : "<%= _('Total') %>",
+		paid_amount : "<%= _('Paid') %>",
+		owing_amount : "<%= _('Owed') %>"
+      }
+    });
+
+    Sage.invoice_report_grids.summary = summary;
+    //alert( summary.getHeight() );
+    var cm = new Ext.grid.ColumnModel
+    	([{
+            id: 'inv-unique',
+            header: "<%= _('No.') %>",
+            dataIndex: 'unique',
+            renderer: invoice_link,
+            summaryRenderer: summary_blank,
+            sortable: true
+        },{ 
+            id: 'cust-name',
+            header: "<%= _('Customer') %>",
+            dataIndex: 'customer_name',
+            renderer: invoice_link,
+            summaryRenderer: summary_blank,
+            sortable: true
+        },{  
+            header: "<%= _('Ref. No.') %>",
+            dataIndex: 'reference',
+            sortable: true,
+            renderer: invoice_link,
+            summaryRenderer: summary_blank,
+            align: "right"
+         },{  
+            id: "inv-date",
+            header: "<%= _('Date') %>",
+            dataIndex: "date",
+            renderer: invoice_link,
+            summaryRenderer: summary_blank,
+            sortable: true				          
+        },{ 
+            header: "<%= _('Status') %>",
+            dataIndex: "brief_meta_status_string",
+            renderer: invoice_link,
+            summaryRenderer: summary_blank,
+            sortable: true				          
+        },{
+            header: "<%= _('Tax 1') %>",
+            dataIndex: 'tax_1_amount',
+            sortable: false,
+            renderer: invoice_link,
+            summaryRenderer: summary_renderer,
+            align: "right"
+         },{  
+            header: "<%= _('Tax 2') %>",
+            dataIndex: 'tax_2_amount',
+            sortable: false,
+            renderer: invoice_link,
+            summaryRenderer: summary_renderer,
+            align: "right"
+         },{  
+            header: "<%= _('Discount') %>",
+            dataIndex: 'discount_amount',
+            sortable: false,
+            renderer: invoice_link,
+            summaryRenderer: inverse_summary_renderer,
+            align: "right"
+         },{  
+            header: "<%= _('Subtotal') %>",
+            dataIndex: 'subtotal_amount',
+            sortable: false,
+            renderer: invoice_link,
+            summaryRenderer: summary_renderer,
+            align: "right"
+        },{  
+            header: "<%= _('Total') %>",
+            dataIndex: 'total_amount',
+            sortable: true,
+            renderer: invoice_link,
+            summaryRenderer: summary_renderer,
+            align: "right"
+        },{  
+            header: "<%= _('Paid') %>",
+            dataIndex: 'paid_amount',
+            sortable: false,
+            renderer: invoice_link,
+            summaryRenderer: summary_renderer,
+            align: "right"
+        },{  
+            header: "<%= _('Owed') %>",
+            dataIndex: 'owing_amount',
+            sortable: false,
+            renderer: invoice_link,
+            summaryRenderer: summary_renderer,
+            align: "right"
+        }]);
+
+    cm.defaultSortable = true;
+
+    Sage.invoice_report_grids['<%= elm %>'] = new Ext.ux.grid.GridPanelWithSummary({
+        el: '<%= elm %>',
+        autoHeight: true,
+        autoWidth: true,
+        autoExpandColumn: "cust-name",
+
+        enableColumnMove: false,
+        title: "<%= h(title) %>",
+
+        cm: cm,
+        autoFill : true,
+        trackMouseOver:true, // We should make links go away and use selectionModel
+        // sm: new Ext.grid.RowSelectionModel({selectRow:Ext.emptyFn}),
+        loadMask: true, // grow up
+        viewConfig: {
+            forceFit:true,
+            autoHeight:true
+        },
+        store: store,
+        plugins: [summary],
+        bbar: new Ext.PagingToolbar({
+            pageSize: <%= page_size %>,
+            store: store,
+            displayInfo: true,
+            displayMsg: "<%= _("Displaying %{what} \{0\} - \{1\} of \{2\}") % { :what => label} %>",
+            emptyMsg: "<%= _("No %{what} to display") % {:what => label } %>",
+            hideMode: 'display'
+        })
+    });
+
+
+    // render it
+    Sage.invoice_report_grids['<%= elm %>'].render();
+
+    Event.observe(window, 'resize', function(){Sage.invoice_report_grids['<%= elm %>'].syncSize();});
+
+    store.on("load", function(){
+    <%= increment_ajax_counter %>
+    	count = this.getTotalCount();
+      Sage.invoice_report_grids['<%= elm %>'].setTitle("<%= h(title) %>");
+      if (count <= <%= page_size %>) {
+        Sage.invoice_report_grids['<%= elm %>'].getBottomToolbar().hide();
+      } else {
+        Sage.invoice_report_grids['<%= elm %>'].getBottomToolbar().show();
+      }
+    });
+    store.load({params:{start:0, limit:<%= page_size %>}});
+
+  //if (this.getTotalCount() <= <%= page_size %>)
+  //	{ Sage.invoice_report_grids['<%= elm %>'].bbar.hide();}
+
+  });
+  </script>
+<% end # content_for "bottom_javascripts"
+     %>

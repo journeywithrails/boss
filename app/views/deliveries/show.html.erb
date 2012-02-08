@@ -1,0 +1,14 @@
+	<% @content_for_lnav = capture do %>
+		<%= link_to _("Back"), deliveries_path %>
+	<% end %>
+    
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+
+	<% @content_for_main = capture do %>
+		<%= @delivery.deliverable_description %>
+		<%= _("Mailed on: %{when}") % {:when => @delivery.created_at} %>
+		<%= _("To: %{recip}") % {:recip => h(@delivery.recipients)} %>
+		<%= _("Message: %{msg}") % {:msg => h(@delivery.body)} %>
+	<% end %>
+	<%= render_inner_layout %>

@@ -1,0 +1,3 @@
+<% fields_for("invoice[line_items][]", @line_item) do |f| %>
+<%= render :partial => "line_items/form", :locals => {:f => f} %>
+<% end %>

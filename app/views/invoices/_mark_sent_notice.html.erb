@@ -1,0 +1,27 @@
+<%= @invoice.meta_status_string %>
+<br/>
+<% if !@already_sent %>
+	<% if @success %>
+		<div class="notice invoice_status_notice" id="flash">
+			<div id="flash_message">
+				<%= _('Invoice has been marked as sent.') %>
+			</div>
+		</div>
+	<% else %>
+		<div id='errorExplanation' class='errorExplanation invoice_status_notice'>
+			<h2><%= _('This invoice cannot be marked as sent because:') %></h2>
+			<ul>
+				<% if @invoice.customer.blank? %>
+					<li><%= _('It has no customer. Please edit the invoice and add a customer.') %></li>
+				<% end %>
+				<% if @invoice.total_amount == 0 %>
+					<li><%= _('It has no line items. Please edit the invoice and add one or more line items.') %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>	
+<% else %>
+	<div id='errorExplanation' class='errorExplanation invoice_status_notice'>
+		<h2><%= _('This invoice has already been sent or marked as sent.') %></h2>
+	</div>
+<% end %>

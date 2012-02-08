@@ -1,0 +1,70 @@
+<h1>
+  <b>Account:</b>
+  <%=h @spaccount.spaccount_name %>
+</h1>
+
+<p>
+  <b>Company:</b>
+  <%=h @spaccount.company %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%=h @spaccount.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%=h @spaccount.last_name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%=h @spaccount.address %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%=h @spaccount.city %>
+</p>
+
+<p>
+  <b>Province:</b>
+  <%=h @spaccount.state_prov %>
+</p>
+
+<p>
+  <b>Postal Code:</b>
+  <%=h @spaccount.zip_postal %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @spaccount.email %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%=h @spaccount.phone %>
+</p>
+
+<p>
+  <b>Fax:</b>
+  <%=h @spaccount.fax %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @spaccount.status %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @spaccount.comment %>
+</p>
+
+<p><%= link_to 'Subscriptions', service_provider_spaccount_spsubscriptions_path(@spaccount) %></p>
+<p>
+<%= link_to 'Edit', edit_service_provider_spaccount_url(@spaccount) %> |
+<%= link_to 'Back', service_provider_spaccounts_path %>
+</p>

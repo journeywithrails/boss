@@ -1,0 +1,80 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+                    <h1>User details for <%= h @user.sage_username %></h1>
+                    <br/>
+                    <table border="0" cellpadding="4" cellspacing="2">
+                      <tbody>
+                        <tr><td align="right"><b>Email:</b></td><td>&nbsp;</td><td><a href="mailto:<%= h @user.email %>"><%= h @user.email %></a></td></tr>
+                        <tr><td align="right"><b>Username:</b></td><td>&nbsp;</td><td><%= h @user.sage_username %></td></tr>
+                        <tr><td align="right"><b>Company Name:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_name %></td></tr>
+                        <tr><td align="right"><b>Address 1:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_address1 %></td></tr>
+                        <tr><td align="right"><b>Address 2:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_address2 %></td></tr>
+                        <tr><td align="right"><b>City:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_city %></td></tr>
+                        <tr><td align="right"><b>Prov/State:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_state %></td></tr>
+                        <tr><td align="right"><b>Postal Code:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_postalcode %></td></tr>
+                        <tr><td align="right"><b>Country:</b></td><td>&nbsp;</td><td><%= localized_country( @user.profile.company_country ) %></td></tr>
+                        <tr><td align="right"><b>Website:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_website %></td></tr>
+                        <tr><td align="right"><b>Phone:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_phone %></td></tr>
+                        <tr><td align="right"><b>Fax:</b></td><td>&nbsp;</td><td><%= h @user.profile.company_fax %></td></tr>
+                        <tr><td align="right"><b>Timezone:</b></td><td>&nbsp;</td><td><%= h @user.profile.time_zone %></td></tr>
+                        <tr><td align="right"><b>Source:</b></td><td>&nbsp;</td><td><%= h @user.signup_type %></td></tr>
+                        <tr><td align="right"><b>Signup:</b></td><td>&nbsp;</td><td><%= @user.created_at %></td></tr>
+                        <tr><td align="right"><b>Mail opt-in:</b></td><td>&nbsp;</td><td><%= @user.profile.mail_opt_in %></td></tr>
+                        <tr><td align="right"><b>Language:</b></td><td>&nbsp;</td><td><%= localize_language( @user.language ) %></td></tr>
+                        <tr><td align="right"><b>Currency:</b></td><td>&nbsp;</td><td><%= @user.profile.currency %></td></tr>
+                        <tr><td align="right"><b>Bogus?</b></td><td>&nbsp;</td><td><%= link_to_remote @user.bogus,
+                          :url => {:action => 'toggle_bogus_user', :id => @user.id }, 
+                          :html => {:id => "user_"+@user.id.to_s },
+                          :before => "document.getElementById('user_#{@user.id.to_s}').disabled = 1;",
+                          :success => "var xax = document.getElementById('user_#{@user.id.to_s}'); if (xax.innerHTML == 'true') { xax.innerHTML = 'false' } else { xax.innerHTML = 'true'; } document.getElementById('user_#{@user.id.to_s}').disabled = 0; ", 
+                          :failure => "document.getElementById('user_#{@user.id.to_s}').disabled = 0; alert('HTTP Error ' + request.status + '!');" %></td></tr>
+                      </tbody>
+                    </table>
+                    <% unless Feedback.find_by_user_email( @user.email ).nil? %>
+                      <br/><br/>
+                      <h1>Feedback received:</h1>
+                      <table border="0" cellpadding="4" cellspacing="2">
+                        <thead>
+                          <tr>
+                            <td><b>ID</b></td>
+                            <td><b>Sent</b></td>
+                            <td><b>Status</b></td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% Feedback.find(:all, :conditions => { :user_email => @user.email }).each do |fb| %>
+                            <tr><td><a href="/admin/feedback/<%= fb.id %>/edit"><%=  fb.id %></a></td>
+                            <td><%=  fb.created_at %></td>
+                            <td><%= fb.response_status %></td></tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    <% end %>
+		<% end %>
+		<%= render_inner_layout %>  

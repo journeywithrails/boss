@@ -1,0 +1,408 @@
+<% content_for "stylesheets" do%>
+  <%= stylesheet_theme_controller("customers") %>
+  <%= xpath_theme %>
+<% end %>
+
+
+<% @content_for_sidebar = (@content_for_sidebar || '') + capture do %>
+  <div id="tax_header">
+  </div>
+
+  <div id="tax_container">
+  <% t = @invoice.taxes_for_editing %>
+  <% unless t.empty? %>
+    <br/>
+    <h1><%= _('Tax') %></h1>
+    <% t.each do |tax| %>
+      <%= f.check_box :"#{tax.profile_key}_enabled" %> <%= _("Charge %{tax_name}") % {:tax_name => h(tax.name)} %>
+	      <div style="text-align:left">@	<%= f.text_field :"#{tax.profile_key}_rate", :size=>2 %>%</div>
+      <% end %>
+      <br/>
+	<% end %>
+  </div>
+
+  <div id="discount_container">
+    <br/>
+    <h1><%= _('Discount') %></h1>
+    <div>
+      <%= f.text_field :discount_value, :size=>2%>
+      <%= f.select :discount_type, Invoice::DiscountTypes, :size=>0 %>
+    </div>
+  </div>
+
+
+<% end %>
+
+<% @content_for_main = (@content_for_main || '') + capture do %>
+  <div class="full yui-g" >
+    <div class="yui-u first">
+      <div><h3><%= _('Customer:') %></h3>
+        <%= f.select( :customer_id, current_user.customers.find_for_select, :prompt => s_("dropdown|– Select Customer –"), :selected => (!@the_customer.blank? ? @the_customer.id : "") ) %>
+        <input id="new-btn"  type="button"  value="<%= s_("Invoice|New") %>"  onclick="Sage.customer_dialog.setup_new();return false;"  />
+        <input id="edit-btn"  type="button"  value="<%= _("Edit") %>"  style=<%= @the_customer ? 'display:inline;' : 'display:none;' %>  onclick="Sage.customer_dialog.setup_edit($('invoice_customer_id').value);return false;" />
+      </div>
+      <div id="on_the_fly_attributes">
+        <% if !@the_customer.blank? %>
+          <div id="preview_customer_content">
+            <div class="wrap">
+              <div class="row_without_top_margin">
+                <div class="cell_value"><span id="customer_address1"><%= h(@the_customer.address1) unless @the_customer.address1.blank? %></span></div>
+              </div>
+              <div class="row_without_top_margin">
+                <div class="cell_value"><span id="customer_address2"><%= h(@the_customer.address2) unless @the_customer.address2.blank? %></span></div>
+              </div>
+              <div class="row_without_top_margin">
+                <div class="cell_value">
+                  <span id="customer_city"><%= h(@the_customer.city) unless @the_customer.city.blank? %></span>
+                  <span id="customer_province_state"><%= h(@the_customer.province_state) unless @the_customer.province_state.blank? %></span>
+                </div>
+              </div>
+              <div class="row_without_top_margin">
+                <div class="cell_value">
+                  <span id="customer_country"><%= localized_country(@the_customer.country) unless @the_customer.country.blank? %></span>
+                  <span id="customer_postalcode_zip"><%= h(@the_customer.postalcode_zip) unless @the_customer.postalcode_zip.blank? %></span>
+                </div>
+              </div>
+
+
+              <div class="row_without_top_margin">
+                <div class="cell_value">
+                  <% unless (@the_customer.contacts.nil? or @the_customer.contacts.size == 0) %>
+										<% if !::AppConfig.hide_localization %>	
+								  		<h3><%= _('Language') %></h3>
+								  		<span><%= localize_language(@the_customer.language) %></span>
+										<% end -%>
+								
+                    <h3><%= _('Attention') %></h3>
+                    <% if (@the_customer.contacts.size == 1) %>
+                      <input id="invoice_contact_id" type="hidden" name="invoice[contact_id]" value=<%= @the_customer.default_contact.id %> />
+                      <span id="span_contact_name"><%=h @the_customer.default_contact.name %></span>
+										
+                    <% else %>
+                      <% if !@invoice.contact.blank?
+                        @the_contact = @invoice.contact_id
+                      else
+                        @the_contact = @the_customer.default_contact.id
+                      end %>
+                      <%= select("invoice", "contact_id",
+                        (@the_customer.contacts.collect	{|p| [ p.name, p.id ] }).sort_by {
+                          |a| a[0].nil? ? "" : a[0];
+                        },
+                        :selected => @the_contact ) %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% else %>
+			<%= no_customer_warning @invoice %>
+		<% end %>
+      </div>
+
+    </div>
+    <div class="yui-u">
+      <div id="invoice_number_block">
+        <table>
+          <tr>
+            <td><label><%= i_(@invoice, "Invoice number:") %></label></td>
+            <td>
+              <% if @invoice.new_record? or @invoice.meta_status == Invoice::META_STATUS_DRAFT or @invoice.status == "quote_draft" %>
+                <%= f.text_field :unique, :size=>14 %>
+              <% else %>
+                <label id="invoice_unique_number"><%= @invoice.unique %></label>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><label><%= _('Issue date:') %><br/><%= _("(yyyy-mm-dd)") %></label></td>
+            <td><%= f.calendar_date_select :date, :size=>0, :class=>"date_select", :horiz_offset => -80 %></td>
+          </tr>
+          <% unless @invoice.quote? %>
+          <tr>
+            <td><label><%= _('Due date:') %><br/><%= _("(yyyy-mm-dd)") %></label></td>
+            <td><%= f.calendar_date_select :due_date, :class=>"date_select", :horiz_offset => -80 %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td><label><%= _('Reference number:') %></label></td>
+            <td><%= f.text_field :reference, :size=>14 %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="full yui-g">
+    <br/>
+    <div class="section_header" style="padding-bottom: 2px;"><%= _('Line Items') %></div>
+	<div id="line_items_notice">
+		<% if @invoice.total_amount == 0 %>
+			<%= no_line_item_warning(@invoice) %>
+		<% else %>
+			&nbsp;
+		<% end %>
+	</div>
+    <table class="entity-list" id="line_items_table" class="line_items_table" style="height:100%">
+      <thead>
+        <tr>
+          <th class="quantity"><%= _('Quantity') %></th>
+          <th class="descrip"><%= _('Description') %></th>
+          <th class="price"><%= _('Price') %></th>
+          <th class="subtotal"><%= _('Subtotal') %></th>
+          <% if @invoice.tax_1 %>
+            <th class="tax"><p id="tax_1_header" style="<%= show_if_tax_enabled(@invoice, 'tax_1') %>"><%=h @invoice.tax_1.name %></p></th>
+          <% end %>
+          <% if @invoice.tax_2 %>
+            <th class="tax"><p id="tax_2_header" style="<%= show_if_tax_enabled(@invoice, 'tax_2') %>"><%=h @invoice.tax_2.name %></p></th>
+          <% end %>
+          <th class="remove">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody id="line_items_list">
+        <!--
+                    <tr class="child_item">
+                      <td class="quantity"></td>
+                      <td class="descrip"></td>
+                      <td class="price"></td>
+                      <td class="subtotal"><div></div></td>
+                      <td class="remove"></td>
+                    </tr>
+                          -->
+  <% if @invoice.line_items.blank? -%>
+    <%= render :partial => 'line_item', :object => LineItem.new %>
+  <% else %>
+    <%= render :partial => 'line_item', :collection => @invoice.line_items %>
+  <% end -%>
+      </tbody>
+    </table>
+
+    <%# add_line_item_link.  No matter what the font size is, a table allows both the image and label to be vertically centered. %>
+    <% image_code = image_tag("/themes/#{user_style}/images/additem.gif") %>
+    <% link_content = %|
+    <table class="image_with_label">
+    <tr>
+    <td>#{image_code}</td>
+    <td>#{_("Add another item")}</td>
+    </tr>
+    </table>| %>
+    <%= add_line_item_link link_content, :id => 'add_line_item' %>
+
+
+    <br /><br/>
+
+  </div>
+	<div id="calculation_notice" style="height: 40px; text-align: center; font-size:16px;">&nbsp;</div>
+  <div class="full yui-g">
+    <div class="yui-u first">
+      <div class="section_header"><%= _('Comment') %></div>
+      <%= f.text_area :description, :size => '32x4' %>
+    </div>
+
+    <div class="yui-u" id="invoice_total_block">
+
+      <h3>&nbsp</h3>
+      <table id ="invoice_total_table">
+
+        <tr>
+          <td class="summary_label">
+            <span><%= _('Subtotal:') %></span>
+          </td>
+          <td class="summary_number">
+            <span id="invoice_line_items_total"><%=(format_amount(@invoice.line_items_total)).untaint %></span>
+          </td>
+        </tr>
+
+        <% discount_block = Proc.new do %>
+          <tr>
+            <td class="summary_label">
+              <span><%= _('Discount:') %></span>
+            </td>
+            <td class="summary_number">
+              <span id="invoice_discount_amount"><%=(format_amount(@invoice.discount_amount)).untaint %></span>
+            </td>
+          </tr>
+        <% end %>
+
+        <% show_first_if(@invoice.discount_before_tax, discount_block) do %>
+          <% @invoice.taxes.each do |tax| %>
+            <tr id="<%=h "invoice_#{tax.profile_key}" %>">
+              <td class="summary_label">
+                <span><%=h tax.name %>:</span>
+              </td>
+              <td class="summary_number">
+                <span id="<%=h "invoice_#{tax.profile_key}_amount" %>">
+                  <%= (format_amount(tax.amount)).untaint %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        <tr>
+          <td class="summary_label">
+            <span><%= _('Total:') %></span>
+          </td>
+          <td class="summary_number">
+            <span id="invoice_total"><%=(format_amount(@invoice.total_amount)).untaint %></span>
+          </td>
+        </tr>
+        <tr>
+          <td  class="summary_label"><span><%= _('Currency:') %></span></td>
+          <td align=left><div id="currency_container"> <%= f.select :currency, Currency.currency_list, :size=>0, :selected => invoice_currency(@invoice) %></div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+<% end %>
+
+
+<% content_for "bottom_javascripts" do -%>
+	<%= render :partial => "layouts/calendar_date_select_locale" %>
+
+  <%= db_agnostic_id_js('line_item') %>
+
+  <% unless current_user.customers.empty? -%>
+    <%= observe_field("invoice_customer_id", {:function => "Sage.toggle_customer()"}) %>
+
+    <script type="text/javascript">
+      // toggle_customer will replace on the on_the_fly_attributes div
+      // with customer address and contact data
+      // it will also show or hide the edit-button depending
+      // if a customer is selected
+      Sage.toggle_customer = function()
+      {
+		if ($('invoice_customer_id').value != "")
+		{
+			// FIXME: if I change loading_string to processing_string it works?
+			$('on_the_fly_attributes').innerHTML = "<%= is_loading_string %>";
+			<%= remote_function(
+		      :url => { :controller => 'invoices', :action => 'toggle_customer' },
+		      :with => "'&selected=' + $('invoice_customer_id').value" ) %> ;
+		}
+		else
+		{
+			$('on_the_fly_attributes').innerHTML = "<%= no_customer_warning @invoice %>";
+			$('edit-btn').hide();
+		}
+
+      };
+    </script>
+
+  <% end -%>
+
+  <script type="text/javascript">
+  <%  if @invoice.new_record?
+    recalc_url = recalculate_new_invoice_path
+  else
+    recalc_url = recalculate_invoice_path(@invoice)
+  end
+  -%>
+  
+	Sage.toggle_tax_line_items = function(){
+	    taxes = ["tax_1", "tax_2"]
+		taxes.each( 
+			function(tax){
+				var gcb = document.getElementById('invoice_' + tax + '_enabled');
+				var hd = document.getElementById(tax + '_header');
+				if (gcb.checked == 0)
+					$(hd).hide();
+				else
+					$(hd).show();
+			    
+				if (tax == "tax_1")
+					var ts = Sage.get_line_item_tax_1_fields('line_items_list');
+				else
+					var ts = Sage.get_line_item_tax_2_fields('line_items_list');
+			
+				ts.each(
+					function(t)
+					{
+						if (gcb.checked == 0)
+							t.style.display = 'none';
+						else
+							t.style.display = '';
+				    }
+				);
+			}
+		);
+	}
+	
+
+    Sage.update_real_tax_fields = function(cover){
+      var tax_name = cover.value;
+      var real_value = cover.up('tr').down('input.'+tax_name+'_value');
+      real_value.value = cover.checked ? '1' : '0';
+    };
+
+    Sage.update_invoice_totals = function(){$('calculation_notice').innerHTML = "<%= calculating_totals_string %>"; <%= remote_function :url => recalc_url, :with_hash => "$H(Sage.serializedFormWithoutMethod('invoice_form', true))" %>; };
+      Sage.update_invoice_totals_fields = Sage.get_line_item_watch_fields('line_items_list');
+      Sage.update_invoice_totals_fields.push($('invoice_discount_value'), $('invoice_discount_type')); // thank you ECMAScript for coming up with the brilliant idea of a push function that does not return the array.
+      Sage.update_invoice_totals_fields=Sage.update_invoice_totals_fields.concat(Sage.get_tax_rate_watch_fields());
+	  Sage.update_invoice_totals_fields.each(
+      function(elm){
+        Event.observe(elm, 'change', Sage.update_invoice_totals);
+      }
+    );
+      Sage.get_tax_checkbox_watch_fields().each(
+      function(elm){
+        Event.observe(elm, 'click', Sage.toggle_tax_line_items);
+        Event.observe(elm, 'click', Sage.update_invoice_totals);
+      }
+    );
+      Sage.get_cover_watch_fields('line_items_list').each(
+      function(elm){
+
+        Event.observe(elm, 'click', function(elm){Sage.update_real_tax_fields(Event.element(elm))});
+
+      }
+    );
+      Ext.onReady(function(){
+
+        var trigger = Ext.get('unique_taken');
+        if (trigger) {
+
+          win = new Ext.Window({
+            el: 'auto-number-taken',
+            layout: 'fit',
+            width: 350,
+            height: 120,
+            closeAction: 'hide',
+            plain: true,
+
+            items: new Ext.Panel({
+              el: 'auto-number-taken-fields',
+              waitMsgTarget: true,
+              autoHeight: true,
+              border: false,
+              frame: false,
+              header: false
+            }),
+            buttons: [{
+                text: 'Yes',
+                handler: function(){
+                  // Set invoice unique
+                  unique = $('invoice_unique');
+                  unique.value = $('available_auto').innerHTML;
+                  // submit form
+                  f = $('invoice_form');
+                  f.submit();
+                  //win.hide();
+                }
+              }, {
+                text: 'No',
+                handler: function(){
+                  $('invoice_unique').value = "";
+                  win.hide();
+                }
+              }]
+          });
+
+          win.show();
+        };});
+  </script>
+  <img src='/images/loading.gif' style="display: none">
+<% end # content_for "bottom_javascripts"
+     %>

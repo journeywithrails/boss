@@ -1,0 +1,39 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+		  <p id="master_admin_header">
+			  Here you can create a new admin.<br/><br/>
+				Check each permission you want the admin to have access to.<br/><br/>
+				A user <b>must</b> have created an account before you can make that account an admin.<br/><br/>
+		  </p>
+			<%= render :partial => "/admin/master/form_new" %>
+			<br/><br/>
+			<b><a href="/admin/master/">Go back</a></b>
+			<% end %>
+			
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+		<%= render_inner_layout %>  

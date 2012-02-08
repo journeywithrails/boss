@@ -1,0 +1,234 @@
+/*FROM OVERVIEW.CSS*/
+select#customers_select_multiple, select#filters_invoice_type{
+  margin:0;
+	width:90%;
+}
+
+#filter_header
+{
+	text-align:center;
+}
+
+#filter
+{
+	margin-left:5px;
+}
+
+#past_due_invoices_grid, #outstanding_invoices_grid, #draft_invoices_grid, #quote_invoices_grid {
+	margin-bottom: 15px;
+}
+
+#legends_container {
+  margin-left:5px;
+  text-indent:0px;  
+}
+
+/*FROM WEB_INVOICE.CSS*/
+
+/* layout */
+    .clearfix:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+    
+    .clearfix {
+        display: inline-block;
+    }
+    
+    html[xmlns] .clearfix {
+        display: block;
+    }
+    
+    * html .clearfix {
+        height: 1%;
+    }
+    
+/* heading */
+
+    #preview_container{
+      width:100%;
+      height:100%;
+    }
+    
+    #content_container{
+     padding-left: 0;
+     padding-right: 0;
+    }
+    
+    #xxxpreview_invoice_content{
+     padding-top: 15px;
+     padding-left: 15px;
+     padding-right: 15px;	
+    }
+    
+    .logo{
+    }
+    
+    #preview_heading{
+      float:left;
+    }
+    
+    #preview_heading_logo{
+      float:left;
+    }
+    
+    #preview_heading_summary
+    {
+       float:right;
+    }
+    
+    #invoice_ref_block
+    {	
+      float:right;
+    }
+    #invoice_ref_block .row_label {
+      padding-right: 1em;
+    }
+    
+    .preview_heading_summary_invoice{
+      font-weight:bold;
+      text-align:right;
+    }
+    
+    .preview_heading_summary_invoice_label{
+      font-weight:bold;
+      text-align:right;
+    }
+    
+    
+    #preview_customer{
+      margin:20px 0 0 0;
+    }
+
+
+/* line item headings */    
+    
+    #preview_entity_list {
+      width: 100%;
+    }
+
+    #preview_line_items_heading{
+      color:white;
+      background-color:#79973F;
+      font-size:110%;
+    }
+    
+    #preview_line_items th.unit{
+      width:30%;
+      text-align:left;
+      padding-left:5px;
+    }
+    
+    #preview_line_items th.description{
+      width:35%;	
+      text-align:left;
+    }
+    
+
+/* preview footer */
+    
+    #preview_footer_summary{
+      float:right;
+      text-align: right;
+      margin-top: 2em;
+      padding: 0.3em;
+    }
+    
+    #preview_footer_summary td {
+      padding: 0.2em;
+    }
+    
+    
+    #invoice_line_items_total{
+      text-align:right;
+    }
+    
+    .preview_footer_summary_label span {
+      padding-right: 1em ;
+    }
+      
+    .preview_footer_summary_amount{
+      text-align:right;
+    }
+    
+    #preview_footer_summary_total{
+      border-top: 1px solid #6666FF;
+    }
+    
+    .preview_footer_summary_total strong {
+      font-weight: bold;
+    }
+    
+    #invoice_paid strong {
+      font-weight: bold;
+    }
+
+/* line items */
+
+    #preview_entity_list th, 
+    #preview_entity_list td div
+    {
+      padding: 0.3em;
+      padding-right: 0.5em;
+      /* border: solid black 1px; */
+      vertical-align: top;
+    }
+    #preview_entity_list td {
+      vertical-align: top;
+    }
+    #preview_entity_list .unit {
+      text-align:left;
+    }
+
+    
+    #preview_line_items th.unit {
+      width:10%;
+    }
+    #preview_entity_list .description {
+      text-align: left;
+    }
+    #preview_line_items th.description{
+      width:30%;
+    }
+    #preview_entity_list .quantity   {
+      text-align: right;
+    }
+    #preview_entity_list .price{
+      text-align: right;
+    }
+    #preview_entity_list .litotal, #preview_entity_list .litotal div {
+      text-align:right;
+    }
+    
+
+/* editing line items */
+    td.unit {
+      width: 10%;
+    }
+    
+    td.unit input{
+      width:100%;
+    }
+    td.descrip {
+      width: 30%;
+    }
+    td.descrip textarea  {
+      width: 100%;
+    }
+    td.quantity input  {
+      width: 98%;
+      text-align: right;
+      padding-right:1px;
+    }
+    td.price input{
+      width: 100%;	
+      text-align: right;
+      padding-right:1px;
+    }
+    td.remove {
+      
+    }

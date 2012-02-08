@@ -1,0 +1,8 @@
+<label><%= _("Merchant ID") %> <%= text_field_tag 'user_gateways[sage_sbs][merchant_id]', user_gateway.merchant_id, :class=>"user_profile_text" %></label>
+<br clear="all"/>
+<label><%= _("Merchant Key") %> <%= text_field_tag 'user_gateways[sage_sbs][merchant_key]', user_gateway.merchant_key, :class=>"user_profile_text" %></label>
+<br clear="all"/>
+<label><%= _("Currency") %> <%= select_tag('user_gateways[sage_sbs][currency]', options_for_select(SageSbsUserGateway.supported_currencies, user_gateway.currency), {:class=>"user_profile_text" }) %></label>
+<br clear="all"/>
+<%=link_to _("Where do I find information on this payment method?"), "http://www.sagespark.com/tools_services/merchant_services/payment_solutions/merchant_accounts_and_processing_services" , :popup => true %>
+<br clear="all"/>

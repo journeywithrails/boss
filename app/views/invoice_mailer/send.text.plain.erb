@@ -1,0 +1,11 @@
+<%= i_(@invoice,'Here is the invoice from %{name}.')% {:name => @company_name}  %>
+
+<% if not @message.blank? %>
+  <%= @message %>
+<% end %>
+
+<%= @invoice_url %>
+
+---------------------------------------------
+
+<%= _('Sent by Billing Boss - your Free online invoicing tool.') %>

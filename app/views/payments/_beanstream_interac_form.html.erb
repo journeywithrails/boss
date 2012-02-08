@@ -1,0 +1,25 @@
+<div id="notice"><%= flash[:notice] %></div>
+<%= error_messages_for(:object_name => 'payment', :object => @payment_data) %>
+<% @billing_address = @payment_data.first %>
+<% form_tag submit_payment_path(:access => @key) do %>
+  <h3>Pay this invoice using INTERAC Online now</h3>
+  <div style="float: left">
+    <% fieldset_tag('Billing Address') do %>
+      <table>
+        <%= form_row 'Full Name', text_field(:billing_address, :name) %>
+        <%= form_row 'Address line 1', text_field(:billing_address, :address1) %>
+        <%= form_row 'Address line 2', text_field(:billing_address, :address2) %>
+        <tr><th colspan="2">(optional)</th></tr>
+        <%= form_row 'City', text_field(:billing_address, :city) %>
+        <%= form_row 'Province', select(:billing_address, :state, select_provinces) %>
+        <%= form_row 'Postal Code', text_field(:billing_address, :zip) %>
+        <%= form_row 'Country', 'Canada' %>
+        <%= form_row 'Phone Number', text_field(:billing_address, :phone) %>
+        <%= form_row 'Email address', text_field(:billing_address, :email) %>
+      </table>
+      <%= hidden_field_tag('billing_address[country]', 'CA') %>
+    <% end %>
+  </div>
+  <br style="clear: both" />
+  <%= submit_tag('Continue to INTERAC Online') %>
+<% end %>

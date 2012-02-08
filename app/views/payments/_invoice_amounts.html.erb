@@ -1,0 +1,36 @@
+<%= f.hidden_field :customer_id, :value => field_if_not_blank(@customer){@customer.id} %>
+
+<div class="yui-u first">
+	<table style="width: 55%;">
+		<tr>
+			<td class="label"><%= _("Customer name:") %> </td>
+			<td class="value"><span name='customer'><%=h @customer.name %></span></td>
+		</tr>
+		<tr>
+			<td class="label"><%= _("Invoice number:") %> </td>
+			<td class="value"><span name='unique'><%= @invoice.unique %></span></td>
+		</tr>
+		<tr>
+			<td class="label"><%= _("Invoice date:") %> </td>
+			<td class="value"><%=format_date("%B %d, %Y") { @invoice.date } %></td>
+		</tr>
+		<tr>
+			<td class="label"><%= _("Reference number:") %> </td>
+			<td class="value"> <% @invoice.reference %></td>
+		</tr>	
+	</table>
+</div>  
+
+<div class="yui-u">
+	<table style="width: 35%;">
+		<tr>
+			<td class="label"><%= _("Invoice Amount:") %> </td>
+			<td class="value"><span id="invoice_total"><%=format_amount( @invoice.total_amount) %></span></td>
+		</tr>
+		<tr>
+			<td class="label"><%= _("Amount Owing:") %> </td>
+			<td class="value"><span id='invoice_amount_owing'><%=format_amount( @invoice.amount_owing) %></span></td>
+		</tr>
+	</table>
+</div>
+

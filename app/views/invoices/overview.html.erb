@@ -1,0 +1,182 @@
+<% content_for "stylesheets" do%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= xpath_theme %>
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>
+<% end %>
+
+<% content_for "javascripts" do%>
+ <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+ <%= javascript_include_tag "/ext/ext-all.js" %>
+ <%= javascript_include_tag "/ext/ext-fix.js" %>  
+ <%= javascript_include_tag "/ext/source/locale/ext-lang-#{locale.language}.js" %>
+<% end%>
+
+<% @content_for_main_top = capture do %>
+<div class="yui-g">       
+    <%=css_button_link_to _("Add New Customer"),  {:controller=>"customers", :action=>"new"}, {:id=>"new_customer", :class=>"button_orange"} %>
+    <%=link_to_create_invoice %>
+    <%=link_to_create_quote %>
+    <div class="page_header"><%= _('Invoice List') %></div>                   
+</div>
+<% end %>
+
+	<% form_for( :filters, :url => { :action => "filter" }, :html => { :method => :put} ) do |f| %>
+		<% @content_for_lnav = capture do %>
+		<% end %>
+	
+		<% @content_for_sidebar = capture do %>
+		<h2 class="state"><small><%= _('Search Invoice') %></small></h2>
+        <%= hidden_field_tag "filters[search_key]", "invoices_overview" %>  
+			<div  id="filter" >
+				<br/>
+				<% if current_user.has_multiple_invoice_types -%>
+				  <div>
+				    <%= _('Invoice Type:') %>
+				    <%= select("filters", "invoice_type", current_user.invoice_types_for_select, { :include_blank => s_('dropdown|– All Invoice Types –')}) %>
+				  </div>
+			    <br />
+			  <% end -%>
+			  <div>
+			    <%= _("Customer:") %>
+			    <%= render :partial => "shared/select_multiple", :locals => { 
+		                :collection => current_user.customers,
+		                :selected_value => @filters.customers,
+		                :name => "filters[customers]",	                                                                
+		                :options => {:option_id => 'customers', :prefix => "customers", :blank_option => s_('dropdown|– All Customers –')}
+		         } %>
+			  </div>
+			  <br /><br />	  
+		 	  <div>
+			    <%= _('Date From:') %> 
+	 				<br />
+					<%= f.calendar_date_select :fromdate, :size=>0, :class=>"date_select" %>		
+			  </div>		
+		 	  <div>
+			    <%= _('Date To:') %>
+					<br />
+					<%= f.calendar_date_select :todate, :size=>0, :class=>"date_select" %>		
+			  </div>		
+			  <br />
+			  <div>
+			    <%= submit_tag _("Search") %>
+			    <%= submit_tag _("Clear"), :name => "filters[clear]" %>
+			  </div>
+			</div>
+     
+        <div>
+          <%= render :partial=> "layouts/sagespark_ads", :locals=>{:group_name=>"regular"} %>
+        </div>
+    
+		<% end %>
+
+	  <% @content_for_infobox = capture do %>
+		  <%= formatted_flash %>
+ 	  <% end %>    
+	
+	
+		<% @content_for_main = capture do %>
+       <%  if (current_user.invoices.count>=3 && current_user.profile.survey_clicked != true) %>
+	      <div>
+          <b><a href="http://survey.accpac.com/survey/wsb.dll/s/8g73" onclick="<%= remote_function(
+        :url => {:controller=>'users', :action => 'survey_clicked', :id=>'true' }) %>" target="_blank"><%= _("Help us improve Billing Boss") %></a></b>
+ 				</div>
+       <% end %>
+		
+			<div>  			
+			<br style="clear:both;"/>			
+		     <%  if (current_user.invoices.count==0) %>
+			<br style="clear:both;"/>	
+						<div class="section_header"><%= _('You have not created any invoices. Click on New Invoice to create your first invoice.') %></div>          
+		     <% end %>
+                        <div id="outstanding_invoices_grid"></div>
+                        
+			<div id="past_due_invoices_grid"></div>
+
+                        <div id="quote_invoices_grid"></div>						
+			
+			<div id="draft_invoices_grid"></div>                      
+			
+			<div id="paid_invoices_grid" style="border:0px solid #99bbe8; overflow:hidden; width:100%;"></div>
+			</div>
+			<%= render :partial => "send_invoice_dialog", :locals => {:show_link => false} %>
+                        <%= render :partial => "convert_quote_dialog", :locals => {:show_link => false}%>
+
+		<% end %>
+		<%= render_inner_layout %>
+	<% end %>
+
+<% if current_user.invoices.count > 0%>
+<% content_for "bottom_javascripts" do -%>
+
+<%= render :partial => "invoice_grid", :locals => {
+  :url_params => {:meta_status => Invoice::META_STATUS_QUOTE},
+  :elm => 'quote_invoices_grid',
+  :label => s_('InvoiceGridTitle|quotes'),
+  :page_size => 10,
+  :action_link => nil,
+  :action_dialog => 'convert_dialog',
+  :action_name => 'Convert into invoice',
+	:action_desc => 'convert into a invoice',
+  :window_title => _("Convert quote into invoice?")
+} unless ::AppConfig.quotes_disabled %>
+    
+<%= render :partial => "invoice_grid", :locals => {
+  :url_params => {:meta_status => Invoice::META_STATUS_PAST_DUE},
+  :elm => 'past_due_invoices_grid',  
+  :label => s_('InvoiceGridTitle|past due'),
+  :page_size => 10,
+  :action_link => '/invoices/{0}/payments/new',
+  :action_name => 'Record Payment',
+	:action_desc => 'record payment'
+} %>
+<%= render :partial => "invoice_grid", :locals => {
+  :url_params => {:meta_status => Invoice::META_STATUS_OUTSTANDING},
+  :elm => 'outstanding_invoices_grid',  
+  :label => s_('InvoiceGridTitle|outstanding'),
+  :page_size => 10,
+  :action_link => '/invoices/{0}/payments/new',
+  :action_name => 'Record Payment'
+} %>
+<%= render :partial => "invoice_grid", :locals => {
+  :url_params => {:meta_status => Invoice::META_STATUS_DRAFT},
+  :elm => 'draft_invoices_grid',  
+  :label => s_('InvoiceGridTitle|draft'),
+  :page_size => 10,
+  :action_link => nil,
+  :action_dialog => 'send_dialog',
+  :action_name => 'Send invoice',
+	:action_desc => 'send invoice by email',
+  :window_title => _("Send invoice")
+} %>
+<%= render :partial => "invoice_grid", :locals => {
+  :url_params => {:meta_status => Invoice::META_STATUS_PAID},
+  :elm => 'paid_invoices_grid',  
+  :label => s_('InvoiceGridTitle|paid'),
+  :page_size => 10,
+  :action_link => nil,
+  :action_name => nil
+} %>
+
+<% end %>
+<% content_for "bottom_javascripts" do -%>
+<%= render :partial => "layouts/calendar_date_select_locale" %>
+
+<script type="text/javascript" charset="utf-8" id="js_setup_invoice_grids_action">
+	Sage.invoice_grids_action = function(action) {
+		switch (action) {
+			case 'did_send':
+				Sage.invoice_grids['past_due_invoices_grid'].getBottomToolbar().onClick('refresh');
+				Sage.invoice_grids['outstanding_invoices_grid'].getBottomToolbar().onClick('refresh');
+				Sage.invoice_grids['draft_invoices_grid'].getBottomToolbar().onClick('refresh');
+				Sage.invoice_grids['paid_invoices_grid'].getBottomToolbar().onClick('refresh');
+                                <% unless ::AppConfig.quotes_disabled %>
+                                  Sage.invoice_grids['quote_invoices_grid'].getBottomToolbar().onClick('refresh');
+                                <% end %>
+        break;
+      case 'did_pay':
+    }
+	};
+</script>
+<% end -%>
+<% end -%>

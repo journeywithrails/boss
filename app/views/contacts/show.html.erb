@@ -1,0 +1,32 @@
+
+	<% @content_for_lnav = capture do %>
+		<%= link_to _('Edit'), edit_customer_contact_path(:customer_id => @customer, :id => @contact) %> |
+		<%= link_to _('Back'), customer_contacts_path(:customer_id => @customer) %>
+	<% end %>
+    
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+
+	<% @content_for_main = capture do %>
+		<p>
+		  <b><%= _('First name') %>:</b>
+		  <%=h @contact.first_name %>
+		</p>
+		
+		<p>
+		  <b><%= _('Last name') %>:</b>
+		  <%=h @contact.last_name %>
+		</p>
+		
+		<p>
+		  <b><%= _('Email') %>:</b>
+		  <%=h @contact.email %>
+		</p>
+		
+		<p>
+		  <b><%= _('Customer') %>:</b>
+		  <%=h @contact.customer_id %>
+		</p>
+	<% end %>
+	<%= render_inner_layout %>
+

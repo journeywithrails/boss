@@ -1,0 +1,8 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+bookkeeping_contract:
+   id: 1
+   bookkeeping_client_id: 13
+   bookkeeper_id: 1
+   created_at: <%= 5.days.ago.to_s :db %>
+   invitation_id: 3

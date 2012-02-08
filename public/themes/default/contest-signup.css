@@ -1,0 +1,57 @@
+	#hd {
+	
+	 width: 950px;
+	 height: 195px;
+	 background-image: url('/images/contest/banner_top_short.gif');
+	 background-repeat: no-repeat;
+	
+	}
+	
+	#bd{
+		background-image: none;
+	}
+
+	label {
+	
+	display: block;
+	font-weight: normal;
+	margin-left: 15px;
+	font-size: 14px;
+	}
+	
+	.input_sender {
+	
+	width: 340px;
+	margin-bottom: 5px;
+	
+	}
+	
+	#left_main{
+		float: left; 
+		width: 540px;
+	}
+	
+	#right_main{
+		float: right; 
+		width: 410px;
+	}
+	
+	.span-with-left-margin{
+		margin-left: 21px;
+	}
+	
+	#signup_top{
+		height: 56px;
+	}
+	
+	#signup_form{
+		width: 384px;
+		background-image: url(/images/contest/signup_bg.gif);
+		background-repeat: repeat-y;
+		background-position: right top; 
+		background-color: rgb(255, 255, 204);		
+	}
+	
+	#signup-bottom{
+		height: 66px;
+	}

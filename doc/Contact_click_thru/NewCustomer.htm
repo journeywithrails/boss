@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>New Customer</title>
+</head>
+<body>
+    <div>
+        New Customer
+        <br />
+        <table style="width: 100%;">
+            <tr>
+                <td><span>Name</span></td>
+                <td><input id="Text1" type="text" /></td>
+            </tr>
+            <tr>
+                <td><span>Address 1</span></td>
+                <td><input id="Text2" type="text" /></td>
+            </tr>
+            <tr>
+                <td><span>Address 2</span></td>
+                <td><input id="Text3" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><br /><span>Primary Contact</span></td>
+            </tr>
+            <tr>
+                <td><span>First Name</span></td>
+                <td><input id="Text4" type="text" /></td>
+            </tr>
+            <tr>
+                <td><span>Last Name</span></td>
+                <td><input id="Text5" type="text" /></td>
+            </tr>
+            <tr>
+                <td><span>EMail</span></td>
+                <td><input id="Text6" type="text" /></td>
+            </tr>
+            <tr>
+                <td><span>Phone</span></td>
+                <td><input id="Text7" type="text" /></td>
+            </tr>
+        </table>
+        <br />
+        <input id="Button1" type="button" value="Add" onclick="window.close('NewCustomer.htm');"/>        
+        <input id="Button1" type="button" value="AddWithError" onclick="window.location.href='NewCustomerError.htm';"/>        
+        <input id="Button2" type="button" value="Cancel" onclick="window.close('NewCustomer.htm');"/>                
+    </div>
+</body>
+</html>

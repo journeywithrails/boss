@@ -1,0 +1,9 @@
+<div id="admin_menu">
+	<h2 class="state"><small>Admin menu:</small></h2>
+	<ul class="lnav_ul">
+	<li><a href="/admin/overview/">Admin home</a></li>
+	<% AdminManager.admin_roles_for(current_user, true).each do |a| %>
+		<li><a href="/admin/<%= a %>/"><%= a.humanize %> admin</a></li>
+	<% end %>
+	</ul>
+</div>

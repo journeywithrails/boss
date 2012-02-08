@@ -1,0 +1,89 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  <%= xpath_theme %>
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+ <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+<% @content_for_lnav = capture do %>
+ <h2 class="state"><small><%= _('Options') %></small></h2>
+ <ul class="lnav_ul"> 
+   <li class="center_link" ><%= render :partial => "send_invitation_dialog", :locals => {:show_link => true} %></li>
+ </ul>
+<% end %>
+  
+<% @content_for_sidebar = capture do %>
+<% end %>
+
+<% @content_for_infobox = capture do %>
+	<%= formatted_flash %>
+<% end %>
+
+<% @content_for_main = capture do %>
+
+<br/>
+
+<% if @bookkeepers.count < 1 %>
+  <% invite = _("invite") %>
+	<h3><%= _("You can send an %{invite} to your bookkeeper or accountant.  Your bookkeeper or accountant will receive an email containing instruction on how to sign up for Billing Boss.  Once they sign up, they will obtain access to a read-only view of your invoicing data.") % {:invite => "#{link_to_function invite, 'Sage.send_dialog.setup();'}"} %></h3>	
+<% else %>
+<h3><%= _("List of people who currently have access to your invoicing data") %></h3>
+<table class="entity-list">
+  <thead>
+    <tr>
+      <th><%= _("E-mail") %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for bookkeeper in @bookkeepers %>
+    <tr>
+      <td><%=h bookkeeper.user.email %></td>
+      <td><%= link_to _("Stop Sharing Data"), delete_bookkeeper_contract_path(:id => bookkeeper.id), 
+				:confirm => _("Warning! This action cannot be undone. Do you wish to delete this person's access to view your invoicing data?"), 
+				:method => :delete %></td>      
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end -%>
+<br/><br/>
+<% unless @invitations.empty? %>
+	<h2 class="state"><%= _("Invitations") %></h2>
+	<table class="entity-list">
+	  <thead>
+	    <tr>
+	      <th><%= _("Sent Date") %></th>
+	      <th><%= _("Email") %></th>
+				<th><%= _("Status") %></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<% @invitations.each do |i| %>
+			<tr>
+				<td><%= format_date("%Y-%m-%d %H:%M") { i.created_at } %></td>
+				<td><%= h(i.deliveries.first.recipients) rescue nil %></td>
+				<td>
+                  <%= translated_status(i.status) %>
+                  <% if i.status == 'sent' %>
+                    <%= link_to _("Cancel"), withdraw_bookkeeper_invitation_path(:id => i.id),
+                        :confirm => _("Cancel this invitation?"), 
+                        :method => :delete %>
+                  <% end %>
+                </td>
+			</tr>
+		<% end -%>
+	  </tbody>
+	</table>
+<% end %>
+
+
+	<% end %>
+
+
+
+<%= render_inner_layout %>

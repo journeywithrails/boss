@@ -1,0 +1,15 @@
+<% raise StandardError, _("not currently implemented") -%>
+
+
+<h1><%= _('Editing bookkeeper') %></h1>
+
+<%= error_messages_for :bookkeeper %>
+
+<% form_for(@bookkeeper) do |f| %>
+  <p>
+    <%= f.submit _("Save") %>
+  </p>
+<% end %>
+
+<%= link_to _('Show'), @bookkeeper %> |
+<%= link_to _('Back'), bookkeepers_path %>

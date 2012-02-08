@@ -1,0 +1,175 @@
+.PS
+copy "sequence.pic";
+movewid=0.8
+boxwid=1.3
+
+title("\fB10: New User Goes to Sagespark to signup for BillingBoss\fP");
+
+actor(U,"\fBNew User\fP");
+object(SS,"\fBSageSpark\fP");
+object(CAS,"\fBCAS\fP");
+object(SAM,"\fBSAM\fP");
+object(PE,"\fBProvEngine\fP");
+object(BB,"\fBBillingBoss\fP");
+step3();
+
+# Logged in Sage Spark User goes to BB
+#begin
+	action(U,SS,"goes to Sage Spark");
+	comment(SS,C1,up 0.1 right 3, wid 2.8 ht 0.7 "User does not" "exist in SAM or BB or SS");
+	#begin
+		message(SS,CAS,"Logged in?");
+		return_message(CAS,SS,"NO");
+		inactive(CAS);
+		step();
+	#end
+	return_message(SS,U, """show page for" "non-logged-in users");
+	inactive(SS);
+#end
+step3();
+
+#begin
+	action(U,SS,"clicks tools-services/free-business-tools" ljust);
+	step();
+	return_message(SS,U, "page about Billing Boss");
+	inactive(SS);
+#end
+step3();
+
+#begin
+	action(U,SS,"clicks Learn More" ljust);
+	step();
+	return_message(SS,U,"page with BB signup link");
+	inactive(SS);
+#end
+step3();
+
+# User clicks link to signup for Billing Boss
+#begin
+	action(U,SS,"""clicks \fIsignup" "\fIfor BillingBoss");
+	#begin
+		message(SS,CAS,"Logged in?");
+		return_message(CAS,SS,"NO");
+		inactive(CAS);
+		step();
+	#end
+	message(SS,CAS,"""redirect to login""service url to cart billing_info");
+	inactive(SS);
+	step2();
+	return_message(CAS,U,"login form with create link");
+	inactive(CAS);
+#end
+step2();
+#begin
+	action(U,CAS,"click create account");
+	message(CAS,SAM,"""redirect to signup" "(SageSpark theme)");
+	inactive(CAS);
+	comment(SAM,C3,up 0.1 right 1.5, wid 3.1 ht 0.5 "with service cart/billing_info");
+	step2();
+	return_message(SAM,U,"""Signup Form""(SageSpark theme)");
+	inactive(SAM);
+#end
+
+step3();
+
+#begin
+	action(U,SAM,"submits credentials");
+	message(SAM,CAS,"auto-login");
+	step();
+	inactive(CAS);
+	step();
+	message(SAM,SS,"""redirect to""cart billing_info");
+	inactive(SAM);
+	step2();
+	#begin
+		#begin
+			message(SS,CAS,"Logged in?");
+			return_message(CAS,SS,"Yes");
+			inactive(CAS);
+			step();
+		#end
+		#begin
+			message_self(SS, "SS user exists?");
+			return_message_self(SS, "NO");
+		#end
+		#begin
+			step();
+			message_self(SS,"create user");
+		#end
+		return_message(SS,U,"""show page""cart billing_info");
+		comment(SS,C2,up 0.1 right 2, wid 3 ht 0.9 "billing_info page of cart" "collects business information""for BB profile");
+		inactive(SS);
+	#end
+#end
+step3();
+
+#begin
+	action(U,SS,"submits bus. info");
+	message(SS,PE,"Provision Billing Boss");
+	return_message(SS,U,"Provisioning");
+	inactive(SS);
+#end
+
+step3();
+
+#begin
+	active(PE);
+	message(PE,PE,"provisioning loop()");
+	step();
+	message(PE,BB,"Create Billing Boss User");
+	inactive(PE);
+	#begin
+		message_self(BB,"create BB user");
+		inactive(PE);	
+		step();
+		inactive(BB);
+		step();
+	#end
+	step();
+#end
+
+elapsed_time();
+
+# User polls to see if Billing Boss is ready
+#begin
+	action(U,SS,"Provisioned?");
+		message(SS,PE,"Provisioned?");
+				message_self(PE,"Provisioned?");
+			return_message(PE,SS,"Yes");
+			inactive(PE);
+		return_message(SS,U,"Yes");
+	inactive(SS);
+#end
+
+elapsed_time();
+
+# User clicks on button to use Billing Boss
+#begin
+	action(U,SS,"Use Billing Boss");
+	#begin
+		message(SS,BB,"redirect user/home");
+		inactive(SS);
+		#begin
+			message(BB,CAS,"Logged in?");
+			return_message(CAS,BB,"Yes");
+			inactive(CAS);
+			step();
+		#end
+		#begin
+			step();
+			message_self(BB, "user exists?");
+			return_message_self(BB, "YES");
+		#end
+		return_message(BB,U,"show User Home Page");
+		inactive(BB);
+	#end
+	step();
+#end
+
+complete(U);
+complete(BB);
+complete(CAS);
+complete(SS);
+complete(PE);
+
+.PE

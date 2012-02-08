@@ -1,0 +1,7 @@
+<% skip_info ||= false -%>
+<label><%= _("Email address") %> <%= text_field_tag 'user_gateways[paypal][email]', user_gateway.email, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<% unless skip_info -%>
+<%=link_to _("Where do I find PayPal® information?"), "/paypal_help.html" , :popup => true %>
+<% end -%>
+<br clear="all"/>

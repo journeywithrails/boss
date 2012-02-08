@@ -1,0 +1,23 @@
+<table border="0" width="580" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" style="font-family: Arial; font-size: 12pt; color: #493F0B;">
+	<tr>
+		<td>&nbsp;</td>
+		<td style="padding-bottom: 20px"></td>
+		<td>&nbsp;</td>
+	</tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td style="padding-bottom: 20px">
+    <p>
+<%= i_(@invoice,'Here is the invoice from %{name}.')% {:name => @company_name} %>
+    <% if not @message.blank? %>
+      <%= @message %>
+      <br/><br/>
+    <%end%>
+    <%= auto_link(@invoice_url, :urls) %>
+    </p>
+    </td>
+  </tr>
+</table>
+
+<p><%= _("Sent by %{url_link} - your Free online invoicing tool.") % {:url_link => link_to(_("Billing Boss"), ::AppConfig.host)} %>
+</p>

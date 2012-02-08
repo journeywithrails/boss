@@ -1,0 +1,10 @@
+<%= error_messages_for(:object_name => 'payment', :object => @payment_data) %>
+<% @billing_address = @payment_data.first %>
+<% form_tag invoice_online_payments_path(:invoice_id => @key) do %>
+  <!-- beanstream interac gateway -->
+  <div class="gateway_form_section">
+    <%= render :partial => "sage_address", :object => @payment_data %>	
+  </div>
+  <br style="clear: both" />
+  <%= submit_tag(_('Pay Now Through INTERAC Online')) %>
+<% end %>

@@ -1,0 +1,442 @@
+/*FROM OVERVIEW.CSS*/
+
+#past_due_invoices_grid, #outstanding_invoices_grid, #draft_invoices_grid, #quote_invoices_grid {
+	margin-bottom: 15px;
+}
+
+.simply-accounting-invoice-row a:link, 
+.simply-accounting-invoice-row a:visited, 
+.simply-accounting-invoice-row a:active, 
+.simply-accounting-invoice-row a:hover {
+	color: blue;
+}
+
+#legends_container {
+  margin-left:5px;
+  margin-top:20px;
+  text-indent:0px;  
+}
+
+/*FROM WEB_INVOICE.CSS*/
+
+/* layout */
+    .clearfix:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+    
+    .clearfix {
+        display: inline-block;
+    }
+    
+    html[xmlns] .clearfix {
+        display: block;
+    }
+    
+    * html .clearfix {
+        height: 1%;
+    }
+
+/* simply preview */
+    #preview_owing_row 
+    {
+      font-size:130%;
+    }
+
+#simply_preview_summary{
+      float:right;
+      text-align: right;
+      margin-top: 2em;
+      padding: 0.3em;
+    }
+    
+    #simply_preview_summary td {
+      padding: 0.2em;
+    }
+
+/* tax settings in left nav */
+    label.charge_tax{
+      float: none;
+    }
+
+    div.tax_rate{
+      text-align: left;
+    }
+    
+
+/* editing line items */
+    td.unit {
+      width: 10%;
+    }
+    
+    td.unit input{
+      width:100%;
+	  border: 1px solid #A7A37E;
+	  background-color: #FFFFCC;
+	  color: #493F0B;
+	  padding-left: 2px;
+    }
+    td.descrip {
+      width: 30%;
+    }
+    td.descrip textarea  {
+      width: 100%;
+	  border: 1px solid #A7A37E;
+	  background-color: #FFFFCC;
+	  color: #493F0B;
+	  padding-left: 2px;
+    }
+    td.quantity input  {
+      width: 98%;
+      text-align: right;
+	  color: #493F0B;
+      padding-right:2px;
+	  border: 1px solid #A7A37E;
+	  background-color: #FFFFCC;
+    }
+    td.price input{
+      width: 100%;	
+      text-align: right;
+	  color: #493F0B;
+      padding-right:2px;
+	  border: 1px solid #A7A37E;
+	  background-color: #FFFFCC;	  
+    }
+    td.remove {
+      
+    }
+	
+	td.price{
+		width: 10%;
+	}
+	td.quantity{
+		width: 10%;
+	}
+
+.grid_link{
+  vertical-align: bottom !important;
+}
+
+#invoice_customer_id {
+  width:50%;
+}
+
+#invoice_recorded_payments{
+	width: 100%;
+	padding: 3px;
+
+}
+#invoice_recorded_payments th{
+	height: 25px;
+	vertical-align: top;
+	padding: 3px;
+}
+#invoice_recorded_payments td{
+	padding: 5px
+}
+
+#invoice_recorded_payments_heading{
+	background-color: #79973F;
+	color: white;
+	font-size: 110%;
+}
+
+#invoice_recorded_payments td{
+	vertical-align: top;
+}
+
+.invoice_recorded_payments_date{
+	width: 10%;
+}
+.invoice_recorded_payments_amount{
+	width: 18%;
+	text-align: right;
+}
+.invoice_recorded_payments_type{
+	width: 17%;
+}
+.invoice_recorded_payments_description{
+	max-width: 200px;
+	word-break:break-all;
+}
+.invoice_recorded_payments_action{
+	width: 7%;
+
+}
+#invoice_recorded_payments tr{
+	border-bottom-width: 1px;
+	border-bottom-color: #79973F;
+	border-bottom-style: solid;
+
+}
+.invoice_status_notice{
+	margin-top: 10px;
+	font-size: 47.6%;
+	padding-bottom: 0px;
+}
+.invoice_status_notice_matched_to_flash{
+	margin-top: 10px;
+	font-size: 47.6%;
+	padding-bottom: 0px;
+	font-weight: normal;
+	color: black;
+	margin-left: 20px;	
+}
+
+/* Invoice History */
+
+#invoice_history {
+	width: 100%;
+	padding: 3px;
+}
+
+#invoice_history th {
+	height: 25px;
+	vertical-align: top;
+	padding: 3px;
+}
+
+#invoice_history td {
+	padding: 5px
+}
+
+#invoice_history_heading {
+	background-color: #79973F;
+	color: white;
+	font-size: 110%;
+}
+
+#invoice_history td {
+	vertical-align: top;
+}
+
+.invoice_history_date {
+	width: 30%;
+}
+
+.invoie_history_action {
+	width: 30%;
+	text-align: right;
+}
+
+#invoice_history tr {
+	border-bottom-width: 1px;
+	border-bottom-color: #79973F;
+	border-bottom-style: solid;
+}
+
+/* fields in online payments */
+#credit_card_info label {
+	width: 12em;
+	font-size: 100%!important;
+}
+
+#billing_address label {
+		font-size: 100%!important;
+}
+
+#business_info label {
+	width: 16em;
+	font-size: 100%!important;	
+}
+
+#personal_info label {
+	width: 13em;
+	font-size: 100%!important;	
+}
+
+/* fix uneven +/-1 pixel spacing between lines */
+fieldset {
+	margin-right: 2em;
+	line-height: 1em;
+}
+
+fieldset select {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+fieldset input {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+#choose_payment_type {
+  float: left;
+  margin-right: -1px;
+  border-right: 1px solid #79973F;
+  padding: 10px;
+}
+
+#choose_payment_type li {
+  margin-bottom: 5px;
+}
+
+#payment_gateway_form {
+  float: left;
+  border-left: 1px solid #79973F;
+  padding: 0 0 10px 10px;
+}
+#payment_gateway_form th {
+  padding-right: 5px;
+}
+#payment_gateway_form legend {
+  font-weight: bold;
+  font-size: 120%;
+  line-height: 2.0em;
+}
+
+#payment_amount {
+  line-height: 2em;
+  font-size: 130%;
+  text-indent: 10px;
+}
+
+.gateway_form_section {
+  float: left;
+}
+
+#sage_vcheck_business, #sage_vcheck_personal {
+  float: left;
+  clear: both;
+}
+
+  #invoice_and_template_container {
+      margin:auto;
+      width:695px;
+      padding-bottom:10px;
+  }
+  
+  #preview_container{
+      width:570px;
+      height:100%;
+      margin:0;
+    }
+
+  #preview_template_selector{
+    padding-left:2px;
+    float:right;
+    min-width:110px;
+  }
+
+  #template_header {
+    font-weight:bold;
+    font-size:14px;
+    color:#A7C520;
+  }
+
+  #preview_template_selector li {
+    margin-bottom:5px;
+  }
+
+    .invoice_content{
+    background-color: #fff; /*background color of content*/
+    color: #000; /*text color of content*/
+    border: 1px solid #333333; /*border color*/
+    padding: .5em 2ex;
+    
+    }
+
+   .company_logo {
+      width: 200px;
+    }
+
+    #invoice_profile_name {
+      font-size: 120%;
+      font-weight: bold;
+    }
+
+    #big_invoice_label {
+      font-size:1.9em;
+      font-weight: bold;
+    }
+    
+   .row_label {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .row_text {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .placeholder_for_printable{
+      display: none;
+    }
+
+/* preview footer */
+
+    #preview_footer_summary{
+      float:right;
+      text-align: right;
+      margin-top: 2em;
+      padding: 0.3em;
+    }
+
+    #preview_footer_summary td {
+      padding: 0.2em;
+    }
+
+    .footer_caption  {
+      font-style: italic;
+    }
+
+   .preview_footer_summary_total strong {
+      font-weight: bold;
+    }
+    
+    #invoice_paid strong {
+      font-weight: bold;
+    }
+
+/* line items */
+
+    #preview_entity_list th,
+    #preview_entity_list td div
+    {
+      padding: 0.3em;
+      padding-right: 0.5em;
+      /* border: solid black 1px; */
+      vertical-align: top;
+    }
+    #preview_entity_list td {
+      vertical-align: top;
+    }
+    #preview_entity_list .unit {
+      text-align:left;
+    }
+
+    #preview_line_items th.unit {
+      width:10%;
+    }
+    #preview_entity_list .description {
+      text-align: left;
+    }
+    #preview_line_items th.description{
+      width:54%;
+    }
+    #preview_entity_list .quantity   {
+      text-align: right;
+	  width: 15%;
+    }
+    #preview_entity_list .price{
+      text-align: right;
+	  width: 15%;
+    }
+    #preview_entity_list .litotal {
+	  width: 15%;
+	  text-align: right;
+    }
+	.div_litotal{
+		text-align: right;
+	}
+
+  .seperator {
+    clear:both;
+    margin-bottom:10px;
+  }

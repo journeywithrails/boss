@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+FILE=billingboss_<%= stage %>_`date +%Y_%m_%d-%H%M`.sql.gz
+cd /var/www/apps/billingboss/<%= stage %>/backup
+/opt/csw/mysql5/bin/mysqldump -u<%= db_user %> -p"<%= db_password %>" --opt <%= db_name %> | /usr/bin/gzip > $FILE
+chmod og-r $FILE

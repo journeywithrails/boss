@@ -1,0 +1,170 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+customer_with_no_contacts:
+  id: 1
+  name: Customer with no contacts
+  created_by_id: 1
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  phone: 123 456 7890
+  
+customer_with_contacts:
+  id: 2
+  name: Customer with Contacts
+  created_by_id: 1
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  phone: (444)444-4444
+  language: en_US
+
+customer_with_every_status_invoice:
+  id: 3
+  name: customer with invoice for every status
+  created_by_id: 1
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  
+# multiple customers for heavy_user
+<% 
+start_pk = 4
+0.upto(20) do |pk| %>
+<%= "heavy_user_customer_#{pk+1}:" %>
+  id: <%= "#{pk+start_pk}" %>
+  name: <%= "heavy_user_customer_#{pk+1}" %>
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  created_by_id: 5
+<% end %>
+
+####  End multiple customers for heavy_user. Next Primary Key: 25  ######
+
+customer_for_payments:
+  id: 25
+  name: customer for payments
+  created_by_id: 6
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  
+email_customer:
+  id: 26
+  name: customer for emailing invoice
+  created_by_id: 7
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+customer_with_invoices_all_paid:
+  id: 27
+  name: customer with invoices all paid
+  created_by_id: 8
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+customer_with_no_invoices:
+  id: 28
+  name: customer with no invoices
+  created_by_id: 8
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+customer_with_invoices_partially_paid:
+  id: 29
+  name: customer with invoices partially paid
+  created_by_id: 8
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+customer_with_invoices_none_paid:
+  id: 30
+  name: customer with invoices none paid
+  created_by_id: 8
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+# multiple customers for customer_list_user
+<% 
+start_pk = 31
+0.upto(20) do |pk| %>
+<%= "customer_list_user_customer_#{pk+1}:" %>
+  id: <%= "#{pk+start_pk}" %>
+  name: <%= "customer_list_user_customer_#{pk+1}" %>
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  created_by_id: 8
+<% end %>
+
+####  End multiple customers for heavy_user. Next Primary Key: 52  ######
+
+customer_for_complete_user_enabled_tax_settings:
+  id: 52
+  name: customer for complete user enabled taxes
+  created_by_id: 2
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+customer_for_complete_user_disabled_tax_settings:
+  id: 53
+  name: customer for complete user disabled taxes
+  created_by_id: 2
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+customer_for_complete_user_no_tax_settings:
+  id: 54
+  name: customer for complete user no tax settings
+  created_by_id: 2
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  
+customer_with_all_address_fields:
+  id: 55
+  name: customer with all address fields
+  created_by_id: 2
+  created_at: 2007-12-13 23:48:28
+  updated_at: 2007-12-13 23:48:28
+  address1: address1
+  address2: address2
+  city: Richmond
+  province_state: British Columbia
+  postalcode_zip: 9A9 A9A
+  country: Canada
+  website: www.simplyaccounting.com
+  phone: 555-555-1212
+  fax: 555-555-1313
+  
+customer_1_for_user_has_bookkeeping_contract:
+  id: 56
+  name: customer 1 for user has bookkeeping contract
+  created_by_id: 13
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+    
+customer_2_for_user_has_bookkeeping_contract:
+  id: 57
+  name: customer 2 for user has bookkeeping contract
+  created_by_id: 13
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28  
+
+simply_customer:
+  id: 58
+  simply_guid: aaaaaaaabbbbbbbbccccccccdddddddd
+  name: SimplyCustomer
+  created_by_id: 21
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+
+sps_customer_with_no_contacts:
+  id: 59
+  name: Customer with no contacts
+  created_by_id: 27
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  phone: 123 456 7890
+
+sps_customer2_with_no_contacts:
+  id: 60
+  name: Customer with no contacts
+  created_by_id: 28
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  phone: 123 456 7890

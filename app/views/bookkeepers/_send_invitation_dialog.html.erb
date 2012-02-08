@@ -1,0 +1,126 @@
+<% content_for "bottom_javascripts" do -%>
+<script type="text/javascript">
+  /*
+   * Ext JS Library 2.0
+   * Copyright(c) 2006-2007, Ext JS, LLC.
+   * licensing@extjs.com
+   * 
+   * http://extjs.com/license
+   */
+
+  
+
+  Ext.onReady(function(){
+      var button = Ext.get('show-send-dialog-btn');
+      Sage.check_valid_bookkeeper_invitation_callback = function () {
+						if($('validation-errors')){
+	            var send_btn = Sage.send_dialog.win.buttons[0];
+	            var close_btn = Sage.send_dialog.win.buttons[1];
+							Sage.send_dialog.state = 'invalid';
+							send_btn.disable();
+							close_btn.enable();
+						}
+			}
+      Sage.send_dialog = function () {
+        return {
+          win: nil,
+          // RADAR: this is a somewhat yucky bit of coupling between the Ext window controls and the remote-form
+          // in the delivery template.
+          state: 'setup',
+          on_success: function() {
+            Sage.send_dialog.state = 'confirm';
+            var send_btn = Sage.send_dialog.win.buttons[0];
+            var close_btn = Sage.send_dialog.win.buttons[1];
+            send_btn.enable();
+            close_btn.enable(); 
+          },
+          on_failure: function() {
+            Sage.send_dialog.state = 'form';
+            var send_btn = Sage.send_dialog.win.buttons[0];
+            var close_btn = Sage.send_dialog.win.buttons[1];
+            send_btn.enable();
+            close_btn.enable();    
+          },
+          url: {
+            url: '/bookkeeping_invitations/new',
+            params: <%= "{#{request_forgery_protection_token.to_s}: '#{form_authenticity_token}'}" %>,
+            callback: Sage.check_valid_bookkeeper_invitation_callback,
+            scripts: true
+          },
+          bookkeeper_id: nil,
+          setup: function (bookkeeper_id) {
+            Sage.send_dialog.url.params['bookkeeper_id'] = bookkeeper_id;
+            // create the window on the first click and reuse on subsequent clicks
+            if(!Sage.send_dialog.win){
+                Sage.send_dialog.win = new Ext.Window({
+                    el:'send-dialog-container',
+                    layout:'fit',
+                    allowDomMove: true,
+                    autoScroll: false,
+                    autoHeight: false,
+                    autoWidth: false,
+                    width:<%= ::AppConfig.bookkeeping_invitation.send_dialog.width %>,
+                    height:<%= ::AppConfig.bookkeeping_invitation.send_dialog.height %>,
+              //                  minHeight: <%= ::AppConfig.bookkeeping_invitation.send_dialog.minHeight %>, # only works with resizeable, does 
+              // not limit autoheight
+                                resizable: false,
+                    closeAction:'hide',
+                    plain: true,
+                    // modal: true,
+                    autoLoad: Sage.send_dialog.url,
+
+                    buttons: [{
+                        text: "<%= _('Send') %>",
+                        id: 'send-dialog-send-button',
+                        handler: function() {
+                          var close_btn = Sage.send_dialog.win.buttons[1];
+                          if(Sage.send_dialog.state == 'form'){
+                            Sage.send_dialog.state = 'sending'
+                            Sage.send_dialog.win.getEl().child('form#new_delivery').dom.onsubmit();
+                            close_btn.setText('<%=_("Close")%>');
+                            close_btn.disable();
+                            this.disable();                          
+                          } else if(Sage.send_dialog.state == 'confirm') {
+                            Sage.send_dialog.state = 'form'
+                            Sage.send_dialog.win.load(Sage.send_dialog.url);
+                            close_btn.setText('<%= _('Cancel') %>');
+                          }
+                        }
+                    },{
+                        text: "<%= _('Cancel') %>",
+                        id: 'send-dialog-cancel-button',
+                        handler: function(){
+                            Sage.send_dialog.win.hide();
+                        }
+                    }]
+                });
+                Sage.send_dialog.win.on('render', function(){
+                  if(Sage.send_dialog.state == 'setup') Sage.send_dialog.state = 'form';
+                })
+            } else {
+              Sage.send_dialog.win.load(Sage.send_dialog.url);
+              Sage.send_dialog.state = 'form';
+            }
+            Sage.send_dialog.win.show(this);
+            
+          }
+        };
+      }();
+      <% if show_link %>
+        button.on('click', function(nil){
+        Sage.send_dialog.setup();
+        });
+     <% end %>
+  });
+</script> 
+<% end # content_for "bottom_javascripts"
+     %>
+
+
+<% if show_link %> 
+     <%= link_to _('Send email invitation to share data'), '#',  :id=>'show-send-dialog-btn'%>  
+<% end %>
+
+<div id="send-dialog-container" class="x-hidden">
+    <div class="x-window-header"><%= _("Share data with your bookkeeper or accountant") %></div>
+</div>

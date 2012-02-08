@@ -1,0 +1,11 @@
+<ul>
+  <li><%= link_to _("Try Sage Spark!") ,::AppConfig.sagebusinessbuilder.url %></li><span class="divide">|</span>
+    <% if ::AppConfig.contest.bybs %><li><a href="/contest"><%= _("Contest") %></a></li><span class="divide">|</span><% end %>
+  <li><a href="/tour"><%= _("Tour") %></a></li><span class="divide">|</span>
+	<li><a href="/invite_a_friend"><%= _("Invite a Friend") %></a></li><span class="divide">|</span>
+	<li><a href="/faq"><%= _("FAQ") %></a></li><span class="divide">|</span>
+	<li><a href="/about"><%= _("About Us") %></a></li><span class="divide">|</span>
+	<li><%= homepage_user_string %></li>	
+	<span class="divide">|</span>
+	<li><%= link_to_signup %></li>
+</ul>

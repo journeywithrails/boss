@@ -1,0 +1,119 @@
+<div id='send-option-dialog' style="height: 100%; width: 90%">
+  <div id="recipients-block">
+    <label for="delivery[recipients]"><%=_"Send To:"%></label><%= f.text_field :recipients %>
+    <ul id="contacts-multi-chooser" style="display:none;">
+      <% if invoice.customer.contacts.empty? %>
+        <li><div style="width: 250px; height:50px;" ><%= _("No Contacts have been entered for this customer") %></div></li>
+        <li class="control"><input type="button" id="contacts-multi-chooser-closer" value="<%= _("OK") %>"/></li>
+      <% else %>
+        <% invoice.customer.contacts.each do |contact| %>
+        <li class="<%= cycle('odd', 'even', :name => 'contacts-multi-chooser') %>">
+          <label class="normal">
+            <input type="checkbox" value="<%= h contact.formatted_email %>" name="invoice[contacts][]" id="invoice_contacts_<%= contact.id %>"/>
+            &nbsp;<%= h contact.formatted_email %>
+          </label>
+        </li>
+        <% end %>
+        <li class="control"><input type="button" id="contacts-multi-chooser-closer" value="<%= _("Done") %>"/></li>
+      <% end %>
+    </ul>
+  </div>
+  <div>
+    <a href="#" id="contacts-multi-chooser-opener"><%= _('more contacts...') %></a>  
+  </div>
+
+  <div>
+  <label for="delivery[subject]"><%= _('Subject:') %></label><%= f.text_field :subject %>
+  </div>
+
+  <label id="delivery_message_label" for="delivery[body]"><%= _('Message:') %></label>
+  <div>
+    <%= f.text_area :body, :cols=>"0", :rows=>"0" %>
+  </div>
+
+  <br/>
+  <div class="delivery_option">
+      <%= check_box_tag 'delivery[mail_options][attach_pdf]', delivery.mail_options[:attach_pdf], false %>
+      <%= i_(invoice,'Attach a copy of the invoice as Adobe PDF document') %>
+  </div>
+
+  <br/>
+  <div class="delivery_option">
+      <%= check_box_tag 'delivery[mail_options][email_copy]', delivery.mail_options[:email_copy], false %>
+      <%= _('Send me a copy of the email') %>
+  </div>
+
+  <br/>
+  <div class="delivery_option">
+  <% if invoice.all_payment_types.any? %>
+    <%= _("Allow customer to pay online using the following:") %>
+    <ul>
+      <%= choose_payment_types_list(invoice, 'delivery[mail_options]') %>
+    </ul>
+  <% end %>
+  </div>
+
+  <br/>
+  <% if !::AppConfig.hide_localization %>
+    <div class="delivery_option">
+      <p style="margin-top:0px;">
+        <%= i_(invoice,'This email and invoice will be sent in the following language') %>: <%= select("customer","language",select_languages_localized,
+                 :selected => customer_language(invoice.customer)) -%>
+        <%= observe_field("customer_language", {:function => "Sage.change_language()"}) %>
+      </p>
+      <span id="on_the_fly_attributes"></span>
+    </div>
+  <% end -%>
+</div>
+
+<script type="text/javascript">
+  Sage.change_language = function() {
+		$('on_the_fly_attributes').innerHTML = "<%= updating_string %>";
+		<%= remote_function(
+      	:url => { :controller => 'customers', :action => 'change_language' },
+      	:with => "'&selected=' + $('customer_language').value + '&id=' + #{invoice.customer.id}")  %> ;
+  	};
+</script>
+
+
+	<script type="text/javascript">
+		
+	$('contacts-multi-chooser-closer').observe('click', function (event) {
+	  $('contacts-multi-chooser').hide();  
+	});
+
+	Event.observe('contacts-multi-chooser-opener', 'click', function (event) {
+	  var recip = $('delivery_recipients').value;
+	  if(null == recip) return;
+	  Form.getInputs('new_delivery', "checkbox", 'invoice[contacts][]').findAll(
+	    function(item) {
+	      item.checked = (recip.indexOf(item.value) > -1);
+	    }
+	  );
+	  $('contacts-multi-chooser').toggle();
+	});
+
+	Sage.contacts_multi_chooser_handler = function (event) {
+	  var elm = $(Event.element(event));
+	  var val = elm.value
+	  var recip = $('delivery_recipients').value;
+	  if(elm.checked) {    
+	    if(recip.indexOf(val) < 0) {
+	      if((recip.length > 5) && (recip.charAt(recip.length-1)!=",")&&(recip.charAt(recip.length-2)!=",")) {
+	        val = ", " + val;
+	      }
+	      $('delivery_recipients').value += val;           
+	    }
+	  } else if(recip.indexOf(val) > -1) {
+	    parts = recip.split(/ *, */).without(val)
+	    $('delivery_recipients').value = parts.join(', ')
+	  }
+
+	}  
+
+	<% invoice.customer.contacts.each do |contact| -%>
+	Event.observe('invoice_contacts_<%= contact.id %>', 'click', Sage.contacts_multi_chooser_handler);
+	<% end -%> 
+
+
+	</script>

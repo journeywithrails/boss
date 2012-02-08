@@ -1,0 +1,32 @@
+<div id="new_delivery_container">
+
+
+<% remote_form_for 'invoice', @invoice, :url => create_recurring_invoice_path(@invoice), :update => "boxContents", :html => {:id=>'invoice-schedule-form', :class => "dialog-form", :method => :put} do |f| %>
+
+  <%= error_messages_for :recurring %>
+
+  <%# f.fields_for :schedule do |f| %>
+    <%= render :partial => "/invoices/fields_for_schedule", :locals => {:form => f} %>
+  <%# end %>
+
+<% end %>
+
+
+<script>
+   var settings = {
+              buttons: [{
+                          id: 'lightbox-close',
+                          label:'cancel',
+                          action: function(){ Lightbox.hideBox(); }
+                        },
+                        {
+                          id: 'invoice_submit',
+                          label:'save',
+                          action: function(){ $('invoice-schedule-form').onsubmit(); }
+                        }],
+               modal: false
+               };
+   Lightbox.setup(settings);
+</script>
+
+</div>

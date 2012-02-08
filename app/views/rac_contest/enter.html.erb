@@ -1,0 +1,185 @@
+
+	<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= stylesheet_link_tag "/themes/static.css" %>	
+	<%= default_theme_controller("rac_contest") %>	
+
+  <%= stylesheet_ie6 %>
+<% end %>
+	
+
+
+<% content_for :header do %>	    	
+	<%= render :partial => "/rac_contest/header" %>
+<% end %>   
+	 
+
+<% content_for :main do %>
+<div id="bd">
+		<div class="yui-g">
+		
+<div style="background-color: rgb(167, 197, 32);" id="main">
+			
+			<!-- TOP CORNERS -->
+			
+				<div class="main_tr" style="height: 20px">
+						<div class="main_tl" style="height: 20px">
+
+								    
+						</div>
+				</div>
+
+			<!-- CONTENT -->
+<% secure_form_for :user, :url => {:controller => 'users', :action => 'create'}, :html => {:id => 'new-user-form'} do |f| -%>
+				<div id="content">
+					  <%= formatted_flash_always %>
+				      <%= error_messages_for :user %>
+					  <%= error_messages_for :profile %>
+			
+								
+					<img alt="Simply fill in the form for your chance to win. (all fields are required)" src="/images/rac_contest/ttl_enter_1.gif"/>				
+<br/><br/>
+					All fields are required<br/><br/>
+					<!-- TOP CORNERS -->
+					
+						<div class="inner_tr">
+								<div class="inner_tl">
+		
+										    
+								</div>
+						</div>
+						
+					<!-- FORM CONTENT -->	
+						
+						<div class="content_form">
+						
+
+							<table cellspacing="0" cellpadding="0" border="0" width="100%">
+								<tbody><tr>
+									<td width="50%">
+										<label>E-mail</label>
+										<%= f.text_field :login, :class => "text_entry" %> 
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									<td width="50%">
+										<label>Address</label>
+										<%= text_field_tag :profile_company_address1, '', :class => "text_entry" %>
+									</td>
+									
+								</tr>
+								<tr>
+									<td width="50%">
+										<label>Create Password</label>
+										<%= f.password_field :password, :class => "text_entry" %>
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									<td width="50%">
+										<label>City</label>
+										<%= text_field_tag :profile_company_city, '', :class => "text_entry" %> 						
+									
+									</td>
+									
+								</tr>
+								<tr>
+									<td width="50%">
+										<label>Confirm Password</label>
+										<%= f.password_field :password_confirmation, :class => "text_entry" %>
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									<td width="50%">
+										<label>Province</label>
+										<%= text_field_tag :profile_company_state, '', :class => "text_entry" %> 							
+									
+									</td>
+									
+								</tr>
+								<tr>
+									<td width="50%">
+										<label>Business Name</label>
+										<%= text_field_tag :profile_company_name, '', :class => "text_entry" %>
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									<td width="50%">
+										
+										<label>Postal Code</label>
+										<%= text_field_tag :profile_company_postalcode, '', :class => "text_entry" %>						
+									
+									</td>
+									
+								</tr>
+								<tr>
+									<td width="50%">
+										<label>Contact Name</label>
+										<%= text_field_tag :profile_contact_name, '', :class => "text_entry" %>
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									
+									<td width="50%">
+										<label>Phone</label>
+										<%= text_field_tag :profile_company_phone, '', :class => "text_entry" %>							
+									
+									</td>
+								</tr>
+								<tr>
+									<td>
+<label>How did you hear about Billing Boss?</label>
+										<%= select_tag "user_heard_from", user_heard_from, :name => "user[heard_from]", :class => "text_entry" %>
+										<br/>
+									</td>
+									<td width="20">
+										<img border="0" width="20" src="/images/rac_contest/spacer.gif"/></td>
+									<td width="50%">
+										<br/>
+											    <span id="accept_terms_of_service"><%= f.check_box :terms_of_service %>    
+		I accept the <a href='/terms_of_service.pdf' target='_new'>Terms of Service</a> and <a href='/privacy_statement.pdf' target='_new'>Privacy Policy</a></span>
+
+		<span id="accept_user_communications"><%= check_box_tag :user_communications, nil, false %>    
+		Sign up to receive Billing Boss email updates.</span>
+										
+										
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+										 </td>
+									<td width="20">
+										 </td>
+									<td width="50%">
+										 </td>
+								</tr>
+							</tbody></table>
+
+							
+							
+						</div>
+						
+					<!-- BOTTOM CORNERS -->
+						<div class="inner_br">
+								<div class="inner_bl">    </div>
+						</div>						
+								
+						
+						<div id="next">
+							<%= image_submit_tag '/images/rac_contest/btn_next.gif', :id => "register_button" %> 
+						</div>
+		Already have a Billing Boss account?<a href="/rac_contest/login">Log in!</a>
+				</div>				
+<% end %>
+			
+			<!-- BOTTOM CORNERS -->
+				<div class="main_br" style="height: 20px">
+						<div class="main_bl" style="height: 20px">    </div>
+				</div>			
+				
+
+
+			</div>	
+	
+		</div>
+</div>
+<% end %>

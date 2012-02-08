@@ -1,0 +1,11 @@
+div.content h1 {
+  font-size:20px; 
+}
+
+div.content h3 {
+  font-size:15px; 
+}
+
+div#admin_statistics ul {
+    margin: 0pt 0pt 0pt 15px;
+}

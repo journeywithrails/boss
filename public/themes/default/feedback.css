@@ -1,0 +1,26 @@
+.first {
+	vertical-align: top;
+	width: 125px;
+	font-weight: bold;
+}
+
+.second {
+	vertical-align: top;	
+	
+}
+.feedback_item td {
+	padding-bottom: 10px;
+}
+
+.feedback_item_all td {
+	padding-bottom: 5px;
+}
+
+.feedback_item_all
+{
+	font-size: 90%;
+}
+
+#feedback_description{
+	font-size: 80%;
+}

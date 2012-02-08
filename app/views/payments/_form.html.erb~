@@ -1,0 +1,20 @@
+<%= f.hidden_field :invoice_id, :value => field_if_not_blank(@invoice){@invoice.id} %>
+
+<div class="yui-u first">
+   <label for="payment_pay_type"><%= _("Type:") %></label>
+   <%= f.select( :pay_type, Payment::PayByManual, { :prompt => _("[Choose payment type]") }) %>
+	 <br clear="all" />
+         <br clear="all" />
+    <label for="payment_date"><%= _("Date:") %><br/><%= _("(yyyy-mm-dd)") %></label>
+  	<%= f.calendar_date_select :date, :size=>0, :class=>"date_select" %>
+	  <br clear="all"/>
+    <label for="payment_amount"><%= _("Amount:") %></label>  
+    <%= f.text_field :amount, :value => ( (@payment.amount && @payment.amount > 0) ? @payment.amount : invoice_amount_owing(@invoice) ), :class => "text_field" %>
+</div>
+<div class="yui-u"></div>
+
+<br clear="all" />
+<br clear="all" />
+<label for="payment_description"><%= _("Notes:") %></label>
+<%= f.text_area :description, :rows => 6, :cols => 60, :class => "text_area" %>
+

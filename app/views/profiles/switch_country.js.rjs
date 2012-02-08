@@ -1,0 +1,7 @@
+if session[:mobile_browser]
+  page.replace_html 'div_country_dependent', :partial => '/profiles/mobile/' + @profile.country_settings.partial, :object =>@profile
+else
+  page.replace_html 'div_country_dependent', :partial => '/profiles/' + @profile.country_settings.partial, :object =>@profile
+  page.replace_html 'div_country_dependent_time_zone', :partial => '/profiles/time_zone_select', :locals => {:selected => selected_time_zone(@profile.company_country)} 
+end
+page.increment_ajax_counter_rjs

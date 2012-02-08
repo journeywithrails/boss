@@ -1,0 +1,46 @@
+<% feedbacks = @filtered_feedback %>
+<% row_num = 0 %>
+Total matching feedback messages: <span id="total_matching_feedbacks" value="<%= feedbacks.size %>"><%= feedbacks.size %></span>
+<% feedbacks.each do |f|%>
+	<br/>
+	<hr/>
+	<br/>
+	<table number="<%= row_num += 1 %>" id="feedback_item_<%= f.id %>" class="feedback_item_all" width="100%">
+	
+		<tr>
+			<td class="first">Feedback #:</td><td id="feedback_item_<%= f.id %>_id" class="second"><%= f.id %></td>
+		</tr>
+		<tr>
+			<td class="first">Sender's name:</td><td id="feedback_item_<%= f.id %>_user_name" class="second"><%= h f.user_name %></td>
+		</tr>
+		<tr>
+			<td class="first">Sender's email:</td><td id="feedback_item_<%= f.id %>_user_email" class="second"><%= h f.user_email %></td>
+		</tr>
+		<tr>
+			<td class="first">Feedback:</td><td id="feedback_item_<%= f.id %>_text_to_send" class="second"><%= h f.text_to_send %></td>
+		</tr>
+		<tr>
+			<td class="first">Admin's response:</td><td id="feedback_item_<%= f.id %>_feedback_response" class="second"><%= h f.response_text %></td>
+		</tr>
+		<tr>
+			<td class="first">Status:</td><td id="feedback_item_<%= f.id %>_response_status" class="second"><%= h f.response_status %></td>
+		</tr>
+		<tr>
+			<td class="first">Owned by:</td><td id="feedback_item_<%= f.id %>_owned_by" class="second"><%= (f.owned_by.nil? || (f.owned_by.to_s == "0")) ? "" : h(User.find(f.owned_by).sage_username) %></td>
+		</tr>
+		<tr>
+			<td class="first">Submitted at:</td><td id="feedback_item_<%= f.id %>_created_at" class="second"><%= f.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+		</tr>
+		<tr>
+			<td class="first">Last modified at:</td><td id="feedback_item_<%= f.id %>_modified_at" class="second"><%= f.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+		</tr>
+		<tr>
+			<td class="first">Last reply mailed at:</td><td id="feedback_item_<%= f.id %>_last_reply_mailed_at" class="second"><%= f.last_reply_mailed_at.strftime("%Y/%m/%d %H:%M:%S") unless f.last_reply_mailed_at.blank? %></td>
+		</tr>
+		<tr>
+			<td class="first"></td><td class="second"><b><%= link_to "Handle this feedback", {:action => :edit, :id => f.id}%></b></td>
+			<td class="second"><b><%= link_to 'Delete this feedback', "/admin/feedback/#{f.id}", :confirm => 'If this is a request that requires admin intervention (such as restored password), or any other feedback that is useful to preserve, it should be handled and marked closed instead of deleted. Confirm deletion?', :method => :delete, :id => 'destroy' %></b></td>
+		</tr>
+	</table>
+
+<% end %>

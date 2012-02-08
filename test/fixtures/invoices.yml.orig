@@ -1,0 +1,800 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+invoice_with_no_customer:
+  id: 1
+  created_by_id: 1
+  customer_id: 0
+  created_at: 2007-10-10 23:48:13
+  updated_at: 2007-10-10 23:48:13
+  date: 2007-4-2
+  unique_number: 99
+  status: draft
+  currency: CAD
+  
+invoice_with_no_profile:
+  id: 2
+  created_by_id: 3
+  customer_id: 1
+  created_at: 2007-10-10 23:48:14
+  updated_at: 2007-10-10 23:48:14
+  unique_number: 1
+  status: draft
+  currency: CAD
+  
+invoice_with_profile:
+  id: 3
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:15
+  updated_at: 2007-10-10 23:48:15
+  unique_number: 2
+  date: 2007-4-2
+  status: draft
+  currency: CAD
+  
+invoice_with_line_items:
+  id: 4
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:16
+  updated_at: 2007-10-10 23:48:16
+  unique_number:  5
+  status: draft
+  currency: CAD
+  template_name: default
+    
+invoice_with_no_line_items:
+  id: 5
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:17
+  updated_at: 2007-10-10 23:48:17
+  unique_number: 7
+  status: draft
+  date: 2007-8-22
+  currency: CAD
+  
+draft_invoice:
+  id: 6
+  created_by_id: 1
+  customer_id: 3
+  created_at: 2007-10-10 23:48:18
+  updated_at: 2007-10-10 23:48:18
+  description: draft
+  unique_number: 9
+  date: 2007-12-23
+  status: draft
+  currency: CAD
+  
+sent_invoice:
+  id: 7
+  created_by_id: 1
+  customer_id: 3
+  created_at: 2007-10-10 23:48:19
+  updated_at: 2007-10-10 23:48:19
+  description: sent
+  total_amount: 10
+  unique_number: 999
+  date: 2007-1-12
+  status: sent
+  currency: CAD
+  
+changed_invoice:
+  id: 8
+  created_by_id: 1
+  customer_id: 3
+  created_at: 2007-10-10 23:48:20
+  updated_at: 2007-10-10 23:48:20
+  description: changed
+  unique_number: 13
+  status: changed
+  currency: CAD
+  
+resent_invoice:
+  id: 9
+  created_by_id: 1
+  customer_id: 3
+  created_at: 2007-10-10 23:48:21
+  updated_at: 2007-10-10 23:48:21
+  description: resent
+  unique_number: 16
+  total_amount: 10
+  date: 2007-6-12
+  status: resent
+  due_date: <%= (1.days.ago).to_formatted_s(:db) %>
+  currency: CAD
+    
+paid_invoice:
+  id: 10
+  created_by_id: 1
+  customer_id: 3
+  created_at: 2007-10-10 23:48:22
+  updated_at: 2007-10-10 23:48:22
+  description: paid
+  unique_number: 17
+  status: paid
+  total_amount: 101.11
+  currency: CAD
+
+invoice_with_unique_number:
+  id: 11
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:23
+  updated_at: 2007-10-10 23:48:23
+  unique_number: 3
+  status: draft
+  due_date: <%= (Time.now + 1.day).to_formatted_s(:db) %>
+  currency: CAD
+
+invoice_with_unique_name:
+  id: 12
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:24
+  updated_at: 2007-10-10 23:48:24
+  unique_name: "a unique name"
+  status: draft
+  currency: CAD
+  
+invoice_with_date:
+  id: 13
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:25
+  updated_at: 2007-10-10 23:48:25
+  unique_number: 4
+  date: 2007-1-30
+  status: draft
+  currency: CAD
+  
+####### multiple invoices for heavy_user  ##############
+<%
+pk = 14
+customer_start_pk = 4
+nums = [22, 1, 5]
+nums.each_with_index do |num, i|
+  customer_pk = customer_start_pk + i
+  1.upto(num) do |j|
+    name = "heavy_user_customer_#{i}_invoice_#{j}"
+    pk += 1
+%>
+
+<%=
+ "#{name}:" %>
+  id: <%= pk %>
+  created_by_id: 5
+  customer_id: <%= customer_pk %>
+  created_at: 2007-10-10 23:<%= pk %>:13
+  updated_at: 2007-10-10 23:<%= pk %>:13
+  unique_number: <%= pk %>
+  status: draft
+  currency: CAD
+  
+  <% end %>
+<% end %>
+
+# next available key is 43
+
+acknowleged_invoice:
+  id: 43
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:26
+  updated_at: 2007-10-10 23:48:26
+  description: unpaid, acknowledged
+  status: acknowledged
+  total_amount: 1000
+  currency: CAD
+  
+unpaid_invoice_1:
+  id: 44
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:27
+  updated_at: 2007-10-10 23:48:27
+  description: unpaid, sent
+  status: sent
+  total_amount: 1000
+  unique_name: unpaid_invoice_1
+  currency: CAD
+  
+unpaid_invoice_2:
+  id: 45
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:28
+  updated_at: 2007-10-10 23:48:28
+  description: unpaid, sent
+  status: sent
+  total_amount: 2000
+  unique_name: unpaid_invoice_2
+  currency: CAD
+  
+unpaid_invoice_3:
+  id: 46
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:29
+  updated_at: 2007-10-10 23:48:29
+  description: unpaid, resent
+  status: resent
+  total_amount: 3000
+  unique_name: unpaid_invoice_3
+  currency: CAD
+  
+partially_paid_invoice:
+  id: 47
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:30
+  updated_at: 2007-10-10 23:48:30
+  description: partially paid
+  status: acknowledged
+  total_amount: 1500.99
+  unique_name: partially_paid_invoice
+  currency: CAD
+  
+fully_paid_invoice:
+  id: 48
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:31
+  updated_at: 2007-10-10 23:48:31
+  description: fully paid
+  status: paid
+  total_amount: 1201.00
+  unique_name: fully_paid
+  currency: CAD
+  
+multiple_invoice_1:
+  id: 49
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:32
+  updated_at: 2007-10-10 23:48:32
+  description: unpaid multiple invoice 1
+  status: sent
+  total_amount: 1001.00
+  unique_name: unpaid_multiple_invoice_1
+  currency: CAD
+  
+multiple_invoice_2:
+  id: 50
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:33
+  updated_at: 2007-10-10 23:48:33
+  description: unpaid multple invoice 2
+  status: sent
+  total_amount: 1002.00
+  unique_name: unpaid_multiple_invoice_2
+  currency: CAD
+  
+customer_all_paid_invoice_1:
+  id: 51
+  created_by_id: 8
+  customer_id: 27
+  created_at: 2007-10-10 23:48:34
+  updated_at: 2007-10-10 23:48:34
+  description: paid invoice 1
+  status: paid
+  total_amount: 1000.00
+  unique_name: paid_invoice_1
+  currency: CAD
+  
+customer_all_paid_invoice_2:
+  id: 52
+  created_by_id: 8
+  customer_id: 27
+  created_at: 2007-10-10 23:48:35
+  updated_at: 2007-10-10 23:48:35
+  description: paid invoice 2
+  status: paid
+  total_amount: 1000.00
+  unique_name: paid_invoice_2
+  currency: CAD
+  
+customer_partially_paid_invoice_1:
+  id: 53
+  created_by_id: 8
+  customer_id: 29
+  created_at: 2007-10-10 23:48:36
+  updated_at: 2007-10-10 23:48:36
+  description: partially paid invoice 1
+  status: acknowledged
+  total_amount: 1000.00
+  unique_name: partially_paid_invoice_1
+  currency: CAD
+  
+customer_partially_paid_invoice_2:
+  id: 54
+  created_by_id: 8
+  customer_id: 29
+  created_at: 2007-10-10 23:48:37
+  updated_at: 2007-10-10 23:48:37
+  description: partially paid invoice 2
+  status: acknowledged
+  total_amount: 1000.00
+  unique_name: partially_paid_invoice_2
+  currency: CAD
+  
+customer_unpaid_invoice_1:
+  id: 55
+  created_by_id: 8
+  customer_id: 30
+  created_at: 2007-10-10 23:48:38
+  updated_at: 2007-10-10 23:48:38
+  description: unpaid invoice 1
+  status: sent
+  total_amount: 1000.00
+  unique_name: unpaid_invoice_1
+  currency: CAD
+  
+customer_unpaid_invoice_2:
+  id: 56
+  created_by_id: 8
+  customer_id: 30
+  created_at: 2007-10-10 23:48:39
+  updated_at: 2007-10-10 23:48:39
+  description: unpaid invoice 2
+  status: sent
+  total_amount: 1000.00
+  unique_name: unpaid_invoice_2
+  currency: CAD
+  
+invoice_no_tax_settings_with_customer_no_tax_settings:
+  id: 57
+  created_by_id: 2
+  customer_id: 54
+  created_at: 2007-10-10 23:48:40
+  updated_at: 2007-10-10 23:48:40
+  description: unpaid invoice 2
+  status: sent
+  total_amount: 1000.00
+  unique_name: invoice_no_tax_settings_no_customer_tax_settings
+  currency: CAD
+  
+invoice_no_tax_settings_with_customer_disabled_tax_settings:
+  id: 58
+  created_by_id: 2
+  customer_id: 53
+  created_at: 2007-10-10 23:48:41
+  updated_at: 2007-10-10 23:48:41
+  description: unpaid invoice 2
+  status: sent
+  total_amount: 1000.00
+  unique_name: invoice_no_tax_settings_with_customer_disabled_tax_settings
+  currency: CAD
+  
+invoice_no_tax_settings_with_customer_enabled_tax_settings:
+  id: 59
+  created_by_id: 2
+  customer_id: 52
+  created_at: 2007-10-10 23:48:42
+  updated_at: 2007-10-10 23:48:42
+  description: unpaid invoice 2
+  status: sent
+  total_amount: 1000.00
+  unique_name: invoice_no_tax_settings_with_customer_enabled_tax_settings
+  currency: CAD
+  
+invoice_with_tax_settings_no_customer:
+  id: 60
+  created_by_id: 2
+  customer_id: nil
+  created_at: 2007-10-10 23:48:43
+  updated_at: 2007-10-10 23:48:43
+  description: unpaid invoice 2
+  status: sent
+  total_amount: 1000.00
+  unique_name: invoice_with_tax_settings_no_customer
+  currency: CAD
+  
+invoice_with_customer_with_no_contacts:
+  id: 61
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:44
+  updated_at: 2007-10-10 23:48:44
+  unique_number: 61
+  status: draft
+  currency: CAD
+  
+invoice_with_customer_with_contact:
+  id: 62
+  created_by_id: 1
+  customer_id: 2
+  created_at: 2007-10-10 23:48:45
+  updated_at: 2007-10-10 23:48:45
+  unique_number: 62
+  status: draft
+  currency: CAD
+  
+discount_before_tax_invoice:
+  id: 63
+  created_by_id: 2
+  customer_id: 52
+  created_at: 2008-01-02 23:48:46
+  updated_at: 2008-01-02 23:48:46
+  unique_number: 63
+  status: draft
+  discount_before_tax: true
+  discount_type: percent
+  discount_value: 2.00
+  discount_amount: 0.31
+  total_amount: 17.25
+  currency: CAD
+  
+invoice_draft_11th:
+  id: 64
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2008-01-21 6:51:47
+  updated_at: 2008-01-21 6:51:47
+  unique_number: 64
+  status: draft
+  currency: CAD
+  
+invoice_with_date_and_due_date:
+  id: 65
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 65
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 10
+  currency: CAD
+  
+invoice_with_date_and_no_due_date:
+  id: 66
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2008-01-22 4:52:49
+  updated_at: 2008-01-22 4:52:49
+  unique_number: 66
+  status: draft
+  date: 2008-01-20
+  total_amount: 10
+  currency: CAD
+  
+invoice_with_due_date_and_no_date:
+  id: 67
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2008-01-22 4:52:50
+  updated_at: 2008-01-22 4:52:50
+  unique_number: 67
+  status: draft
+  due_date: 2008-01-21
+  currency: CAD
+  
+invoice_with_due_date_before_date:
+  id: 68
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2008-01-22 4:52:51
+  updated_at: 2008-01-22 4:52:51
+  unique_number: 68
+  status: draft
+  date: 2008-01-21
+  due_date: 2008-01-20    
+  currency: CAD
+  
+invoice_big:
+  id: 69
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2008-02-04 18:37
+  updated_at: 2008-02-04 18:37
+  unique_number: 69
+  status: draft
+  date: 2008-02-04
+  due_date: 2008-02-14
+  currency: CAD
+  
+invoice_bookkeeping_client_customer_1:
+  id: 70
+  created_by_id: 13
+  customer_id: 56
+  created_at: 2008-01-22 4:52:51
+  updated_at: 2008-01-22 4:52:51
+  unique_number: 70
+  status: draft
+  date: 2008-01-21
+  due_date: 2008-01-20
+  total_amount: 10.00   
+  currency: CAD
+  
+invoice_bookkeeping_client_customer_2:
+  id: 71
+  created_by_id: 13
+  customer_id: 57
+  created_at: 2008-01-22 4:52:51
+  updated_at: 2008-01-22 4:52:51
+  unique_number: 71
+  status: draft
+  date: 2008-01-21
+  due_date: 2008-01-20 
+  total_amount: 20.00     
+  currency: CAD
+  
+unsent_simply_accounting_invoice:
+  id: 72
+  type: SimplyAccountingInvoice
+  created_by_id: 21
+  customer_id: 58
+  created_at: 2008-01-22 4:52:51
+  updated_at: 2008-01-22 4:52:51
+  unique_name: 1
+  status: draft
+  date: 2008-01-21
+  due_date: 2008-01-20
+  subtotal_amount: 100.00 
+  total_amount: 100.00
+  simply_amount_owing: 85.00
+  currency: CAD
+  
+sent_simply_accounting_invoice:
+  id: 73
+  type: SimplyAccountingInvoice
+  created_by_id: 21
+  customer_id: 58
+  created_at: 2008-01-22 4:52:51
+  updated_at: 2008-01-22 4:52:51
+  unique_name: 2
+  status: sent
+  date: 2008-01-21
+  due_date: 2008-01-20
+  subtotal_amount: 100.00 
+  total_amount: 100.00
+  currency: ZAR
+  
+draft_invoice_for_simply_user:
+  id: 74
+  created_by_id: 21
+  customer_id: 58
+  created_at: 2007-10-10 23:48:18
+  updated_at: 2007-10-10 23:48:18
+  description: draft
+  unique_number: 3
+  date: 2007-12-23
+  status: draft
+  currency: CAD
+  
+invoice_paid_by_user_for_payments:
+  id: 75
+  created_by_id: 6
+  customer_id: 3
+  created_at: 2007-10-10 23:48:22
+  updated_at: 2007-10-10 23:48:22
+  description: partially paid
+  unique_number: 76
+  status: sent
+  total_amount: 100
+  currency: CAD
+
+unpaid_invoice_4:
+  id: 76
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:29
+  updated_at: 2007-10-10 23:48:29
+  description: unpaid, resent
+  status: resent
+  total_amount: 321.0
+  unique_name: unpaid_invoice_4
+  currency: CAD
+
+
+unpaid_invoice_5:
+  id: 77
+  created_by_id: 6
+  customer_id: 25
+  created_at: 2007-10-10 23:48:29
+  updated_at: 2007-10-10 23:48:29
+  description: unpaid, resent
+  status: resent
+  total_amount: 321.33
+  unique_name: unpaid_invoice_5
+  currency: CAD
+
+sent_invoice_with_no_customer:
+  id: 78
+  created_by_id: 5
+  customer_id: nil
+  created_at: 2007-10-10 23:48:43
+  updated_at: 2007-10-10 23:48:43
+  description: unpaid invoice 2
+  status: sent
+  total_amount: 0.00
+  unique_name: sent_invoice_with_no_customer1
+  currency: CAD
+  
+invoice_moneris_payment_cc:
+  id: 83
+  created_by_id: 28
+  customer_id: 60
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 83
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 10.00
+  currency: CAD
+  
+invoice_moneris_payment_cc_two:
+  id: 84
+  created_by_id: 28
+  customer_id: 60
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 84
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 1.50
+  currency: CAD
+
+invoice_sps_fail_cc_payment:
+  id: 85
+  created_by_id: 27
+  customer_id: 59
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 85
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 2.00
+  currency: CAD
+
+invoice_sps_usd_payment_1:
+  id: 86
+  created_by_id: 28
+  customer_id: 60
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 86
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 2.00
+  currency: USD
+
+invoice_sps_usd_payment_2:
+  id: 87
+  created_by_id: 27
+  customer_id: 59
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 87
+  status: sent
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 2.00
+  currency: USD
+
+invoice_sps_payment_cc:
+  id: 88
+  created_by_id: 28
+  customer_id: 60
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 88
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 10
+  currency: CAD
+
+invoice_moneris_payment_need_to_call_for_authorization:
+  id: 89
+  created_by_id: 28
+  customer_id: 60
+  created_at: 2008-01-22 4:52:48
+  updated_at: 2008-01-22 4:52:48
+  unique_number: 89
+  status: draft
+  date: 2008-01-20
+  due_date: 2008-01-21
+  total_amount: 1.01
+  currency: CAD
+
+quote:
+  id: 100
+  created_by_id: 1
+  customer_id: 0
+  created_at: 2007-10-10 23:48:13
+  updated_at: 2007-10-10 23:48:13
+  date: 2007-4-2
+  unique_number: 131213
+  status: quote_draft
+  currency: CAD
+
+<<<<<<< HEAD
+quote_sent:
+  id: 101
+=======
+recurring:
+  id: 91
+>>>>>>> origin/wojciech_1560_12
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2007-10-10 23:48:13
+  updated_at: 2007-10-10 23:48:13
+<<<<<<< HEAD
+  date: 2007-4-2
+  unique_number: 131214
+  status: quote_sent
+  currency: CAD
+  total_amount: 60.02
+
+=======
+  date: 2009-9-24
+  due_date: 2009-9-27
+  status: recurring
+  currency: CAD
+  total_amount: 73.27
+
+recurring_sendable:
+  id: 92
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2009-06-10 23:48:13
+  updated_at: 2009-06-10 23:48:13
+  date: 2011-9-24
+  status: recurring
+  currency: CAD
+  total_amount: 100
+
+recurring_3:
+  id: 93
+  created_by_id: 2
+  customer_id: 52
+  created_at: 2009-09-10 23:48:13
+  updated_at: 2009-09-10 23:48:13
+  date: 2011-9-24
+  status: recurring
+  currency: CAD
+  total_amount: 100
+
+auto_generated_invoice_1:
+  id: 94
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2009-06-10 23:48:13
+  updated_at: 2009-06-10 23:48:13
+  date: 2011-9-24
+  status: draft
+  currency: CAD
+  total_amount: 100
+  recurring_invoice_id: 91
+
+auto_generated_invoice_2:
+  id: 95
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2009-07-10 23:48:13
+  updated_at: 2009-07-10 23:48:13
+  date: 2011-9-24
+  status: draft
+  currency: CAD
+  total_amount: 100
+  recurring_invoice_id: 91
+
+auto_generated_invoice_3:
+  id: 96
+  created_by_id: 1
+  customer_id: 1
+  created_at: 2009-08-10 23:48:13
+  updated_at: 2009-08-10 23:48:13
+  date: 2011-9-24
+  status: draft
+  currency: CAD
+  total_amount: 100
+  recurring_invoice_id: 91
+>>>>>>> origin/wojciech_1560_12

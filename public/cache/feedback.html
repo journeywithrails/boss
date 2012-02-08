@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--  development -->
+<head>
+	<!-- Use IE7 mode -->
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Feedback: index</title>
+  <link href="/themes/global.css?1257152049" media="screen, print" rel="stylesheet" type="text/css" />
+  <link href="/themes/default/shared.css?1257152049" media="screen, print" rel="stylesheet" type="text/css" />
+  <link href="/themes/default/home.css?1257152049" media="screen, print" rel="stylesheet" type="text/css" />
+  <link href="/themes/default/session.css?1257152049" media="screen, print" rel="stylesheet" type="text/css" />  
+  
+      <!--[if IE 6]>
+        <link href="/themes/default/ie6.css" media="screen, print" rel="stylesheet" type="text/css" />
+      <![endif]-->
+    
+
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	
+	<link href="/yui/build/reset-fonts-grids/reset-fonts-grids.css?1257152210" media="screen" rel="stylesheet" type="text/css" />			  
+	<link href="/themes/default/home.css?1257152049" media="screen, print" rel="stylesheet" type="text/css" />
+	<link href="/themes/static.css?1257152049" media="screen" rel="stylesheet" type="text/css" />	
+
+
+	<script src="/javascripts/prototype.js?1257152062" type="text/javascript"></script>
+	<script src="/javascripts/effects.js?1257152062" type="text/javascript"></script>
+	<!-- load any template-specific javascripts (use by including a content_for block in template) -->
+	
+
+</head>
+
+<body>
+	<!-- Locale: en_US -->
+  <!-- IE6 minimum width hack, opening -->
+  <div id="MinWidthContainer"><div id="PageContainer"><div id="PageContentContainer">
+
+  <div id="doc3" class="yui-t8">		
+	  <div id="hd">
+  			    	
+	<div id="header">
+	<div id="header_inner">
+		<div id="search_bg_rt">&nbsp;</div>
+		<div id="search">
+			<div id="top_nav">
+	  		<ul>
+  <li><a href="http://sbb.simplytest.com:8888">Try Sage Spark!</a></li><span class="divide">|</span>
+    
+  <li><a href="/tour">Tour</a></li><span class="divide">|</span>
+	<li><a href="/invite_a_friend">Invite a Friend</a></li><span class="divide">|</span>
+	<li><a href="/faq">FAQ</a></li><span class="divide">|</span>
+	<li><a href="/about">About Us</a></li><span class="divide">|</span>
+	<li><a href="http://localhost:3000/login" id="login-link"><span>Log In</span></a></li>	
+	<span class="divide">|</span>
+	<li><a href="http://account.simplytest.com:4000/billingboss/signup/new?locale=en_US&service=http%3A%2F%2Flocalhost%3A3000%2Fprofiles%2Fnewedit%3Flocale%3Den_US" id="signup-link">Sign up</a></li>
+</ul>
+
+			</div>
+		</div>
+		
+		<div id="search_bg_lt">&nbsp;</div>
+	
+		<div id="logo_text">
+			<a href="/">
+				<img alt="Billing Boss by Sage - Invoicing Made Easy" altclass="logo_text" src="/themes/default/images/spark/billing-boss-logo.gif?1257151901" />
+			</a>
+		</div>		
+		<!-- <div style="cursor: pointer" onclick="location.href='/'" id="logo"></div> -->
+		<div id="login_bar">
+				<li><a href="http://localhost:3000/login" id="login-link">Log In</a></li><li><a href="http://account.simplytest.com:4000/billingboss/signup/new?locale=en_US&service=http%3A%2F%2Flocalhost%3A3000%2Fprofiles%2Fnewedit%3Flocale%3Den_US" id="signup-link">Sign up</a></li>
+		</div>
+	</div>
+</div>
+<div class="clear"/>
+
+
+  	</div>			
+	 	<div id="yui-main">
+	 	  <br/>
+      	 
+
+<div id="content_container">
+	
+      <!-- ROUNDED CORNERS - WITH INFOBOX -->
+      
+      <div class="corner_large_tr" style="clear: both;">
+          <div class="corner_large_tl">
+            <div class="infobox">								
+              <p>
+              Feedback								
+              </p>								
+            </div>
+          
+          </div>
+      </div>							
+      
+      
+      <!-- CONTENT SECTION -->
+       
+	<div class="content">
+<br/>	
+	
+<form action="/feedback/create" method="post"><div style="margin:0;padding:0"><input name="authenticity_token" type="hidden" value="e1450e7b074fd8d8da5deb7165f50fb55575d994" /></div>
+  <div class="colored_input">
+    <p>Please use this form to send us feedback on this site.<br/><br/>If you are reporting a bug or malfunction, please be descriptive in the nature of the problem and how you got it, so we can reproduce and fix it as soon as possible.</p>
+    <br clear=all/>
+    <p>Your Name (optional):</p>  
+    <input id="feedback_user_name" name="feedback[user_name]" size="30" type="text" />  
+     <br clear=all/>
+    <br clear=all/>
+    <p>Your email address (must be provided if you want a response):</p>  
+    <input id="feedback_user_email" name="feedback[user_email]" size="30" type="text" />  
+    <br clear=all/>  
+    <br clear=all/>
+    <p>Your message:</p>
+    <textarea cols="70" id="feedback_text_to_send" name="feedback[text_to_send]" rows="15"></textarea>
+    <br clear=all/>
+    <br clear=all/>
+  </div>   
+  <input class="form_submit" id="send-btn" name="commit" type="submit" value="Send" />  
+</form>
+	</div>
+
+      <!-- BOTTOM CORNERS -->
+      <div class="corner_large_bl">
+          <div class="corner_large_br"></div>
+      </div>							
+      <!-- END OF ROUNDED CORNERS -->
+
+
+
+</div>	
+
+			
+	  </div>
+    <div id="ft">
+ 		  
+
+<div class="footer">
+  
+    <br/>
+    <div>
+      <ul>
+        <li><a href="/tour">Take the Tour</a></li>
+        <span class="divide">|</span>
+        <li><a href="http://www.sagespark.com/blog/billingboss" target="_blank">Blog</a></li>
+        <span class="divide">|</span>
+        <li>
+        <a href="/feedback">Feedback</a>
+        </li>
+        
+          <span class="divide">|</span>
+          
+          <a href="/home?mobile=true">Mobile version</a>
+              </ul>
+    </div>
+    <br/>
+  
+  <p>
+    Billing Boss &copy; 2009 <a href='http://www.sagesoftware.ca'>Sage</a>. All rights reserved.
+  </p>
+</div>
+
+    </div>    
+  </div>
+
+  <!-- IE6 minimum width hack, closing -->
+  </div></div></div>
+  
+  
+
+
+  
+  
+</body>
+<script src="/javascripts/application.js?1257152062" type="text/javascript"></script>	
+
+
+
+</html>
+

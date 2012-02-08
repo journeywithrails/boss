@@ -1,0 +1,19 @@
+<% login ||= nil -%>
+  <% secure_form_tag({:controller => 'session', :action => 'create'}, {:id => 'login_form'}) do %>
+    <div id="login_fields">
+    	<ul class="form">
+    		<li>
+      <div class="form_field_hdr">E-mail:</div>
+      <%= text_field_tag 'login', params[:login] || login.unless_nil?('',''), :class => "login_input"%>
+      </li>
+      <li>
+	  <div class="form_field_hdr">Password:</div>
+      <%= password_field_tag 'password', nil,:class => "login_input" %>
+      </li>
+	  </ul>
+
+		<%= link_to_function "Log in", "$(this).up('form').submit()", :id => "login_button", :class => "button white margined" %>
+
+    </div>
+  <% end %>    
+

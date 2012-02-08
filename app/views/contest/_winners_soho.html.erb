@@ -1,0 +1,19 @@
+<table width=100% class="winners" id="soho_winners">
+	<th>Draw Date</th>
+	<th>Prize</th>
+	<th>Winner</th>
+	<% @winners.each do |w| %>
+		<tr>
+			<td>
+				<%= w.draw_date %>
+			</td>
+			<td>
+				<%= w.prize %>
+			</td>
+			<td>
+				<%= w.winner_name %>
+			</td>
+		</tr>
+	<% end %>
+
+</table>

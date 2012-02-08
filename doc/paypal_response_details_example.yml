@@ -1,0 +1,28 @@
+timestamp: "2008-01-30T01:00:16Z"
+name: 
+payer_country: US
+address_owner: PayPal
+postal_code: 
+state_or_province: 
+correlation_id: ea0a5c81a6c96
+invoice_id: 6-00000002
+salutation: 
+payer: tornad_1198018980_per@gmail.com
+street1: 
+payer_business: 
+token: EC-6B715832H9954071T
+build: "498001"
+street2: 
+version: "2.000000"
+payer_status: verified
+address_status: None
+first_name: Test
+ack: Success
+payer_id: 74GZMZ7CKFVAJ
+country_name: 
+last_name: User
+city_name: 
+middle_name: 
+custom: 6_18b2f92dcef4c9cb3038eb4149bacfd_2
+suffix: 
+

@@ -1,0 +1,6 @@
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: root
+  :password: '6825t'
+  :database: tornado_development

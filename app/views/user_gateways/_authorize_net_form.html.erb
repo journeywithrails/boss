@@ -1,0 +1,9 @@
+<% skip_info ||= false -%>
+<label><%= _("Login ID") %> <%= text_field_tag 'user_gateways[authorize_net][login]', user_gateway.login, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Password") %> <%= text_field_tag 'user_gateways[authorize_net][password]', user_gateway.password, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<% unless skip_info -%>
+<%= link_to _("Where do I find Authorize.Net information?"), "/authorize_net_help.html" , :popup => true %>
+<% end -%>
+<br clear="all"/>

@@ -1,0 +1,5 @@
+page << "if ($('contact_default_div')) {"
+page['contacts_container'].show
+page.remove 'contact_default_div' 
+page.replace_html 'contacts_container', :partial => "contacts/contact_line_items", :object => @contacts, :locals => {:checked => false}
+page << "};"

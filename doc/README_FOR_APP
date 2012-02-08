@@ -1,0 +1,17 @@
+Application Configuration
+=========================
+
+Application Configuration is stored in config/application.yml.
+
+This file is expected to contain a 'common' key and a key for each environment 
+('development', 'test', 'production', etc.) a t the top level. At load time,
+this config file is loaded into an open struct with the relevant dictionary for
+the current environment merged into common and stored in a global constant
+::AppConfig.
+
+Since the yaml file is recursively parsed into an OpenStruct, values can be
+nested arbitrarily and are referred to by dot-path: 
+
+    ::AppConfig.my_group.my_sub_group.my_setting
+
+

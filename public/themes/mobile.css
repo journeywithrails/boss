@@ -1,0 +1,88 @@
+#footer_icons_table,#footer_icons_row{margin:0 !important;padding:0 !important;}
+.Action{-webkit-border-image:url(/images/iphone/act-btn.png) 0 5 0 5;border-width:0 5px;}
+.active_footer_icon{background:url(/images/iphone/menuButton_active_big.png) no-repeat center !important;}
+.add a{font-size:18px !important;}
+.add a,.remove a{color:#324F85;font-size:16px;font-weight:700;text-decoration:none;}
+.button{border-width:0 14px;color:#fff;display:block;font:bold 20px/46px Helvetica;margin:3px 0;text-align:center;text-decoration:none;text-shadow:#000 0 1px 0;}
+.country-border-fix{border-top:1px solid #B4B4B4 !important;}
+.enabled_menu_button{background:url(/images/iphone/menuButton_active.png) no-repeat center !important;}
+.enabled_menu_button_small{background:url(/images/iphone/menuButton_small_active.png) no-repeat center !important;}
+.footer_icon{font-size:16px;font-weight:700;height:44px;text-align:center;width:104px;}
+.footer_icon a{color:#FFF;text-decoration:none;}
+.form_field_hdr{color:#4c566c;font:bold 14px Helvetica;margin-bottom:10px;text-shadow:#fff 0 1px 0;}
+.margined{margin-right:10px !important;}
+.menu_button{background-height:100%;background-position:center;background-width:100%;height:30px;text-align:center;}
+.menu_button a{color:#FFF;font-weight:700;text-decoration:none;}
+.mobile_label{width:150px;}
+.mobile_logo{display:block;margin-left:auto;margin-right:auto;margin-top:5px;}
+.mobile_logo_bg{margin:0 0 0 -10px;padding:0;background-color:#ffffff;min-height:45px;padding:5px;}
+.white{-webkit-border-image:url(/images/iphone/white-btn.png) 0 14 0 14;color:#000;text-shadow:#fff 0 1px 0;}
+body{-webkit-text-size-adjust:none;-webkit-user-select:none;background:#c5ccd3 url(/images/iphone/stripes.png);font-family:Helvetica;margin:0 0 0 10px;padding:0;}
+body#blank p{color:#898989;margin:250px 0 0;text-align:center;}
+body#normal li em{font-style:normal;font-weight:400;}
+body#normal li{-webkit-border-radius:0;}
+body#normal ul li{font-size:20px;}
+body#normal ul li small{font-size:16px;line-height:28px;}
+body#normal ul{-webkit-border-radius:0;border-left:0;border-right:0;border-top:0;margin:0;}
+body#normal{background-color:#fff;margin:0;padding:0;}
+div#footer,div#secondary_header{-webkit-box-sizing:border-box;background:#6d85a3 url(/images/iphone/bg-head.png) repeat-x top;border-bottom:1px solid #2e3744;border-top:1px solid #cdd5df;margin:0 0 0 -10px;min-height:44px;}
+div#header{-webkit-box-sizing:border-box;background:#6d85a3 url(/images/iphone/bg-head.png) repeat-x top;border-bottom:1px solid #2e3744;border-top:1px solid #cdd5df;margin:0 0 0 -10px;min-height:44px;padding:10px;}
+div#header #backButton {-webkit-border-image:url(/images/iphone/back-btn.png) 0 8 0 14;border-width:0 8px 0 14px;left:6px;max-width:55px;padding:0;right:auto;}
+div#header + h1,ul + h1,.blue{color:#4c566c;font:bold 18px Helvetica;margin:15px 0 0 10px;text-shadow:#fff 0 1px 0;}
+div#header a{-webkit-border-image:url(/images/iphone/tool-btn.png) 0 5 0 5;background:none;border-width:0 5px;color:#FFF;font:bold 12px/30px Helvetica;height:30px;margin:0;overflow:hidden;padding:0 3px;position:absolute;right:6px;text-decoration:none;text-overflow:ellipsis;text-shadow:#2e3744 0 -1px 0;top:7px;white-space:nowrap;width:auto;}
+div#header h1{color:#fff;font:bold 20px/30px Helvetica;left:50%;margin:2px 0 0 -24%;overflow:hidden;padding:5px 0;position:absolute;text-align:center;text-overflow:ellipsis;text-shadow:#2d3642 0 -1px 0;top:0;white-space:nowrap;width:49%;}
+div#header p{clear:both;color:#3c4650;font-size:13px;font-weight:700;left:35px;margin:0;overflow:hidden;position:absolute;right:35px;text-align:center;text-overflow:ellipsis;text-shadow:#C0CBDB 0 1px 0;top:4px;white-space:nowrap;}
+div#header ul{margin-top:15px;}
+div#secondary_header table{margin-top:3px;}
+div.pre{height:60px;}
+div.pre a{right:6px;top:25px !important;}
+div.pre h1{top:18px !important;}
+li:first-child{-webkit-border-top-left-radius:8px;-webkit-border-top-right-radius:8px;border-top:0;}
+li:last-child{-webkit-border-bottom-left-radius:8px;-webkit-border-bottom-right-radius:8px;}
+td#footer_icon{margin:0 !important;padding:0 !important;width:104px;}
+tr.child_item h3{font-size:14px !important;}
+tr.child_item td{border-top:1px solid #B4B4B4;color:#666;display:list-item;list-style:none;list-style-type:none;padding:8px;}
+tr.child_item td input[type="text"],tr.child_item td input[type="password"],tr.child_item td textarea,tr.child_item td select{-webkit-appearance:textarea;background:#fff url(../.png);border:0;color:#777;display:inline-block;font:normal 17px Helvetica;margin-left:0;padding:0;width:70%;}
+tr.child_item td textarea{height:30px;padding:0;text-indent:-2px;}
+ul + p,ul.data + p + p,ul.form + p + p{color:#4c566c;font:14px Helvetica;margin:0 10px 17px 0;text-align:center;text-shadow:#FFF 0 1px 0;}
+ul li{border-top:1px solid #B4B4B4;color:#666;list-style-type:none;padding:10px;}
+ul li a + a{color:#000;display:block;font:14px Helvetica;margin:0;overflow:hidden;padding:0;text-overflow:ellipsis;white-space:nowrap;}
+ul li a + a + a,ul li.img a + a + a + a,ul li.img a + small + a + a + a{color:#666;display:block;font:13px Helvetica;margin:0;overflow:hidden;padding:0;text-overflow:ellipsis;white-space:nowrap;}
+ul li a img.ico,ul li img.ico{display:block;float:left;margin:-4px 10px -4px -1px;}
+ul li a,li.img a + a{-webkit-tap-highlight-color:rgba(0,0,0,0);color:#000;display:block;margin:-10px;overflow:hidden;padding:12px 10px;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;}
+ul li input[type="checkbox"],ul li input[type="radio"]{color:#324f85;margin:0;padding:10px;}
+ul li input[type="checkbox"]:after,ul li input[type="radio"]:after{content:attr(title);display:block;font:17px Helvetica;margin:-12px 0 0 17px;width:246px;}
+ul li input[type="text"],ul li input[type="password"],ul li textarea,ul li select{-webkit-appearance:textarea;background:#fff url(../.png);border:0;color:#777;display:inline-block;font:normal 17px Helvetica;margin-left:0;padding:0;width:100%;}
+ul li select{-webkit-appearance:textfield;background:transparent url(/images/iphone/chevron.png) no-repeat 103% 3px;margin-left:-6px;text-indent:0;width:104%;}
+ul li small{color:#369;display:block;float:right;font:17px Helvetica;overflow:hidden;padding:3px 0;text-align:right;text-overflow:ellipsis;white-space:nowrap;width:23%;}
+ul li small + a{width:75%;}
+ul li small.counter{-webkit-border-radius:11px;background:#9a9faa;color:#fff;display:inline !important;font-size:17px !important;font-weight:700;line-height:13px !important;margin-top:2px;padding:4px 10px 5px;width:auto;}
+ul li textarea{height:120px;padding:0;text-indent:-2px;}
+ul li.arrow{background-image:url(/images/iphone/chevron.png);background-position:right center;background-repeat:no-repeat;}
+ul li.arrow a{width:95%;}
+ul li.arrow small{padding:0 15px;}
+ul li.arrow small + a{width:70%;}
+ul li.arrow small.counter{margin-right:15px;}
+ul li.img{padding-left:115px;}
+ul li.img a + a{font-size:17px;font-weight:700;margin:-10px 10px -20px -5px;}
+ul li.img a + a + a{font-size:14px;font-weight:400;margin-bottom:-10px;margin-left:-10px;margin-top:0;}
+ul li.img a + small + a{margin-left:-5px;}
+ul li.img a + small + a + a{font-size:14px;font-weight:400;margin-bottom:-10px;margin-left:-10px;margin-top:-20px;}
+ul li.img a + small + a + a + a{margin-bottom:0;margin-left:0 !important;}
+ul li.img a.img{background:url(/images/iphone/standard-img.png) no-repeat;display:inline-block;float:left;height:75px;margin:-10px 0 -20px -115px;width:100px;}
+ul,tr.child_item{-webkit-border-radius:8px;background:#fff;border:1px solid #B4B4B4;color:#000;font:bold 17px Helvetica;margin:15px 10px 17px 0;padding:0;}
+ul.field li a{display:inline-block;font-size:13px;line-height:18px;margin:0;overflow:visible;padding:0;vertical-align:top;white-space:normal;width:60%;}
+ul.field li big{display:inline-block;font-size:13px;font-weight:400;line-height:18px;overflow:visible;white-space:normal;width:60%;}
+ul.field li h3,tr.child_item td h3{color:#4c566c;float:left;font-size:13px;line-height:18px;margin:0 10px 0 0;overflow:hidden;padding:0;text-align:right;text-overflow:ellipsis;white-space:nowrap;width:25%;}
+ul.field li small{font-size:13px;font-weight:700;margin-top:3px;position:absolute;right:25px;z-index:3;}
+ul.form li{padding:7px 10px;}
+ul.form li.error{border:2px solid red;}
+ul.form li.error + li.error{border-top:0;}
+ul.form li:hover,body#blank{background:#fff;}
+ul.individual{background:none;border:0;clear:both;height:45px;}
+ul.individual li{-webkit-border-radius:8px;-webkit-box-sizing:border-box;background:#FFF;border:1px solid #b4b4b4;color:#b7becd;display:block;float:left;font-size:14px;padding:11px 10px 14px;text-align:center;width:48%;}
+ul.individual li + li,body#chat div.right{float:right;}
+ul.individual li a{-webkit-border-radius:8px;color:#324f85;line-height:16px;margin:-11px -10px -14px;padding:11px 10px 14px;}
+ul.individual li a:hover,ul.individual_ ive li:hover{background:#36c;color:#fff;}
+ul.individual_active li,ul.individual_active li a{color:#324f85;text-decoration:none;}
+

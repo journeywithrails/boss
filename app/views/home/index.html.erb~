@@ -1,0 +1,271 @@
+<% content_for "bottom_javascripts" do -%>
+	<%= javascript_include_tag '/javascripts/homepage/billingboss.js' %>
+<% end %>
+
+<% content_for :header do %>
+	<%= render :partial => "/layouts/homepage_header" %>
+<% end %>
+	 
+<% content_for :main do %>	 
+	
+	<!-- Body Content Starts -->
+	<div class="wrapper">
+	
+	<!-- Right Side Starts -->
+	<div id="right-side">
+    <% if !::AppConfig.hide_localization %>
+    <div class="cornerbox" id="languages-cornerbox">
+        <div class="promobox" id="languages-promo">
+          <table>
+            <tr>
+              <td>
+                <span class="langs"><%= _("In your language") %></span><br/><br/>
+
+                <%=_("Change language")%>
+                <% selected = cookies["lang"].blank? ? default_language : cookies["lang"] %>
+                <%= select_tag "language", options_for_select(select_languages_native, selected).sort, :onChange => "window.location = '/' + value;"%><br/><br/>
+                <span class="langexp2"><%= _("Community supported") %></span><br/><br/>
+              <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </td>
+              <td>
+                <div id="marqueecontainer" onMouseover="copyspeed=pausespeed" onMouseout="copyspeed=marqueespeed">
+                  <div id="vmarquee">
+                    <div class="langbox" id="languages-enum">
+                      <table>
+                        <% available_languages.each do |iso639| %>
+                          <tr><td>
+                            <div class='native_lang'><%= link_to humanize_language( iso639 ), :controller => 'languages', :action => 'show', :id => iso639 %></div>
+                            <div class='local_lang'>&ndash; <%= localize_language( iso639 ) %></div>
+                          </td></tr>
+                        <% end %>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+	<h1 class="first"><a href="#info" onclick="$('#heavy-text').accordion('activate', 0)"><%= _('Send Invoices Quickly &amp; Easily') %></a></h1>
+	<p><%= _("A simple online invoicing tool. No more messy spreadsheets or complicated accounting software. We've ignored features that you don't need and focused just on making billing simple.") %><br />
+	<a href="#info" onclick="$('#heavy-text').accordion('activate', 0)"><%= _('Learn more about the online invoicing >') %></a></p>
+	
+	<h1><a href="#info" onclick="$('#heavy-text').accordion('activate', 1)"><%= _('Always Free to Use') %></a></h1>
+	<p><%= _("Unlike other invoice solutions, with Billing Boss, there are no limits to the number of invoices you can create or send.") %><br />
+	<a href="#info" onclick="$('#heavy-text').accordion('activate', 1)"><%= _('Why is Billing Boss free >') %></a></p>
+	
+	<h1><a href="#info" onclick="$('#heavy-text').accordion('activate', 2)"><%= _('Get Paid Faster') %></a></h1>
+	<p><%= _("Your customers can pay you immediately with online payments.") %><br />
+	<a href="#info" onclick="$('#heavy-text').accordion('activate', 2)"><%= _('How it works >') %></a></p>
+	
+	<h1><a href="files/privacy_statement.pdf" target="_blank"><%= _('Safe &amp; Secure') %></a></h1>
+	<p><%= _("Your data and your customer information is encrypted and stored in a state of the art facility with regular backup. We never use or share your data.") %><br />
+	<a href="files/privacy_statement.pdf" target="_blank"><%= _('Read our Privacy policy >') %></a></p>
+	
+	<h1><a href="#info" onclick="$('#heavy-text').accordion('activate', 3)"><%= _('Share data with your bookkeeper or accountant') %></a></h1>
+	<p><%= _("Invite your accounting professional to share your data - no more sending files back and forth.") %><br />
+	<a href="#info" onclick="$('#heavy-text').accordion('activate', 3)"><%= _('Learn more about sharing your data >') %></a></p>
+	</div>
+	<!-- Right Side Ends -->
+
+	
+	<!-- Left Side Starts -->
+	<div id="left-side">
+	
+  <% if ::AppConfig.mobile_enabled %>
+  <div class="cornerbox" id="mobile-cornerbox">
+    <div id="feature-promos">
+      <div class="promobox" id="mobile-promo">
+        
+
+
+
+<table>
+	<tr>
+	<td>
+		<div class="promobrag" style="width:380px;">
+			<div class="payment-plus-plusimg">
+<%= image_tag("/themes/default/images/homepage/billing-paymentplus-plus.gif", :alt => _("Payment plus"), :altclass => "payment_plus_logo") %>
+			</div>
+			<div style="float:left;">
+				<div class="payment-plus-Upgaredtxt">
+				<%= _("Upgared your Billing Boss now with") %></div>
+			<div class="payment-plus-paymentplusimg">
+<%= image_tag("/themes/default/images/homepage/billing-paymentplus-payment-plus.gif", :alt => _("Payment plus"), :altclass => "payment_plus") %></div>				
+			<div class="payment-plus-getpaidtxt-main">
+				<div class="payment-plus-getpaidtxt">
+				<%= _("It is now easier than ever to then get paid with") %></div>
+				<div><%= _("Billing Boss using your own merchant account!") %></div>
+
+			</div>
+
+			</div>
+<div class="clearspace"></div>
+			<div class="payment-plus-buynowimg">
+			<%= localized_image_tag("/themes/default/images/homepage/billing-paymentplus-billing-buy.gif", :alt => _('Buy now'), :altclass => "buy_now") %>
+			</div>
+
+		</div>
+	</td>
+
+	</tr>
+</table>
+      </div>
+    </div>
+    <div class="clearspace"></div>
+	</div>
+  <% end %>
+	
+	<!-- Invite a Friend Starts -->
+	<div id="invite-a-friend">
+		<%= localized_image_tag("/themes/default/images/homepage/invite-a-friend.gif", :alt => _('Invite a Friend'), :altclass => "invite_friend") %>
+	<p><%= taf_header_text %></p>
+	
+	<div id="invite-a-friend-form">
+		<% form_for(:referral, :url => {:controller => :referral, :action => :create} ) do |f| %>
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="40%"><span class="green-label"><%= _("Your Name:") %></span></td>
+					<td width="60%"><span class="green-label"><%= _('Your Email Address:') %></span></td>
+				</tr>
+				<tr>
+					<td><%= f.text_field("referrer_name", :class => "textfield") %></td>
+					<td><%= f.text_field("referrer_email", :class => "textfield", :value => (logged_in? ? current_user.email : "")) %></td>
+				</tr>
+				<tr>
+					<td><span class="orange-label"><%= _("Friend's Name:") %></span></td>
+					<td><span class="orange-label"><%= _("Friend's Email Address:") %></span></td>
+				</tr>
+				<tr>
+					<td><%= f.text_field("friend_name_1", :class => "textfield") %> </td>
+					<td><%= f.text_field("friend_email_1", :class => "textfield") %></td>
+				</tr>
+				<% if ::AppConfig.referral_captcha %>
+				<tr>
+					<td>
+						<br/><%= _('Please type the code you see into the box below it:') %>
+					</td>
+					<td>
+						<%= show_simple_captcha(:image_style => 'simply_green', :distortion => 'medium', :label => "") %>
+					</td>
+				</tr>
+				<% end %>
+				<tr>
+					<td><%= link_to( _("Send to multiple friends"), {:controller => "referral", :action => "new"}) %></td>
+					<td align="right">
+						<%= localized_image_submit_tag '/themes/default/images/homepage/send-button.gif', :name => "commit", :id => "referral_submit", :class => "send", :alt => _("send"), :altclass => "invite_send" %>
+					</td>
+				</tr>
+			</table>
+		<% end %>
+	</div>
+	
+	<% if ::AppConfig.contest.bybs %>
+        <p><%= _("* See <a href='/contest/rules'>contest rules</a>")%></p>
+    <% end %>
+	</div>
+	<!-- Invite a Friend Ends -->
+	
+	</div>
+	<!-- Left Side Ends -->
+	
+	
+	<div class="clearspace"></div>
+	
+	<!-- Heavy Text Starts -->
+	<div id="heavy-text">
+	
+	<a name="info"></a>
+	<h2><%= _('Click on a topic below to read more:') %></h2>
+	
+	<!-- Left Column Starts -->
+	<div class="l-column">
+	
+	<div class="text-block">
+	<div class="title"><h1><%= _('A simple invoicing solution') %></h1></div>
+	<div><p><%= _("You don't need any accounting experience to run Billing Boss because it isn't an online accounting application. We've kept in simple on purpose, so you can get organized and get the job done fast.  With our billing solution, you can easily create and send invoices while being able to see the customers that have paid and those who still owes you money. Spending less time on billing and tracking down payments, means that you have more time to focus on your business.") %>
+	</p>
+	<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 0)" class="top"><%= _('Close Topic') %></a>
+	</div>
+	</div>
+	
+	<div class="text-block">
+	<div class="title"><h1><%= _('Why Billing Boss is Free') %></h1></div>
+	<div><p><%= _("Billing Boss is here to help you meet your number 1 need (getting paid quickly and easily).  It has to be free – after all, you can easily write invoices by hand in Word or struggle with an ugly spreadsheet.  Where we will make money is when we solve harder problems for you. We're currently working on some exciting services to help you grow your business. Stay tuned as we'll be announcing them in the coming months.") %>
+	</p>
+	<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 1)" class="top"><%= _('Close Topic') %></a>
+	</div>
+	</div>
+	
+	<div class="text-block">
+	<div class="title"><h1><%= _('Accepting Online Payments') %></h1></div>
+	<div><p><%= _('Get your invoices paid an average of 2 weeks faster by accepting online payments through Billing Boss. ') %>
+	<br /><br />
+	<%= _('If you have a merchant account through Sage Payment Services, Beanstream, or if you have a PayPal account, when you email your customer an invoice, they can pay your invoice online immediately.') %>
+	</p>
+	<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 2)" class="top"><%= _('Close Topic') %></a>
+	</div>
+	</div>
+	
+	<div class="text-block">
+	<div class="title"><h1><%= _('Sharing your data') %></h1></div>
+	<div><p><%= _('While other online invoicing tools do not allow you to <strong>easily share your data</strong>, Billing Boss allows you to securely grant your accountant or bookkeeper access to your invoices, without having to transfer files back and forth. ') %>
+	<br /><br />
+	<%= _("Since you can see everything online, your workflow and communication between you and your accountant or bookkeeper will be faster, more efficient and more accurate.") %>
+	</p>
+	<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 3)" class="top"><%= _('Close Topic') %></a>
+	</div>
+	</div>
+	
+	</div>
+	<!-- Left Column Ends -->
+	
+	<!-- Right Column Starts -->
+	<div class="r-column">
+	
+	<div class="text-block">
+          <div class="title"><h1><%= _("Access from anywhere") %></h1></div>
+          <div><p><%= _("Because Billing Boss is an online application, there is no software to download and you're not tied to your home computer. You can access Billing Boss 24/7 through any internet connection - even if you are traveling, as long as you have access to a computer, you can send your customers an invoice. ") %>
+          </p>
+          <a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 4)" class="top"><%= _('Close Topic') %></a>
+          </div>
+        </div>
+
+<div class="text-block">
+<div class="title"><h1><%= _("Look Professional - fast") %></h1></div>
+<div><p><%= _("There's no need to spend time designing an invoice template with Billing Boss. We've done the work for you - just add your business information and you have a professionally designed invoice template that is ready to use over and over.") %>
+</p>
+<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 5)" class="top"><%= _('Close Topic') %></a>
+</div>
+</div>
+
+<div class="text-block">
+<div class="title"><h1><%= _("Built by Small Business Experts") %></h1></div>
+<div><p><%= _("Sage is a leading supplier of business management software and services to 5.7 million customers worldwide. From small start-ups to larger organizations, we make it easier for companies to manage their business processes.") %>
+<br /><br />
+<%= _("Our purpose is to help our customers run their businesses more effectively, helping them to gain greater insight into their business activities and providing them with lasting benefits by automating their business processes") %>
+</p>
+<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 6)" class="top"><%= _('Close Topic') %></a>
+</div>
+</div>
+
+<div class="text-block">
+<div class="title"><h1><%= _("Get Organized and Stay Organized") %></h1></div>
+<div><p><%= _("With Billing Boss, all of your invoices are stored in one place for easy access. You'll be able to quickly see how much you've billed out, what is paid and which invoices are overdue.") %></p>
+<a href="javascript:;" onclick="$('#heavy-text').accordion('activate', 7)" class="top"><%= _('Close Topic') %></a>
+</div>
+</div>
+
+</div>
+<!-- Right Column Ends -->
+
+<div class="clearspace"></div>
+</div>
+<!-- Heavy Text Ends -->
+</div>
+<!-- Body Content Ends -->
+<% end %>

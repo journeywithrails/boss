@@ -1,0 +1,620 @@
+Index: activesupport/lib/active_support/core_ext/hash/indifferent_access.rb
+===================================================================
+--- activesupport/lib/active_support/core_ext/hash/indifferent_access.rb	(revision 8644)
++++ activesupport/lib/active_support/core_ext/hash/indifferent_access.rb	(working copy)
+@@ -80,7 +80,11 @@
+       when Hash
+         value.with_indifferent_access
+       when Array
+-        value.collect { |e| e.is_a?(Hash) ? e.with_indifferent_access : e }
++        # don't do collect() because we need to be sure the object_id doesn't change
++        value.each_index do |i|
++          value[i] = value[i].with_indifferent_access if value[i].is_a?(Hash)
++        end
++        value
+       else
+         value
+       end
+@@ -92,6 +96,8 @@
+     module Hash #:nodoc:
+       module IndifferentAccess #:nodoc:
+         def with_indifferent_access
++          return self if self.is_a?(HashWithIndifferentAccess)
++
+           hash = HashWithIndifferentAccess.new(self)
+           hash.default = self.default
+           hash
+Index: actionpack/test/controller/request_test.rb
+===================================================================
+--- actionpack/test/controller/request_test.rb	(revision 8644)
++++ actionpack/test/controller/request_test.rb	(working copy)
+@@ -456,6 +456,85 @@
+     )
+   end
+ 
++  def test_deep_query_string_with_array_of_hashes_with_multiple_pairs_in_depth_first_order
++    assert_equal(
++      {'x' => {'y' => [{'z' => '10', 'w' => 'a'}, {'z' => '20', 'w' => 'b'}]}},
++      ActionController::AbstractRequest.parse_query_parameters('x[y][][z]=10'+'&'+'x[y][][z]=20'+'&'+'x[y][][w]=a'+'&'+'x[y][][w]=b')
++    )
++  end
++
++  def test_deep_query_string_with_multiple_pairs_in_breadth_first_order_cannot_have_holes
++    assert_equal(
++      {'x' => {'y' => [{'z' => '10', 'w' => 'a'}, {'z' => '20', 'w' => 'c'}, {'z' => '30'}]}},
++      ActionController::AbstractRequest.parse_query_parameters('x[y][][z]=10&x[y][][w]=a&x[y][][z]=20&x[y][][z]=30&x[y][][w]=c')
++    )
++  end
++
++  def test_deep_query_string_lots_of_arrays_and_hashes_using_explicit_array_index
++    assert_equal(
++      {"a" => 
++        {"x" => 'hi',
++         "b" => [
++            {"c" => {"d" => ["1a", "1b", "1c"]}}, 
++            {"c" => {"d" => ["2a", "2b", "2c"]}}, 
++            {"c" => {"d" => ["3a", "3b", "3c"]}}
++          ]
++        }
++      },
++      ActionController::AbstractRequest.parse_query_parameters([
++              'a[x]=hi',
++              'a[b][#0][c][d][]=1a', 'a[b][#0][c][d][]=1b', 'a[b][#0][c][d][]=1c',
++              'a[b][#1][c][d][]=2a', 'a[b][#1][c][d][]=2b', 'a[b][#1][c][d][]=2c',
++              'a[b][#2][c][d][]=3a', 'a[b][#2][c][d][]=3b', 'a[b][#2][c][d][]=3c'
++            ].join('&')
++      )
++    )
++  end
++
++  def test_query_string_with_explicit_array_indices_with_hole
++    assert_equal(
++      {'a' => [{'c'=>'c0'}, nil, {'c'=>'c2'}]},
++      ActionController::AbstractRequest.parse_query_parameters('a[#0][c]=c0' + '&' + 'a[#2][c]=c2')
++    )
++  end
++
++  def test_checkbox_hack_query_string
++    assert_equal(
++       {"bob"=>{"test"=>"1"}},
++    ActionController::AbstractRequest.parse_query_parameters("bob[test]=1&bob[!test]=0")
++     )
++  end
++
++  def test_deep_checkbox_hack_query_string
++    assert_equal(
++       {"bob"=>{'thingy' => {"test"=>"1"}}},
++    ActionController::AbstractRequest.parse_query_parameters("bob[thingy][test]=1&bob[thingy][!test]=0")
++     )
++  end
++
++  def test_array_checkbox_hack_query_string
++    assert_equal(
++       {"bob"=>{'things' => [{"test"=>"0"},{"test"=>"1"},{"test"=>"0"}]}},
++    ActionController::AbstractRequest.parse_query_parameters("bob[things][][!test]=0&bob[things][][test]=1"+
++      "&bob[things][][!test]=0&bob[things][][!test]=0")
++    )
++    assert_equal(
++       {"bob"=>{'things' => [{"test"=>"1"},{"test"=>"0"},{"test"=>"0"}]}},
++    ActionController::AbstractRequest.parse_query_parameters("bob[things][][test]=1&bob[things][][!test]=0"+
++      "&bob[things][][!test]=0&bob[things][][!test]=0")
++     )
++    assert_equal(
++      {"bob"=>{'things' => [{"test"=>"1"},{"test"=>"1"},{"test"=>"0"}]}},
++    ActionController::AbstractRequest.parse_query_parameters("bob[things][][test]=1&bob[things][][!test]=0"+
++      "&bob[things][][test]=1&bob[things][][!test]=0&bob[things][][!test]=0")
++    )
++    assert_equal(
++       {"bob"=>{'things' => [{"test"=>"1"},{"test"=>"1"},{"test"=>"1"}]}},
++    ActionController::AbstractRequest.parse_query_parameters("bob[things][][test]=1&bob[things][][!test]=0"+
++         "&bob[things][][test]=1&bob[things][][!test]=0&bob[things][][test]=1&bob[things][][!test]=0")
++     )
++  end
++
+   def test_query_string_with_nil
+     assert_equal(
+       { "action" => "create_customer", "full_name" => ''},
+Index: actionpack/test/template/form_helper_test.rb
+===================================================================
+--- actionpack/test/template/form_helper_test.rb	(revision 8644)
++++ actionpack/test/template/form_helper_test.rb	(working copy)
+@@ -1,4 +1,4 @@
+-require 'abstract_unit'
++require "#{File.dirname(__FILE__)}/../abstract_unit"
+ 
+ silence_warnings do
+   Post = Struct.new(:title, :author_name, :body, :secret, :written_on, :cost)
+@@ -146,21 +146,21 @@
+ 
+   def test_check_box
+     assert_dom_equal(
+-      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[secret]" type="hidden" value="0" />',
++      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[!secret]" type="hidden" id="post_secret_0" value="0" />',
+       check_box("post", "secret")
+     )
+     @post.secret = 0
+     assert_dom_equal(
+-      '<input id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[secret]" type="hidden" value="0" />',
++      '<input id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[!secret]" type="hidden" id="post_secret_0" value="0" />',
+       check_box("post", "secret")
+     )
+     assert_dom_equal(
+-      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[secret]" type="hidden" value="0" />',
++      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[!secret]" type="hidden" id="post_secret_0" value="0" />',
+       check_box("post", "secret" ,{"checked"=>"checked"})
+     )
+     @post.secret = true
+     assert_dom_equal(
+-      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[secret]" type="hidden" value="0" />',
++      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[!secret]" type="hidden" id="post_secret_0" value="0" />',
+       check_box("post", "secret")
+     )
+   end
+@@ -168,14 +168,14 @@
+   def test_check_box_with_explicit_checked_and_unchecked_values
+     @post.secret = "on"
+     assert_dom_equal(
+-      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="on" /><input name="post[secret]" type="hidden" value="off" />',
++      '<input checked="checked" id="post_secret" name="post[secret]" type="checkbox" value="on" /><input name="post[!secret]" type="hidden" id="post_secret_0" value="off" />',
+       check_box("post", "secret", {}, "on", "off")
+     )
+   end
+ 
+   def test_checkbox_disabled_still_submits_checked_value
+     assert_dom_equal(
+-      '<input checked="checked" disabled="disabled" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[secret]" type="hidden" value="1" />',
++      '<input checked="checked" disabled="disabled" id="post_secret" name="post[secret]" type="checkbox" value="1" /><input name="post[!secret]" type="hidden" id="post_secret_0" value="1" />',
+       check_box("post", "secret", { :disabled => :true })
+     )
+   end
+@@ -239,7 +239,7 @@
+       text_area("post", "body", "name" => "really!")
+     )
+     assert_dom_equal(
+-      '<input checked="checked" id="post_secret" name="i mean it" type="checkbox" value="1" /><input name="i mean it" type="hidden" value="0" />',
++      '<input checked="checked" id="post_secret" name="i mean it" type="checkbox" value="1" /><input name="!i mean it" type="hidden" id="post_secret_0" value="0" />',
+       check_box("post", "secret", "name" => "i mean it")
+     )
+     assert_dom_equal text_field("post", "title", "name" => "dont guess"),
+@@ -259,7 +259,7 @@
+       text_area("post", "body", "id" => "really!")
+     )
+     assert_dom_equal(
+-      '<input checked="checked" id="i mean it" name="post[secret]" type="checkbox" value="1" /><input name="post[secret]" type="hidden" value="0" />',
++      '<input checked="checked" id="i mean it" name="post[secret]" type="checkbox" value="1" /><input name="post[!secret]" type="hidden" id="i mean it_0" value="0" />',
+       check_box("post", "secret", "id" => "i mean it")
+     )
+     assert_dom_equal text_field("post", "title", "id" => "dont guess"),
+@@ -284,7 +284,7 @@
+       text_area("post[]", "body")
+     )
+     assert_dom_equal(
+-      "<input checked=\"checked\" id=\"post_#{pid}_secret\" name=\"post[#{pid}][secret]\" type=\"checkbox\" value=\"1\" /><input name=\"post[#{pid}][secret]\" type=\"hidden\" value=\"0\" />",
++      "<input checked=\"checked\" id=\"post_#{pid}_secret\" name=\"post[#{pid}][secret]\" type=\"checkbox\" value=\"1\" /><input name=\"post[#{pid}][!secret]\" type=\"hidden\" id=\"post_#{pid}_secret_0\" value=\"0\" />",
+       check_box("post[]", "secret")
+     )
+    assert_dom_equal(
+@@ -313,7 +313,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' />" +
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' />" +
+       "<input name='commit' id='post_submit' type='submit' value='Create post' />" +
+       "</form>"
+ 
+@@ -335,7 +335,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' />" +
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' />" +
+       "</form>"
+ 
+     assert_dom_equal expected, _erbout
+@@ -355,7 +355,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' />" +
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' />" +
+       "</form>"
+ 
+     assert_dom_equal expected, _erbout
+@@ -377,7 +377,7 @@
+       "<input name='post[123][title]' size='30' type='text' id='post_123_title' value='Hello World' />" +
+       "<textarea name='post[123][body]' id='post_123_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[123][secret]' checked='checked' type='checkbox' id='post_123_secret' value='1' />" +
+-      "<input name='post[123][secret]' type='hidden' value='0' />" +
++      "<input name='post[123][!secret]' type='hidden' id='post_123_secret_0' value='0' />" +
+       "</form>"
+ 
+     assert_dom_equal expected, _erbout
+@@ -411,7 +411,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' />"
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' />"
+ 
+     assert_dom_equal expected, _erbout
+   end
+@@ -428,7 +428,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' />"
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' />"
+ 
+     assert_dom_equal expected, _erbout
+   end
+@@ -445,7 +445,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' />"
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' />"
+ 
+     assert_dom_equal expected, _erbout
+   end
+@@ -483,7 +483,7 @@
+       "<input name='post[title]' size='30' type='text' id='post_title' value='Hello World' />" +
+       "<textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea>" +
+       "<input name='parent_post[secret]' checked='checked' type='checkbox' id='parent_post_secret' value='1' />" +
+-      "<input name='parent_post[secret]' type='hidden' value='0' />" +
++      "<input name='parent_post[!secret]' type='hidden' id='parent_post_secret_0' value='0' />" +
+       "</form>"
+ 
+     assert_dom_equal expected, _erbout
+@@ -536,7 +536,7 @@
+       "<label for='title'>Title:</label> <input name='post[title]' size='30' type='text' id='post_title' value='Hello World' /><br/>" +
+       "<label for='body'>Body:</label> <textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea><br/>" +
+       "<label for='secret'>Secret:</label> <input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' /><br/>" +
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' /><br/>" +
+       "</form>"
+ 
+     assert_dom_equal expected, _erbout
+@@ -558,7 +558,7 @@
+       "<label for='title'>Title:</label> <input name='post[title]' size='30' type='text' id='post_title' value='Hello World' /><br/>" +
+       "<label for='body'>Body:</label> <textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea><br/>" +
+       "<label for='secret'>Secret:</label> <input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' /><br/>" +
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' /><br/>" +
+       "</form>"
+ 
+     assert_dom_equal expected, _erbout
+@@ -618,7 +618,7 @@
+        "<label for='title'>Title:</label> <input name='post[title]' size='30' type='text' id='post_title' value='Hello World' /><br/>" +
+        "<label for='body'>Body:</label> <textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea><br/>" +
+        "<label for='secret'>Secret:</label> <input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-       "<input name='post[secret]' type='hidden' value='0' /><br/>" +
++       "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0' /><br/>" +
+        "</form>"
+ 
+      assert_dom_equal expected, _erbout
+@@ -637,7 +637,7 @@
+       "<label for='title'>Title:</label> <input name='post[title]' size='30' type='text' id='post_title' value='Hello World' /><br/>" +
+       "<label for='body'>Body:</label> <textarea name='post[body]' id='post_body' rows='20' cols='40'>Back to the hill and over it again!</textarea><br/>" +
+       "<label for='secret'>Secret:</label> <input name='post[secret]' checked='checked' type='checkbox' id='post_secret' value='1' />" +
+-      "<input name='post[secret]' type='hidden' value='0' /><br/>"
++      "<input name='post[!secret]' type='hidden' id='post_secret_0' value='0'/><br/>"
+     
+     assert_dom_equal expected, _erbout
+   end
+Index: actionpack/lib/action_controller/request.rb
+===================================================================
+--- actionpack/lib/action_controller/request.rb	(revision 8644)
++++ actionpack/lib/action_controller/request.rb	(working copy)
+@@ -602,96 +602,106 @@
+     end
+   end
+ 
++  # RADAR result of refactoring parser to properly handle array params in 
++  # depth-first order (as returned by Prototype 1.5.1+) is that if array
++  # params are in breadth-first order, all rows must have all keys for
++  # the result to match that of the previous parser.
++  # ie, "x[][a]=a1&x[][b]=b1&x[][a]=a2&x[][a]=a3&x[][b]=b3"
++  # will parse to {x=>[{a=>'a1', b=>'b1}, {a=>'a2', b=>'b3'}, {a=>'a3'}]}
++  # not {x=>[{a=>'a1', b=>'b1}, {a=>'a2'}, {a=>'a3', b=>'b3'}]} as before.
++  # However the previous parser and this one return the same result when
++  # the "hole" is the first param:
++  # 'x[][a]=a1&x[][b]=b1&x[][b]=b2&x[][a]=a3&x[][b]=b3' will parse to
++  # {"x"=>[{"a"=>"a1", "b"=>"b1"}, {"a"=>"a3", "b"=>"b2"}, {"b"=>"b3"}]}
++  # with both parsers.
++  #
++  # Handle new checkbox hack (which prepends the method_name component of the name
++  # of the hidden field element with '!').
++  #
++  # Handle explicit array indexing, by recognizing '#' prefix for array indices
++  # a[#0][c]=1&a[#2][c] is parsed as {:a => [{:c=>1}, nil, {:c=>2}]}
+   class UrlEncodedPairParser < StringScanner #:nodoc:
+-    attr_reader :top, :parent, :result
+-
++    attr_reader :result
+     def initialize(pairs = [])
+       super('')
+-      @result = {}
++      @result = {}.with_indifferent_access
++      @no_checkbox_hack = true
++      @last_key = nil
++      @last_pointer = nil
+       pairs.each { |key, value| parse(key, value) }
+     end
+ 
+     KEY_REGEXP = %r{([^\[\]=&]+)}
+-    BRACKETED_KEY_REGEXP = %r{\[([^\[\]=&]+)\]}
+-
++    BRACKETED_KEY_REGEXP = %r{\[([^\[\]=&]*)\]}
++    CHECKBOX_HACK_PREFIX = '!'
++    ARRAY_HACK_PREFIX = '#'
+     # Parse the query string
+     def parse(key, value)
++      pointer = @result
+       self.string = key
+-      @top, @parent = result, nil
+-
+-      # First scan the bare key
+-      key = scan(KEY_REGEXP) or return
+-      key = post_key_check(key)
+-
+-      # Then scan as many nestings as present
++      prev_key = scan(KEY_REGEXP) or return
++      next_key = nil
++      checkbox_key = false
+       until eos?
+-        r = scan(BRACKETED_KEY_REGEXP) or return
+-        key = self[1]
+-        key = post_key_check(key)
+-      end
+-
+-      bind(key, value)
+-    end
+-
+-    private
+-      # After we see a key, we must look ahead to determine our next action. Cases:
+-      #
+-      #   [] follows the key. Then the value must be an array.
+-      #   = follows the key. (A value comes next)
+-      #   & or the end of string follows the key. Then the key is a flag.
+-      #   otherwise, a hash follows the key.
+-      def post_key_check(key)
+-        if scan(/\[\]/) # a[b][] indicates that b is an array
+-          container(key, Array)
+-          nil
+-        elsif check(/\[[^\]]/) # a[b] indicates that a is a hash
+-          container(key, Hash)
+-          nil
+-        else # End of key? We do nothing.
+-          key
+-        end
+-      end
+-
+-      # Add a container to the stack.
+-      def container(key, klass)
+-        type_conflict! klass, top[key] if top.is_a?(Hash) && top.key?(key) && ! top[key].is_a?(klass)
+-        value = bind(key, klass.new)
+-        type_conflict! klass, value unless value.is_a?(klass)
+-        push(value)
+-      end
+-
+-      # Push a value onto the 'stack', which is actually only the top 2 items.
+-      def push(value)
+-        @parent, @top = @top, value
+-      end
+-
+-      # Bind a key (which may be nil for items in an array) to the provided value.
+-      def bind(key, value)
+-        if top.is_a? Array
+-          if key
+-            if top[-1].is_a?(Hash) && ! top[-1].key?(key)
+-              top[-1][key] = value
++        r = scan(BRACKETED_KEY_REGEXP) or break
++        next_key = self[1]
++        if next_key.blank? or next_key[0...1] == ARRAY_HACK_PREFIX
++          raise ArgumentError, "Can't parse multi-dimensional arrays" if prev_key.blank? 
++          pointer[prev_key] ||= []
++          type_conflict!(Array, pointer[prev_key]) unless pointer[prev_key].is_a?(Array)
++          pointer = pointer[prev_key]
++        else
++          checkbox_key = (next_key[0...1] == CHECKBOX_HACK_PREFIX)
++          if checkbox_key 
++            raise ArgumentError, "exclamation mark (!) as prefix is for form value names is reserved!" unless rest.blank?
++            next_key = next_key[1..-1]            
++            if next_key == @last_key
++              @last_key = nil
++              return
++            end
++          end
++          if pointer.is_a?(Array)
++            if prev_key[0...1] == ARRAY_HACK_PREFIX
++              prev_key = prev_key[1..-1]
++              prev_key = pointer.length if prev_key.blank?
++              pointer[prev_key.to_i] ||= {}.with_indifferent_access
++              pointer = pointer[prev_key.to_i]
++            elsif pointer.empty?
++              pointer << {}.with_indifferent_access
++              pointer = pointer.first
+             else
+-              top << {key => value}.with_indifferent_access
+-              push top.last
++              pointer = pointer.find{|h| not h.has_key?(next_key) } || pointer.push({}.with_indifferent_access).last
+             end
+           else
+-            top << value
++            raise ArgumentError, "don't know what to do" if prev_key.blank?
++            pointer[prev_key] ||= {}.with_indifferent_access
++            type_conflict!(Hash, pointer[prev_key]) unless pointer[prev_key].is_a?(Hash)
++            pointer = pointer[prev_key]
+           end
+-        elsif top.is_a? Hash
+-          key = CGI.unescape(key)
+-          parent << (@top = {}) if top.key?(key) && parent.is_a?(Array)
+-          return top[key] ||= value
++        end
++        prev_key = next_key
++      end
++      # a little extra checking to avoid having to change existing tests that expect an arbitrary solution to malformed params
++      if rest.blank? or rest.first == '[' 
++        value = {}.with_indifferent_access if rest.first == '['
++        if prev_key.blank?
++          type_conflict!(Array, pointer) unless pointer.is_a?(Array)
++          pointer << value
++        elsif prev_key[0...1] == ARRAY_HACK_PREFIX
++          prev_key = prev_key[1..-1]
++          prev_key.blank? ? pointer << value : pointer[prev_key.to_i] = value
+         else
+-          raise ArgumentError, "Don't know what to do: top is #{top.inspect}"
++          type_conflict!(Hash, pointer) unless pointer.is_a?(Hash)
++          pointer[prev_key] = value
+         end
+-
+-        return value
+       end
++      @last_key = checkbox_key ? nil : prev_key
++    end
+ 
+-      def type_conflict!(klass, value)
+-        raise TypeError, "Conflicting types for parameter containers. Expected an instance of #{klass} but found an instance of #{value.class}. This can be caused by colliding Array and Hash parameters like qs[]=value&qs[key]=value."
+-      end
++    def type_conflict!(klass, value)
++      raise TypeError, "Conflicting types for parameter containers. Expected an instance of #{klass} but found an instance of #{value.class}. This can be caused by colliding Array and Hash parameters like qs[]=value&qs[key]=value."
++    end
++
+   end
+ 
+   module UploadedFile
+Index: actionpack/lib/action_view/helpers/form_helper.rb
+===================================================================
+--- actionpack/lib/action_view/helpers/form_helper.rb	(revision 8644)
++++ actionpack/lib/action_view/helpers/form_helper.rb	(working copy)
+@@ -155,9 +155,8 @@
+       #
+       # In many cases you will want to wrap the above in another helper, so you could do something like the following:
+       #
+-      #   def labelled_form_for(record_or_name_or_array, *args, &proc)
+-      #     options = args.extract_options!
+-      #     form_for(record_or_name_or_array, *(args << options.merge(:builder => LabellingFormBuiler)), &proc)
++      #   def labelled_form_for(name, object, options, &proc)
++      #     form_for(name, object, options.merge(:builder => LabellingFormBuiler), &proc)
+       #   end
+       #
+       # If you don't need to attach a form to a model instance, then check out FormTagHelper#form_tag.
+@@ -382,24 +381,26 @@
+       # integer is above zero, then the checkbox is checked. Additional options on the input tag can be passed as a
+       # hash with +options+. The +checked_value+ defaults to 1 while the default +unchecked_value+
+       # is set to 0 which is convenient for boolean values. Since HTTP standards say that unchecked checkboxes don't post anything,
+-      # we add a hidden value with the same name as the checkbox as a work around.
++      # we add a hidden value whose name has an ! prepended to the method name part of the checkbox name as a work around.
+       #
++      #
+       # ==== Examples 
+       #   # Let's say that @post.validated? is 1:
+       #   check_box("post", "validated")
+       #   # => <input type="checkbox" id="post_validate" name="post[validated]" value="1" checked="checked" />
+-      #   #    <input name="post[validated]" type="hidden" value="0" />
++      #   #    <input name="post[!validated]" type="hidden" id="post_validate_0" value="0" />
+       #
+       #   # Let's say that @puppy.gooddog is "no":
+       #   check_box("puppy", "gooddog", {}, "yes", "no")
+       #   # => <input type="checkbox" id="puppy_gooddog" name="puppy[gooddog]" value="yes" />
+-      #   #    <input name="puppy[gooddog]" type="hidden" value="no" />
++      #   #    <input name="puppy[!gooddog]" type="hidden" id="puppy_gooddog_0" value="no" />
+       #
+       #   check_box("eula", "accepted", {}, "yes", "no", :class => 'eula_check')
+       #   # => <input type="checkbox" id="eula_accepted" name="eula[accepted]" value="no" />
+-      #   #    <input name="eula[accepted]" type="hidden" value="no" />
++      #   #    <input name="eula[!accepted]" type="hidden" id="eula_accepted_0" value="no" />
+       #
+       def check_box(object_name, method, options = {}, checked_value = "1", unchecked_value = "0")
++        options[:with_check_box_hack] = true unless options.has_key?(:with_check_box_hack)
+         InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_check_box_tag(options, checked_value, unchecked_value)
+       end
+ 
+@@ -510,7 +511,12 @@
+         end
+         options["checked"] = "checked" if checked
+         add_default_name_and_id(options)
+-        tag("input", options) << tag("input", "name" => options["name"], "type" => "hidden", "value" => options['disabled'] && checked ? checked_value : unchecked_value)
++        if options["name_0"]
++          hidden_field = tag("input", "name" => options.delete("name_0"), "id" => options.delete("id_0"), "type" => "hidden", "value" => options['disabled'] && checked ? checked_value : unchecked_value)
++        else
++          hidden_field = ''
++        end
++        tag("input", options) << hidden_field
+       end
+ 
+       def to_date_tag()
+@@ -586,37 +592,61 @@
+ 
+       private
+         def add_default_name_and_id(options)
++          if options["with_check_box_hack"]        
++            options["name_0"] ||= options["name"] if options["name"]
++            options["id_0"] ||= options["id"] if options["id"]
++            options["name_0"] = "!#{options["name_0"]}" if options["name_0"]
++            options["id_0"] = "#{options["id_0"]}_0" if options["id_0"]
++          end
+           if options.has_key?("index")
+-            options["name"] ||= tag_name_with_index(options["index"])
++            options["name"] ||= tag_name_with_index(options["indexes_id_only"] ? '' : options["index"])
+             options["id"]   ||= tag_id_with_index(options["index"])
++            if options["with_check_box_hack"]
++              options["name_0"] ||= tag_name_with_index(options["indexes_id_only"] ? '' : options["index"], true)
++              options["id_0"]   ||= tag_id_with_index(options["index"], true)
++            end
+             options.delete("index")
+           elsif defined?(@auto_index)
+-            options["name"] ||= tag_name_with_index(@auto_index)
++            if options["with_check_box_hack"]
++              options["name_0"] ||= tag_name_with_index(options["indexes_id_only"] ? '' : @auto_index, true)
++              options["id_0"]   ||= tag_id_with_index(@auto_index, true)
++            end
++            options["name"] ||= tag_name_with_index(options["indexes_id_only"] ? '' : @auto_index)
+             options["id"]   ||= tag_id_with_index(@auto_index)
+           else
+             options["name"] ||= tag_name + (options.has_key?('multiple') ? '[]' : '')
+             options["id"]   ||= tag_id
++            if options["with_check_box_hack"]
++              options["name_0"] ||= tag_name(true) + (options.has_key?('multiple') ? '[]' : '')
++              options["id_0"]   ||= tag_id(true)
++            end
+           end
++          options.delete("with_check_box_hack")
++          options.delete("indexes_id_only")
+         end
+ 
+-        def tag_name
+-          "#{@object_name}[#{@method_name}]"
++        def tag_name(with_check_box_hack=false)
++          name = (with_check_box_hack ? ActionController::UrlEncodedPairParser::CHECKBOX_HACK_PREFIX : '') + @method_name          
++          "#{@object_name}[#{name}]"
+         end
+ 
+-        def tag_name_with_index(index)
+-          "#{@object_name}[#{index}][#{@method_name}]"
++        def tag_name_with_index(index, with_check_box_hack=false)
++          name = (with_check_box_hack ? ActionController::UrlEncodedPairParser::CHECKBOX_HACK_PREFIX : '') + @method_name          
++          "#{@object_name}[#{index}][#{name}]"
+         end
+ 
+-        def tag_id
+-          "#{sanitized_object_name}_#{@method_name}"
++        def tag_id(with_check_box_hack=false)
++          "#{sanitized_object_name}_#{@method_name}" + (with_check_box_hack ? '_0' : '')
+         end
+ 
+-        def tag_id_with_index(index)
+-          "#{sanitized_object_name}_#{index}_#{@method_name}"
++        def tag_id_with_index(index, with_check_box_hack=false)
++          index ||= ''
++          index = index.gsub(/^#/, '')
++          "#{sanitized_object_name}_#{index}_#{@method_name}" + (with_check_box_hack ? '_0' : '')
+         end
+ 
+         def sanitized_object_name
+-          @object_name.gsub(/[^-a-zA-Z0-9:.]/, "_").sub(/_$/, "")
++          @object_name.gsub(/[^-a-zA-Z0-9:.]/, "_").squeeze('_').sub(/_$/, "")
+         end
+     end
+ 

@@ -1,0 +1,21 @@
+<div id="choose_payment_type">
+  <% if invoice.payment_choice? %>
+    <ul>
+      <% invoice.selected_payment_types.each do |pt| %>
+        <li>
+          <label class="normal">
+            <%= radio_button_tag("payment_type", pt, payment_type == pt) %>
+            <%= _(TornadoGateway.payment_type_name(pt)) %>
+          </label>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<div>
+  <div id="payment_amount"><%= _("Paying %{currency} %{amount}.") % {:currency => invoice.currency, :amount => format_amount(invoice.amount_owing) } %></div>
+  <div id="payment_gateway_form">
+    <%= render :partial => gateway.form_partial %>
+  </div>
+</div>
+<div style="clear: both;"></div>

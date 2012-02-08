@@ -1,0 +1,72 @@
+<h1>New account</h1>
+
+<%= error_messages_for :spaccount %>
+
+<% form_for(@spaccount) do |f| %>
+  <p>
+    <b>Account name</b><br />
+    <%= text_field_tag("spaccount[spaccount_name]") %>
+  </p>
+  
+  <p>
+    <b>Company</b><br />
+    <%= text_field_tag("spaccount[company]") %>
+  </p>
+
+  <p>
+    <b>First name</b><br />
+    <%= text_field_tag("spaccount[first_name]") %>
+  </p>
+
+  <p>
+    <b>Last name</b><br />
+    <%= text_field_tag("spaccount[last_name]") %>
+  </p>
+
+  <p>
+    <b>Address</b><br />
+    <%= text_field_tag("spaccount[address]") %>
+  </p>
+
+  <p>
+    <b>City</b><br />
+    <%= text_field_tag("spaccount[city]") %>
+  </p>
+
+  <p>
+    <b>Province</b><br />
+    <%= text_field_tag("spaccount[state_prov]") %>
+  </p>
+  
+  <p>
+    <b>Country</b><br />
+    <%= text_field_tag("spaccount[country]") %>
+  </p>
+
+  <p>
+    <b>Postal/ZIP Code</b><br />
+    <%= text_field_tag("spaccount[zip_postal]") %>
+  </p>
+
+  <p>
+    <b>Email</b><br />
+    <%= text_field_tag("spaccount[email]") %>
+  </p>
+  
+  <p>
+    <b>Phone</b><br />
+    <%= text_field_tag("spaccount[phone]") %>
+  </p>
+  
+  <p>
+    <b>Fax</b><br />
+    <%= text_field_tag("spaccount[fax]") %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', service_provider_spaccounts_path %>
+

@@ -1,0 +1,34 @@
+
+/* IE6 minimum width hack.  Width value corresponds to that in YUI. */
+  body {
+    width: 100%;
+    height: 100%;
+    min-width:950px; /* This takes care of all the 'decent' browsers */
+    margin: 0px; 
+    padding: 0px;  /*optional*/
+    /* Optionally set text-align: center; and increase the padding if you wish to have the page centered with margins... */
+  }
+  /* Hide the following from IE/MAC as this doesn't need the fix... \*/
+  #MinWidthContainer {
+    padding-left:950px;
+    height: 0px;
+  }
+  #MinWidthContainer #PageContainer {
+    height: 0px;
+  }
+  #MinWidthContainer #PageContainer #PageContentContainer {
+    margin-left:-950px;
+    position: relative; 
+    height: 0px;
+  }
+  
+  /* Arbitrary cleanup for the theme */
+  #header {
+    height: 120px;
+  }
+  #header_bottom {
+    height: 156px;
+    padding: 0 0 0 0;
+    background-color: #A7C520;
+  }
+

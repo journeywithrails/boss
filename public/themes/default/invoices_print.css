@@ -1,0 +1,318 @@
+/*
+TODO:
+  - Fonts inconsistent...
+  - Better spacing for the invoice and total sections.
+  - Bill-To instead of To as the header for the customer address?
+  - Bold font is only used for the total... doesn't look balanced.
+  - Page numbering font.
+  - Make Print Preview look like the PDF? 
+*/
+
+@media print {
+  /* reduce the min-width so it'll fit on a printed page, and respect the margins */
+    #doc, #doc2, #doc3, #doc4, .yui-t1, .yui-t2, .yui-t3, .yui-t4, .yui-t5, .yui-t6, .yui-t7 {
+      min-width:550px !important;
+    }
+  /* temp hack to preent truncating the Quantity column label */
+    #preview_line_items th.quantity{
+      width:6em !important;	
+    }
+  @page {
+    /* margin for PDF */
+      margin-top: 0.3in !important;
+      margin-bottom: 0.5in !important;
+      margin-left:5% !important;
+      margin-right:5% !important;
+    /* prince page numbers */
+      @bottom {
+        font-family: Verdana !important;
+        content: "Page " counter(page) " of " counter(pages) !important
+      }
+  }
+}  
+
+body {
+      font-family:  Garamond, "Times New Roman", Times, serif!important;
+      font-size: 12pt!important;
+      width:100%!important;
+  }
+
+  #preview_invoice_content {
+    width:100% !important;
+    margin: 0!important;
+  }
+
+ #preview_header_line {
+    color: black !important;
+    background-color: black !important;
+ }
+
+/* print preview works accross multiple pages for IE */
+  .clearfix {
+    display: inline !important;
+  }
+  
+/* print preview accross multiple pages for FireFox */
+  #bd:after,
+  .yui-g:after,
+  .yui-gb:after, 
+  .yui-gc:after, 
+  .yui-gd:after, 
+  .yui-ge:after, 
+  .yui-gf:after {
+    display: inline !important;
+  }
+  
+/* Remove stuff. */
+  a#new_invoice {
+      display: none !important;
+  }
+  div#hd {
+    display: none !important;
+  }
+  div#ft {
+    display: none !important;
+  }
+  #flash_message {
+    display: none;
+  }
+  div#lnav {
+    display: none !important;
+  }
+  #ajax_counter {
+    display: none;
+  }
+  
+  .yui-t1 #yui-main .yui-b {
+    margin-left: 0 !important;
+  }
+
+  .yui-t2 #yui-main .yui-b {
+    margin-left: 0 !important;
+  }
+
+  .yui-t5 #yui-main .yui-b {
+    margin-right: 0 !important;
+  }
+  
+  div.corner_large_tl {
+    background: none !important;
+    display:none !important;
+  }
+  
+  div.corner_large_tr {
+    background: none !important;
+    display:none !important;
+  }
+
+  div.corner_large_bl {
+    background: none !important;
+    display:none !important;
+  }
+
+  div.corner_large_br {
+    background: none !important;
+    display:none !important;
+  }
+  
+  div#content_container {
+		width: 100% !important;
+		float: left !important;
+  }
+  
+  div.content {
+    background: none !important;
+    border: none !important;
+  }
+
+/* more spacing for the longer printed page */
+  #preview_line_items {
+    margin-top: 1em !important;
+  }
+  
+.invoice_content{
+	background-color: #fff !important; /*background color of content*/
+  border: 0px !important; /*border color*/
+  padding: 0em 0px!important;
+	bottom: 0px !important;
+	right: 0px !important;  
+}
+
+/* white background */
+#preview_container {
+  background-image: none !important;
+  background-color: white !important;
+  margin-top: -42px !important;
+  border: none !important;
+  padding: 0px 0px !important;
+  width:100%!important;
+}
+
+#invoice_and_template_container {
+  width:100%!important;
+  margin:0!important;
+}
+
+#preview_template_selector {
+  display:none;
+}
+
+  #content_container {
+      background-color: white !important;
+      width:100%!important;
+  }
+  .placeholder_for_printable{
+		display: inline !important;
+  }
+  hr{
+  	margin-top: 0px !important;
+  }
+
+/* grey line items column heading */
+  #preview_line_items_heading, #invoice_recorded_payments_heading{
+    color: black !important;
+    background-color: #DDDDDD !important;
+    border-top:1px solid #999999!important;
+    border-bottom:1px solid #999999!important;
+    font-size:12pt!important;
+	}
+
+	#invoice_recorded_payments_heading th{
+      width:6em !important;			
+	}
+	
+ th{
+    font-weight: bold !important;
+	  font-size: 100% !important;
+  }  
+
+	#invoice_recorded_payments{
+		font-family: Arial !important;
+	}
+  
+  .section_header{
+  	color: black !important;
+  }
+  
+  .page_header_small{
+  	font-size: 130% !important;
+	color: black !important;
+  }
+
+#invoice_recorded_payments tr{
+	border-bottom: none !important;
+}
+
+.invoice_recorded_payments_action{
+	display: none !important;
+
+}
+
+.logo_upload_link{
+    display: none !important;
+}
+
+  #invoice_ref_block
+  {
+    border:black 1px solid!important;
+    background-color:white !important;
+    padding: 10px 10px 0px 10px;
+  }
+
+    .invoice_header_left{
+      float:left;
+      display:inline;
+      width:40%;
+      padding:0px;
+    }
+    
+    .invoice_header_right{
+      float:right;
+      display:inline-block;
+      width:55%;
+      padding:0px;
+    }
+
+    .invoice_header_all_right{
+      float:right;
+      display:block;
+      width:100%;
+      padding:0px;
+    }
+
+    .row_label {
+      font-weight: bold;
+      font-size: 11pt!important;
+      white-space: nowrap;
+    }
+
+    .row_value {
+      font-size: 10pt!important;
+      white-space: nowrap;
+      display:inline;
+    }
+
+ 
+
+  /* hacks to make fonts consistent, contrary to YUI */
+  #invoice_ref_block span,
+  .yui-g div,
+  #preview_footer_summary span,
+  #preview_line_items th {
+    font-family: Arial;
+  }
+/* black line above the total amount */
+  #preview_footer_summary_total{
+    border-top: 1px solid black !important;
+  }
+  .preview_footer_summary_label span {
+    font-size: 12pt!important;
+    font-weight: bold;
+  }
+  .hiddenprintimage{
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+  }
+
+/* remove title and title buttons */
+  .page_title {
+    display: none;
+  }
+  
+/* remove IE 6 min-width hack */  
+  #MinWidthContainer {
+    padding-left:0px;
+  }
+  #MinWidthContainer #PageContainer #PageContentContainer {
+    margin-left:-0px; 
+  }
+  
+/* for IE 7 */
+  #sub_nav_off, #sub_nav_on {
+    width: 1px;
+  }
+  
+	#history_container {
+		display: none;
+	}
+
+#invoice_access_container {
+  display: none;
+}
+
+ .invoice_total {
+    font-size: 11pt!important;
+  }
+
+  #invoice_profile_name {
+    font-size: 12pt!important;
+  }
+
+  #invoice_recorded_payments_container, #secondary_body_header {
+    display:none;
+  }
+
+  #preview_heading_logo{
+     border:none;
+    }

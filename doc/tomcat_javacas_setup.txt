@@ -1,0 +1,352 @@
+######################### ports & hosts & components for development & test
+
+billingboss -- run rails server in console on port 3000
+if we need hosts
+devel.billingboss.com
+test.billingboss.com
+
+CAS -- run tomcat on port 443
+cas.test.billingboss.com
+
+SAM -- run merb on port 4000
+sam.test.billingboss.com
+
+SBB -- run apache on port 8888
+sbb.test.sagebusinessbuilder.com
+
+# hosts snippet
+###### development, sage ##########
+127.0.0.1 sam.test.billingboss.com
+127.0.0.1 cas.test.billingboss.com
+127.0.0.1 devel.billingboss.com
+127.0.0.1 test.billingboss.com
+# hardcoded references to this url, don't have time to untangle :( overseas team can do it
+127.0.0.1 development.sagebusinessbuilder.com
+
+
+sudo port install maven2
+sudo port install tomcat5
+# if this fails, check which package it fails on and if it is out of date by a minor version, edit the Portfile for that package by hand to change the version. You will also have to download the correct checksum for the new version and put that in the Portfile too
+
+# after installing tomcat5 with macports, the webapp dir will be /opt/local/share/java/tomcat5/webapps/
+
+# commands for stopping/starting tomcat:
+sudo /opt/local/share/java/tomcat5/bin/shutdown.sh
+sudo /opt/local/share/java/tomcat5/bin/startup.sh
+
+
+# follow this guide: http://tomcat.apache.org/tomcat-5.5-doc/ssl-howto.html
+$JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA
+# Uncomment the "SSL HTTP/1.1 Connector" entry in $CATALINA_HOME/conf/server.xml and tweak as necessary.
+# note $CATALINA_HOME may not be defined in your environment -- it should be /opt/local/share/java/tomcat5/
+
+# setup $CATALINA_HOME/conf/tomcat-users.xml to look something like
+<?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <role rolename="manager"/>
+  <role rolename="admin"/>
+  <user username="tomcat" password="tomcat" roles="tomcat"/>
+  <user username="role1" password="tomcat" roles="role1"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="admin" password="44claire" roles="admin,manager"/>
+</tomcat-users>
+# (and restart tomcat)
+
+# create Maven WAR overlay
+http://www.ja-sig.org/wiki/display/CASUM/Maintaining+local+customizations+using+Maven+2
+# edit pom.xml with correct version.
+# add this to pom.xml, in <dependencies>: (see thread http://tp.its.yale.edu/pipermail/cas/2008-March/007791.html)
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>servlet-api</artifactId>
+    <version>2.4</version>
+    <scope>provided</scope>
+</dependency>
+
+
+cp src/main/webapp/WEB-INF/deployerConfigContext.xml  cas-server-sage/src/main/webapp/WEB-INF/deployerConfigContext.xml
+
+# create directories & classes
+mkdir -p cas-server-sage/src/main/java/com/sage/cas/adaptors/jdbc
+cp cas-server-support-jdbc/src/main/java/org/jasig/cas/adaptors/jdbc/QueryDatabaseAuthenticationHandler.java cas-server-sage/src/main/java/com/sage/cas/adaptors/jdbc/SageAccountAuthenticationHandler.java
+
+mkdir -p cas-server-sage/src/main/java/com/sage/cas/authentication/handler
+cp cas-server-core/src/main/java/org/jasig/cas/authentication/handler/DefaultPasswordEncoder.java cas-server-sage/src/main/java/com/sage/cas/authentication/handler/SageAccountPasswordEncoder.java
+
+mkdir -p cas-server-sage/src/main/webapp/WEB-INF/
+cp cas-server-webapp/src/main/webapp/WEB-INF/deployerConfigContext.xml cas-server-sage/src/main/webapp/WEB-INF/
+
+
+# run maven. watch maven download approximately 3% of the entire internet. Yay, a build process that requires a net connection and depends on a third party website. How agile.
+
+
+# to deploy to tomcat
+
+# add to pom.xml
+<repositories>
+  <repository>
+    <id>Maven Snapshots</id>
+    <url>http://snapshots.maven.codehaus.org/maven2/</url>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
+  </repository>
+</repositories>
+<pluginRepositories>
+  <pluginRepository>
+    <id>Maven Snapshots</id>
+    <url>http://snapshots.maven.codehaus.org/maven2/</url>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
+  </pluginRepository>
+</pluginRepositories>
+<build>
+  ...
+  <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>tomcat-maven-plugin</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </plugin>
+  </plugins>
+</build>
+
+
+
+# doing something like environments with Maven2
+# the good news: at least they have some sort of environment mechanism. Well one would hope. It being Enterprise and all.
+# the bad news: it sucks, is clunky, and has gotchas
+# linky: 
+# note the method described in linky is to use to "solve simple configuration set-ups only...There are other and better ways to handle two and many-dimensional configuration issues". Note the complete absence of any sort of reference to what said ways may be. 
+
+
+
+# setting up jdbc authentication http://www.ja-sig.org/wiki/display/CASUM/Using+JDBC+for+Authentication
+# add auth handler bean
+<bean class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">
+    <property name="dataSource" ref="dataSource" />
+    <property name="sql" value="SELECT password from sage_users where username like ?" />
+</bean>
+
+# add dataSource to beans
+# note make sure this is NOT inside the <bean id="authenticationManager">
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+  <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+  <property name="url" value="jdbc:mysql://localhost:3306/sage_test"/>
+  <property name="username" value="root"/>
+  <property name="password" value="simply#1"/>
+</bean>
+
+# add dependencies to cas-server-sage/pom.xml
+
+<dependency>
+	<groupId>org.jasig.cas</groupId>
+	<artifactId>cas-server-support-jdbc</artifactId>
+	<version>${project.version}</version>
+</dependency>
+<dependency>
+	<groupId>commons-dbcp</groupId>
+	<artifactId>commons-dbcp</artifactId>
+	<version>1.2.1</version>
+	<scope>runtime</scope>
+</dependency>
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>5.1.5-bin</version>
+	<scope>provided</scope>
+</dependency>
+
+
+
+
+
+############### Windows Setup ######################
+# 0. ensure you have a jdk installed, and JAVA_HOME set to point to it, and that %JAVA_HOME%\bin is in Path
+# 1. install Tomcat
+# http://tomcat.apache.org/download-55.cgi. Download, run installer, follow instructions
+# if you install the service, also get the startup.bat and shutdown.bat scripts, from the zip archive
+
+# 2. install maven. need cygwin, or at least some command line tools. http://maven.apache.org/download.html
+cd /cygdrive/c/Program Files (x86)/Apache Software Foundation
+# cd /cygdrive/c/Program Files/Apache Software Foundation # may be this instead
+wget http://apache.sunsite.ualberta.ca/maven/binaries/apache-maven-2.0.9-bin.tar.gz
+tar xzf apache-maven-2.0.9-bin.tar.gz
+# go to system properties (right click My Computer, properties, advanced, environment variables)
+# set M2_HOME = C:\Program Files (x86)\Apache Software Founda tion\apache-maven-2.0.9
+# set M2 = %M2_HOME%\bin
+# note I put the variables in system not in user, so I just have one Path variable
+
+# add %M2% to path
+
+# download javacas -- http://www.ja-sig.org/downloads/cas/cas-server-3.3-release.tar.gz
+# can put this anywhere
+# build with maven
+mvn -Dmaven.test.skip=true package install
+
+# setup cas.properties for the environments you wish to build for
+cp src/main/resources/test/cas.properties.sample src/main/resources/test/cas.properties
+# edit and set database credentials and the account table db name (sam_test for example)
+
+# checkout sage cas customization project
+svn co https://secure2.svnrepository.com/s_celeduc/sagecas/trunk/cas-server-sage
+# build with maven. default profile (environment) is development
+mvn -Ptest -Dmaven.test.skip=true package install
+# or use the included deploy shell script
+# copy target/cas.war to Tomcat webapps dir (for me was C:\Program Files (x86)\Apache Software Foundation\Tomcat 5.5\webapps)
+
+
+
+# test setup for  ssl
+# to delete
+"$JAVA_HOME/bin/keytool" -delete -alias tomcat -keypass changeit -keystore "$JAVA_HOME/.keystore"
+
+"$JAVA_HOME/bin/keytool" -import -alias geotrust -keystore "%JAVA_HOME%\castest.billingboss.com.kbd" -file geotrust.crt
+"%JAVA_HOME%\bin\keytool" -genkey -alias tomcat -keystore "%JAVA_HOME%\.keystore" -keypass changeit -keyalg RSA
+Enter keystore password:
+What is your first and last name?
+  [Unknown]:  castest.billingbos.com
+What is the name of your organizational unit?
+  [Unknown]:  SageCas
+What is the name of your organization?
+  [Unknown]:  Sage Software
+What is the name of your City or Locality?
+  [Unknown]:  Vancouver
+What is the name of your State or Province?
+  [Unknown]:  BC
+What is the two-letter country code for this unit?
+  [Unknown]:  CA
+Is CN=castest.billingbos.com, OU=SageCas, O=Sage Software, L=Vancouver, ST=BC, C=CA correct?
+  [no]:  yes
+
+"%JAVA_HOME%\bin\keytool" -export -alias tomcat -keystore "%JAVA_HOME%\.keystore" -keypass changeit -file server.crt
+Enter keystore password: changeit
+Certificate stored in file <server.crt>
+
+"%JAVA_HOME%\bin\keytool" -import -file server.crt -alias castest -keypass changeit -keystore "%JAVA_HOME%\jre\lib\security\cacerts"
+Trust this certificate? [no]: yes
+
+# convert billingboss.crt to binary (http://www.geotrusteurope.com/support/install/install_jse.htm)
+# not this did not complain about unlocked key or ask for the key passphrase. so don't think it is doing right thing. Maybe it is.
+# if it does work than you do this with the root cert: (note must be the BINARY version): this didn't work for me so I didn't go further
+"%JAVA_HOME%\bin\keytool" -import -trustcacerts -keystore my.kdb -alias root - file c:\root_der.cer
+
+
+
+# above stuff was not working properly for certificate with key, so found this method: http://blog.datajelly.com/2007/06/adding-ssl-to-tomcat.html
+# download the equifax root certificate. http://www.geotrust.com/resources/root_certificates/index.asp. For us it is Root 5 - Equifax Secure Global eBusiness CA-1 . need the pem version (base64)
+
+sudo openssl rsa -in /var/www/apps/billingboss/production/shared/ssl.key/castest.billingboss.key -out /var/www/apps/billingboss/production/shared/ssl.key/castest.billingboss.key.unlocked
+
+# the first time I did this with a test file and a dummy password & it worked the first time. Then at some point I updated cygwin. Big mistake When I tried to reproduce with with a proper keystore name and password (and I stupidly deleted my working test keystore first, because it had a dummy password) I had to run it over and over and over again, and eventually had to reboot before I got it to work. each time I had to close the cmd window and open a new one, start bash again etc. Don't run in a login shell -- doesn't work. after the password prompt appears, wait a few seconds before typing a password. Eventually I realized it was getting openssl from the 1-click ruby install of all fucking places, which was probably conflicting with things installed in cygwin in some way. then I tried the cygwin openssl (0.9.8h) and it failed. This failure turned out to be a known bug. Finally I ran the openssl from /ruby/bin (0.9.8d) but NOT in bash. Then it worked!
+/ruby/bin/openssl pkcs12 -export -in castest.billingboss.com.crt -inkey castest.billingboss.com.key.unlocked -name "tomcat" -certfile Equifax_Secure_Global_eBusiness_CA-1.cer -out castest.p12
+
+# verify. make sure chain length of certificate is 2. 
+"$JAVA_HOME/bin/keytool" -v -list -keystore castest.p12  -storetype pkcs12
+
+mv castest.p12 $CATALINA_HOME/conf
+
+# uncomment the ssl connector in server.xml and make it look like below
+
+<Connector port="8443" protocol="HTTP/1.1"
+           maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+           enableLookups="true" disableUploadTimeout="true"
+           acceptCount="100" scheme="https" secure="true"
+           clientAuth="false" sslProtocol="TLS"
+           keystoreFile="conf/castest.p12"
+           keypass="jellorulesfinancalworld"
+           keystoreType="PKCS12"
+/>
+
+# SBB Setup
+http://sage.svnrepository.com/sagebusinessbuilder/trac.cgi/wiki/development_environment
+
+
+# Setting up components as services
+# viewing services: run services.msc
+# I could not get Apache to run as server on my windows box, though it runs in console
+
+
+# make sure virtual host (and namevirtualhost directive in httpd.conf) have the host specified:
+<VirtualHost *:8888>
+# make sure that UseCanonicalName is On in httpd.conf 
+# by doing these two things $_SERVER[SERVER_NAME] will have correct domain AND port, despite known bug in apache where port is set to 80 by mod_rewrite (I think that's why. In any case, this setup will work to have PHP CAS set the service param correctly)
+
+
+
+# acceptance tests with selenium
+# install selenium ide in firefox
+
+
+
+# building firefox on mac
+http://jbhannah.net/2008/07/13/building-firefox/
+
+# get prereqs:
+
+sudo port sync
+sudo port install mercurial libidl autoconf213
+
+# create a sage test user profile 
+mkdir -p ~/.mozilla/firefox/sagetest
+
+cat > ~/.mozilla/firefox/sagetest/user.js
+user_pref("print.always_print_silent", true);
+user_pref("print.print_bgcolor", true);
+user_pref("print.print_bgimages", true);
+user_pref("print.print_shrink_to_fit", false);
+user_pref("print.print_to_file", true);
+user_pref("print.print_to_filename", "/tmp/mozilla.pdf");
+user_pref("browser.startup.homepage", "about:blank");
+user_pref("browser.sessionstore.resume_from_crash", false);
+
+# create a mozconfig file
+cat > ~/.mozconfig
+. $topsrcdir/browser/config/mozconfig
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/fx-jssh
+mk_add_options MOZ_CO_PROJECT=browser,xulrunner
+ac_add_options --enable-extensions=default,jssh,webservices
+ac_add_options --disable-debug --enable-optimize
+ac_add_options --disable-tests
+ac_add_options --enable-official-branding
+ac_add_options --with-macos-sdk=/Developer/SDKs/MacOSX10.5.sdk
+mk_add_options MOZ_MAKE_FLAGS="-s -j4"
+
+cd ~/src
+cvs -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot co -r FIREFOX_3_0_1_RELEASE mozilla/client.mk mozilla/browser/config/mozconfig
+make -f client.mk checkout
+make -f client.mk build
+
+# create a sage_test profile for firefox:
+/Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
+add a profile named sage_test
+finish launching and setup preferences as follows: (these settings will minimize unexpected modal dialogs and maximize speed)
+Main -- Downloads -- save files to: /tmp
+Main -- when firefox starts -- show a blank page
+Tabs -- new pages should be opened in a new window. Turn off all warnings
+Content -- UNCHECK block pop-up windows
+Privacy -- UNCHECK all history settings
+Privacy -- CHECK always clear my private data
+Security -- UNCHECK remember passwords
+Advanced -- General -- UNCHECK check my spelling as I type
+Advanced -- General -- UNCHECK always check to see if Firefox is default browser
+Advanced -- Update -- UNCHECK all the automatic update checking
+
+# set browser.sessionstore.resume_from_crash to false, by typing about:config in the location bar
+# this is necessary because the acceptance tests will kill firefox when they are done, and without this you get a modal dialog on startup
+
+# after saving preferences, quit firefox and restart with -ProfileManager so you can switch back to your regular profile. The tests will use the sage_test profile via commandline
+
+
+# setup to run multiple firefox apps
+
+cd /Applications/Firefox.app/Contents/MacOS/components/~

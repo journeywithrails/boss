@@ -1,0 +1,21 @@
+<%@skip_header=true%>
+<% content_for "stylesheets" do %>
+  	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= default_theme_controller("home") %>	
+<% end %>
+
+
+<% content_for(:main) do %>
+  <%=render :partial => "company_brand", :locals => { :profile => @profile } %>
+  
+  <h1><%= flash[:notice] %></h1>
+  <% if @try_again %>
+    <button id='try_again_button'>Try Again</button>
+		<script type="text/javascript">
+      Event.observe('try_again_button', 'click', function(){window.location.reload(true)})
+    </script>
+    <% if @payment and @payment.cancelable? %>
+      <%= link_to 'Cancel the current transaction', retry_invoice_online_payments_path(access_key) %>
+    <% end %>
+  <% end %>
+<% end %>

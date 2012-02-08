@@ -1,0 +1,10 @@
+# where to fetch bounced emails from
+# Must first mark all current bounced mail as processed  
+production:
+  type: pop
+  server: inbound.electric.net
+  username: @@APP_BB_EMAIL_USERNAME@@
+  password: @@APP_BB_EMAIL_PASSWORD@@
+  processed_folder: processed  
+  port: 110
+  

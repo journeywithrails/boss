@@ -1,0 +1,30 @@
+admin_role_for_peon_admin_user:
+  user_id: 16
+  role_id: 1
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+admin_role_for_master_admin_user:
+  user_id: 17
+  role_id: 1
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+admin_role_for_feedback_admin_user:
+  user_id: 18
+  role_id: 1
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+master_admin_role_for_master_admin_user:
+  user_id: 17
+  role_id: 2
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+feedback_admin_role_for_feedback_admin_user:
+  user_id: 18
+  role_id: 3
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+winners_admin_role_for_winners_admin_user:
+  user_id: 22
+  role_id: 4
+  created_at: <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>

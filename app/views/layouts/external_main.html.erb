@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--  <%=h RAILS_ENV %> -->
+<head>
+	<!-- Use IE7 mode -->
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%=h page_title %></title>
+  <%= stylesheet_global %>
+  <%= default_theme %>
+  <%= default_theme_controller("home") %>
+  <%= default_theme_controller("session") %>  
+  <%= (stylesheet_ie6).untaint %>
+
+	<!-- load any template-specific stylesheets (use by including a content_for block in template) -->	
+	<%= yield :stylesheets %>
+
+	<%= javascript_include_tag 'prototype' %>
+	<%= javascript_include_tag 'effects' %>
+	<!-- load any template-specific javascripts (use by including a content_for block in template) -->
+	
+
+</head>
+
+<body>
+	<%= locale_comment %>
+  <!-- IE6 minimum width hack, opening -->
+  <div id="MinWidthContainer"><div id="PageContainer"><div id="PageContentContainer">
+
+  <div id="doc3" class="yui-t8">		
+	  <div id="hd">
+  		<%= yield :header %>
+  	</div>			
+	 	<div id="yui-main">
+	 	  <br/>
+      <%= yield :main %>			
+	  </div>
+    <div id="ft">
+ 		  <%= if !@skip_footer then render(:partial => "layouts/main_footer") end %>
+    </div>    
+  </div>
+
+  <!-- IE6 minimum width hack, closing -->
+  </div></div></div>
+  
+<%= render :partial => "/layouts/google" %>  
+</body>
+<%= javascript_include_tag 'application' %>	
+<% if RAILS_ENV == 'test' -%>
+  <!-- conditionally include increment_ajax_counter for testing -->
+  <%= javascript_include_tag('increment_ajax_counter') %>
+<% end -%>
+<%= yield :javascripts %>
+
+<%= yield :bottom_javascripts %>
+</html>
+

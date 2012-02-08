@@ -1,0 +1,43 @@
+<li>
+	<div class="form_field_hdr"><%= f.label :name, _("Name:") + mandatory() %></div>
+	<%= f.text_field :name %>
+</li>
+<li>
+	<div class="form_field_hdr"><%= f.label :address1, _("Address 1:") %></div>
+	<%= f.text_field :address1 %>
+</li>
+<li>
+	<div class="form_field_hdr"><%= f.label :address2, _("Address 2:") %></div>
+	<%= f.text_field :address2 %>
+</li>
+<li>
+	<div class="form_field_hdr"><%= f.label :city, _("City:") %></div>
+	<%= f.text_field :city %>
+</li>
+<li>
+	<div class="form_field_hdr"><%= f.label :country, _("Country:") %></div>
+	<%= country_select(:customer, :country, ['Canada', 'United States']) %>
+</li>
+
+	<div id="div_country_dependent"><%= render :partial => '/shared/mobile/' + fields.country_settings.partial, :object => fields %></div>
+
+<li>
+	<div class="form_field_hdr"><%= f.label :phone, _("Phone:") %></div>
+	<%= f.text_field :phone %>
+</li>
+<li>
+	<div class="form_field_hdr"><%= f.label :fax, _("Fax:") %></div>
+	<%= f.text_field :fax %>
+</li>
+<li>
+	<div class="form_field_hdr"><%= f.label :website, _("Website:") %></div>
+	<%= f.text_field :website %>
+</li>
+<% if params["_dc"] #this is the only way i seem to have found to distinguish on-the-fly vs regular pages %>
+	<%= render :partial => "/customers/customer_state_province_js_toggle" %>
+<% else %>
+	<% content_for "bottom_javascripts" do -%>
+		<%= render :partial => "/customers/customer_state_province_js_toggle" %>
+	<% end # content_for "bottom_javascripts"
+     %>		
+<% end %>

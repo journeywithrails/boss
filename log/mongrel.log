@@ -1,0 +1,81 @@
+
+** Daemonized, any open files are closed.  Look at /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid and log/mongrel.log for info.
+** Starting Mongrel listening at 0.0.0.0:3000
+** Starting Rails with test environment...
+load appconfig
+Sage::Test::Server config: /home/mahesh/tornado_dev/home/mahesh/src/billingboss/test/fixtures/config/sso_integration/test_local.yml
+using local SMTP server on port 2000. Make sure you have a SMTP server running locally
+using a log level of debug
+reset test urls in appconfig
+** Rails loaded.
+** Loading any Rails specific GemPlugins
+** Signals ready.  TERM => stop.  USR2 => restart.  INT => stop (no restart).
+** Rails signals registered.  HUP => reload (without restart).  It might not work well.
+** Mongrel 1.1.5 available at 0.0.0.0:3000
+** Writing PID file to /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid
+** TERM signal received.
+Loaded suite /usr/bin/mongrel_rails
+Started
+
+Finished in 0.000324 seconds.
+
+0 tests, 0 assertions, 0 failures, 0 errors
+** Daemonized, any open files are closed.  Look at /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid and log/mongrel.log for info.
+** Starting Mongrel listening at 0.0.0.0:3000
+** Starting Rails with test environment...
+load appconfig
+Sage::Test::Server config: /home/mahesh/tornado_dev/home/mahesh/src/billingboss/test/fixtures/config/sso_integration/test_local.yml
+using local SMTP server on port 2000. Make sure you have a SMTP server running locally
+using a log level of debug
+reset test urls in appconfig
+** Rails loaded.
+** Loading any Rails specific GemPlugins
+** Signals ready.  TERM => stop.  USR2 => restart.  INT => stop (no restart).
+** Rails signals registered.  HUP => reload (without restart).  It might not work well.
+** Mongrel 1.1.5 available at 0.0.0.0:3000
+** Writing PID file to /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid
+** Daemonized, any open files are closed.  Look at /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid and log/mongrel.log for info.
+** Starting Mongrel listening at 0.0.0.0:3000
+** Starting Rails with test environment...
+load appconfig
+Sage::Test::Server config: /home/mahesh/tornado_dev/home/mahesh/src/billingboss/test/fixtures/config/sso_integration/test_local.yml
+using local SMTP server on port 2000. Make sure you have a SMTP server running locally
+using a log level of debug
+reset test urls in appconfig
+** Rails loaded.
+** Loading any Rails specific GemPlugins
+** Signals ready.  TERM => stop.  USR2 => restart.  INT => stop (no restart).
+** Rails signals registered.  HUP => reload (without restart).  It might not work well.
+** Mongrel 1.1.5 available at 0.0.0.0:3000
+** Writing PID file to /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid
+** Daemonized, any open files are closed.  Look at /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid and log/mongrel.log for info.
+** Starting Mongrel listening at 0.0.0.0:3000
+** Starting Rails with test environment...
+load appconfig
+Sage::Test::Server config: /home/mahesh/tornado_dev/home/mahesh/src/billingboss/test/fixtures/config/sso_integration/test_local.yml
+using local SMTP server on port 2000. Make sure you have a SMTP server running locally
+using a log level of debug
+reset test urls in appconfig
+** Rails loaded.
+** Loading any Rails specific GemPlugins
+** Signals ready.  TERM => stop.  USR2 => restart.  INT => stop (no restart).
+** Rails signals registered.  HUP => reload (without restart).  It might not work well.
+** Mongrel 1.1.5 available at 0.0.0.0:3000
+** Writing PID file to /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid
+** Daemonized, any open files are closed.  Look at /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid and log/mongrel.log for info.
+** Starting Mongrel listening at 0.0.0.0:3000
+** Starting Rails with test environment...
+-------------- my code -------------
+production
+staging
+load appconfig
+Sage::Test::Server config: /home/mahesh/tornado_dev/home/mahesh/src/billingboss/test/fixtures/config/sso_integration/test_local.yml
+using local SMTP server on port 2000. Make sure you have a SMTP server running locally
+using a log level of debug
+reset test urls in appconfig
+** Rails loaded.
+** Loading any Rails specific GemPlugins
+** Signals ready.  TERM => stop.  USR2 => restart.  INT => stop (no restart).
+** Rails signals registered.  HUP => reload (without restart).  It might not work well.
+** Mongrel 1.1.5 available at 0.0.0.0:3000
+** Writing PID file to /home/mahesh/tornado_dev/home/mahesh/src/billingboss/tmp/pids/mongrel.pid

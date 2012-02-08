@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!-- Use IE7 mode -->
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<%= stylesheet_global %>	
+			
+		<%= stylesheet_link_tag "/themes/default/homepage.css" %>
+
+		<%= yield :stylesheets %>		
+		<meta name="description" content="Billing Boss - Online Invoicing for free" />
+		<meta name="keywords" content="online invoicing,free online invoicing,online billing" />
+		
+		 <title><%= page_title %></title>
+		<%= javascript_include_tag 'prototype' %>
+		<%= javascript_include_tag 'application' %>
+		<%= javascript_include_tag '/javascripts/homepage/jquery-1.3.2.min.js' %>
+		<%= javascript_include_tag '/javascripts/homepage/shadow/jquery.dimensions.js' %>
+		<%= javascript_include_tag '/javascripts/homepage/jquery.accordion.js' %>
+		<%= javascript_include_tag '/javascripts/homepage/cornerz/cornerz.js' %>
+		<%= javascript_include_tag '/javascripts/homepage/shadow/shadow.js' %>
+	</head>
+
+	<body>
+		<%= locale_comment %>
+		<%= yield :header %>
+		<%= yield :main %>
+		<div class="footer">
+			<%= render :partial => "layouts/main_footer" %>
+		</div>
+		<%= render :partial => "/layouts/google" %>
+	</body>
+<% if RAILS_ENV == 'test' -%>
+  <!-- conditionally include increment_ajax_counter for testing -->
+  <%= javascript_include_tag('increment_ajax_counter') %>
+<% end -%>
+<%= yield :javascripts %>
+
+<%= yield :bottom_javascripts %>
+</html>

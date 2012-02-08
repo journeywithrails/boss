@@ -1,0 +1,47 @@
+<% content_for "stylesheets" do -%>
+<% end -%>
+
+<% content_for "javascripts" do -%>
+<% end -%>
+
+<% @content_for_sidebar = capture do %>
+<% end %>
+
+<% content_for "submenu" do %>
+    <div id="tabcontent" class="clearfix">
+      <ul  class="selected">
+        <li>
+          <%= invoice_report_link %>
+        </li>
+        <li>
+          <%= payment_report_link %>
+        </li>
+      </ul>
+    </div>
+<% end %>
+
+
+<% @content_for_main_top = capture do %>
+ <div class="yui-g">
+   <div class="yui-u first"> 
+      <div class="page_header"><%= _('Reports') %></div>
+   </div>   
+   <div  class="yui-u" >
+   </div>    
+</div>
+<% end %>
+
+<% @content_for_main = capture do %>
+  <ul>
+    <li>
+      <%= invoice_report_link _("Invoice Report") %>
+      <div><%= bookkeeper_view? ? _("Lists your client's invoices with totals and taxes.") : _("Lists your invoices with totals and taxes.") %></div>
+    </li>
+    <li>
+      <%= payment_report_link _("Payment Report") %>
+      <div><%= _('Lists payments that have been applied to invoices.') %></div>
+    </li>
+  </ul>
+<% end %>
+
+<%= render_inner_layout('nomenu') %>

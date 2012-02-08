@@ -1,0 +1,7 @@
+<% @invoice ||= Invoice.new %>
+<% remote_form_for 'invoice', @invoice, 
+		:update => 'auto-number-taken-fields', 
+		:html => {:id => 'new_invoice'},
+		:url => {:action => 'create', :controller => 'invoices'} do |f| %>
+		  <%= taken_auto(@invoice) %>
+<% end %>

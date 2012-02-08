@@ -1,0 +1,7 @@
+if session[:mobile_browser]
+  page.replace_html 'div_country_dependent', :partial => 'shared/mobile/' + @customer.country_settings.partial, :object =>@customer
+else
+  page.replace_html 'div_country_dependent', :partial => 'shared/' + @customer.country_settings.partial, :object =>@customer
+end
+page.increment_ajax_counter_rjs
+

@@ -1,0 +1,427 @@
+# Line items for invoice_with_no_customer
+one:
+  id: 1
+  unit: Name of line item one
+  description: Line Item one of invoice_with_no_customer
+  invoice_id: 1
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+two:
+  id: 2
+  unit: Name of line item two
+  description: Line Item two of invoice_with_no_customer
+  invoice_id: 1
+  position: 2
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+# Line items for invoice_with_line_items
+line_item_one:
+  id: 3
+  unit: Name of line item one
+  description: Line Item one of invoice_with_line_items
+  quantity: 1.00
+  price: 11.11
+  invoice_id: 4
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+line_item_two:
+  id: 4
+  unit: Name of line item two
+  description: Line Item two of invoice_with_line_items
+  quantity: 1.00
+  price: 22.22
+  invoice_id: 4
+  position: 2
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+# Line items for payments tests
+acknowleged_invoice_line_item:
+  id: 5
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 1000.00
+  invoice_id: 43
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+unpaid_invoice_1_line_item:
+  id: 6
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 1000.00
+  invoice_id: 44
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+unpaid_invoice_2_line_item:
+  id: 7
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 2000.00
+  invoice_id: 45
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+unpaid_invoice_3_line_item:
+  id: 8
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 3000.00
+  invoice_id: 46
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+partially_paid_invoice_line_item:  
+  id: 9
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 1500.99
+  invoice_id: 47
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+fully_paid_invoice_line_item:
+  id: 10
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 1201.00
+  invoice_id: 48
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+invoice_10_line_item:
+  id: 11
+  unit: Name of line item one
+  description: line item one description
+  quantity: 1.00
+  price: 100.00
+  invoice_id: 10
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+discount_before_tax_invoice_line_item_1:
+  id: 12
+  unit: item 1
+  description: line item one description
+  quantity: 1.00
+  price: 1.11
+  invoice_id: 63
+  position: 1
+  created_at: 2008-01-02 16:18:06
+  updated_at: 2008-01-02 16:18:06  
+  
+discount_before_tax_invoice_line_item_2:
+  id: 13
+  unit: item 2
+  description: line item two description
+  quantity: 2.00
+  price: 2.22
+  invoice_id: 63
+  position: 2
+  created_at: 2008-01-02 16:18:06
+  updated_at: 2008-01-02 16:18:06    
+  
+discount_before_tax_invoice_line_item_3:
+  id: 14
+  unit: item 3
+  description: line item three description
+  quantity: 3.00
+  price: 3.33
+  invoice_id: 63
+  position: 3
+  created_at: 2008-01-02 16:18:06
+  updated_at: 2008-01-02 16:18:06    
+  
+line_item_for_dated_item_1:
+  id: 15
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 65
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+line_item_for_dated_item_2:
+  id: 16
+  unit: Name 2
+  description: Desc 2
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 66
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+line_item_for_dated_item_3:
+  id: 17
+  unit: Name 3
+  description: Desc 3
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 67
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_sent_invoice:
+  id: 18
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 7
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_resent_invoice:
+  id: 19
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 9
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+line_item_for_invoice_bookkeeping_client_customer_1:
+  id: 20
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 70
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+line_item_for_invoice_bookkeeping_client_customer_2:
+  id: 21
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 20.00
+  invoice_id: 71
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+<% 1.upto(150) do |i| %>  
+<%= "line_item_#{i}_for_invoice_big:" %>
+  id: <%= "#{i+100}" %>
+  invoice_id: 69
+  unit: <%= Babel.random_short.gsub( '&', 'and' ) %>
+  description: <%= Babel.random_short.gsub( '&', 'and' ) %>
+  quantity: <%= rand(1000) / 10 %>
+  price: <%= rand(1000) / 100 %>
+<% end %>
+
+line_item_for_invoice_75:
+  id: 22
+  unit: LI
+  description: Desc 1
+  quantity: 1.00
+  price: 100.00
+  invoice_id: 75
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_76:
+  id: 23
+  unit: LI
+  description: Desc 1
+  quantity: 1.00
+  price: 321.00
+  invoice_id: 76
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_77:
+  id: 24
+  unit: LI
+  description: Desc 1
+  quantity: 1.00
+  price: 321.33
+  invoice_id: 77
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_79:
+  id: 25
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 2.00
+  invoice_id: 79
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_80:
+  id: 26
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 2.00
+  invoice_id: 80
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+
+line_item_for_invoice_81:
+  id: 27
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 2.00
+  invoice_id: 81
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_82:
+  id: 28
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 82
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+line_item_for_invoice_83:
+  id: 29
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 83
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+  
+line_item_for_invoice_84:
+  id: 30
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 1.50
+  invoice_id: 84
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_85:
+  id: 31
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 2.00
+  invoice_id: 85
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+
+line_item_for_invoice_86:
+  id: 32
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 2.00
+  invoice_id: 86
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_87:
+  id: 33
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 2.00
+  invoice_id: 87
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_88:
+  id: 34
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 10.00
+  invoice_id: 88
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+
+line_item_for_invoice_89:
+  id: 35
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 1.01
+  invoice_id: 89
+  position: 1
+  created_at: 2007-10-16 16:18:06
+  updated_at: 2007-10-16 16:18:06
+
+line_item_for_invoice_58:
+  id: 36
+  unit: Name 1
+  description: Desc 1
+  quantity: 1.00
+  price: 1.01
+  invoice_id: 58
+  position: 1
+  created_at: 2009-09-23 16:18:06
+  updated_at: 2009-09-23 16:18:06
+
+line_item_for_invoice_91:
+  id: 37
+  unit: Hour
+  description: Recurring invoice line item
+  quantity: 1.00
+  price: 73.27
+  invoice_id: 91
+  position: 1
+  created_at: 2009-09-23 16:18:06
+  updated_at: 2009-09-23 16:18:06
+
+line_item_for_invoice_92:
+  id: 38
+  unit: Pound
+  description: Recurring invoice2 line item
+  quantity: 1.00
+  price: 100.00
+  invoice_id: 92
+  position: 1
+  created_at: 2009-09-23 16:18:06
+  updated_at: 2009-09-23 16:18:06

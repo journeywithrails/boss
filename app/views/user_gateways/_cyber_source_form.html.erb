@@ -1,0 +1,29 @@
+<% skip_info ||= false -%>
+<label><%= _("User name") %> <%= text_field_tag 'user_gateways[cyber_source][login]', user_gateway.login, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<label><%= _("Transaction Key") %> <%= text_field_tag 'user_gateways[cyber_source][password]', user_gateway.password, :class=>"user_profile_text"  %></label>
+<br clear="all"/>
+<p>To obtain your transaction key, follow these steps:</p>
+<ol>
+  <li>1 Log into the <a href="https://ebc.cybersource.com/" target="_BLANK">Business Center</a>.</li>
+  <li>
+    <p>2 In the navigation pane, click Account Management &gt; Transaction Security Keys.</p>
+    <p>The Transaction Security Keys page appears. </p>
+  </li>
+  <li>3 Click Security Keys for the SOAP Toolkit API. </li>
+  <li>
+    <p>4 Click Generate Key.</p>
+    <p>
+      Your new key immediately appears in a box below the table. If you forget to copy or download your password, 
+      you will need to create a new password and delete the previous one.
+    </p>
+  </li>
+  <li>Copy the value that appears in the box below the table</li>
+  <li>Paste the value into the Transaction Key field on this page</li>
+</ol>
+<br clear="all"/>
+
+<% unless skip_info -%>
+<%= link_to _("Where do I find CyberSource information?"), "/cyber_source_help.html", :popup => true %>
+<% end -%>
+<br clear="all"/>

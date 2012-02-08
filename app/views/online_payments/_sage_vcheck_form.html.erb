@@ -1,0 +1,90 @@
+<%= error_messages_for(:object_name => 'payment', :object => (@payment_data ? @payment_data.compact : nil)) %>
+<% content_for "bottom_javascripts" do -%>
+	<script type="text/javascript" language="javascript">
+    Sage.setCheckType = function(e) {
+      if (e.value == 'personal') {
+        Element.show('sage_vcheck_personal');
+        Element.hide('sage_vcheck_business');
+      } else {
+        Element.show('sage_vcheck_business');
+        Element.hide('sage_vcheck_personal');
+      }
+    }
+  </script>
+<% end -%>
+<%= yield(:bottom_javascripts) if params[:action] == 'payment_type' %>
+<% @check, @dob, @license, @ssn, @billing_address, @customer, @business = @payment_data %>
+<% form_tag invoice_online_payments_path(:invoice_id => @key) do %>
+  <!-- sage vcheck gateway -->
+  <div class="gateway_form_section">
+    <% fieldset_tag(_('Check Information')) do %>
+	  <br clear="all" />
+	
+	  <%= label :customer_type, _('Check Type') %>
+      <label><%= radio_button(:customer, :customer_type, 'business', :onclick => 'Sage.setCheckType(this)') %> <%= _("Business") %></label>
+      <label><%= radio_button(:customer, :customer_type, 'personal', :onclick => 'Sage.setCheckType(this)') %> <%= _("Personal") %></label>
+	  <br clear="all" />
+
+	  <%= label :first_name, _('First Name') %>
+	  <%= text_field(:check, :first_name) %>
+	  <br clear="all" />
+
+	  <%= label :last_name, _('Last Name') %>
+	  <%= text_field(:check, :last_name) %>
+	  <br clear="all" />
+
+	  <%= label :account_type, _('Account Type') %>
+	  <%= select(:check, :account_type, ['checking', 'savings']) %>
+	  <br clear="all" />
+
+	  <%= label :number, _('Check Number') %>
+	  <%= text_field(:check, :number) %>
+	  <br clear="all" />
+
+	  <%= label :routing_number, _('Routing Number') + '<br/>'+_(' (9 digits)') %>
+	  <%= text_field(:check, :routing_number) %>
+	  <br clear="all" />
+
+	  <%= label :account_number, _('Account Number') %>
+	  <%= text_field(:check, :account_number) %>
+	  <br clear="all" />
+    <% end %>
+  </div>
+  <div class="gateway_form_section">
+	<%= render :partial => "sage_address", :object => @payment_data %>
+  </div>
+  <div class="gateway_form_section" <%= 'style="display: none;"' if @customer.personal? %> id="sage_vcheck_business">
+    <% fieldset_tag(_('Business information'), :id => 'business_info') do %>
+	  <br clear="all" />
+
+	  <%= label :federal_tax_number, _('Business Federal Tax Number (EIN)') %>
+	  <%= text_field(:business, :federal_tax_number) %>
+	  <br clear="all" />
+    <% end %>
+  </div>
+  <div class="gateway_form_section" <%= 'style="display: none;"' unless @customer.personal? %> id="sage_vcheck_personal">
+    <% fieldset_tag('Identifying information', :id => 'personal_info') do %>
+	  <br clear="all" />
+
+	  <%= label :dob, _('Date of Birth') %>
+	  <%= date_select(:dob, :birth_date, 
+        :start_year => Time.now.year - 100,
+        :end_year => Time.now.year - 18) %>
+	  <br clear="all" />
+
+	  <%= label :state, _('Driver\'s License State') %>
+	  <%= select(:license, :state, select_states) %>
+	  <br clear="all" />
+
+	  <%= label :number, _('Driver\'s License Number') %>
+	  <%= text_field(:license, :number) %>
+	  <br clear="all" />
+
+	  <%= label :number, _('Social Security Number / Social Insurance Number') %>
+	  <%= text_field(:ssn, :number) %>
+	  <br clear="all" />
+    <% end %>
+  </div>
+  <br style="clear: both" />
+  <%= submit_tag(_('Pay Now')) %>
+<% end %>

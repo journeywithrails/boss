@@ -1,0 +1,15 @@
+<%@skip_header=true%>
+<% content_for("header") do %>
+<%=render :partial => "company_brand", :locals => { :profile => @profile } %>
+<% end %>
+
+<% content_for("main") do -%>
+  <%= _("Please confirm payment of %{amount} for invoice %{invoice_number} to %{email}.") % {:amount => "#{format_amount @payment.amount}", :invoice_number => @invoice.unique, :email => @user_gateway.email} %>
+
+  <% form_tag complete_invoice_online_payments_path(:invoice_id => access_key) do -%>
+    <%= hidden_field_tag 'token', params['token'] %>
+    <%= hidden_field_tag 'PayerID', params['PayerID'] %>
+    <%= link_to _('Cancel'), cancel_invoice_online_payments_path(:invoice_id => access_key), :id => 'cancel' %>
+    <%= submit_tag _('Confirm Payment'), :id => 'confirm-button' %>
+  <% end -%>
+<% end -%>

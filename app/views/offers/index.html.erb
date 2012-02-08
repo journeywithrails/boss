@@ -1,0 +1,18 @@
+<h1><%= _('Listing offers') %></h1>
+
+<table>
+  <tr>
+    <th><%= _('From') %></th>
+    <th><%= _('For') %></th>
+  </tr>
+
+<% @offers.each do |offer| %>
+  <tr>
+    #RADAR: is this even used?
+    <td><%= link_to offer.invitor.name, "javascript: alert(_('implement show user'))" %></td>
+    <td><%= h( offer.short_description) %></td>
+    <td><%= link_to _('Edit'), edit_offer_path(offer) %></td>
+  </tr>
+<% end %>
+
+</table>

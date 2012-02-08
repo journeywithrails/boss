@@ -1,0 +1,6 @@
+<send-invoice-browsal>
+  <error-messages type="yaml"><%= error_messages.to_yaml %></error-messages>
+  <%= current_url %>
+<%= xml_metadata @invoice %>
+<%= xml_metadata @customer %>
+</send-invoice-browsal>

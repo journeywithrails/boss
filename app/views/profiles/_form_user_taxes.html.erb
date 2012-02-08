@@ -1,0 +1,196 @@
+<% content_for "bottom_javascripts" do -%>
+	<script type="text/javascript" language="javascript">
+	  // Set official tax values if the province is Canadian.
+	  
+	  
+	  Sage.taxesSetToOfficial = function() {
+
+	    var taxValues2 = new Array();
+	    taxValues2['BRITISH COLUMBIA'] = 'GST,5.0,PST,7.0';
+	    taxValues2['ALBERTA'] = 'GST,5.0';
+	    taxValues2['SASKATCHEWAN'] = 'GST,5.0,PST,7.0';
+	    taxValues2['MANITOBA'] = 'GST,5.0,PST,7.0';
+	    taxValues2['ONTARIO'] = 'GST,5.0,PST,8.0';
+	    taxValues2['QUEBEC'] = 'GST,5.0,QST,7.875';
+	    taxValues2['NEWFOUNDLAND AND LABRADOR'] = 'HST,13.0';
+	    taxValues2['NEWFOUNDLAND'] = 'HST,13.0';
+	    taxValues2['NEW BRUNSWICK'] = 'HST,13.0';
+	    taxValues2['NOVA SCOTIA'] = 'HST,13.0';
+	    taxValues2['PRINCE EDWARD ISLAND'] = 'GST,5.0,PST,10.5';
+	    taxValues2['YUKON'] = 'GST,5.0';
+	    taxValues2['NORTHWEST TERRITORIES'] = 'GST,5.0';
+	    taxValues2['NUNAVUT'] = 'GST,5.0';
+	    taxValues2['DEFAULT'] = '';
+
+	    var provIndex = 'DEFAULT';
+	    if(  "<%= current_user.profile.company_country.to_s %>" == "CA" ) {
+	      provIndex = Sage.trim("<%= current_user.profile.company_state.to_s %>".toUpperCase());
+	    }
+	    var provTaxValues = taxValues2[provIndex] ?
+	      taxValues2[provIndex].split(',') : taxValues2['DEFAULT'];
+
+	    $('profile_tax_1_name').value = provTaxValues[0] ? provTaxValues[0] : '';
+	    $('profile_tax_1_rate').value = provTaxValues[1] ? provTaxValues[1] : '';
+	    $('profile_tax_2_name').value = provTaxValues[2] ? provTaxValues[2] : '';
+	    $('profile_tax_2_rate').value = provTaxValues[3] ? provTaxValues[3] : '';
+
+	    Sage.highlight_element('profile_tax_1_name');
+	    Sage.highlight_element('profile_tax_1_rate');
+	    Sage.highlight_element('profile_tax_2_name');
+	    Sage.highlight_element('profile_tax_2_rate')
+            $('tax_1_in_taxable_amount_wrapper').show();
+	  };
+
+	  Sage.trim = function( s ) {
+	    ret = s;
+	    ret = ret.replace(/^\s+/g,"");
+	    ret = ret.replace(/\s+$/g,"");
+	    return ret;
+	  };
+
+	  Sage.taxesBlank = function( elemName ) {
+	    alert( elemName );
+	  };
+
+	  Sage.blank_rate_if_name_blank = function() {
+	    if( $('profile_tax_1_name').value.replace(/\s/g, '') == '' ) {
+	      $('profile_tax_1_rate').value = '';
+	    }
+	    if( $('profile_tax_2_name').value.replace(/\s/g, '') == '' ) {
+	      $('profile_tax_2_rate').value = '';
+	    }
+	  };
+
+	  Sage.enable_tax_settings = function(){
+	    if( $('profile_tax_enabled').checked ) {
+	      $('tax_settings').show();
+		  $('discounts').show();
+	    }
+	    else {
+	      $('tax_settings').hide();
+		  $('discounts').hide();
+	    }
+	  };
+
+	  Sage.enable_province_tax_defaults = function(){
+	    if(( "<%= current_user.profile.company_country.to_s %>" == "CA" ) && ("<%= current_user.profile.company_country.to_s %>" != "")) {
+	      $('taxes_official').show();
+	    }
+	    else {
+	      $('taxes_official').hide();
+	    }
+	  };   
+	  
+	  Event.observe('taxes_official_link', 'click', Sage.taxesSetToOfficial );
+	  Event.observe('profile_tax_1_name', 'blur', Sage.blank_rate_if_name_blank );
+	  Event.observe('profile_tax_2_name', 'blur', Sage.blank_rate_if_name_blank );
+	  Event.observe('profile_tax_enabled', 'click', Sage.enable_tax_settings);
+
+
+	  Sage.enable_tax_settings();
+	  Sage.enable_province_tax_defaults();
+
+
+				
+	</script>
+
+<% end # content_for "bottom_javascripts"
+     %>
+  
+  <div id="user_taxes">
+  <%= hidden_field_tag(:profile_tab, "taxes") %>
+	<div class="profile_title"><%= _('Set up your tax settings') %></div>
+	<br clear="all">
+        <div class="profile_subtitle"><%= _('If you collect taxes, please enter them here. They will be included on all your new invoices (changing a tax setting here will not affect previously saved invoices).') %></div>      
+
+	<div class="yui-gd">
+		
+	<div class="yui-u first" id="enable_taxes">
+	<br/>
+		<span class="label_checkbox_pair">
+			
+			<%= f.check_box :tax_enabled, {:class => "checkbox"} %>
+			<%= f.label :tax_enabled, _("My company charges taxes") %>
+		</span>
+	</div>     
+  
+      <div class="yui-u" id="tax_settings">
+    <div id="taxes_official"style="margin-top: 3px;"><br/><a  href="#" id="taxes_official_link" ><b><%= _('Use the official tax values for my province') %></b></a></div>
+	<br/>
+	
+	
+	<table width="100%"><tr><td width="50%" valign="top">
+  
+      <%# We are using a button/link instead of a checkbox because a button is a little more intuitive and flexible even though the checkbox may be more informative.  Another argument agains the checkbox is a checkbox would entail that we transparently update tax values the moment they change, possibly against the user's wishes. %>  
+      <%# Use plain JS intead of AJAX to store the default tax rates since it's faster, and we are not going to provide defaults for a many tax authorities, so put the data on the client side. %>    
+      
+
+	<%= f.label :tax_1, _("Tax 1"), {:class=>"tax_label"} %>
+	<br clear="all" />
+	<%= f.label :tax_1_name, _("Name"), {:class=>"small"} %>
+	<%= f.text_field :tax_1_name,{ :size => 8, :class=>"taxinput" }%>
+	<br clear="all" />
+	<%= f.label :tax_1_rate, _("Rate in %"), {:class=>"small"} %>
+	<%= f.text_field :tax_1_rate, { :size => 8, :class=>"taxinput" } %><br/>
+	<br clear="all" />
+	
+	
+</td>
+<td width="50%" valign="top">
+	
+	
+	<%= f.label :tax_2, _("Tax 2"), {:class=>"tax_label"} %>
+	<br clear="all" />
+	<%= f.label :tax_2_name, _("Name"), {:class=>"small"} %>
+	<%= f.text_field :tax_2_name,{ :size => 8, :class=>"taxinput" } %>
+	<br clear="all" />
+	<%= f.label :tax_2_rate, _("Rate in %"), {:class=>"small"} %>
+	<%= f.text_field :tax_2_rate, { :size => 8, :class=>"taxinput" } %>
+		
+</td></tr>		
+</table>	
+		
+        <div id="discounts" class="user_profile">
+
+          <div class="column">
+            <%= f.check_box :discount_before_tax, {:class => "checkbox"} %>
+            <%= f.label :discount_before_tax, _("Calculate discount before tax") %>            
+          </div>
+
+          <%
+              tax_1_in_taxable_amount_label = _("Include %{tax} in taxable amount");
+          %>
+          <div id="tax_1_in_taxable_amount_wrapper" class="column" >
+            <%= f.check_box :tax_1_in_taxable_amount,  {:class => "checkbox"} %>
+            <%= f.label :tax_1_in_taxable_amount, tax_1_in_taxable_amount_label %{:tax=>@profile.tax_1_name}, :id=>"tax_1_in_taxable_amount_label"%></div>
+          <br clear="all" />
+
+          <script>
+
+            <% if @profile.tax_1_name.blank? %>
+              $('tax_1_in_taxable_amount_wrapper').hide();
+            <% end %>
+              
+            $("profile_tax_1_name").observe("change",function(ev){
+              if (this.value == "") 
+                $('tax_1_in_taxable_amount_wrapper').hide();
+              else
+              {
+                var str = '<%= tax_1_in_taxable_amount_label %>';
+                var tax = $('profile_tax_1_name').value;
+                $('tax_1_in_taxable_amount_label').innerHTML = str.sub('%{tax}',tax);
+                $('tax_1_in_taxable_amount_wrapper').show();
+              }
+            });
+
+          </script>
+
+        </div>  		
+		
+     </div>      
+
+  </div>
+  <br clear="all"/>
+      
+  </div>
+

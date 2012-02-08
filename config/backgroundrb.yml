@@ -1,0 +1,15 @@
+--- 
+:backgroundrb:
+  :ip: 0.0.0.0
+  :port: 11007
+  :log: foreground
+
+:schedules:
+  :fetcher_worker:
+    :fetch_mail:
+      :trigger_args: */60 * * * * * 
+      # every minute
+
+  :recurring_invoices_worker:
+    :process_recurring_invoices:
+      :trigger_args: 13 0,12 * * * *

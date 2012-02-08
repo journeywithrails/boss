@@ -1,0 +1,146 @@
+<%@skip_footer= true%>
+
+<% if @invoice.nil? then @invoice=invoice end %>
+<div id="preview_invoice_content" >
+	<% unless @invoice.invoice_file.nil? #FIXME temporarily ignore empty invoice_file -%>
+  <p><%= _("Only the invoice summary is displayed on this page.") %>
+	<%if logged_in? then %> 
+	<%# viewing a PDF link by the receipient of the invoice is not supported right now%>
+	<%= _("To see the entire invoice, <b>%{link}</b>.") % {:link => link_to( _("download it in PDF format"), formatted_invoice_path(@invoice, 'pdf'), :id => "simply_invoice_pdf_link")} %>
+	<% end %>
+  <br/><br/><hr/><br/>
+  </p>
+	<% end -%>
+  
+  <%# hack: print preview across multiple pages for FireFox %>
+
+	<div class="yui-gc">
+		<div class="yui-u first">
+		    <div id="simply_preview_customer">
+		        <table>
+		        <tr>
+		        	<td valign="top" style="width: 80px">
+		        		<b><%= _("To:") %></b>
+		        	</td>
+					<td>
+					    <span id="invoice_customer_name"><%= h(@invoice.customer.name) %></span><br />
+					</td>
+				</tr>
+			</table>
+			<br/>
+			</div>
+			<div id="comment">
+			  <% if !@invoice.description_clean.blank? %>
+		        <table>
+		          <tr>
+		        	<td valign="top" style="width: 80px">
+		        		<b><% _("Comment:") %></b>
+		        	</td>
+					<td>
+  						<%= @invoice.description_clean %>
+					</td>
+				  </tr>
+			    </table>
+			  <% end %>
+		    </div>
+		</div>
+		<div class="yui-u" >
+		<div style="padding: 0px !important; margin-top: 0px !important" id="simply_preview_summary">
+	        <table>
+	          <tr>
+	            <td><span class="row_label"><%= _('Invoice') %>:</span></td>
+	            <td><span id="invoice_unique"><%= h(@invoice.unique) %></span></td>
+	          </tr>
+	          <tr>
+	            <td><span class="row_label"><%= _('Issue date') %>:</span></td>
+	            <td><span id="invoice_date"><%= format_date("%B %d, %Y") { @invoice.date } %></span></td>
+	          </tr>
+	          <tr>
+	            <td><span class="row_label"><%= _('Due date') %>:</span></td>
+	            <td><span id="invoice_due_date"><%= format_date("%B %d, %Y") { @invoice.due_date } %></span></td>
+	          </tr>
+	          <tr>
+	            <td><span class="row_label"><%= _('Reference No.') %>:</span></td>
+	            <td><span><%= h(@invoice.reference) %></span></td>
+	          </tr>
+	        </table> 
+          <br/>
+          <br/>   
+    		  <table>
+		    <tr>
+			  <td class="preview_footer_summary_label">
+			    <span><%= _('Subtotal') %>:</span>
+			  </td>
+			  <td class="preview_footer_summary_amount">
+			    <span id="invoice_line_items_total"><%= format_amount(@invoice.line_items_total) %></span>
+			  </td>
+			</tr>
+			<tr>
+			<% if @invoice.discount_before_tax %>
+			<td class="preview_footer_summary_label">
+			    <span id="invoice_discount_name"><%= _('Discount') %>: </span>
+			</td>
+			<td class="preview_footer_summary_amount">
+			    <span id="invoice_discount_amount"><%= format_amount(@invoice.discount_amount) %></span>
+			</td>
+			<% end %>
+			</tr>
+				<% @invoice.taxes.each do |tax| %>
+				<tr id="<%= "invoice_tax_#{tax.name}" %>">
+			  		<td class="preview_footer_summary_label">
+			  			<span><%= tax.name %>:</span>
+					</td>
+					<td class="preview_footer_summary_amount">
+						<span id="<%= "invoice_tax_#{tax.amount}" %>">
+						  <%= format_amount(tax.amount) %>
+						</span>
+					</td>
+				</tr> 
+				<% end %>
+			<% if !@invoice.discount_before_tax %>
+			<td class="preview_footer_summary_label">
+			    <span id="invoice_discount_name"><%= _('Discount') %>: </span>
+			</td>
+			<td class="preview_footer_summary_amount">
+			    <span id="invoice_discount_amount"><%= format_amount(@invoice.discount_amount) %></span>
+			</td>
+			<% end %>
+      <% if (@invoice.paid != 0) %>
+			<tr>
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span><strong><%= _('Total Due') %>:</strong></span>
+			  </td>
+			  <td id="preview_footer_summary_total" class="preview_footer_summary_total">
+			    <span id="invoice_total"><strong><%= format_amount(@invoice.total_amount) %></strong></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span><strong><%= _('Less Payments') %>:</strong></span>
+			  </td>
+			  <td id="preview_footer_paid" class="preview_footer_paid">
+			    <span id="invoice_paid"><strong><%= format_amount(@invoice.paid) %></strong></span>
+			  </td>
+			</tr>
+      <% end %>
+			<tr>
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span><strong><%= _('Amount Owing') %>:</strong></span>
+			  </td>
+			  <td id="preview_footer_summary_total" class="preview_footer_summary_total">
+			    <span id="invoice_total"><strong> <%= format_amount(@invoice.amount_owing) %></strong></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td class="preview_footer_summary_label preview_footer_summary_total">
+			    <span class="footer_caption">(<%= invoice_currency(@invoice)%>)</span>
+			  </td>
+			  <td id="preview_footer_paid" class="preview_footer_paid">
+			    &nbsp;
+			  </td>
+			</tr>
+		  </table>	
+		</div>
+	</div>
+	</div>
+</div>

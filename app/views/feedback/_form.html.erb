@@ -1,0 +1,20 @@
+<%= error_messages_for :feedback %>
+<% form_for(:feedback, :url => {:action => :create} ) do |f| %>
+  <div class="colored_input">
+    <p><%= _('Please use this form to send us feedback on this site.') %><br/><br/><%= _('If you are reporting a bug or malfunction, please be descriptive in the nature of the problem and how you got it, so we can reproduce and fix it as soon as possible.') %></p>
+    <br clear=all/>
+    <p><%= _('Your Name (optional):') %></p>  
+    <%= f.text_field( :user_name) %>  
+     <br clear=all/>
+    <br clear=all/>
+    <p><%= _('Your email address (must be provided if you want a response):') %></p>  
+    <%= f.text_field( :user_email) %>  
+    <br clear=all/>  
+    <br clear=all/>
+    <p><%= _('Your message:') %></p>
+    <%= f.text_area( :text_to_send, {:size => "70x15"}) %>
+    <br clear=all/>
+    <br clear=all/>
+  </div>   
+  <%= f.submit(_("Send"), :class => "form_submit", :id => 'send-btn'  ) %>  
+<% end %>

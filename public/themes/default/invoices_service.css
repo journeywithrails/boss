@@ -1,0 +1,148 @@
+/* heading */
+
+    #preview_heading{
+      float:left;
+    }
+
+    #preview_heading_logo{
+      float:right;
+      margin-right: 15px;      
+    }
+
+    #preview_company_info {
+      margin-top:10px;
+      margin-bottom:100px;
+    }
+    #preview_heading_summary
+    {
+       float:right;
+    }
+
+    #preview_remit_to
+    {
+      float:left;
+    }   
+
+    #addressing_container {
+      padding-top:10px;
+    }
+    
+    #big_invoice_label_container {
+      width:100%;
+      margin-bottom:30px;
+      margin-right: 10px;
+    }
+
+    #big_invoice_label {
+      float:right;
+    }
+
+    #invoice_ref_block
+    {
+      border:#79973f 1px solid;
+      padding:10px;
+      background-color:#ffffcc;
+      margin-bottom: 10px;
+      height:52px;
+    }
+
+
+    .preview_heading_summary_invoice{
+      font-weight:bold;
+      text-align:right;
+    }
+
+    .preview_heading_summary_invoice_label{
+      font-weight:bold;
+      text-align:right;
+    }
+
+    #preview_customer
+    {
+      margin-top:5px;
+      float:left;
+      width: 300px;
+    }
+
+    #preview_contact
+    {
+      margin-top: 5px;
+      float:left;
+    }    
+
+    #customer_section {
+      margin-left:10px;
+      margin-top:10px;
+    } 
+
+    .invoice_header_left {
+      float:left;
+      width: 250px;
+    }
+
+    .invoice_header_right {
+      float:right;
+      width: 250px;
+    }
+
+/* line item headings */
+
+    #preview_entity_list {
+      width: 100%;
+    }
+
+    #preview_line_items_heading{
+      color:white;
+      background-color:#79973F;
+      font-size:110%;
+    }
+
+    #preview_header_line
+    {
+    border: 0;
+    color: #79973f;
+    background-color: #79973f;
+    height: 1px;
+    width: 100%;
+    text-align: left;
+    margin-top:10px;
+    margin-bottom:10px;
+    }
+
+    #preview_line_items th.unit{
+      width:30%;
+      text-align:left;
+      padding-left:5px;
+    }
+
+    #preview_line_items th.description{
+      width:35%;
+      text-align:left;
+    }
+
+    #invoice_line_items_total{
+      text-align:right;
+    }
+
+    .preview_footer_summary_label span {
+      padding-right: 1em ;
+      font-size: 110%;
+      font-weight: bold;
+    }
+
+    .preview_footer_summary_amount{
+      text-align:right;
+    }
+
+    #preview_footer_summary_total{
+      border-top: 1px solid #79973f;
+    }
+
+    #preview_entity_list .quantity   {
+      width: 0%;
+      display:none;
+    }
+
+
+
+

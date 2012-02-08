@@ -1,0 +1,35 @@
+.grid-panel{width:100%; height:auto; margin:auto; padding:0px; border-collapse: collapse; }
+
+.grid-panel .header{width:auto; background:transparent url(/images/new_grid/white-top-bottom.gif) repeat-x scroll 0 -1px; 
+color:#493F0B; font-family:tahoma,arial,verdana,sans-serif; font-size:11px;font-weight:bold; line-height:15px; overflow:hidden; padding:5px 3px 4px 5px;   border-bottom:1px solid #A7C520;}
+
+.grid-panel{border:1px solid #A7C520;}
+.grid-content{border:1px solid #E0EDA8; border-style: none solid none solid;}
+.grid-content .row{width:100%; padding:0px; margin:0px; }
+.grid-content .row td{ border-bottom:solid 1px #E0EDA8;}
+
+.grid-content .row.normal:hover{background:url(/images/new_grid/row-over.gif) repeat-x top;}
+.grid-content .row.normal td {height:1px; padding:3px 3px 3px 10px; font-family:arial,tahoma,helvetica,sans-serif; font-size:11px; text-decoration:none;  font-size:11px; line-height:13px; }
+.grid-content .row.names td {padding:4px 3px 4px 5px; border-left:1px solid #E0EDA8; background:url(/images/new_grid/grid3-hrow.gif) repeat-x; line-height:15px;   vertical-align:middle;  font-family:arial,tahoma,helvetica,sans-serif; font-size:11px;}
+.grid-content .row.names td.first{border-left:none;}
+
+.grid-content .row.normal  td div  a{ color:#493F0B; }
+.grid-content .row.names  td div a{ }
+
+.grid-content .row.normal td div{height:15px; overflow:hidden;}
+
+
+.grid-content table{width:100%; table-layout:fixed;}
+
+.grid-content .row  td.left{text-align:left;}
+.grid-content .row  td.right{text-align:right;}
+.grid-content .row  td.center{text-align:center;}
+
+
+.grid-panel .footer{ position:relative; width:100%; height:16px; border-top:1px solid #A7C520;  overflow:hidden; padding:4px 0px 5px 0px; background:url(/images/new_grid/bg.gif) repeat-x; margin:0px;  font-family:arial,helvetica,clean,sans-serif; font-size:11px; color:#000; text-align:left;}
+.grid-panel .footer table{margin-left:4px;}
+.grid-panel .footer table tr td a, .grid-panel .footer table tr td img{padding:0 3px 0 0;}
+.grid-panel .footer table tr td input{margin:0 1px 0 1px;}
+.grid-panel .footer table tr td.split{padding:0 5px 0 5px ;}
+.grid-panel .footer table tr td.split img{padding:0px; margin:0px;}
+.grid-panel .footer .caption{ position:absolute; top:5px; right:10px; font-size:11px;  color:#444; }

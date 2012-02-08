@@ -1,0 +1,32 @@
+<% form_for(:master, :url => "/admin/master/update/#{@user.id}", :html => {:method => :put} ) do |f| %>
+  <% admin_roles = admin_roles(true) %> 
+  <table width="100%" id="master_admin_table">
+    <th class="center-cell">
+      User login
+    <% admin_roles.each do |r| %>
+      <th class="center-cell">
+        <%= r.humanize %>
+      </th>
+    <% end %>
+    <th>
+      &nbsp;
+    </th>
+    <% admin_roles = admin_roles %>
+    <tr>
+      <td class="login-field-cell">
+      <b><%= h @user.sage_username %></b>
+      </td>
+      <% admin_roles.each do |o| %>
+        <td class="center-cell">
+          <input type="checkbox" id="master_<%= o %>" name="master[<%= o %>]" value="1" <%= "checked" if @user.has_role?( o ) %> />
+          <input type="hidden" id="master_<%= o %>_0" name="master[!<%= o %>]" value="0" />
+        </td>	 
+      <% end %>
+      <td>
+        <b><a href="/admin/master/delete/<%= @user.id %>">Delete admin</a></b>
+      </td>
+    </tr>
+  </table>
+  <br/>
+<p style="text-align: center"><%= f.submit( "Update" ) %></p>
+<% end %>

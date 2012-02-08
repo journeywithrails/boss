@@ -1,0 +1,10 @@
+case @heard_from
+when "other"
+  page.replace_html 'div_specify_heard_from', :partial => @heard_from, :locals => {:profile =>@profile}
+when "accountantbookkeeper"
+  page.replace_html 'div_specify_heard_from', :partial => @heard_from, :locals => {:profile => @profile}
+else
+  page.replace_html 'div_specify_heard_from', ""
+end
+
+page.increment_ajax_counter_rjs

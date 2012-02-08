@@ -1,0 +1,76 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+  
+	<%= stylesheet_theme_controller %>
+	<%= stylesheet_theme_controller_printable(print?) %>	
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+  <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+		<% @content_for_main_top = capture do %>
+		
+		<% end %>
+
+		<% @content_for_lnav = capture do %>
+			<%= render :partial => "admin/menu" %>
+		<%end%>
+
+		<% @content_for_sidebar = capture do %>
+		<% end %>
+    
+		<% @content_for_infobox = capture do %>
+          <%= formatted_flash %>
+		<% end %>    
+
+		<% @content_for_main = capture do %>
+          <h1>Summary statistics</h1>
+          <div id="admin_statistics">
+            <ul>
+              <li>
+                <table>
+                  <tr>
+                    <td>Users:</td><td align="right"><%= AdminManager.commify_result( AdminManager.user_count ) %></td>
+                  </tr>
+                  <tr>
+                    <td>Invoices:</td><td align="right"><%= AdminManager.commify_result( AdminManager.invoice_count ) %></td>
+                  </tr>
+                </table>
+              </li>
+              <li><a href="/admin/overview/details">Detailed summary statistics</a></li>
+            </ul>
+          </div>
+          <br/>
+
+          <div id="admin_statistics">
+            <h3>Users</h3>
+              <ul>
+                <li>User list: <a href="/admin/overview/users_summary">summary</a> or <a href="/admin/overview/users_details">details</a></li>
+                <li><a href="/admin/overview/users_by_language">Users by language</a></li>
+                <li><a href="/admin/overview/users_by_country">Users by country</a></li>
+                <li><a href="/admin/overview/users_by_customers">Users by customer count</a></li>
+                <li><a href="/admin/overview/payment_gateway_users">Payment gateway users</a></li>
+              </ul>
+            <h3>Referrals</h3>
+              <ul>
+                <li><a href="/admin/overview/user_referral_sources">User referral sources</a></li>
+                <li><a href="/admin/overview/referral_summary">Direct referrals</a></li>
+                <li><a href="/admin/overview/users_who_joined_after_being_invoiced">Users who joined after being invoiced</a></li>
+                <li><a href="/admin/overview/users_sharing_data">Users sharing data</a></li>
+              </ul>
+            <h3>Customers</h3>
+              <ul>
+                <li><a href="/admin/overview/customers_by_language">Customers by language</a></li>
+                <li><a href="/admin/overview/customers_by_country">Customers by country</a></li>
+              </ul>
+            <h3>Invoices</h3>
+              <ul>
+                <li><a href="/admin/overview/invoices_by_currency">Invoices by Currency</a></li>
+                <li><a href="/admin/overview/invoices_by_date">Invoices by Date</a></li>
+              </ul>
+          </div>
+		<% end %>
+		<%= render_inner_layout %>  

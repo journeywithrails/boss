@@ -1,0 +1,34 @@
+	<script type="text/javascript">
+		// when the country is changed, update the province select and labels
+    Sage.update_customer_form = function(){
+		  <%= remote_function(
+				:url => { :controller => 'customers', :action => 'switch_country' }, 
+				:with => "'customer[country]=' + $('customer_country').value")
+			%>;							
+		};
+    Event.observe($('customer_country'), 'change', Sage.update_customer_form);
+
+		// this function is used both in the regular customer form and the edit popup
+    Sage.update_customer_form = function(){
+			if (document.forms['customer-popup'])
+			{
+			  <%= remote_function(:url => { :controller => 'customers', :action => 'switch_country' }, 
+					:with => "'customer[country]=' + document.forms['customer-popup'].elements['customer_country'].value") %>;							
+			}
+			else
+			{
+			  <%= remote_function(:url => { :controller => 'customers', :action => 'switch_country' }, 
+					:with => "'customer[country]=' + $('customer_country').value") %>;
+
+			}
+		};
+		
+		if (document.forms['customer-popup'])
+		{
+		  Event.observe(document.forms['customer-popup'].elements['customer_country'], 'change', Sage.update_customer_form);														
+		}
+		else
+		{
+		  Event.observe($('customer_country'), 'change', Sage.update_customer_form);													
+		};
+	</script>	

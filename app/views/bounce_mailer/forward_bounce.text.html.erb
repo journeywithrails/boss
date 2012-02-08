@@ -1,0 +1,5 @@
+<%= _("We were unable to deliver invoice \#%{invoice_num}.  Please check the recipient's email address %{sent_to} to make sure it is correct.") % {:invoice_num => h(@invoice_num), :sent_to => h(@sent_to) } %> <br/>
+<%= _('It may be necessary to send this invoice directly from your own email account, as the message may have been rejected by a spam filter.') %>
+<br/>
+<br/>
+<%#= @bounce %>

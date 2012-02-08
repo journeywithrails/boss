@@ -1,0 +1,12 @@
+<span id="show_csv_import_form">
+	<%= toggle_import_function _('Import Customer List') %>
+</span>
+
+<div id="csv_import_form" style="display:none;">
+	<% form_for :csv_import, :url => { :controller => 'customers', :action => 'import' }, :html => { :multipart => true, :method => :post, :target => "upload_frame" } do |f|%>
+		<p><label><%= _("Select a CSV file") %>:</label>
+		<%= f.file_field :file, :size => "6" %></p>
+		<p><%= submit_tag _('Upload') %> <%= _("or") %> <%= toggle_import_function _('Cancel') %></p>
+	<% end -%>
+	<iframe id="upload_frame" name="upload_frame" style="display: none"></iframe>
+</div>

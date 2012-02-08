@@ -1,0 +1,45 @@
+<% content_for "stylesheets" do%>
+
+
+<% end %>
+
+	<div id="header">
+		
+		<h1><%= _("New Payment") %></h1>
+		<%= link_to _("Cancel"), "/invoices/#{@invoice.id}", :id => "backButton" %>
+		<%= link_to_function _("Save"), "Sage.dirty_page = false;$('payment_form').submit()", :id => "save_button", :class => "nav Action" %>
+
+
+	</div>
+
+<% form_for(:payment, :url => payments_path, :html => {:id => "payment_form"} ) do |f| %>
+	<% @content_for_lnav = capture do %>
+
+	<% end -%>
+
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+  
+	<% @content_for_infobox = capture do %>
+
+	    <%= formatted_flash %>
+		<%= error_messages_for :payment %>
+ 	<% end %>  
+
+    <% @content_for_main_top = capture do %>
+
+    <% end %>
+	<% @content_for_main = capture do %>
+			<%= render :partial => '/payments/mobile/invoice_amounts', :locals => {:f => f} %>
+		  <%= render :partial => "/payments/mobile/form", :locals => {:f => f} %>
+		
+	<% end %>
+	<%= render_inner_mobile_layout("nomenu") %>
+
+    <%= link_to_function _("Save"), "Sage.dirty_page = false;$('payment_form').submit()", :id => "save_payment_button", :class => "button white margined" %>
+
+<% end %>
+
+<% content_for "bottom_javascripts" do %>
+    <%= protect_form('payment_form') %>
+<% end %>

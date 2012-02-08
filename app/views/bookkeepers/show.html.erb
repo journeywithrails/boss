@@ -1,0 +1,82 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_theme_controller("customers") %>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+<% end -%>
+
+<% content_for "javascripts" do -%>
+  <%= javascript_include_tag "/ext/adapter/prototype/ext-prototype-adapter.js" %>
+  <%= javascript_include_tag "/ext/ext-all.js" %>
+ <%= javascript_include_tag "/ext/ext-fix.js" %>   
+<% end -%>
+
+<% @content_for_lnav = capture do %>
+  <h2 class="state"><small><%= _("Options") %></small></h2>
+  <ul class="lnav_ul"> 
+    <li><%= render :partial => "send_invitation_dialog", :locals => {:show_link => false} %></li>         
+    <li><%= link_to_function _('Hire'), "Sage.send_dialog.setup(#{@bookkeeper.id});" %></li>
+    <li><%= link_to _('Bookkeeper List'), bookkeepers_path %></li>
+  </ul>
+<% end %>
+  
+<% @content_for_sidebar = capture do %>
+<% end %>
+
+<% @content_for_main_top = capture do %>
+ <div class="yui-g">
+   <div class="yui-u first"> 
+     <div class="page_header"><%= _('Bookkeeper') %></div>
+   </div>   
+  	<div  class="yui-u" >
+    </div>    
+</div>
+<% end %>
+
+<% @content_for_main = capture do %>
+  <div class="yui-g">
+  		<div class="row">
+  		   <h1><%= @bookkeeper.profile.company_name.blank? ? @bookkeeper.user.email : @bookkeeper.profile.company_name %></h1>
+         <br/>
+  		</div>
+  	<div class="yui-u first">
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Contact Name:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.contact_name %></div>
+  		</div>
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Address 1:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_address1 %></div>
+  		</div>
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Address 2:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_address2 %></div>
+  		</div>      
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('City:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_city %></div>
+  		</div>
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Website:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_website %></div>
+  		</div>      
+  	</div>      
+  	<div class="yui-u">          
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Country:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_country %></div>
+  		</div>
+    	<div id="div_country_dependent">
+        <%= render :partial => @bookkeeper.profile.country_settings.partial, :object => @bookkeeper.profile %>	
+    	</div>      
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Phone:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_phone %></div>
+  		</div>      
+  		<div class="row">
+  	  	 <div class="cell_label"><%= _('Fax:') %></div>
+  		 <div class="cell_value"><%= h @bookkeeper.profile.company_fax %></div>
+  		</div>      
+    </div>    
+</div>
+  
+<% end %>
+<%= render_inner_layout %>

@@ -1,0 +1,49 @@
+<% content_for "stylesheets" do%>
+  <%= stylesheet_link_tag "/ext/resources/css/ext-all.css" %>
+	<%= stylesheet_theme_controller %>
+<% end %>
+
+<% form_for(:payment, :url => payments_path, :html => {:id => "payment_form"} ) do |f| %>
+	<% @content_for_lnav = capture do %>
+		<h2 class="state"><%= _("Options") %></h2> 
+		<br />
+		<ul class="lnav_ul">
+			<li><%= link_to _("Back to invoice"), "/invoices/#{@invoice.id}" %> </li>
+			<li><%= link_to _("Edit payment customer"), "/customers/#{@customer.id}/edit" %> </li>
+		</ul>
+	<% end -%>
+
+	<% @content_for_sidebar = capture do %>
+	<% end %>
+  
+	<% @content_for_infobox = capture do %>
+		<!-- here is call to formatted flash -->
+	 	<%= formatted_flash %>
+		<!-- end call to formatted flash -->
+		<%= error_messages_for :payment %>
+ 	<% end %>  
+
+	<% @content_for_main_top = capture do %>
+		<div class="page_header"><%= _("Record a new payment")%></div>
+	<% end %>
+
+	<% @content_for_main = capture do %>
+			<div class="yui-g">  
+				<%= render :partial => 'invoice_amounts', :locals => {:f => f} %>
+			</div>
+			<br />
+			<div class="yui-g">   
+				<%= render :partial => "form", :locals => {:f => f} %>
+				<p>
+					<div class="right_aligned_with_margin"><%= f.submit _("Save Payment"), :class => "form_submit" %></div>
+				</p>
+		</div>
+	<% end %>
+
+	<%= render_inner_layout %>
+
+<% end %>
+
+<% content_for "bottom_javascripts" do %>
+	<%= protect_form('payment_form') %>
+<% end %>

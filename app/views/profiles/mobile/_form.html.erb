@@ -1,0 +1,248 @@
+<% content_for "bottom_javascripts" do -%>
+	<script type="text/javascript" language="javascript">
+	  // Set official tax values if the province is Canadian
+	  
+	  Sage.taxesSetToOfficial = function() {
+
+	    var taxValues2 = new Array();
+	    taxValues2['BRITISH COLUMBIA'] = 'GST,5.0,PST,7.0';
+	    taxValues2['ALBERTA'] = 'GST,5.0';
+	    taxValues2['SASKATCHEWAN'] = 'GST,5.0,PST,7.0';
+	    taxValues2['MANITOBA'] = 'GST,5.0,PST,7.0';
+	    taxValues2['ONTARIO'] = 'GST,5.0,PST,8.0';
+	    taxValues2['QUEBEC'] = 'GST,5.0,QST,7.875';
+	    taxValues2['NEWFOUNDLAND AND LABRADOR'] = 'HST,13.0';
+	    taxValues2['NEWFOUNDLAND'] = 'HST,13.0';
+	    taxValues2['NEW BRUNSWICK'] = 'HST,13.0';
+	    taxValues2['NOVA SCOTIA'] = 'HST,13.0';
+	    taxValues2['PRINCE EDWARD ISLAND'] = 'GST,5.0,PST,10.5';
+	    taxValues2['YUKON'] = 'GST,5.0';
+	    taxValues2['NORTHWEST TERRITORIES'] = 'GST,5.0';
+	    taxValues2['NUNAVUT'] = 'GST,5.0';
+	    taxValues2['DEFAULT'] = '';
+
+	    var provIndex = 'DEFAULT';
+	    if( $('profile_company_country').value.toUpperCase() == 'CA' ) {
+	      provIndex = Sage.trim($('profile_company_state').value.toUpperCase());
+	    }
+	    var provTaxValues = taxValues2[provIndex] ?
+	      taxValues2[provIndex].split(',') : taxValues2['DEFAULT'];
+
+	    $('profile_tax_1_name').value = provTaxValues[0] ? provTaxValues[0] : '';
+	    $('profile_tax_1_rate').value = provTaxValues[1] ? provTaxValues[1] : '';
+	    $('profile_tax_2_name').value = provTaxValues[2] ? provTaxValues[2] : '';
+	    $('profile_tax_2_rate').value = provTaxValues[3] ? provTaxValues[3] : '';
+
+	    Sage.highlight_element('profile_label_tax_1_name');
+	    Sage.highlight_element('profile_label_tax_1_rate');
+	    Sage.highlight_element('profile_label_tax_2_name');
+	    Sage.highlight_element('profile_label_tax_2_rate')
+	  };
+
+	  Sage.trim = function( s ) {
+	    ret = s;
+	    ret = ret.replace(/^\s+/g,"");
+	    ret = ret.replace(/\s+$/g,"");
+	    return ret;
+	  };
+
+	  Sage.taxesBlank = function( elemName ) {
+	    alert( elemName );
+	  };
+
+	  Sage.blank_rate_if_name_blank = function() {
+	    if( $('profile_tax_1_name').value.replace(/\s/g, '') == '' ) {
+	      $('profile_tax_1_rate').value = '';
+	    }
+	    if( $('profile_tax_2_name').value.replace(/\s/g, '') == '' ) {
+	      $('profile_tax_2_rate').value = '';
+	    }
+	  };
+
+	  Sage.update_customer_form = function(){
+	       <%= remote_function(:url => { :controller => 'profiles', :action => 'switch_country' }, :with => "'profile[country]=' + $('profile_company_country').value") %>;
+	       // + $('profile_company_country').value + '&idx=#{@profile.to_param}'") %>;
+	  };
+
+	  Sage.enable_tax_settings = function(){
+
+	    if( $('profile_tax_enabled').checked ) {
+	      $('tax_settings').show();
+		  $('discounts').show();
+	    }
+	    else {
+	      $('tax_settings').hide();
+		  $('discounts').hide();
+	    }
+	  };
+
+	  Sage.enable_province_tax_defaults = function(){
+	    if( ($('profile_company_country').value.toUpperCase() == 'CA' ) && ($('profile_company_state').value != '')) {
+	      $('taxes_official').show();
+	    }
+	    else {
+	      $('taxes_official').hide();
+	    }
+	  };   
+	  Event.observe('taxes_official_link', 'click', Sage.taxesSetToOfficial );
+
+	  Event.observe('profile_tax_1_name', 'blur', Sage.blank_rate_if_name_blank );
+	  Event.observe('profile_tax_2_name', 'blur', Sage.blank_rate_if_name_blank );
+
+	  Event.observe('profile_company_country', 'change', Sage.update_customer_form);
+	  Event.observe('profile_company_country', 'change', Sage.enable_province_tax_defaults);
+	  Event.observe('profile_company_state', 'change', Sage.enable_province_tax_defaults);
+	  Event.observe('profile_tax_enabled', 'click', Sage.enable_tax_settings);
+
+
+	  Sage.enable_tax_settings();
+	  Sage.enable_province_tax_defaults();
+		
+
+	</script>
+
+<% end # content_for "bottom_javascripts"
+     %>
+
+
+<div class="user_profile">
+
+<div class="blue"><%= _("Company address") %></div>
+
+ 
+ 
+  <div id="user_addressing">
+  	<ul class="form">
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_name, _("Business name:") + mandatory(@profile, @profile.company_name) %></div>
+			<%= f.text_field :company_name, {:class=>"user_profile_text" } %>
+		</li>
+		<li>
+			<div class="form_field_hdr"><%= f.label :contact_name, _("Contact name:") %></div>
+			<%= f.text_field :contact_name, {:class=>"user_profile_text" } %>
+		</li>	
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_address1, _("Address 1:") + mandatory(@profile, @profile.company_address1) %></div>
+			<%= f.text_field :company_address1, {:class=>"user_profile_text" } %>
+		</li>	
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_address2, _("Address 2:") %></div>
+			<%= f.text_field :company_address2, {:class=>"user_profile_text" } %>
+		</li>	
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_city, _("City:") + mandatory(@profile, @profile.company_city) %></div>
+			<%= f.text_field :company_city, {:class=>"user_profile_text" } %>
+		</li>		
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_country, _("Country:") + mandatory(@profile, @profile.company_country), {:style=>"float:left"} %></div>
+			<%= country_select(:profile, :company_country, [$COUNTRY.to_s, 'Canada', 'United States'], {:size => 10, :length => 10, :class=>"foo"}) %>
+		</li>	
+				<div class="profile_div_country_dependent" id="div_country_dependent">
+					<%= render :partial => "/profiles/mobile/#{@profile.country_settings.partial}", :object => @profile %>
+				</div>				
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_phone, _("Phone:") %></div>
+			<%= f.text_field :company_phone, {:class=>"user_profile_text" } %>
+		</li>											
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_fax, _("Fax:") %></div>
+			<%= f.text_field :company_fax, {:class=>"user_profile_text" } %>
+		</li>	
+		<li>
+			<div class="form_field_hdr"><%= f.label :company_website, _("Website:") %></div>
+			<%= f.text_field :company_website, {:class=>"user_profile_text" } %>
+		</li>	
+		<li>
+			<div class="form_field_hdr"><%= _("Default message to be used on invoices:") %></div>
+			<%= f.text_area :default_comment_for_invoice, {:size=>'0x0', :class=>"user_profile_text_area" } %>
+		</li>
+                <li>
+			<div class="form_field_hdr"><%= _("Default message to be used on quotes:") %></div>
+			<%= f.text_area :default_comment_for_quote, {:size=>'0x0', :class=>"user_profile_text_area" } %>
+		</li>
+	</ul>
+		
+	</div>
+
+  
+  
+  <div class="blue"><%= _("Tax Settings") %></div>
+  <div id="user_taxes">
+        <ul>
+        	<li>
+        	<%= f.check_box :tax_enabled, {:class => "checkbox", :id => "profile_tax_enabled"} %>
+			<%= f.label :tax_enabled, _("My company charges taxes") %>
+        	</li>
+		</ul>
+			<div id="tax_settings">
+		<ul>
+				<li>
+					<div id="taxes_official"><a id="taxes_official_link" onclick="Sage.taxesSetToOfficial()"><%= _("Use the official tax values for my province") %></a></div>
+				<li>
+					<div class="form_field_hdr"><%= f.label :tax_1_name, _("Tax 1 Name"), {:id => "profile_label_tax_1_name", :class=>"small"} %></div>
+					<%= f.text_field :tax_1_name,{ :size => 8, :class=>"taxinput" }%>	
+				</li>
+				<li>
+					<div class="form_field_hdr"><%= f.label :tax_1_rate, _("Tax 1 Rate in %"), {:id => "profile_label_tax_1_rate",:class=>"small"} %></div>
+					<%= f.text_field :tax_1_rate, { :size => 8, :class=>"taxinput" } %>
+				</li>
+				<li>
+					<div class="form_field_hdr"><%= f.label :tax_2_name, _("Tax 2 Name"), {:id => "profile_label_tax_2_name",:class=>"small"} %></div>
+					<%= f.text_field :tax_2_name,{ :size => 8, :class=>"taxinput" }%>	
+				</li>
+				<li>
+					<div class="form_field_hdr"><%= f.label :tax_2_rate, _("Tax 2 Rate in %"), {:id => "profile_label_tax_2_rate",:class=>"small"} %></div>
+					<%= f.text_field :tax_2_rate, { :size => 8, :class=>"taxinput" } %>
+				</li>
+			</ul>
+			</div>
+			<div id="discounts">
+				<ul>
+				<li>
+			    	<%= f.check_box :discount_before_tax, {:class => "checkbox"} %>
+			    	<%= f.label :discount_before_tax, _("Calculate discount before tax") %>
+				</li>
+
+                                <%
+                                    tax_1_in_taxable_amount_label = _("Include %{tax} in taxable amount");
+                                %>
+
+                                <li id ="tax_1_in_taxable_amount_wrapper">
+			    	<%= f.check_box :tax_1_in_taxable_amount,  {:class => "checkbox"} %>
+                                <%= f.label :tax_1_in_taxable_amount, tax_1_in_taxable_amount_label %{:tax=>@profile.tax_1_name}, :id=>"tax_1_in_taxable_amount_label" %>
+				</li>
+				</ul>
+			</div>
+
+                        <script>
+
+                          <% if @profile.tax_1_name.blank? %>
+                            $('tax_1_in_taxable_amount_wrapper').hide();
+                          <% end %>
+
+                          $("profile_tax_1_name").observe("change",function(ev){
+                            if (this.value == "")
+                              $('tax_1_in_taxable_amount_wrapper').hide();
+                            else
+                            {
+                              var str = '<%= tax_1_in_taxable_amount_label %>';
+                              var tax = $('profile_tax_1_name').value;
+                              $('tax_1_in_taxable_amount_label').innerHTML = str.sub('%{tax}',tax);
+                              $('tax_1_in_taxable_amount_wrapper').show();
+                            }
+                          });
+
+                        </script>
+  </div>
+
+  <div class="blue"><%= _("Language") %></div>
+  <div id="language-box">
+        <ul>
+        	<li>
+                <%= render :partial => '/layouts/change_language' %><br/>
+        	</li>
+		</ul>
+  </div>
+
+</div>
+

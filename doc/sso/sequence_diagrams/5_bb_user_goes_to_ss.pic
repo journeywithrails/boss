@@ -1,0 +1,91 @@
+.PS
+
+copy "sequence.pic";
+movewid=1.25
+boxwid=1.1
+
+title("\fB5. Logged-in BillingBoss User goes to SageSpark\fP");
+
+actor(U,"\fBBBUser\fP");
+object(SS,"\fBSageSpark\fP");
+object(CAS,"\fBCAS\fP");
+
+step();
+step();
+
+# Logged in Billing Boss User goes to Sagespark
+#begin
+	action(U,SS,"goes to Sage Spark");
+	#begin
+		comment(SS,C1,down 0.7 left 0.35, wid 1.5 ht 0.7 "User does not" "exist in Sage Spark");
+		message(SS,CAS,"Logged in?");
+		return_message(CAS,SS,"Yes");
+		inactive(CAS);
+		step();
+	#end
+
+	#begin
+		message_self(SS, "SS user exists?");
+		return_message_self(SS, "NO");
+	#end
+	
+	#begin
+		message_self(SS, "Service is signup?");
+		comment(SS,C1,down 0.7 left 0.35, wid 1.5 ht 0.7 "If service not signup" "assume came from BillingBoss");
+		return_message_self(SS, "NO");
+	#end
+# Sage Spark shows creates user, sets status to needs_profile
+	#begin
+		message_self(SS,"create user");
+		message_self(SS,"set status NEEDS_PROFILE");
+	#end
+	return_message(SS,U,"show special landing page");
+	inactive(SS);
+	inactive(U);
+#end
+step();
+step();
+
+elapsed_time();
+
+#begin
+	action(U,SS,"goes to Sage Spark");
+	#begin
+		comment(SS,C1,down 0.7 left 0.35, wid 1.5 ht 0.7 "User exists in" "Sage Spark with" "'needs profile' set");
+		message(SS,CAS,"Logged in?");
+		return_message(CAS,SS,"Yes");
+		inactive(CAS);
+		step();
+	#end
+
+	#begin
+		message_self(SS, "SS user exists?");
+		return_message_self(SS, "YES");
+	#end
+
+	#begin
+		message_self(SS, "needs profile?");
+		pause(SS);
+		divider_line();
+		lconstraint(SS, "YES");
+		resume(SS);
+		return_message(SS,U,"show special landing page");
+		inactive(SS);active(SS);
+		divider_line();
+		lconstraint(SS, "NO");
+		resume(SS);
+		return_message(SS,U,"show logged in home page");
+	#end
+
+	inactive(SS);
+	inactive(U);
+#end
+
+step();
+step();
+
+complete(U);
+complete(CAS);
+complete(SS);
+
+.PE

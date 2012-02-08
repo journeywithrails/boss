@@ -1,0 +1,416 @@
+diff --git a/activerecord/lib/active_record/connection_adapters/abstract/database_statements.rb b/activerecord/lib/active_record/connection_adapters/abstract/database_statements.rb
+index e8f1338..d8582b6 100644
+--- a/activerecord/lib/active_record/connection_adapters/abstract/database_statements.rb
++++ b/activerecord/lib/active_record/connection_adapters/abstract/database_statements.rb
+@@ -48,12 +48,19 @@ module ActiveRecord
+       end
+ 
+       # Wrap a block in a transaction.  Returns result of block.
+-      def transaction(start_db_transaction = true)
++      def transaction(start_db_transaction = true, savepoint_number = 1)
+         transaction_open = false
++        savepoint_open = false
+         begin
+           if block_given?
+             if start_db_transaction
+-              begin_db_transaction
++              if savepoint_number == 1
++                begin_db_transaction
++              else
++                if create_savepoint(savepoint_number)
++                  savepoint_open = true
++                end
++              end
+               transaction_open = true
+             end
+             yield
+@@ -61,16 +68,29 @@ module ActiveRecord
+         rescue Exception => database_transaction_rollback
+           if transaction_open
+             transaction_open = false
+-            rollback_db_transaction
++            unless savepoint_open
++              rollback_db_transaction
++            else
++              savepoint_open = false
++              rollback_to_savepoint(savepoint_number)
++            end
+           end
+           raise unless database_transaction_rollback.is_a? ActiveRecord::Rollback
+         end
+       ensure
+         if transaction_open
+           begin
+-            commit_db_transaction
++            unless savepoint_open
++              commit_db_transaction
++            else
++              release_savepoint(savepoint_number)
++            end
+           rescue Exception => database_transaction_rollback
+-            rollback_db_transaction
++            unless savepoint_open
++              rollback_db_transaction
++            else
++              rollback_to_savepoint(savepoint_number)
++            end
+             raise
+           end
+         end
+@@ -86,6 +106,18 @@ module ActiveRecord
+       # done if the transaction block raises an exception or returns false.
+       def rollback_db_transaction() end
+ 
++      # abstract create_savepoint method that does nothing
++      def create_savepoint(sp_number)
++      end
++
++      # abstract rollback_to_savepoint method that does nothing
++      def rollback_to_savepoint(sp_number)
++      end
++
++      # abstract release_savepoint method that does nothing
++      def release_savepoint(sp_number)
++      end
++
+       # Alias for #add_limit_offset!.
+       def add_limit!(sql, options)
+         add_limit_offset!(sql, options) if options
+diff --git a/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb b/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb
+index 7edf5b0..724ca29 100755
+--- a/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb
++++ b/activerecord/lib/active_record/connection_adapters/mysql_adapter.rb
+@@ -284,6 +284,25 @@ module ActiveRecord
+         # Transactions aren't supported
+       end
+ 
++      def create_savepoint(sp_number)
++        execute("SAVEPOINT rails_nested_transaction_#{sp_number}")
++        return true
++      rescue Exception
++        # savepoints are not supported
++      end
++
++      def rollback_to_savepoint(sp_number)
++        execute("ROLLBACK TO SAVEPOINT rails_nested_transaction_#{sp_number}")
++      rescue Exception
++        # savepoints are not supported
++      end
++
++      def release_savepoint(sp_number)
++        execute("RELEASE SAVEPOINT rails_nested_transaction_#{sp_number}")
++      rescue Exception
++        # savepoints are not supported
++      end
++
+ 
+       def add_limit_offset!(sql, options) #:nodoc:
+         if limit = options[:limit]
+diff --git a/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb b/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb
+index 4a48bf3..7c38b6f 100644
+--- a/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb
++++ b/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb
+@@ -417,6 +417,25 @@ module ActiveRecord
+         execute "ROLLBACK"
+       end
+ 
++      def create_savepoint(sp_number)
++        execute("SAVEPOINT rails_nested_transaction_#{sp_number}")
++        return true
++      rescue Exception
++        # savepoints are not supported
++      end
++
++      def rollback_to_savepoint(sp_number)
++        execute("ROLLBACK TO SAVEPOINT rails_nested_transaction_#{sp_number}")
++      rescue Exception
++        # savepoints are not supported
++      end
++
++      def release_savepoint(sp_number)
++        execute("RELEASE SAVEPOINT rails_nested_transaction_#{sp_number}")
++      rescue Exception
++        # savepoints are not supported
++      end
++
+       # SCHEMA STATEMENTS ========================================
+ 
+       # Returns the list of all tables in the schema search path or a specified schema.
+diff --git a/activerecord/lib/active_record/fixtures.rb b/activerecord/lib/active_record/fixtures.rb
+index 61a5ef2..ff4751d 100755
+--- a/activerecord/lib/active_record/fixtures.rb
++++ b/activerecord/lib/active_record/fixtures.rb
+@@ -557,6 +557,7 @@ module Test #:nodoc:
+             load_fixtures
+             @@already_loaded_fixtures[self.class] = @loaded_fixtures
+           end
++          Thread.current['transactional_test'] = true
+           ActiveRecord::Base.send :increment_open_transactions
+           ActiveRecord::Base.connection.begin_db_transaction
+ 
+@@ -576,9 +577,12 @@ module Test #:nodoc:
+         return unless defined?(ActiveRecord::Base) && !ActiveRecord::Base.configurations.blank?
+ 
+         # Rollback changes if a transaction is active.
+-        if use_transactional_fixtures? && Thread.current['open_transactions'] != 0
+-          ActiveRecord::Base.connection.rollback_db_transaction
+-          Thread.current['open_transactions'] = 0
++        if use_transactional_fixtures?
++          if Thread.current['open_transactions'] != 0
++            ActiveRecord::Base.connection.rollback_db_transaction
++            Thread.current['open_transactions'] = 0
++          end
++          Thread.current['transactional_test'] = false
+         end
+         ActiveRecord::Base.verify_active_connections!
+       end
+diff --git a/activerecord/lib/active_record/transactions.rb b/activerecord/lib/active_record/transactions.rb
+index 534f179..d202402 100644
+--- a/activerecord/lib/active_record/transactions.rb
++++ b/activerecord/lib/active_record/transactions.rb
+@@ -69,18 +69,58 @@ module ActiveRecord
+     # Also have in mind that exceptions thrown within a transaction block will be propagated (after triggering the ROLLBACK), so you
+     # should be ready to catch those in your application code.
+     module ClassMethods
+-      def transaction(&block)
++      def transaction(options={}, &block)
+         previous_handler = trap('TERM') { raise TransactionError, "Transaction aborted" }
+         increment_open_transactions
+ 
+         begin
+-          connection.transaction(Thread.current['start_db_transaction'], &block)
++          connection.transaction((options[:force] == true) || Thread.current['start_db_transaction'], Thread.current['open_transactions'], &block)
+         ensure
+           decrement_open_transactions
+           trap('TERM', previous_handler)
+         end
+       end
+ 
++      # Sets the options for implicit transactions. For different
++      # action types.
++      #
++      # The action types are:
++      # * <tt>:save</tt> - transaction type for creating or updating a record.
++      # * <tt>:destroy</tt> - transaction type for deleting a record.
++      #
++      # The transaction types are:
++      # * <tt>:none</tt> - no transaction is created.
++      # * <tt>:flat</tt> - transaction is only created if non exist. This is the default.
++      # * <tt>:nested</tt> - transaction is created even if one exists. This only works if the database supports nested transactions, if it does not then the behaviour is the same as for :flat.
++      #
++      # Option examples:
++      #   set_transaction_types :save => :flat
++      #   set_transaction_types :save => :none, :destroy => :nested
++      #   set_transaction_types :nested
++      def set_transaction_types(options)
++        case options
++        when Symbol
++          options = { :save => options, :destroy => options }
++        when Hash
++          options[:save] ||= :flat
++          options[:destroy] ||= :flat
++        else
++          raise(ArgumentError, "Invalid transaction type(s): %s", options.inspect)
++        end
++
++        options.assert_valid_keys(:save, :destroy)
++
++        write_inheritable_attribute("transaction_types", options)
++      end
++
++      def get_transaction_type(action_type)
++        get_transaction_types[action_type] || :flat
++      end
++
++      def get_transaction_types
++        (read_inheritable_attribute("transaction_types") or write_inheritable_attribute("transaction_types", {}))
++      end
++
+       private
+         def increment_open_transactions #:nodoc:
+           open = Thread.current['open_transactions'] ||= 0
+@@ -93,20 +133,42 @@ module ActiveRecord
+         end
+     end
+ 
+-    def transaction(&block)
+-      self.class.transaction(&block)
++    def transaction(options={}, &block)
++      self.class.transaction(options, &block)
+     end
+ 
+     def destroy_with_transactions #:nodoc:
+-      transaction { destroy_without_transactions }
++      transaction_type = self.class.get_transaction_type(:destroy)
++      if transaction_type == :none
++        destroy_without_transactions
++      else
++        options = { :force => (transaction_type == :nested) }
++        transaction(options) { destroy_without_transactions }
++      end
+     end
+ 
+     def save_with_transactions(perform_validation = true) #:nodoc:
+-      rollback_active_record_state! { transaction { save_without_transactions(perform_validation) } }
++      rollback_active_record_state! do
++        transaction_type = self.class.get_transaction_type(:save)
++        if transaction_type == :none
++          save_without_transactions
++        else
++          options = { :force => (transaction_type == :nested) }
++          transaction(options) { save_without_transactions(perform_validation) }
++        end
++      end
+     end
+ 
+     def save_with_transactions! #:nodoc:
+-      rollback_active_record_state! { transaction { save_without_transactions! } }
++      rollback_active_record_state! do
++        transaction_type = self.class.get_transaction_type(:save)
++        if transaction_type == :none
++          save_without_transactions!
++        else
++          options = { :force => (transaction_type == :nested) }
++          transaction(options) { save_without_transactions! }
++        end
++      end
+     end
+ 
+     # Reset id and @new_record if the transaction rolls back.
+diff --git a/activerecord/test/abstract_unit.rb b/activerecord/test/abstract_unit.rb
+index 1317f8d..c63af06 100755
+--- a/activerecord/test/abstract_unit.rb
++++ b/activerecord/test/abstract_unit.rb
+@@ -63,7 +63,7 @@ end
+ ActiveRecord::Base.connection.class.class_eval do  
+   
+   if not (const_get('IGNORED_SQL') rescue nil)    
+-    IGNORED_SQL = [/^PRAGMA/, /^SELECT currval/, /^SELECT CAST/, /^SELECT @@IDENTITY/]
++    IGNORED_SQL = [/^PRAGMA/, /^SELECT currval/, /^SELECT CAST/, /^SELECT @@IDENTITY/, /^SHOW FIELDS/]
+ 
+     def execute_with_counting(sql, name = nil, &block)
+       $query_count ||= 0
+diff --git a/activerecord/test/transactions_test.rb b/activerecord/test/transactions_test.rb
+index a31d993..ab68c0a 100644
+--- a/activerecord/test/transactions_test.rb
++++ b/activerecord/test/transactions_test.rb
+@@ -279,3 +279,119 @@ if current_adapter?(:PostgreSQLAdapter)
+     end
+   end
+ end
++
++if current_adapter?(:PostgreSQLAdapter) or current_adapter?(:MysqlAdapter)
++  class NestedTransactionsTest < TransactionTest
++
++    def test_nested_explicit_transactions_with_forced_nesting
++      Topic.transaction do
++        @first.approved = true
++        @first.save
++        @second.approved = true
++        @second.save
++        begin
++          Topic.transaction :force => true do
++            @second.approved = false
++            @second.save
++            raise "Bad things!"
++          end
++        rescue
++          # ignore the exception
++        end
++      end
++
++      assert Topic.find(1).approved?, "First should have been approved"
++      assert Topic.find(2).approved?, "Second should have been approved"
++    end
++
++    def test_nested_explicit_transactions_without_forced_nesting
++      Topic.transaction do
++        @first.approved = true
++        @first.save
++        @second.approved = true
++        @second.save
++        begin
++          Topic.transaction do
++            @second.approved = false
++            @second.save
++            raise "Bad things!"
++          end
++        rescue
++          # ignore the exception
++        end
++      end
++
++      assert Topic.find(1).approved?, "First should have been approved"
++      assert !Topic.find(2).approved?, "Second should have been unapproved"
++    end
++
++    def test_transaction_type_save_none
++      with_topic_transaction_options :save => :none do
++        assert_queries(1) { @first.save! }
++      end
++    end
++
++    def test_transaction_type_save_flat
++      with_topic_transaction_options :save => :flat do
++        assert_queries(3) { @first.save! }
++      end
++    end
++
++    def test_transaction_type_save_flat_inside_transaction
++      with_topic_transaction_options :save => :flat do
++        Topic.transaction do
++          assert_queries(1) { @first.save! }
++        end
++      end
++    end
++
++    def test_transaction_type_save_nested
++      with_topic_transaction_options :save => :nested do
++        assert_queries(3) { @first.save! }
++      end
++    end
++
++    def test_transaction_type_save_nested_inside_transaction
++      with_topic_transaction_options :save => :nested do
++        Topic.transaction do
++          assert_queries(3) { @first.save! }
++        end
++      end
++    end
++
++    def test_transaction_type_destroy_none
++      with_topic_transaction_options :destroy => :none do
++        assert_queries(8) { assert @first.destroy }
++      end
++    end
++
++    def test_transaction_type_destroy_flat
++      with_topic_transaction_options :destroy => :flat do
++        assert_queries(10) { assert @first.destroy }
++      end
++    end
++
++    def test_transaction_type_destroy_nested
++      with_topic_transaction_options :destroy => :nested do
++        assert_queries(12) { assert @first.destroy }
++      end
++    end
++
++    private
++      def with_topic_transaction_options(options)
++        # NOTE Reply does not inherit this because the class
++        # has already been loaded
++        old_types_topic = Topic.send(:get_transaction_types)
++        old_types_reply = Topic.send(:get_transaction_types)
++
++        begin
++          Topic.send(:set_transaction_types, options)
++          Reply.send(:set_transaction_types, options)
++          yield
++        ensure
++          Topic.send(:set_transaction_types, old_types_topic)
++          Reply.send(:set_transaction_types, old_types_reply)
++        end
++      end
++  end
++end

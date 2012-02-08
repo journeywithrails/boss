@@ -1,0 +1,5 @@
+customer_name,customer_address1,customer_address2,customer_city,customer_province_state,customer_postalcode_zip,customer_country,customer_website,customer_phone,customer_fax,contact_first_name,contact_last_name,contact_email
+new_customer,addr1,addr2,city,province,zip,CA,example.com,1111,2222,Bill,Gates,bgates@microsft.com
+new_customer2,addr1,addr2,city,province,zip,CA,example.com,1111,2222,Kid,Rock,krock@microsft.com
+new_customer,addr1,addr2,city,province,zip,CA,example.com,1111,2222,Bill,Gates,bgates@microsft.com
+new_customer2,addr1,addr2,city,province,zip,CA,example.com,1111,2222,Kid,Rock,krock@microsft.com

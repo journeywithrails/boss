@@ -1,0 +1,20 @@
+<%#used for display things that are outside of the corners %>
+<div>
+  <%= @content_for_main_top %>	
+</div>
+
+<div> 
+
+    <%= @content_for_infobox.blank? ? "&nbsp;" : @content_for_infobox %>	
+    <div class="corner_large_tr">
+		<div class="corner_large_tl">
+		&nbsp;
+		</div>
+    </div>						
+   
+  	<div class="content">
+
+      <%= @content_for_main %>			
+	  </div>
+    <%= bottom_corners() %>
+</div> 

@@ -1,0 +1,30 @@
+<% content_for "stylesheets" do -%>
+	<%= default_theme_controller("home") %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>	
+	
+<% end -%>
+
+<% @content_for_infobox = capture do %>
+	<%= formatted_flash_always %>
+<% end %>
+<%@skip_footer= true%>
+<% @content_for_main = capture do %>
+	<div class="simply_wrapper">
+		<p class="one-line-space">
+			We noticed that you have a merchant account set up with Sage Payment Solutions in Simply Accounting.
+		</p>
+		<p class="one-line-space">
+			Would you like to use this account with Billing Boss to allow your customers to pay online?
+			Billing Boss can send an email to your customers on your behalf with a link to pay online. When the customer clicks on the link, the customer will
+			be taken to a special processing page at Billing Boss where the customer can pay using a credit card. Billing Boss uses your Sage Payment Solutions account
+			to process the credit card. <br/><br/>Online payments are easy with Billing Boss.
+			
+		</p>
+		<%= button_to 'Yes, use my account', user_gateway_path(:id => api_token.user_gateway_id), { :method => :put, :id =>'switch-sps-yes' } %>
+Billing Boss will use your Sage Payment Solutions account to process online payment.
+    <br/><br/>
+		<%= link_to 'No, do not use my account', new_delivery_path, :id => "switch-sps-no" %><br/>
+		Billing Boss will not use your Sage Payment Solutions account to process online payment.
+	</div>
+<%end%>
+<%= render_inner_layout('norounded') %>

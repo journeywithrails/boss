@@ -1,0 +1,18 @@
+<div class="page_header"><%= _("Online Payments") %></div>
+<br/>
+<% if not @profile.nil? %>
+  <div >
+	  	<%#= image_tag(is_logo_missing(@profile.logo ), { :class => "logo"} ) %>
+  </div>
+  
+  <div id="company_info" >
+    <span id="profile_name"><%= field_if_not_blank(@profile.company_name) { h @profile.company_name } %></span><br />
+    <span id="profile_address1"><%= field_if_not_blank(@profile.company_address1) { h @profile.company_address1 } %></span><br />
+    <span id="profile_address2"><%= field_if_not_blank(@profile.company_address2) { h @profile.company_address2 } %></span><br />
+    <span id="profile_city"><%= field_if_not_blank(@profile.company_city) { h @profile.company_city } %></span> <span id="profile_state"><%= field_if_not_blank(@profile) { h @profile.company_state } %></span><br />
+    <span id="profile_country"><%= field_if_not_blank(@profile.company_country) { h @profile.company_country } %></span><br />
+    <span id="profile_phone"><%= field_if_not_blank(@profile.company_phone) {_("Phone: %{num}") % {:num => h(@profile.company_phone)} } %></span><br />
+    <span id="profile_fax"><%= field_if_not_blank(@profile.company_fax) { _("Fax: %{num}") % {:num => h(@profile.company_fax)} } %></span><br />		
+  </div>
+<br/>
+<% end %>

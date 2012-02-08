@@ -1,0 +1,4 @@
+<tr>
+	<td class="invoice_history_date"><%= format_date("%Y-%m-%d %H:%M") { tz(activity.created_at) } %></td>
+	<td class="invoice_history_action"><%= activity_description(activity) %></td>
+</tr>

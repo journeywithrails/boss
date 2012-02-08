@@ -1,0 +1,137 @@
+<span class="blue"><%= _("From") %></span>
+<ul class="field">
+	<li><h3><%= _("Name") %></h3>
+		<% if !@profile.contact_name.blank? %>
+			<%= h(@profile.contact_name) %>
+		<% end %>
+		<% if !@profile.contact_name.blank? and !@profile.company_name.blank? %>
+			<%= ", " %>
+		<% end %>
+		<% if !@profile.company_name.blank? %>
+			<%= h(@profile.company_name) %>
+		<% end %>
+	</li>
+	
+	<li><h3><%= _("Address") %></h3><a href='<%= "http://www.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=#{(h(@profile.company_address1) unless @profile.company_address1.blank?)} #{(h(@profile.company_address2) unless @profile.company_address2.blank?)} #{(h(@profile.company_city))} #{(h(@profile.company_state) unless @profile.company_state.blank?)} #{(h(@profile.company_country) unless @profile.company_country.blank?)}"  %>'>
+		<%= h(@profile.company_address1) unless @profile.company_address1.blank? %>
+		<%= h(@profile.company_address2) unless @profile.company_address2.blank? %>
+		<%= h(@profile.company_city) %>
+		<%= h(@profile.company_state) unless @profile.company_state.blank? %>&nbsp;
+		<%= h(@profile.company_country) unless @profile.company_country.blank? %>&nbsp;
+		</a>
+	</li>
+	<% if !@profile.company_postalcode.blank? %>
+		<li><h3><%= _("Postal/ZIP") %></h3>
+			<a href='http://www.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=<%= h(@profile.company_postalcode) %>'><%= h(@profile.company_postalcode) %></a>
+		</li>
+	<% end %>
+	<% if !@profile.company_phone.blank? %>
+		<li><h3><%= _("Phone") %></h3>
+			<a href='tel:+<%= h(@profile.company_phone) %>'><%= h(@profile.company_phone) %></a>
+		</li>
+	<% end %>
+	<% if !@profile.company_fax.blank? %>
+		<li><h3><%= _("Fax") %></h3>
+			<a href='tel:+<%= h(@profile.company_fax) %>'><%= h(@profile.company_fax) %></a>
+		</li>
+	<% end %>
+	<% if !@profile.company_website.blank? %>
+		<li><h3><%= _("Website") %></h3>
+			<a href='http://<%= h(@profile.company_website) %>'><%= h(@profile.company_website) %></a>
+		</li>
+	<% end %>
+</ul>
+<h1><%= _("To") %></h1>
+<ul class="field">
+			<% if !@invoice.customer.name.blank? %>
+				<li><h3><%= _("Name") %></h3>
+						<%= h(@invoice.customer.name) %>
+				</li>
+			<% end %>
+			<% if !@invoice.customer.address1.blank? || !@invoice.customer.address2.blank? %>
+				<li class="arrow"><h3><%= _("Address") %></h3> <%= link_to(h("#{@invoice.customer.address1} #{@invoice.customer.address2} #{@invoice.customer.city} #{@invoice.customer.province_state} #{@invoice.customer.country}"), "http://www.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=#{@invoice.customer.address1} #{@invoice.customer.address2} #{@invoice.customer.city} #{@invoice.customer.province_state} #{@invoice.customer.country}")%></li>
+			<% end %>
+			<% if !@invoice.customer.postalcode_zip.blank? %>
+				<li class="arrow"><h3><%= _("Postal/ZIP") %></h3> <%= link_to(h(@invoice.customer.postalcode_zip), "http://www.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=#{@invoice.customer.postalcode_zip}")%></li>
+			<% end %>
+			<% if !@invoice.customer.phone.blank? %>
+				<li class="arrow"><h3><%= _("Phone") %></h3> <%= link_to(h(@invoice.customer.phone), "tel:+#{h(@invoice.customer.phone)}")%></li>
+			<% end %>
+			<% if !@invoice.customer.fax.blank? %>
+				<li><h3><%= _("Fax") %></h3> <%= h(@invoice.customer.fax) %></li>
+			<% end %>
+			<% if !@invoice.customer.website.blank? %>
+				<li class="arrow"><h3><%= _("Website") %></h3> <%= link_to(h(@invoice.customer.website), "http://#{h(@invoice.customer.website)}")%></li>
+			<% end %>
+</ul>
+<h1><%= _("Terms") %></h1>
+<ul class="field">
+	<% if !@invoice.date.blank? %>
+		<li>
+			<h3><%= _("Issue date") %></h3>
+				<%= format_date(_("%B %d, %Y")) { @invoice.date } %>
+		</li>
+	<% end %>
+	<% if !@invoice.due_date.blank? %>
+		<li>
+			<h3><%= _("Due date") %></h3>
+				<%= format_date(_("%B %d, %Y")) { @invoice.due_date } %>
+		</li>
+	<% end %>
+	<% if !@invoice.reference.blank? %>
+		<li>
+			<h3><%= _("Reference") %></h3>
+				<%= h(@invoice.reference)%>
+		</li>
+	<% end %>
+</ul>
+<h1><%= _("Totals") %></h1>
+<ul class="field">
+	<li>
+		<h3><%= _("Subtotal") %></h3>
+			<%= format_amount(@invoice.line_items_total) %>  <%= invoice_currency(@invoice)%>
+	</li>
+
+
+<% discount_block = Proc.new do %>
+		<%= discount_div(@invoice)%>
+<% end %>
+
+<% show_first_if(@invoice.created_by.profile.discount_before_tax, discount_block) do %>
+	<% @invoice.taxes.each do |tax| %>
+        <% next if (tax.amount == 0 and tax.name.blank?) or !tax.enabled? %>
+			<li id="<%= "invoice_#{tax.profile_key}" %>">
+			  	<h3><%= h(tax.name) %></h3>
+				<span id="<%= "invoice_#{tax.profile_key}_amount" %>">
+						  <%= format_amount(tax.amount) %>  <%= invoice_currency(@invoice)%>
+				</span>
+			</li>
+			<% end %>
+		<% end %>
+
+<% if @invoice.paid != 0 %>
+	<li>
+		<h3><%= _("Total") %></h3>
+		<%= format_amount(@invoice.total_amount) %>  <%= invoice_currency(@invoice)%>
+	</li>
+	<li>
+		<h3><%= _("Paid") %></h3>
+		<%= format_amount(@invoice.paid) %>  <%= invoice_currency(@invoice)%>
+	</li>
+<% end %>
+<li>
+	<h3><%= _("Due") %></h3>
+	<%= format_amount(@invoice.amount_owing) %> <%= invoice_currency(@invoice)%>
+</li>
+</ul>
+<h1><%= _("Comment") %></h1>
+<ul class="field">
+
+<% if !@invoice.description_clean.blank? %>
+<li>
+	<h3><%= _("Comment") %></h3>
+	<%= @invoice.description_clean %>
+</li>
+</ul>
+<% end %>
+</ul>

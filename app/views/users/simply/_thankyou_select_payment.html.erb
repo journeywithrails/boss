@@ -1,0 +1,38 @@
+<p class="main_simply_text"><%= _("Your Billing Boss account is now active and from here you can choose to send the invoice
+you were working on in Simply Accounting, or delay sending and learn more about online payment solutions.") %></p>
+<br/><br/>
+
+	<div class="caption"><%= _("Send the invoice now or later") %></div>
+	<div id="send_invoice_now_or_later_box" class="yui-g">
+          <div class="corner_large_tr" style="clear: both; height: 20px;">
+            <div style="height: 20px;" class="corner_large_tl">
+              <div class="infobox_empty">
+              </div>	
+            </div>
+          </div>
+          <div id="send_invoice_now_or_later_content" class="white content">
+            <p class="small_simply_text">
+              <%= _("Your Billing Boss account is ready to go! Email now
+                  and that invoice will be in your customer's hands in no time!
+                  If you didn't set your online payment method, they can still
+                  pay you in the usual way (e.g. mailing a cheque)
+                  and you can go to your
+                  <a onclick='window.open(this.href);return false;' 
+                  href='%{url}'>Billing Boss settings</a>
+                  anytime to setup online payment.") % { :url => ::AppConfig.secure_host } %>
+                  <br/><br/>
+                  <%= _("If you'd prefer to wait on sending, choose \"I Will Send the Invoice Later\"
+                  and you'll be returned to Simply Accounting.") %>
+              <br/><br/>
+            </p>
+            <div class="center">
+              <%#TODO: change link to the payment subpage after profile is split %>
+              <%= link_to localized_image_tag("/images/simply/btn-email-invoice.gif", :alt => _("E-mail the Invoice")), new_delivery_path, :id => 'email-the-invoice-button' %>
+              <%= link_to localized_image_tag("/images/simply/btn-close-window.gif", :alt => _("Close this window")), "javascript:{page_complete();return false;}", :id => "complete-btn" %>
+            </div>
+          </div>
+          <div class="tour_box_bl">
+            <div class="tour_box_br">	
+            </div>								
+          </div>
+	</div>

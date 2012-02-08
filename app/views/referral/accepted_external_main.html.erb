@@ -1,0 +1,58 @@
+
+<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= default_theme_controller %>
+	<%= default_theme_controller("home") %>	
+	<%= stylesheet_link_tag "/themes/static.css" %>			  
+<% end %>
+
+
+<% content_for :header do %>	    	
+	<%= render :partial => "home/header" %>
+<% end %>   
+
+ 
+<% content_for :main do %>
+
+              
+  <div id="content_container">
+  
+
+      
+      <!-- ROUNDED CORNERS - WITH INFOBOX -->
+      
+      <div class="corner_large_tr" style="clear: both;">
+          <div class="corner_large_tl">
+            <div class="infobox">								
+              <p>
+              <%= _('Referral') %>								
+              </p>								
+            </div>
+          
+          </div>
+      </div>							
+      
+      
+      <!-- CONTENT SECTION -->
+       
+      <div class="content">
+          <br/><br/>
+        
+			<%= @tour_target = "home"
+          render :partial => "referral/accepted" %> 
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+      
+      </div>
+       
+       
+      <!-- BOTTOM CORNERS -->
+      <div class="corner_large_bl">
+          <div class="corner_large_br"></div>
+      </div>							
+      <!-- END OF ROUNDED CORNERS -->
+    
+  </div>
+              
+  
+<% end %>

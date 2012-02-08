@@ -1,0 +1,51 @@
+<% content_for "stylesheets" do %>
+		  
+<% end %>
+<% content_for "bottom_javascripts" do -%>
+
+<% end # content_for "bottom_javascripts" 
+       %>
+
+<% content_for :header do %>
+  <div id="header">
+    <% if logged_in? %>
+      <%= link_to _("Log out"), "/logout", :id => "backButton" %>
+      <h1 style="font-size: 12px; overflow: visible; "><%= h current_user.profile.company_name %></h1>
+    <%  else %>
+      <h1><%= _("Billing Boss") %></h1>
+    <% end %>
+  </div>
+<% end %>
+
+<% content_for :main do %>	 
+  <div class="mobile_logo_bg">
+    <img class="mobile_logo" src="/themes/default/images/spark/billing-boss-logo.gif"/>
+  </div>
+  <% if !logged_in? %>
+    <ul>
+      <li class="arrow">
+        <%= _("Existing user?")%> <%= link_to _("Log in"), :controller => "session", :action => "new" %>
+      </li>
+      <li class="arrow">
+        <%= _("New user?")%> <%= link_to _("Sign up"), :controller => "users", :action => "new" %>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <%= render :partial => '/layouts/change_language' %><br/>
+      </li>
+    </ul>
+  <% else %>
+    <ul>
+      <li class="arrow">
+        <%= link_to(_("Invoices"), "/invoices/overview") %>
+      </li>
+      <li class="arrow">
+        <%= link_to(_("Customers"), "/customers/overview") %>
+      </li>
+      <li class="arrow">
+        <%= link_to(_("Settings"), "/profiles") %>
+      </li>
+    </ul>
+  <% end %>
+<% end %>

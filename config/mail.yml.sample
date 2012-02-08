@@ -1,0 +1,42 @@
+# where to fetch bounced emails from
+development:
+  type: imap
+  server: imap.gmail.com
+  username: 
+  password: 
+  ssl: SSL
+  use_login: LOGIN
+  port: 993
+  processed_folder: processed
+   
+test:
+  type: imap
+  server: imap.gmail.com
+  username: 
+  password:
+  ssl: SSL
+  use_login: LOGIN
+  port: 993
+  processed_folder: processed
+
+
+staging:
+  type: imap
+  server: imap.gmail.com
+  username: 
+  password: 
+  ssl: SSL
+  use_login: LOGIN
+  port: 993
+  processed_folder: processed
+
+  
+# Must first mark all current bounced mail as processed  
+production:
+  type: imap
+  server: 
+  username:
+  password: 
+  processed_folder: processed  
+  port: 25
+  

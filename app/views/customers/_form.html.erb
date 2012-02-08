@@ -1,0 +1,17 @@
+<%= render :partial => "fields", :locals => {:f => f}, :object => @customer %>	
+
+<div class="full yui-g">
+  <div class="left_align">
+    <br/>
+    <div class="section_header" style="margin-left: 10px;"><%= _('Contact people') %></div>
+  </div>
+  <div id="contacts_container" class="contacts_container">	
+  	<div id="contact_wrapper">
+      <% if @customer.contacts.size == 0 -%>
+        <%= render :partial => "contacts/contact_line_items", :object => [Contact.new], :locals => {:checked => true} %>      
+      <% else %>  	  
+        <%= render :partial => "contacts/contact_line_items", :object => @customer.contacts, :locals => {:checked => false} %>
+      <% end %>
+   	</div>
+  </div>
+</div>

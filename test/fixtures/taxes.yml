@@ -1,0 +1,37 @@
+complete_user_profile_tax_1:
+  id: 1
+  taxable_id: 2
+  taxable_type: User  
+  name: Goods and Services Tax
+  rate: 6.0
+  enabled: true
+  profile_key: tax_1
+  
+complete_user_profile_tax_2:
+  id: 2
+  taxable_id: 2
+  taxable_type: User  
+  name: BC PST
+  rate: 7.0
+  enabled: true
+  profile_key: tax_2
+
+discount_before_tax_invoice_tax_1:
+  id: 3
+  taxable_id: 63
+  taxable_type: Invoice 
+  name: GST
+  rate: 7.00
+  enabled: true
+  profile_key: tax_1
+  parent_id: 1
+
+discount_before_tax_invoice_tax_2:
+  id: 4
+  taxable_id: 63
+  taxable_type: Invoice  
+  name: PST
+  rate: 6.00
+  enabled: true
+  profile_key: tax_2
+  parent_id: 2

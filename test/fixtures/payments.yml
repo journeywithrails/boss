@@ -1,0 +1,120 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+payment_with_no_invoice:
+  id: 1
+  pay_type: cash
+  amount: 50.00
+  date: 2007-11-14
+  description: '$50 cash deposit against no invoice'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 25
+  created_by_id: 6
+  
+partial_payment_for_partially_paid_invoice:
+  id: 2
+  pay_type: cash
+  amount: 500.00
+  date: 2007-11-14
+  description: 'Partial payment of $500 cash.'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 25
+  created_by_id: 6
+  status: recorded
+
+full_payment_for_fully_paid_invoice:
+  id: 3
+  pay_type: cheque
+  amount: 1201.00
+  date: 2007-11-14
+  description: 'Payment in full, $1201.00'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 25
+  created_by_id: 6
+  status: recorded
+ 
+payment_for_invoice_10:
+  id: 4
+  pay_type: cheque
+  amount: 50.00
+  date: 2007-11-14
+  description: 'Payment against invoice 10'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 1
+  created_by_id: 6
+  status: recorded
+
+payment_for_multiple_invoices:
+  id: 5
+  pay_type: cheque
+  amount: 2000
+  date: 2007-11-14
+  description: 'Payment against multiple invoices'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 1
+  created_by_id: 6
+  status: recorded
+  
+customer_all_paid_payment_1:
+  id: 6
+  pay_type: cheque
+  amount: 1000
+  date: 2007-11-14
+  description: 'Payment against invoices'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 27
+  created_by_id: 8
+  status: recorded
+
+customer_all_paid_payment_2:
+  id: 7
+  pay_type: cheque
+  amount: 1000
+  date: 2007-11-14
+  description: 'Payment against invoices'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 27
+  created_by_id: 8
+  status: recorded
+
+customer_partially_paid_payment_1:
+  id: 8
+  pay_type: cheque
+  amount: 200
+  date: 2007-11-14
+  description: 'Payment against invoices'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 29
+  created_by_id: 8
+  status: recorded
+
+customer_partially_paid_payment_2:
+  id: 9
+  pay_type: cheque
+  amount: 200
+  date: 2007-11-14
+  description: 'Payment against invoices'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 29
+  created_by_id: 8
+  status: recorded
+
+payment_for_invoice_75:
+  id: 10
+  pay_type: cheque
+  amount: 50.00
+  date: 2007-11-14
+  description: 'Payment against invoice 75'
+  created_at: 2007-11-14 13:39:14
+  updated_at: 2007-11-14 13:39:14
+  customer_id: 25
+  created_by_id: 6
+  status: recorded
+  

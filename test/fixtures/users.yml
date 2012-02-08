@@ -1,0 +1,290 @@
+basic_user:
+  id: 1
+  sage_username: basic_user
+  biller_id: 1
+  email: basic_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  active: true
+
+complete_user:
+  id: 2
+  sage_username: complete_user
+  biller_id: 2
+  email: complete_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 10.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  updated_at: <%= 5.days.ago.to_s :db %>
+  remember_token: complete_user_token
+  remember_token_expires_at: <%= 1.days.from_now.to_s :db %>
+  language: en_US
+  
+user_without_profile:
+  id: 3
+  sage_username: user_without_profile
+  biller_id: 3
+  email: user_without_profile@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+user_without_invoices:
+  id: 4
+  sage_username: user_without_invoices
+  biller_id: 4
+  email: user_without_invoices@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+# a user with many customers and invoices
+heavy_user:
+  id: 5
+  sage_username: heavy_user
+  biller_id: 5
+  email: heavy_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+user_for_payments:
+  id: 6
+  sage_username: user_for_payments
+  biller_id: 6
+  email: user_for_payments@billingboss.com
+  salt: d17e62b60e9b2759db500812d490a3f078fd499b
+  crypted_password: d8a173de716dcbbc56dcb1d504bf03fd7c903bea # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  
+email_user:
+  id: 7
+  sage_username: email_user
+  biller_id: 7
+  email: admin@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+customer_list_user:
+  id: 8
+  sage_username: customer_list_user
+  biller_id: 8
+  email: customer_list_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+bookkeeper_user:
+  id: 9
+  sage_username: bookkeeper_user
+  biller_id: 9
+  bookkeeper_id: 1
+  email: bookkeeper_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+wants_bookkeeper_user:
+  id: 10
+  sage_username: wants_bookkeeper_user
+  biller_id: 11
+  email: wants_bookkeeper_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+doesnt_want_bookkeeper_user:
+  id: 11
+  sage_username: doesnt_want_bookkeeper_user
+  biller_id: 12
+  email: doesnt_want_bookkeeper_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+#is this allowed?
+user_without_biller:
+  id: 12
+  sage_username: user_without_biller
+  email: user_without_biller@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+user_has_bookkeeping_contract:
+  id: 13
+  sage_username: user_has_bookkeeping_contract
+  biller_id: 13
+  email: user_has_bookkeeping_contract@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+other_bookkeeper_user:
+  id: 14
+  sage_username: other_bookkeeper_user
+  biller_id: 14
+  bookkeeper_id: 2
+  email: other_bookkeeper_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+
+unactivated_user:
+  id: 15
+  sage_username: unactivated_user
+  biller_id: 15
+  email: unactivated_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activation_code: bobisaveryfinecode
+
+peon_admin_user:
+  id: 16
+  sage_username: peon_admin_user
+  biller_id: 16
+  email: peon_admin_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test  
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+master_admin_user:
+  id: 17
+  sage_username: master_admin_user
+  biller_id: 17
+  email: master_admin_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test  
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+feedback_admin_user:
+  id: 18
+  sage_username: feedback_admin_user
+  biller_id: 18
+  email: feedback_admin_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test  
+  created_at: <%= 5.days.ago.to_s :db %>
+  
+soho_user:
+  id: 19
+  sage_username: soho_user
+  biller_id: 19
+  email: soho_user@billingboss.com
+  signup_type: soho
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  
+ssan_user:
+  id: 20
+  sage_username: ssan_user
+  biller_id: 20
+  email: ssan_user@billingboss.com
+  signup_type: ssan
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  
+simply_accounting_user:
+  id: 21
+  sage_username: simply_accounting_user
+  biller_id: 21
+  email: simply_accounting_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test 
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %> 
+  
+winners_admin_user:
+  id: 22
+  sage_username: winners_admin_user
+  biller_id: 22
+  email: winners_admin_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test  
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %> 
+  
+castest:
+  id: 23
+  sage_username: castest
+  email: castest@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  
+inactive_user:
+  id: 24
+  biller_id: 23
+  sage_username: inactive_user
+  email: inactive_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  active: false
+
+active_user:
+  id: 25
+  biller_id: 24
+  sage_username: active_user
+  email: active_user@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  active: true
+
+castest_billingboss:
+  id: 26
+  biller_id: 25
+  sage_username: castest_billingboss
+  email: castest_billingboss@billingboss.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  active: true
+
+user_with_sps_gateway_settting:
+  id: 27
+  biller_id: 27
+  sage_username: sps_user@ex.com
+  email: sps_user@ex.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  active: true
+
+user_without_sps_gateway_settting:
+  id: 28
+  biller_id: 28
+  sage_username: sps_user1@ex.com
+  email: sps_user1@ex.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  activated_at:  <%= 5.days.ago.to_s :db %>
+  active: true

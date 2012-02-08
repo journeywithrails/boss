@@ -1,0 +1,26 @@
+db: &db
+  adapter: mysql
+  encoding: utf8
+  host: localhost
+
+#development:
+#  <<: *db
+#  database: tornado_development
+#  username: root
+#  password: 'password'
+
+# Warning: The database defined as 'test' will be erased and
+# re-generated from your development database when you run 'rake'.
+# Do not set this db to the same as development or production.
+test:
+  <<: *db
+  database: bb_staging_test
+  username: bb_test
+  password: '<%= test_password %>'
+
+staging:
+  adapter: mysql
+  encoding: utf8
+  database: bb_staging_production
+  username: bb_staging_prod
+  password: '<%= stage_password %>'

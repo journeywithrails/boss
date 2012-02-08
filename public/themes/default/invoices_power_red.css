@@ -1,0 +1,15 @@
+
+  #big_invoice_label {
+      color:#FF1100!important;
+    }
+
+   #preview_line_items_heading_no_border{
+      color:white;
+      font-weight: bold;
+      background-color:#FF1100!important;
+    }
+
+
+    #invoice_total {
+      color: #FF1100!important;
+    }

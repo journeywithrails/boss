@@ -1,0 +1,134 @@
+<% content_for "bottom_javascripts" do -%>
+	<script type="text/javascript" language="javascript">
+
+
+	  Sage.trim = function( s ) {
+	    ret = s;
+	    ret = ret.replace(/^\s+/g,"");
+	    ret = ret.replace(/\s+$/g,"");
+	    return ret;
+	  };
+
+
+	  Sage.update_customer_form = function(){
+
+	       <%= remote_function(:url => { :controller => 'profiles', :action => 'switch_country' }, :with => "'profile[country]=' + $('profile_company_country').value") %>;
+	       // + $('profile_company_country').value + '&idx=#{@profile.to_param}'") %>;
+	  };
+		Sage.toggle_specify_heard_from = function()
+			{
+				<%= remote_function( 
+					:url => { :controller => 'profiles', :action => 'toggle_specify_heard_from' }, 
+					:with => "'heard_from=' + $('profile_heard_from').value" ) %> ;
+				};
+
+	  Event.observe('profile_company_country', 'change', Sage.update_customer_form);
+
+				
+	</script>
+
+<% end # content_for "bottom_javascripts"
+     %>
+<div id="user_addressing">
+	<%= hidden_field_tag(:profile_tab, "addressing") %>
+	<% if !@profile.is_heard_from_complete? %>
+		<div class="profile_title"><%= _('How did you hear about Billing Boss?') %></div>
+	
+ 		<%= select_heard_from :profile, :heard_from %>
+			<%= observe_field("profile_heard_from", {:function => "Sage.toggle_specify_heard_from()"}) %>		
+			
+			<br clear="all" />
+			<br clear="all" />
+
+			<div id="div_specify_heard_from">
+				<% if display_text_field?(@profile) %> 
+				<%= @profile.heard_from.to_s %>
+					<%= render :partial => @profile.heard_from.to_s, :object => @profile %>
+				<% end -%>	
+			</div>
+			<br clear="all" />
+			<br clear="all" />
+		<% elsif (@profile.heard_from == "fr_canada_post") and (@profile.venture_1_id.blank?) -%>
+			<%= f.label :venture_1_id, _("Venture One ID:") %>
+			<%= f.text_field :venture_1_id, {:class=>"user_profile_text" } %>
+			<br clear="all" />
+			<br clear="all" />
+		<% end -%>
+		
+	<div class="profile_title"><%= _('Set up your business address') %></div>
+		<br clear="all">
+		<div class="profile_subtitle">
+		<%= _('Please enter your company addressing information. All data entered here will be displayed on all your invoices.') %>
+	</div>
+	<div class="profile_subtitle">
+	</div>
+	
+		<div class="yui-g">
+			<div class="yui-u first">
+				<br clear="all" />
+				<%= f.label :company_name, _("Business name:%{name}") % {:name => mandatory(@profile, @profile.company_name)} %>
+				<%= f.text_field :company_name, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+			
+				<%= f.label :contact_name, _("Contact name:") %>
+				<%= f.text_field :contact_name, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+			
+				<%= f.label :company_address1, _("Address 1:%{address}") % {:address => mandatory(@profile, @profile.company_address1)} %>
+				<%= f.text_field :company_address1, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+			
+				<%= f.label :company_address2, _("Address 2:") %>
+				<%= f.text_field :company_address2, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+			
+				<%= f.label :company_city, _("City:%{city}") % {:city => mandatory(@profile, @profile.company_city)} %>
+				<%= f.text_field :company_city, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+				
+			  	<%= f.label :company_country, _("Country:%{country}") % {:country => mandatory(@profile, @profile.company_country)}, {:style=>"float:left"} %>
+				<%# If the country field is invalid, shows the prompt.  The built-in form helper "prompt" option only works when the field is blank.  The state SELECT uses the built-in form helper.  Consider using an accessor method which returns blank if the country is not valid. %>  
+				<%= country_select(:profile, :company_country, [$COUNTRY.to_s, ['Canada', 'CA'], ['United States', 'US']], {:size => 10, :length => 10, :class=>"foo"}) %>
+			  
+				<br clear="all" />
+				<div class="profile_div_country_dependent" id="div_country_dependent">
+					<%= render :partial => @profile.country_settings.partial, :object => @profile %>	
+				</div>	
+			
+			  	<%= f.label :company_phone, _("Phone:") %>
+				<%= f.text_field :company_phone, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+			
+			  	<%= f.label :company_fax, _("Fax:") %>
+				<%= f.text_field :company_fax, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+			
+			  	<%= f.label :company_website, _("Website:") %>
+				<%= f.text_field :company_website, {:class=>"user_profile_text" } %>
+				<br clear="all" />
+				
+				<div id="div_country_dependent_time_zone">
+					<%= f.label :time_zone, _("Time zone:") %>
+					<%= time_zone_select 'profile', 'time_zone', nil, options = {:default => "GMT", :model => TZInfo::Timezone } %>
+				</div>
+				
+				<br clear="all" />
+				<br clear="all" />
+			</div>
+			<div class="yui-u">
+				<br clear="all"/>
+					
+			</div>
+		</div>
+		<div class="profile_subtitle"><%= _('Default message to be used on invoices. You can put your tax number here if applicable.') %></div>
+		<br clear="all" />
+		<%= f.text_area :default_comment_for_invoice, {:size=>'0x0', :class=>"user_profile_text_area" } %>
+                <br/><br/>
+                <% unless ::AppConfig.quotes_disabled %>
+                  <div class="profile_subtitle"><%= _('Default message to be used on quotes.') %></div>
+                  <br clear="all" />
+                  <%= f.text_area :default_comment_for_quote, {:size=>'0x0', :class=>"user_profile_text_area" } %>
+                <% end %>
+	</div>
+
+

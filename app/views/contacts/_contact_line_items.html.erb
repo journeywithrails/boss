@@ -1,0 +1,25 @@
+<% content_for "bottom_javascripts" do -%>
+<%= db_agnostic_id_js('customer_contact') %>
+<% end %>
+
+<table id="contacts_list">
+  <thead>
+  	<th class="contact_primary"><%= _('Primary') %></th>	
+  	<th class="contact_name"><%= _('First Name') %></th>	
+  	<th class="contact_name"><%= _('Last Name') %></th>	
+  	<th class="contact_email"><%= _('Email') %></th>	
+  	<th class="contact_phone"><%= _('Phone') %></th>	
+  	<th class="remove"></th>
+  </thead>
+  
+<%= render :partial => 'contacts/contact_line_item', :collection => (contact_line_items || []), :locals => {:checked => checked} %>
+
+<tr id="add_contact_row">
+	<td colspan="6">
+		<div class="left_align">
+			<br/>
+			<%= add_contact_link _('Add Contact [+]'), :id => 'add_contact' %>
+		</div>
+	</td>		
+</tr>
+</table>

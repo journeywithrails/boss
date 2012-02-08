@@ -1,0 +1,10 @@
+unsent_simply_invoice_file:
+  id: 1
+  simply_accounting_invoice_id: 72
+  content_type: "application/pdf"
+  filename: 01_72_01.pdf
+sent_simply_invoice_file:
+  id: 2
+  simply_accounting_invoice_id: 73
+  content_type: "application/pdf"
+  filename: 01_73_01.pdf

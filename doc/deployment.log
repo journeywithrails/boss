@@ -1,0 +1,423 @@
+############# Security Setup #############
+#Add private key to .ssh/authorized_keys
+# You should have already generated your key.
+echo your-keystring-here >> ~admin/.ssh/authorized_keys
+
+Please ensure the following public keys are added to authorized_keys as follows:
+#michael
+echo ssh-dss AAAAB3NzaC1kc3MAAAEBAKNHCd7IIQP1nQKPuryVLj/fucFb0D8OVfwt5SwY6C4KVeKcgdL3VLfRtdy/07Tbtkz7GeJuy3Rx6i7SFAZwTcnoAVdE1ypaB2WOEiN20Q3/3Emdu7UDWCbVYEs5ohnYq30sA0US1z8EhCAMDEefgTgOhd8756RDg8iuC/To/tWmb4feyX0ExzVXZsm3m5N8jRG0/RUnbhmjWlUsJyTB5jYbotSH4OyulZewCE2sdXUQeUsqZ8TQTvVg88X13kfvvQRIkGfGsxDmhtinLi4djoz3OCionzq80a/KwLDB3CPTgY190tAEzSkIX8ebEpz1eYwTT+b8PqwsztwRViwpipUAAAAVAM/w5saVAoGw7HMwt67sFqHTGTMrAAABAAFNkpYTDgBQ6JNHDGeyH2jJzORvSgaU4jiF9B9Ym/Mv2TKJvrFxpQkfcBprZmGAFPD9NxZhXJN6/U5kh0pHu/oO6cZc8bix/8P7lwVDgW6mYWvyOCJ7L9l8NX7lUkJeFUQvBcdVAJNZxImnxo9zJMsX4UT2cmlT5PtbLQfAvN2naZULw/hDRIQDQ6r7ezAmgiZkd98sRHyZ0FZCD4JyV5f3TSQnYXDzfAVkscfPbquCmN4AQBXchFKohcybNuiaDcabGNMtuQUgFEZvKrwdy1Z2q8TZNIoQS9XT5hb+ybnMS9SYZN4OrKS/K764z+bVX4AW7zAwkrqhvLsac6yNyKwAAAEBAIki9DTUxzXv8RJcMcsCTkgWfYBTfLhK1xYDEfJLBWbdQvc+iC4a/mrFGCTJiMSoJ2PwFQ2Img2pLlmelxYabBVCaxEA/Ihrj27QtktA2pSqN6Y22LF+sqsJRHqu5GgNHGymOFSEWOZyKa3Z1z2uBUdZisOGSfv/HlMbHSMSVzl4qp8A0TIoGutEBVGpKuGS1Si/vnJ/hGhaLlYcE3jvjlIQQD/IILcpQEZl2z9VpN4uw4zeRixP21DAUbg07H03fcQ+LFV4wotj7G6tTHBusq9CXVX2PNE5+dPEGQmMkwx+UWtpiqwq3HTR/MhzcHdwoWdL5gL5b+gMopZ3KU9m5uw= lasto@htulo.local>> ~admin/.ssh/authorized_keys
+
+#brian
+echo ssh-dss AAAAB3NzaC1kc3MAAAEAYLBOznCh9gAdrcnrgJjWpJ3adVbngVyMa42X/ingXuNyaygtWoTESU3KCoNge5DW9710nM8KVlUCabXt4uQdE+dPHwDUPzwtv+afG880SrgOJZuCFGNj+y+VpB7I8vPvnhDAZkmweIStgl2JQHBCO+37deCmu/q8aL7FqfAuZjrSreKjO4VCn5mFgzeezsgwwgnabzt+sgcfhFoFw9EVdixL0M69/WJc+XVuqd9T5QBKzCqldA7jrfdHBzRZSrDlTlNfgkI/Q45QMD8IlugtPZjLXeWhBmvkd+YAhdE0ajLGIbaA2ZLcEhK3yStkklHiJItkyDEAuP2ob0TzlYGIIQAAABUAg1RcXhr0oPeOafBeqxngq0DWTWEAAAEASLCGmcHP1OEL/TXZKqBlYAPwpTk2p7CL/+cJjC+g4vEM5W8jaeSHneyfiW0ldSv0wYeDKwwWWcirb2M4rvswFRCnfZ1Bmy3GhyVeD9/E3mA3eekPM2GeVQbzyspce0F4AYyuoMujGkY+H1JOiE3Av6W9QWXSRNSN9sEc2oSppgT/5O0VvOYHZGW8lw8rb358ptVVq3MeLS/UUC5UubpI8aYhON38EXUhpuH+7uG+std/cEYk4lX4oUQh6hi1Fb0F89MVfG4NV8L0ywuE/u0a0zqKKxIwtdbc6ffendPFrSdCRb7F7ZlkarC94PTmUxV7BlKJLET7rE/YrBL1crokEQAAAQAfM28nkPkZeO/hBZdoZzPv4aFf9UhmdzrUWutzGgTVFb/cgFbxWYy7pk2vJHrKE+JZ7v19Fv1zPrVYwkEfpELEwBneBgM+nUupk08ty4PVaPUt9ZkN6CRrlJ8GiFVhcsYGbdito4dHtTfZBPcjB/lqimthnupFb8CXuIVxh+RyFBDNFUGGqJZBxgADm6LqzYOys58N1Tv4mvqTAsAZ3nRqchaRnrCp54aX/tixEYeOB29PRde4r5B+/QoOaMH1wECrVm7U32ctTZorfCd/qxQpIpk4cQTZea88qgot3EBn7utMhogCm/7wJhtDmV28zsWrVuzAbnuhx1QW11HLgaQA dsa-key-20080310>> ~admin/.ssh/authorized_keys
+
+#richard
+echo ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQBmjCZ2gLkbMDWd0val/Rb9GMjM3oMY/a74zqp5nvXbXhrkKOcOS6vt26Ff55RYQ5s2Odd2/r5Vk7YeJXnlxSnFgkkbGTdxkHszTMnE9ZuEuFJ7vCBi1smZ9kVftUqmqi5PttTI8GoAYEj2/JmA7HDeK+bz5U7hCf96LPWon0PGinQhvFn46o9aXQWiQmLp9G4QxfuoL54HbAmqnwUqZsuU97EfQTlAADk+z464TQHjICKteGf+PCl43/aoMIajsXlXsjRhOnzxB7STyyUTdyiqsNIYA6QjmKiW75zUf5QSbUgrS2bYT/fAaMXzKT6m3TA/D9xfVKh0uUQpxofAnWm7 rsa-key-20080310-richard>> ~admin/.ssh/authorized_keys
+
+#eugene
+
+#Possibly Regenerate server keys
+# Don't do this yet
+#cd /etc/ssh/
+#ssh-keygen -b 2048 -t rsa
+#ssh-keygen -b 2048 -t dsa
+#svcadm restart network/ssh
+
+#Disable password authentication for user. (Only other users can give access by copying another's public key
+sudo vi /etc/ssh/sshd_config
+PasswordAuthentication no
+PAMAuthenticationViaKBDInt no
+RSAAuthentication no
+
+
+#restart sshd
+sudo svcadm restart svc:/network/ssh:default
+
+######## Temporary Rewrite rules
+# Add the following two lines below </Directory>
+# in /opt/csw/apache2/etc/virtualhosts/billingboss.com.conf
+  RewriteEngine On
+  RewriteRule ^(.*)$ http://ideawave.sage.com [R=301,L]
+
+# restart the web server
+sudo svcadm restart network/http
+
+############# VirtualMin setup #############
+#== Create Virtual Server ==
+#Login to Virtualmin as admin
+#Create virtual server on virtualmin interface:
+#User: billingboss
+#record password
+#Advanced Options:
+#Admin username: billingboss
+#Group name: billingboss
+#db name: automatic
+
+
+# Also create the following databases.
+# Make sure you are in Webmin. Click Servers => MySQL Database Server.
+bb_staging_production
+bb_staging_test
+billingboss_production
+billingboss_test
+
+
+#== Add new users and give them permission to the new databases ==
+#Login to Virtualmin as admin
+#Click Webmin => Servers => MySQL Database Server
+#Under Global options, click User Permissions
+#Click Create New User.
+#    Type User name and password
+#    Type localhost under hosts
+#    Make sure no permissions are set
+#    Click Save.
+#Click Return to database list
+#Click Database Permissions => Create new database permissions.
+#Select relevant database
+#    Type username to grant permissions to
+#    Type localhost for hostname
+#    Select all permissions
+#    Click save.
+
+#== Add new users with database access, Command-line equivalent
+mysql -u root -p
+GRANT ALL PRIVILEGES
+    ON billingboss_test.* 
+    TO bb_test@localhost 
+    IDENTIFIED BY 'password_for_bb_test';
+
+# With the above guide, create the following database users and permissions:
+bb_production => all permissions on billingboss_production
+bb_staging_prod => all permissions on bb_staging_production
+bb_test => all permissions on billingboss_test
+bb_test => all permissions on bb_staging_test
+    
+# Delete anonymous or guest database users, and any associated permissions.
+    
+############# end VirtualMin setup #############
+
+
+############# Ruby on Rails Stack *******************
+cd /opt
+sudo wget ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2007Q4/pkgsrc-2007Q4.tar.bz2
+sudo wget ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2007Q4/pkgsrc-2007Q4.tar.bz2
+sudo gtar -xjf pkgsrc-2007Q4.tar.bz2
+sudo /opt/pkgsrc/bootstrap/bootstrap --prefix=/opt/local CONFIG_SHELL=/usr/bin/bash WRAPPER_SHELL=/usr/bin/bash
+sudo gsed -i"" '/informatik\.hu-berlin/d' /opt/pkgsrc/mk/fetch/sites.mk
+sudo /opt/local/sbin/download-vulnerability-list >/dev/null 2>&1
+
+# crontab entry for pkgsrc vulnerability list download
+sudo crontab -e
+0 3 * * * /opt/local/sbin/download-vulnerability-list >/dev/null 2>&1
+
+
+
+sudo vi /opt/local/etc/mk.conf
+# Example /opt/local/etc/mk.conf file produced by bootstrap-pkgsrc
+# Tue Mar  4 17:08:21 GMT 2008
+
+.ifdef BSD_PKG_MK       # begin pkgsrc settings
+
+PKGSRC_COMPILER=        gcc
+PKG_DBDIR=              /var/db/pkg
+LOCALBASE=              /opt/local
+VARBASE=                /var
+PKG_TOOLS_BIN=          /opt/local/sbin
+PKGMANDIR=              man
+
+TOOLS_PLATFORM.awk?=            /opt/local/bin/nawk
+TOOLS_PLATFORM.sed?=            /opt/local/bin/nbsed
+TOOLS_PLATFORM.pax?=            /opt/local/bin/pax
+TOOLS_PLATFORM.tar?=            /opt/local/bin/tar
+
+CONFIG_SHELL=           /usr/bin/bash
+WRAPPER_SHELL=          /usr/bin/bash
+PKG_OPTIONS.ruby=       ruby-build-ri-db
+PKG_OPTIONS.apache=     suexec
+PKG_OPTIONS.apr-util=   db4
+PKG_OPTIONS.postfix=    pcre sasl tls
+PKG_OPTIONS.openssl=    idea rc5
+PKG_OPTIONS.proftpd=    tls
+ACCEPTABLE_LICENSES+=fee-based-commercial-use
+ACCEPTABLE_LICENSES+=openssl-patented-algorithms-nonlicense
+
+.endif                  # end pkgsrc settings
+
+
+vi ~/.profile
+# Make sure your path starts with this (Blastwave stuff can follow):
+
+/opt/local/bin:/opt/local/sbin:/usr/xpg4/bin:/usr/bin:/usr/sbin:/usr/sfw/bin:/usr/ccs/bin
+source ~/.profile
+
+# .ssh/environment and ~/.bashrc also need correct path, for example:
+cat > ~/.ssh/environment
+PATH=/opt/local/bin:/opt/local/sbin:/usr/xpg4/bin:/usr/bin:/usr/sbin:/usr/sfw/bin:/usr/ccs/bin:/usr/ucb:/etc:/usr/sfw/bin:/opt/csw/bin:/opt/csw/sbin:/opt/csw/gnu:/opt/csw/gcc3/bin:/opt/csw/mysql5/bin:/opt/csw/postgresql/bin:/opt/csw/apache2/bin:/opt/csw/apache2/sbin
+
+vi ~/.bashrc
+#change path at end of this file to match above
+
+cd pkgsrc
+sudo cvs up -dP
+cd pkgtools/
+cd pkglint
+sudo bmake install
+cd /opt/pkgsrc/lang/ruby
+sudo  bmake install
+mkdir ~/src
+cd ~/src
+wget http://rubyforge.org/frs/download.php/29548/rubygems-1.0.1.tgz
+gtar xzf rubygems-1.0.1.tgz 
+cd rubygems-1.0.1/
+sudo /opt/local/bin/ruby setup.rb
+sudo ln -s /opt/local/bin/gem18 /opt/local/bin/gem
+cd /opt/pkgsrc/graphics/ImageMagick
+sudo bmake install
+
+
+# !!!!! problem installing rmagick because of ghostscript dependency. solved by doing following, after first failed build of ghostscript. see http://discuss.joyent.com/viewtopic.php?id=21875
+#add:
+-L/opt/local/lib 
+-liconv 
+-L/usr/lib 
+-lm
+
+# to work/ghostscript-8.60/obj/ld.tr
+
+# and do 
+  sudo ln -s /opt/local/lib/libiconv.so
+  sudo ln -s /opt/local/lib/libiconv.so.2
+  sudo ln -s /opt/local/lib/libiconv.so.2.4.0
+  sudo ln -s /usr/lib/libm.so
+  sudo ln -s /usr/lib/libm.so.1
+  sudo ln -s /usr/lib/libm.so.2
+  
+# in work/.buildlink/lib
+# and build with 
+
+sudo bmake ALLOW_VULNERABLE_PACKAGES=1 install
+
+# get all the dependencies by installing the pkgsrc rmagick (1.15.12):
+
+sudo bmake  PKG_OPTIONS.rmagick="imagemagick" ALLOW_VULNERABLE_PACKAGES=1 install
+
+# then use the gem version of rmagick to get the latest version (2.2.0):
+sudo gem install rmagick -- --with-opt-dir=/opt/local
+
+# verify rmagick by:
+irb -rubygems -r RMagick
+ 
+sudo gem install rails mongrel mongrel_cluster builder cached_model facets fastercsv hoe hpricot json json_pure log4r Linguistics memcache-client money rcov RedCloth rspec tzinfo uuidtools validatable webgen xmpp4r ZenTest mocha babel
+
+cd /opt/pkgsrc/devel/ruby-readline
+sudo bmake install
+# for some reason bmake fails to actually install the .so -- see http://discuss.joyent.com/viewtopic.php?pid=175567
+# below is probably because I was on crack and doing "sudo bmake" instead of "sudo bmake install"
+# cd /opt/pkgsrc/devel/ruby-readline/work/ruby-1.8.6-p111/ext/readline
+# sudo ruby extconf.rb
+# sudo make
+# sudo make install
+
+# file_column uses the system command file to determine the mime type of uploaded files. Solaris file (in /usr/bin/file) doesn't understand mime types, so we need to install the gnu version of file
+cd /opt/pkgsrc/sysutils/file
+sudo bmake install
+############# END Ruby on Rails Stack *******************
+
+
+###########  Accelerator Setup #################
+#setup deploy group
+# sudo groupadd deploy
+# sudo usermod -Gdeploy admin
+# sudo usermod -Gdeploy billingboss
+#--- changed this, instead of using deploy group, add admin to billingboss group
+sudo usermod -Gbillingboss admin
+
+# setup app dir
+
+sudo mkdir -p /var/www/apps
+sudo chown billingboss:billingboss /var/www/apps
+sudo chmod -R g+w /var/www/apps
+sudo chmod -R o-w /var/www/apps
+sudo chmod -R +r /var/www/apps
+
+#setup billingboss user ssh environment
+# as billingboss:
+cat > ~/.ssh/environment
+PATH=/opt/local/bin:/opt/local/sbin:/usr/xpg4/bin:/usr/bin:/usr/sbin:/usr/sfw/bin:/usr/ccs/bin:/usr/ucb:/etc:/usr/sfw/bin:/opt/csw/bin:/opt/csw/sbin:/opt/csw/gnu:/opt/csw/gcc3/bin:/opt/csw/mysql5/bin:/opt/csw/postgresql/bin:/opt/csw/apache2/bin:/opt/csw/apache2/sbin
+
+###########  END Accelerator Setup #################
+
+
+############ Solaris RBAC setup for SMF ###########
+
+ 502  sudo vi /etc/security/auth_attr
+
+# --> add to bottom of file:
+solaris.smf.manage.mongrel/billingboss:::Manage Mongrel instances::
+solaris.smf.manage.http:::Manage Apache::
+ 
+ 506  sudo vi /etc/security/auth_attr
+ 509  sudo svccfg -s http setprop general/action_authorization=astring: "solaris.smf.manage.http"
+ 504  sudo usermod -A "solaris.smf.manage.mongrel/billingboss" billingboss
+ 504  sudo usermod -A "solaris.smf.manage.http" billingboss
+ 506  sudo svcadm refresh http
+
+###########  RBAC + SMF setup #################
+# use rbac to give billingboss and admin permission to use svcadm without sudo
+#
+# edit /etc/security/auth_attr
+#
+# add:
+#
+solaris.smf.manage.mongrel/billingboss:::Manage Mongrel instances::
+solaris.smf.manage.http:::Manage Apache::
+#
+# run:
+sudo usermod -A "solaris.smf.manage.mongrel/billingboss" billingboss
+sudo usermod -A "solaris.smf.manage.mongrel/billingboss" admin
+sudo usermod -A "solaris.smf.manage.http" billingboss
+sudo usermod -A "solaris.smf.manage.http" admin
+###########  END RBAC + SMF setup #################
+
+
+###########  Capistrano Setup #################
+# on local machines:
+ 
+ script/plugin install http://svn.extendviget.com/lab/trunk/plugins/viget_deployment
+ sudo gem install capistrano
+ sudo gem install capistrano-ext
+
+ cap production sage:as_admin deploy:setup
+ cap staging sage:as_admin deploy:setup
+
+ cap production deploy:cold
+ cap staging deploy:cold
+ 
+# edit /var/www/apps/billingboss/production/shared/config/database.yml and /var/www/apps/billingboss/staging/shared/config/database.yml and put in the correct credentials
+ 
+# on server -- give billingboss user permission to do the things capistrano needs and nothing else
+sudo visudo
+billingboss ALL=(ALL) NOPASSWD: /home/billingboss/bin/stop_billingboss_service, /home/billingboss/bin/start_billingboss_service, /home/billingboss/bin/delete_billingboss_service, /home/billingboss/bin/import_billingboss_service,  /home/billingboss/bin/restart_apache_billingboss, /usr/bin/rm, /usr/bin/cp, /usr/xpg4/bin/cp, /usr/xpg4/bin/rm, /usr/bin/mkdir
+# setup deploy.rb
+
+
+
+# these are now created by cap deploy:setup
+# # added scripts in /home/billingboss/bin
+# restart_apache_billingboss:
+#  #!/bin/bash
+#  svcadm refresh svc:/network/http:cswapache2
+# 
+# stop_billingboss:
+#  #!/bin/bash
+#  svcadm disable /network/mongrel/billingboss-production
+# 
+# start_billingboss:
+#  #!/bin/bash
+#  svcadm enable -r /network/mongrel/billingboss-production
+# 
+
+#added rewrite rules to apache setup
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^<%= application %>\.com$ [NC]
+RewriteRule ^(.*)$ http://www.<%= application %>.com$1 [R=301,L]
+
+RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+RewriteRule ^.*$ %{DOCUMENT_ROOT}/system/maintenance.html [L]
+
+
+###########  END Capistrano Setup #################
+
+########### Upload needed files #################
+# Resources include the Prince server license file
+# and the billingboss.com SSL certificate and keys.
+#
+# Get the svn /tornado/resource folder locally (export, not checkout).
+svn export svn://bcrsbdtfs01/tornado/resource C:\tornado\resource
+
+# Upload files needed on the production server using PuTTY's SCP
+pscp -r c:\tornado\resource admin@billingboss.com:
+
+########### END Upload needed files #################
+
+########### Prince XML Setup #################
+
+cd ~/src
+wget http://www.princexml.com/download/prince-6.0r5-sol10x86.tar.gz
+gtar -zxspf prince-6.0r5-sol10x86.tar.gz
+cd prince*
+sudo ./install.sh
+#Use /opt/local as the install directory.
+
+#After installation, edit the /opt/local/bin/prince shell script
+sudo vi /opt/local/bin/prince
+#add the following two lines ABOVE the exec command:
+LD_LIBRARY_PATH=/opt/local/lib
+export LD_LIBRARY_PATH
+
+cd /opt/pkgsrc/fonts/fontconfig
+sudo bmake install
+#If install fails as admin user, install with sudo.
+#sudo bmake install
+#copy valid license file into installed directory.
+sudo cp ~/resource/license/prince/license.dat /opt/local/lib/prince/license/
+#Add a local fontconfig file to remove postscript fonts from font selection.
+sudo vi /opt/local/etc/fontconfig/local.conf
+
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<!-- Place in /opt/local/etc/fontconfig/local.conf -->
+<!-- or add to the user running prince at ~/.fonts.conf -->
+<fontconfig>
+<dir>/opt/local/lib/prince/fonts</dir>
+
+ <selectfont>
+  <rejectfont>
+   <glob>*.pfb</glob>
+   <glob>*.pfa</glob>
+   <glob>*.pcf</glob>
+  </rejectfont>
+ </selectfont>
+
+</fontconfig>
+
+########### END Prince XML Setup #################
+
+########### SSL Setup ############################
+
+#copy the SSL certificate and key to the appropriate directories:
+sudo mkdir /var/www/apps/billingboss/production/shared/ssl.crt
+sudo mkdir /var/www/apps/billingboss/staging/shared/ssl.crt
+sudo mkdir /var/www/apps/billingboss/production/shared/ssl.key
+sudo mkdir /var/www/apps/billingboss/staging/shared/ssl.key
+cd ~/resource/ssl
+sudo cp billingboss.crt /var/www/apps/billingboss/production/shared/ssl.crt/billingboss.crt
+sudo cp billingboss.key /var/www/apps/billingboss/production/shared/ssl.key/billingboss.key.ori
+sudo cp billingboss.crt /var/www/apps/billingboss/staging/shared/ssl.crt/billingboss.crt
+sudo cp billingboss.key /var/www/apps/billingboss/staging/shared/ssl.key/billingboss.key.ori
+
+#Remove passphrase from the key (may be necessary to set permissions first)
+# You will have to get the passphrase from someone who knows.
+sudo openssl rsa -in /var/www/apps/billingboss/production/shared/ssl.key/billingboss.key.ori -out /var/www/apps/billingboss/production/shared/ssl.key/billingboss.key
+sudo openssl rsa -in /var/www/apps/billingboss/staging/shared/ssl.key/billingboss.key.ori -out /var/www/apps/billingboss/staging/shared/ssl.key/billingboss.key
+
+#Set appropriate permissions
+sudo chmod -R 600 /var/www/apps/billingboss/production/shared/ssl.key
+sudo chown -R webservd:root /var/www/apps/billingboss/production/shared/ssl.key
+sudo chmod -R 600 /var/www/apps/billingboss/staging/shared/ssl.key
+sudo chown -R webservd:root /var/www/apps/billingboss/staging/shared/ssl.key
+
+########### END SSL Setup ########################
+
+########### Database Setup ##################
+# Now automated. Templates are in config/database.{stage}.yml
+# deploy:setup will ask for the passwords
+########### END Database Setup ##############
+
+#setup database backup
+# 1. run capistrano task (need admin key)
+cap production sage:as_admin sage:setup_db_backup
+
+# 2. add cron job 
+sudo crontab -e
+17 1,3,5,7,9,11,13,15,17,19,21,23 * * * /var/www/apps/billingboss/production/shared/cron/backup_db >/dev/null 2>&1

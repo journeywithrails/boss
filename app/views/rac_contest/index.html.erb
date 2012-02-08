@@ -1,0 +1,88 @@
+
+	<% content_for "stylesheets" do %>
+	<%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>			  
+	<%= stylesheet_link_tag "/themes/static.css" %>	
+	<%= default_theme_controller %>	
+  <%= stylesheet_ie6 %>
+  <style>
+  			#content{
+  				background-image: url('/images/rac_contest/bg_content_home.gif');
+
+			}  </style>
+<% end %>
+
+<% content_for :header do %>	    	
+	<%= render :partial => "/rac_contest/header" %>
+<% end %>   
+	 
+
+<% content_for :main do %>
+<div id="bd">
+
+		<div class="yui-g">
+	
+<div style="background-color: rgb(167, 197, 32);" id="main">
+			
+			<!-- TOP CORNERS -->
+			
+				<div class="main_tr" style="height: 20px">
+						<div class="main_tl" style="height: 20px">
+
+								    
+						</div>
+				</div>
+
+			<!-- CONTENT -->
+			
+				<div id="content">
+				
+					<div style="padding-bottom: 20px;">
+						<p>Help your clients take control of their billing with <b>Billing Boss by Sage</b> our <b>FREE online invoicing</b> tool designed for small businesses and freelancers that makes invoicing and receiving payments <b>Fast and Easy.</b></p><br/><p>We’re focused on getting the basics done, keeping things simple – and making it easy for your clients to share their accounts receivable data with you.</p>
+					</div>
+
+				
+						<div class="right_box">
+						
+								<p><span style="font-size: 12pt;"><b>With Billing Boss, YOU can</b>:</span></p><br/>
+								<ul>
+									<li>Get an "accountant's view" of your clients' data with information</li>
+									<li>Interact better with your clients that do not use accounting software themselves</li>
+								</ul> 
+
+						</div>
+						
+						<div class="left_box">
+
+						
+								<p><span style="font-size: 12pt;"><b>With Billing Boss, your CLIENTS can</b>:</span></p><br/>
+								<ul>
+									<li>Easily create, send, and track invoices and payments</li>
+									<li>Receive online payments immediately</li>
+									<li>Share data with you securely – no need to send files back and forth!</li>
+								</ul>  	
+						
+						</div>
+						
+						<div id="enter_now">
+							<a id='enter_link' href="/rac_contest/enter"><img  alt="Enter Now to Win!" src="/images/rac_contest/btn_new_user.gif"/></a>
+						</div><br/>
+						<div id="enter_now_existing" style="text-align: center">
+							<a id='login_link' href="/rac_contest/login" class="linkb"><b>Existing Billing Boss users click here to enter ></b></a>
+						</div>
+				</div>				
+			
+			
+			<!-- BOTTOM CORNERS -->
+				<div class="main_br" style="height: 20px">
+						<div class="main_bl" style="height: 20px">    </div>
+				</div>			<br/>
+				
+
+
+			</div>
+
+			
+		</div>
+<br/><br/>
+</div>
+<% end %>

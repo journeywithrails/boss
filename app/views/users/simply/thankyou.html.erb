@@ -1,0 +1,31 @@
+<%@skip_footer= true%>
+<% content_for "stylesheets" do -%>
+  <%= default_theme_controller("home") %>
+  <%= stylesheet_link_tag "/yui/build/reset-fonts-grids/reset-fonts-grids.css" %>  
+<% end -%>
+
+<% @content_for_infobox = capture do %>
+  <%= error_messages_for :user %>
+<% end %>
+
+<% @content_for_main = capture do %>
+  <!-- the main layout -->
+  <div class="simply_wrapper">
+    <div class="yui-g" > 
+      <p class="main_simply_text"><%= _('Thanks for signing up!') %></p><br/>
+      <p class="main_simply_text"><%= _('You should soon receive an email confirming your username and password.') %></p><br/>
+    </div>
+    <% if api_token? -%>
+      <% if api_token.signup? -%>
+        <a href="javascript:page_complete()" id="continue-button"><%= _('CONTINUE') %></a>
+      <% elsif api_token.send_invoice? -%>
+        <% if api_token.new_gateway -%>
+          <%= render :partial=> "users/simply/thankyou_select_payment" %>
+        <% else -%>
+          <%= render :partial=> "users/simply/thankyou_pending_invoice" %>
+        <% end -%>
+      <% end -%>
+    <% end -%>
+  </div>  
+<%end%>
+<%= render_inner_layout('norounded') %>

@@ -1,0 +1,31 @@
+<div>
+	<% secure_form_for :user, :url => {:controller => 'users', :action => 'create'}, :html => {:id => 'new-user-form'} do |f| -%>
+	<div class="signup_fields">
+		
+	<ul class="form">
+
+	<li>
+		<div class="form_field_hdr">E-mail:</div>
+    	<%= f.text_field :login, :class => "login_input" %> 
+	</li>
+	<li>
+		<div class="form_field_hdr">Password:</div>
+		<%= f.password_field :password, :class => "login_input" %>  
+	</li>
+	<li>
+		<div class="form_field_hdr">Confirm Password:</div>
+		<%= f.password_field :password_confirmation, :class => "login_input" %>   
+	</li> 
+	<li>
+		<%= f.check_box :terms_of_service, :title => _("I accept the Terms of Service and Privacy Policy"), :style => "margin-bottom: 15px" %><br/>
+
+	</li>
+	<li>
+		<%= check_box_tag :user_communications, nil, false, :title => _("Receive Billing Boss e-mail updates"), :style => "margin-bottom: 15px" %>
+	</li>
+	</ul>
+	<%= link_to_function _("Sign up"), "$(this).up('form').submit()", :id => "register_button", :class => "button white margined" %>
+    <ul class="individual"><li><%= link_to_login _("Existing account") %></li></ul>             
+  </div>
+	<% end -%>
+</div>

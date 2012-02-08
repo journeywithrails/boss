@@ -1,0 +1,23 @@
+<% content_for "stylesheets" do %>
+		  
+<% end %>
+<% content_for "bottom_javascripts" do -%>
+
+<% end # content_for "bottom_javascripts" 
+        %>
+
+<% content_for :header do %>
+	<div id="header">
+		<h1><%= _("New User") %></h1>
+		<%= link_to _("Home"), home_path, :id => "backButton" %>
+	</div>
+<% end %>
+	 
+<% content_for :main do %>	 
+  	  <%= formatted_flash_always %>
+      <%= error_messages_for :user %>
+	  <%= error_messages_for :profile %>
+	  
+        <div class="page_header"><%= _("Please enter an email address and select a password to create an account") %></div>
+          <%= render :partial=> "/users/mobile/form" %>
+<% end %>

@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="cell_label"><%= _("%{state_prompt}:") % { :state_prompt => _( known_country.country_settings.state_label)} %></div>
+  <div class="cell_value"><%= h known_country.company_state %></div>
+</div>
+<div class="row">
+  <div class="cell_label"><%= _("%{postalcode_prompt}:") % { :postalcode_prompt => _( known_country.country_settings.postalcode_label)} %></div>
+  <div class="cell_value"><%= h known_country.company_postalcode %></div>
+</div>

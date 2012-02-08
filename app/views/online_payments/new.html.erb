@@ -1,0 +1,43 @@
+<% content_for("stylesheets") do%>
+	<%= stylesheet_theme_controller("invoices") %>
+	<%= stylesheet_theme_controller_printable(print?, "invoices")%>		
+<% end -%>
+<% @content_for_sidebar = capture do %>
+  <div class="invoice_lnav">
+    <h2 class="state"><small><%= _('Invoice Options') %></small></h2>
+    <ul class="lnav_ul">
+      <li>
+        <%= link_to(_('View Invoice'), display_invoice_invoice_path(:id => access_key)) %>
+      </li>
+    </ul>
+  </div>	
+<% end %>
+<% @content_for_main_top = capture do %>
+  <div class="yui-ge page_title">
+    <div class="yui-u first"> 
+      <div id="page_header" class="page_header"><%= _('Pay Invoice') %></div>
+    </div>   
+  </div>
+<% end %>
+
+<% @content_for_infobox = capture do %>
+  <%= formatted_flash %>
+<% end %>    
+<% @content_for_main = capture do %>
+  <div id="preview_container">
+    <%= render :partial => 'payment_form', :locals => { :invoice => @invoice, :payment_type => @payment_type, :gateway => @gateway } %>
+  </div>
+<% end %>
+<% content_for "bottom_javascripts" do -%>
+  <script type="text/javascript">
+    Sage.change_payment_type = function(){
+      <%= remote_function(:url => payment_type_invoice_online_payments_path(:invoice_id => access_key), :with => "'payment_type=' + this.value") %>;
+    };
+
+    <% @invoice.selected_payment_types.each do |payment_type| %>
+      Event.observe('payment_type_<%= payment_type %>', 'click', Sage.change_payment_type);
+    <% end %>
+  </script>
+<% end %>
+<%= render_inner_layout %>
+

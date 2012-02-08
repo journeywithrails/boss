@@ -1,0 +1,5 @@
+  <div class="global_rescue_error">
+  <h1><%= _('An error has occurred.') %></h1><br/>
+  <p><%= _('Something went wrong, and your request cannot be processed. Please try again.') %></p><br/>
+  <p><%= _("If the problem persists, please send us a report using the %{feedback_form_link}. Please be as descriptive as possible, so that we can quickly find and fix the cause of the problem.") % {:feedback_form_link => "#{link_to 'feedback form', {:controller => :feedback}}"} %></p>
+  </div>

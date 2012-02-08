@@ -1,0 +1,25 @@
+<div id="new_delivery_container">
+  <%= error_messages_for :delivery %>
+
+  <% 
+  remote_form_for(@delivery, 
+        :update => 'new_delivery_container', 
+        :success => 'Sage.send_dialog.on_success()', 
+        :failure => 'Sage.send_dialog.on_failure()') do |f| %>
+    <%= f.hidden_field(:deliverable_type) %>
+    <%= f.hidden_field(:deliverable_id) %>
+    <%= f.hidden_field(:mail_name) %>
+    <%= options_for_mail(@delivery, f, @delivery.deliverable, @delivery.mail_name) %>
+
+    <% if @show_controls %>
+      <p>
+        <%= f.submit _("Cancel") %> <%= f.submit _("Send") , :id => 'send-btn' %>
+      </p>
+    <% end %>
+  <% end %>
+<br />
+  
+</div>
+
+<%# do not put in bottom_javascripts -- gets returned with no layout %>
+<%= increment_ajax_counter(true) %>

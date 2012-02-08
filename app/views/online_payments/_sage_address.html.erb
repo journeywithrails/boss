@@ -1,0 +1,63 @@
+<%# This partial is now used by more than just the Sage gateways. -%>
+<% fieldset_tag('Billing Address', :id => 'billing_address') do %>
+  <br clear="all" />
+
+  <%# The name field is not always required by the gateway. If not then don't include it in the form. -%>
+  <% unless @billing_address.exclude?(:name) -%>
+    <%= label :name, _('Full Name') %>
+    <%= text_field(:billing_address, :name) %>
+    <br clear="all" />
+  <% end -%>
+
+  <%= label :country, _('Country') %>
+  <%= country_select(:billing_address, :country, payment_priority_countries, {:active_merchant => true, :prompt => _("Please select Country:")}) %>
+  <br clear="all" />
+
+  <%= label :address1, _('Address') %>
+  <%= text_field(:billing_address, :address1) %>
+  <br clear="all" />
+
+  <% unless @billing_address.exclude?(:address2) -%>
+    <%= label :address2, _('Address Line 2') %>
+    <%= text_field(:billing_address, :address2) %>
+    <br clear="all" />
+  <% end -%>
+
+  <%= label :city, _('City') %>
+  <%= text_field(:billing_address, :city) %>
+  <br clear="all" />
+
+	<div class="payment_div_country_dependent" id="div_country_dependent">
+		<%= render :partial => 'online_payments/' + @billing_address.country_settings.partial, :object => @billing_address %>	
+	</div>
+
+  <% unless @billing_address.exclude?(:phone) -%>
+    <%= label :phone, _('Phone Number') %>
+    <%= text_field(:billing_address, :phone) %>
+    <br clear="all" />
+  <% end -%>
+
+  <% unless @billing_address.exclude?(:fax) -%>
+    <%= label :fax, _('Fax Number') %>
+    <%= text_field(:billing_address, :fax) %>
+    <br clear="all" />
+  <% end -%>
+
+  <%= label :email, _('Email address') %>
+  <%= text_field(:billing_address, :email) %>
+  <br clear="all" />
+<% end %>
+
+<% content_for "bottom_javascripts" do -%>
+  <script type="text/javascript">
+    if(!Sage.update_payment_form) {
+      Sage.update_payment_form = function(){
+           <%= remote_function(:url => { :controller => 'online_payments', :action => 'switch_country' }, :with => "'billing_address[country]=' + $('billing_address_country').value") %>;
+      };
+    } else {
+      Event.stopObserving('billing_address_country', 'change', Sage.update_payment_form);
+    };
+    Event.observe('billing_address_country', 'change', Sage.update_payment_form);
+  </script>
+<% end -%>
+<%= yield(:bottom_javascripts) if params[:action] == 'payment_type' %>

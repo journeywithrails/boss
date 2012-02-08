@@ -1,0 +1,19 @@
+<div class="invoice_lnav">
+      <h2 class="state"><%= _('Options') %></h2>
+        <ul class="lnav_ul">
+        <li>
+          <% if @invoice.sendable? %>
+            <%= render :partial => "invoices/send_invoice_dialog", :locals => {:show_link => true} %>
+          <% else %>
+            <%= link_to_remote _('Send'), :id => "show-send-dialog-btn", :url => "/invoices/send_notice/#{@invoice.id}",
+                  :method => :put, :update => invoice_status_html_id(@invoice), :before => status_action_js %>
+          <% end %>
+        </li>      
+        <li><%= link_to _('Convert into invoice'), "#", :id => "show-convert-dialog-btn"  %> <%= render :partial => "/invoices/convert_quote_dialog", :locals => {:show_link => true}%> </li>
+        <li><%= link_to _('Save as PDF'), invoice_path(@invoice) + '.pdf' %></li>
+				<!-- should link to open new window with PDF displayed and load window.print() -->
+        <li><%= link_to _('Print'), "javascript:print()" %></li>
+        <li><%= link_to _('Edit this quote'), edit_invoice_path(@invoice) %></li>
+        <li><%= link_to _('Delete this quote'), invoice_path(@invoice), :confirm => delete_warn_string(@invoice), :method => :delete, :id => 'destroy' %></li>
+      </ul>
+    </div>

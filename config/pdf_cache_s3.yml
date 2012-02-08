@@ -1,0 +1,24 @@
+development:
+  bucket_name: billingboss-development-uploads
+  access_key_id: 0BCA7PE1YRYKEJY78NR2
+  secret_access_key: n9ZT2sYK3Mza9FE7+uop3H5+SOgVW0mdb3Q2gfP5  
+
+test:
+  bucket_name: billingboss-test-uploads
+  access_key_id: 0BCA7PE1YRYKEJY78NR2
+  secret_access_key: n9ZT2sYK3Mza9FE7+uop3H5+SOgVW0mdb3Q2gfP5  
+
+production:
+  bucket_name: billingboss-production-uploads
+  access_key_id: 0BCA7PE1YRYKEJY78NR2
+  secret_access_key: n9ZT2sYK3Mza9FE7+uop3H5+SOgVW0mdb3Q2gfP5  
+
+load_testing:
+  bucket_name: billingboss-load-testing-uploads
+  access_key_id: 0BCA7PE1YRYKEJY78NR2
+  secret_access_key: n9ZT2sYK3Mza9FE7+uop3H5+SOgVW0mdb3Q2gfP5  
+
+staging:
+  bucket_name: billingboss-staging-uploads
+  access_key_id: 0BCA7PE1YRYKEJY78NR2
+  secret_access_key: n9ZT2sYK3Mza9FE7+uop3H5+SOgVW0mdb3Q2gfP5  

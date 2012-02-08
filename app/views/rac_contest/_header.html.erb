@@ -1,0 +1,15 @@
+<div class="<%= ::AppConfig.contest.rac ? 'contest_wrapper' : 'contest_wrapper_end' %>">
+	
+	<a class="logo_link" href="http://<%= request.host_with_port %>"><img border="0" alt="" src="/images/contest/spacer.gif"/></a>
+
+
+		<div id="navbar">
+
+			<ul>
+				<%= rac_contest_menu_builder %>
+			</ul>
+		</div>
+	
+		<img border="0" alt="" src="/images/contest/spacer.gif"/>
+		<img border="0" alt="" src="/images/contest/spacer.gif"/>
+</div>

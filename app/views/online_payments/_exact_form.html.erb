@@ -1,0 +1,26 @@
+<%= error_messages_for(:object_name => 'payment', :object => @payment_data) %>
+<% @card, @billing_address = @payment_data %>
+<% form_tag invoice_online_payments_path(:invoice_id => @key) do %>
+  <!-- beanstream gateway -->
+  <div class="gateway_form_section">
+    <% fieldset_tag(_('Credit Card Information')) do %>
+      <table>
+        <%= form_row _('Credit Card Number'), text_field(:card, :number) %>
+        <%= form_row _('Cardholder\'s First Name'), text_field(:card, :first_name) %>
+        <%= form_row _('Cardholder\'s Last Name'), text_field(:card, :last_name) %>
+        <%= form_row _('Expiration Date'), select(:card, :month, (1..12)) + select(:card, :year, (Time.now.year..(Time.now.year + 9))) %>
+        <%= form_row _('3-digit CVV Number'), text_field(:card, :verification_value) %>
+      </table>
+    <% end %>
+  </div>
+  <div class="gateway_form_section">
+    <% fieldset_tag('Billing Address') do %>
+      <table>
+        <%= form_row _('Zip or Postal Code'), text_field(:billing_address, :zip) %>
+        <%= form_row _('Email address'), text_field(:billing_address, :email) %>
+      </table>
+    <% end %>
+  </div>
+  <br style="clear: both" />
+  <%= submit_tag(_('Pay Now')) %>
+<% end %>

@@ -1,0 +1,12 @@
+<% @content_for_lnav = capture do %>
+<% end %>
+  
+<% @content_for_sidebar = capture do %>
+<% end %>
+
+<% @content_for_main = capture do %>
+  <h1>Sorry! You do not have access to that page.</h1>
+<% end %>
+
+<%= render_inner_layout %>
+

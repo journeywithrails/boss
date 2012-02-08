@@ -1,0 +1,66 @@
+<div class="grid-panel">
+  <div class="header">Recurring Invoices</div>
+  <div class="grid-content">
+
+
+
+      <table cellspacing="0" cellpadding="0" border="0" width="100%" id="recurring-grid">
+        <tr  class="row names">
+          <td class="left first"><div><span href="/invoices/1">Customer Name</span></div></td>
+          <td class="right"><div><span> Frequency</span></div></td>
+          <td class="right"><div><span>Next invoice</span></div></td>
+          <td class="right"><div><span>Total amount</span></div></td>
+          <td class="right"><div><span>Currency</span></div></td>
+          <td class="right"><div><span>Generated invoices</span></div></td>
+          <td class="right"><div><span></span></div></td>
+        </tr>
+      <% @invoices.each do |invoice| %>
+        <tr id="invoice_<%=invoice.id %>" class="row normal invoice">
+          <td class="left"><div class="customer"><%= link_to_customer invoice %></div></td>
+          <td class="right"><div class="frequency">monthly</div></td>
+          <td class="right"><div class="date"><%=format_date(_("%m/%d/%y")) {invoice.date} %></div></td>
+          <td class="right"><div class="total_amount"><%= format_amount(invoice.total_amount).untaint %></div></td>
+          <td class="right"><div class="currency"><%= invoice.currency %></div></td>
+          <td class="right"><div class="generated-invoices"><%= invoice.generated_invoices.empty? ? _("no invoices generated") : link_to("view generated invoices", generated_invoice_path(invoice)) %></div></td>
+          <td class="center"><div><%= link_to "view invoice", invoice_path(invoice)  %></div></td>
+        </tr>
+      <% end %>
+      </table>
+
+    </div>
+
+    <div class="footer">
+      <table cellspacing="0" cellpadding="0" border="0" width="auto" class="navigation">
+          <tr>
+            <td valign="middle">
+              <%=  image_tag('/images/new_grid/page-first-disabled.gif') %>
+            </td>
+            <td valign="middle">
+              <%=  image_tag('/images/new_grid/page-prev-disabled.gif') %>
+            </td>
+            <td valign="middle" class="split">
+              <%= image_tag "/images/new_grid/grid-blue-split.gif" %>
+            </td>
+            <td valign="middle">
+              Page
+            </td>
+            <td valign="middle">
+              <input  type="text" value="1" size="3" style="height: 12px;" >
+            </td>
+            <td valign="middle">
+              of 1
+            </td>
+            <td valign="middle" class="split">
+              <%= image_tag "/images/new_grid/grid-blue-split.gif" %>
+            </td>
+            <td valign="middle">
+              <%=  image_tag('/images/new_grid/page-next-disabled.gif') %>
+            </td>
+            <td valign="middle">
+              <%=  image_tag('/images/new_grid/page-last-disabled.gif') %>
+            </td>
+          </tr>
+        </table>
+        <div class="caption">Displaying recurring invoices 1 - <%= @invoices.count %> of <%= @invoices.count %></div>
+      </div>
+    </div>     

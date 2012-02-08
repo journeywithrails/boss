@@ -1,0 +1,41 @@
+
+<% fields_for"customer[contacts_attributes][]", contact_line_item do |contact_line_item_fields| -%>
+<%  row_id ||= ""
+    row_id = row_id.blank? ? db_agnostic_id('customer_contact', contact_line_item) : row_id
+    contact_line_item.row_id = row_id
+    row_id_str = "id=\"#{row_id}\""  -%>
+		
+<tr class="child_item narrow_field" <%= row_id_str -%>>
+ 	<td class="contact_primary">
+		<div>
+		  <% default_contact_id_or_new = (contact_line_item.new_record? ? row_id : contact_line_item.id) -%>
+      <% rb_checked = checked || contact_line_item.is_default? -%>
+	 		<%= radio_button_tag "customer[default_contact_id]", default_contact_id_or_new, rb_checked, :class => 'row_id' %>
+		</div>		
+	</td>					
+	<td class="contact_name">		
+		<%= contact_line_item_fields.text_field :first_name,  :class => "colored_field", :index => nil %>
+	</td>	
+	<td class="contact_name">		
+		<%= contact_line_item_fields.text_field :last_name,:class => "colored_field", :index => nil  %>
+	</td>	
+	<td class="contact_email">		
+		<%= contact_line_item_fields.text_field :email, :class => "colored_field", :index => nil%>
+	</td>	
+	<td class="contact_phone">		
+		<%= contact_line_item_fields.text_field :phone, :class => "colored_field", :index => nil%>
+	</td>	
+  <td class="remove">
+    <% if contact_line_item.new_record? %>
+      <div><%= link_to_function localized_image_tag("/themes/#{user_style}/images/deleteitem.gif", :alt => _("delete contact")) , "$(this).up('.child_item').remove();", :name => 'remove' %></div>
+    <% else -%>
+      <div><%= link_to_function localized_image_tag("/themes/#{user_style}/images/deleteitem.gif", :alt => _("delete contact")), "Sage.mark_for_destroy(this);", :name => 'remove' %></div>
+    <% end -%>
+    <%= contact_line_item_fields.hidden_field :row_id, :index => nil, :class => 'row_id' %>
+    <%= contact_line_item_fields.hidden_field :should_destroy, :index => nil, :class => 'should_destroy' %>
+    <%# I was not able to find any way to get id to not return nil. If you use alias method to override LineItem#id, it just doesn't work %>
+    <%= hidden_field_tag 'customer[contacts_attributes][][id]', contact_line_item.id.nil? ? '' : contact_line_item.id, :index => nil %> 
+  </td>
+</tr>	
+<% end %>
+

@@ -1,0 +1,191 @@
+<% content_for "stylesheets" do -%>
+  <%= stylesheet_theme_controller("invoices_bold_orange") %>
+	<%= stylesheet_theme_controller_printable(print?) %>
+<% end -%>
+
+<div class ="invoice_content" id="preview_invoice_content">
+
+  <div style="width:100%;display:block">
+    <div  id="big_invoice_label">
+      <%= invoice_text @invoice, "Invoice" %>      
+    </div>
+
+    <div class="txtright right">
+      <p>
+        <% unless @invoice.reference.blank? %>
+          <div class="right">
+            <%= _('Reference No.:') %>&nbsp;<%= h(@invoice.reference) %>
+          </div><br style="clear:both;"/>
+        <% end %>
+        <div>
+            <%= format_date(_("%b %d, %Y")) { @invoice.date } %>
+        </div>
+        <div>
+          <%= invoice_text @invoice, 'Invoice' %>&nbsp;<%= h(@invoice.unique) %>
+        </div>
+      </p>
+    </div>    
+  </div>
+
+
+  <%= logo_or_upload_link(@profile) %><br/>
+  <!--Row 2-->
+  <div>
+    <br/><br/>
+      <!--Company Address-->
+        <div class="left companyadr pdgleft10">
+            <span class="txtbold"><%=h(@profile.company_name)%></span>
+            <p>
+                <span id="invoice_profile_address1"><%=h(@profile.company_address1)%></span><br />
+                <%  unless @profile.company_address2.blank?%>
+                  <span id="invoice_profile_address2"><%=h(@profile.company_address1)%></span><br />
+                <% end %>
+                  <span id="invoice_profile_city"><%=h(@profile.company_city) + (@profile.company_state.blank? ? "<br/>" : ", ") unless @profile.company_city.blank? %></span>
+                  <span id="invoice_profile_state"><%=h(@profile.company_state) + " " unless @profile.company_state.blank? %></span><br />
+                  <span id="invoice_profile_postalcode"><%=h(@profile.company_postalcode) + (@profile.company_country.blank? ? "<br/>" : " ") unless @profile.company_postalcode.blank? %></span>
+                  <span id="invoice_profile_country"><%= localized_country(@profile.company_country) unless @profile.company_country.blank? %></span><br />
+                  <%  unless @profile.company_phone.blank? %>
+                    <span id="invoice_profile_phone"><%= "Tel. %{tel}" % {:tel => h(@profile.company_phone)} unless @profile.company_phone.blank? %></span><br />
+                  <% end %>
+                  <%  unless @profile.company_fax.blank? %>
+                    <span id="invoice_profile_fax"><%= _("Fax %{fax}") % {:fax => h(@profile.company_fax)} %></span><br />
+                  <% end %>
+                  <%  unless @profile.company_website.blank? %>
+                    <span id="invoice_profile_website"><%=h(@profile.company_website) %></span>
+                  <% end %>
+            </p>
+        </div>
+        <!--/Company Address-->
+
+        <!--Billed to-->
+        <div class="left billedto pdgleft10">
+            <% unless @invoice.customer.blank? %>
+            <span class="txtbold"><%= _('Bill to:') %></span>
+            <p>
+                <span id="invoice_customer_name"><%= h(@invoice.customer.name) %></span><br/>
+                <span id="invoice_customer_address1"><%= h(@invoice.customer.address1) unless @invoice.customer.address1.blank? %></span><br/>
+                <%  unless @invoice.customer.address2.blank? %>
+                  <span id="invoice_customer_address2"><%= h(@invoice.customer.address2)%></span><br/>
+                <% end %>
+                <span id="invoice_customer_city"><%= h(@invoice.customer.city) + (@invoice.customer.province_state.blank? ? "" : ", ") unless @invoice.customer.city.blank? %></span>
+                <span id="invoice_customer_province_state"><%= h(@invoice.customer.province_state) unless @invoice.customer.province_state.blank? %></span><br/>
+
+                <span id="invoice_postalcode_zip"><%= h(@invoice.customer.postalcode_zip) + (@invoice.customer.country.blank? ? "" : " ") unless @invoice.customer.postalcode_zip.blank? %></span>
+                <span id="invoice_customer_country"><%= localized_country(@invoice.customer.country) unless @invoice.customer.country.blank? %></span>
+            </p>
+            <% end %>
+        </div>
+        <!--/Billed to-->
+
+        <!--Column 3-->
+
+        <div class="right">
+                <div class="right">
+                    <% unless @invoice.contact.blank? %>
+                      <!--Attention-->
+                      <div class="attention pdgleft10">
+                          <span class="txtbold"><%= _('Attention:') %></span><br />
+                          <p>
+                            <span id="invoice_contact_first_name"><%= h(@invoice.contact.first_name) unless @invoice.contact.first_name.blank? %></span>
+                            <span id="invoice_contact_last_name"><%= h(@invoice.contact.last_name) unless @invoice.contact.last_name.blank? %></span><br />
+                          </p>
+
+                      </div>
+                      <!--/Attention-->
+                    <% end %>
+                </div>
+        </div>
+        <!--/Column 3-->
+    <div class="clear"></div>
+</div>
+
+    <div id="big_tab" >
+      <div><img src="/themes/default/images/roundedrectangle_v2.jpg" /></div>
+      <div id="big_tab_text">
+        <div id="invoice_total"><%= (format_amount(@invoice.amount_owing)).untaint %>
+        </div>
+          <% unless @invoice.due_date.nil? %>
+            <%= _('Due by') %>  <span id="invoice_due_date"><%= format_date(_("%b %d, %Y")) { @invoice.due_date } %></span>
+          <%  end %>
+      </div>
+    </div>
+<!--/Row 2-->
+
+
+  <br style="clear:both;"/><br/>
+  <div id="preview_line_items_container">
+    <div id="preview_line_items" class="clearfix">
+      <table id="preview_entity_list">
+      <thead >
+        <tr id="preview_line_items_heading_no_border">
+        <th class="description"><%= _('Description') %></th>
+        <th class="quantity" ><%= _('Quantity') %></th>
+        <th class="price"><%= _('Price') %></th>
+        <th class="litotal"><%= _('Total') %></th>
+      </tr>
+      </thead>
+  
+      <tbody>
+      <% count =0 %>
+      <% @invoice.line_items.each do |line_item| -%>
+        <tr class="preview_child_item <%= "last_line" if count == @invoice.line_items.count - 1 %>" >
+          <td class="description"><div class="div_description"><%=h line_item.description %></div></td>
+          <td class="quantity"><div class="div_quantity"><%= (format_amount(line_item.quantity)).untaint %></div></td>
+          <td class="price"><div class="div_price"><%= (format_amount(line_item.price)).untaint %></div></td>
+          <td class="litotal"><div class="div_litotal"><%= (format_amount(line_item.subtotal)).untaint %></div></td>
+        </tr>
+        <%count = count +1%>
+      <% end %>		  	
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <br style="clear:both;"/>
+  
+  <div>
+	
+		<div id="preview_footer_summary">
+		  <table>
+		    <tr>
+			  <td class="preview_footer_summary_label">
+			    <span><%= _('Subtotal:') %></span>
+			  </td>
+			  <td class="preview_footer_summary_amount">
+			    <span id="invoice_line_items_total"><%= (format_amount(@invoice.line_items_total)).untaint %></span>
+			  </td>
+			</tr>
+			<% discount_block = Proc.new do %>
+				<%= (discount_div(@invoice)).untaint %>
+			<% end %>
+			<% show_first_if(@invoice.created_by.profile.discount_before_tax, discount_block) do %>
+				<% @invoice.taxes.each do |tax| %>
+
+        <% next if (tax.amount == 0 and tax.name.blank?) or !tax.enabled? %>
+				<tr id="<%=h "invoice_#{tax.profile_key}" %>">
+			  		<td class="preview_footer_summary_label">
+			  			<span><%=h tax.name %>:</span>
+					</td>
+					<td class="preview_footer_summary_amount">
+						<span id="<%= "invoice_#{tax.profile_key}_amount" %>">
+						  <%= (format_amount(tax.amount)).untaint %>
+						</span>
+					</td>
+				</tr> 
+				<% end %>
+			<% end %>
+		  </table>	
+		</div>
+	</div>
+  <br style="clear:both;"/>
+
+  <div>
+      <% if !@invoice.description_clean.blank? %>
+            <br/><br/>
+            <b><%= _('Comment:') %></b><br/><br/>
+              <%=h @invoice.description_clean %>
+            <br/>
+      <% end %>
+   </div>
+
+</div>

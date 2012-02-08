@@ -1,0 +1,57 @@
+
+<p class='taf_header'> 
+<%= taf_header_text %></p>
+<br/><div class="colored_input">
+<table id="invitations" style="width: 100%">
+	<tr height="30px" class="referrer_row">
+		<th class="sender_label"><%= _('Your name') %>:</th>
+		<th id="referrer_name_field_cell" class="<%= highlight_referring_name_on_error %>">  
+			<%= f.text_field(:referrer_name, :class => "input_sender", :value => repeat_referrer_name_if_error) %>  
+		</th>
+		<th class="sender_label"><%= _('Your e-mail') %>:</th>
+		<th id="referrer_email_field_cell" class="<%= highlight_referring_email_on_error %>">
+
+			<%= f.text_field(:referrer_email, :value => repeat_referrer_email_if_error || @username,  :class => "input_sender") %>
+		</th>
+	</tr>
+		<% i=1; i.upto(::AppConfig.referrals_size) do |@i| %>
+		
+		<tr height="30px" class="friend_row">
+			<td class="friend_label"><%= _("Friend's name") %>:</td>
+			<td id="friend_<%= @i %>_name_field_cell" class="<%= highlight_friend_name_on_error %>">
+				<%= f.text_field("friend_name_#{@i.to_s}", :class => "input_friend", :value => repeat_friend_name_if_error) %>  
+			</td>
+			<td class="friend_label"><%= _("Friend's e-mail") %>:</td>
+			<td id="friend_<%= @i %>_email_field_cell" class="<%= highlight_friend_email_on_error %>">
+				<%= f.text_field("friend_email_#{@i.to_s}", :class => "input_friend", :value => repeat_friend_email_if_error ) %>  
+			</td>
+		</tr>
+		<% end %>
+</table>
+</div>
+<div style="width: 100%; height: 120px;">
+	<div style="float: right; width: 48%; margin-top: 20px;">									
+		<p style="text-align: center">
+			<% if !@came_from_contest.blank? || !@came_from_rac_contest.blank? %>
+				<%= _submit_tag _("send"), :name => "commit", :id => "referral_submit", :class => "form_button" %>
+			<% else %>
+				<%= f.submit _('Send invitations!'), :class => "form_submit" %>
+			<% end %>
+		</p>
+	</div>
+	<div style="width: 48%; margin-left: 15px;">
+		<% if ::AppConfig.referral_captcha %>
+		<br/>
+		<p><%= _('Please type the code you see into the box below it') %>:</p>
+
+		<div id="captcha">
+		
+		<%= show_simple_captcha(:image_style => 'simply_green', :distortion => 'medium', :label => "") %>
+	</div>
+    <br clear="all"/>
+<% end %>
+	</div>
+</div>
+<%= f.hidden_field(:came_from_contest, :value => @came_from_contest) %>  
+<%= f.hidden_field(:came_from_rac_contest, :value => @came_from_rac_contest) %>  
+
